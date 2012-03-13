@@ -1,0 +1,26 @@
+Meeting Agenda
+
+Location: Room 5204
+Date: 2012-03-13
+Time: 22:35
+Facilitator: meeting leader, Mattias Markehed
+Note taker: Kristian Sällberg
+
+Attendees: Kristian Sällberg, 
+
+Participants:
+	1.	Objectives (5 min)
+	2.	Resolve any issues preventing the team to continue (this should be possible to verify at next meeting, short clear description, use issues from project site).
+?	3.	Reports (15 min)
+?	4.	From previous meetings, solved issues, e. t. c. , see 4
+	5.	Discussion items (35 min)
+		1.	How do we do...?
+		2.	What to do...?
+		3.	Why is...?
+	6.	Outcomes and assignments (5 min)
+		1.	It's decided that only a single .... (add to Issues, Wiki, Possible RAD)
+		2.	Peter should....
+		3.	Anna should...
+	7.	Wrap up
+		1.	Unsolved ...
+		2.	Next meeting?
