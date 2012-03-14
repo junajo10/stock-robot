@@ -1,26 +1,64 @@
 Meeting Agenda
 
-Location: Room 5204
-Date: 2012-03-13
-Time: 22:35
-Facilitator: meeting leader, Mattias Markehed
+Location: Room 5205
+Date: 2012-03-14
+Time: 09:00
+Facilitator: Mattias Markehed
 Note taker: Kristian Sällberg
 
-Attendees: Kristian Sällberg, 
+Attendees: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
 
 Participants:
 	1.	Objectives (5 min)
-	2.	Resolve any issues preventing the team to continue (this should be possible to verify at next meeting, short clear description, use issues from project site).
-?	3.	Reports (15 min)
-?	4.	From previous meetings, solved issues, e. t. c. , see 4
-	5.	Discussion items (35 min)
-		1.	How do we do...?
-		2.	What to do...?
-		3.	Why is...?
-	6.	Outcomes and assignments (5 min)
-		1.	It's decided that only a single .... (add to Issues, Wiki, Possible RAD)
-		2.	Peter should....
-		3.	Anna should...
-	7.	Wrap up
-		1.	Unsolved ...
-		2.	Next meeting?
+	
+			*Thursday: 
+				=> At least one Use Case
+				=> Complete the first part of the RDD document
+			*3 week goal:
+				=> We aim to have a working alpha prototype, together with a simple algorithm for testing all parts of the system.
+				
+	2.	Reports (15 min)
+			*We have all learned how to use GIT for cooperating through a common repo!
+			*Previously to the meeting, we have discussed what we want the robot to achieve and how.
+			*We were previously 3 members in the group
+				=> We have been blessed with a new team member, the fantastic Erik. Known for his previous endeveurs in stock market robots. We have introduces Erik to our current vision and goals.
+			
+	3.	Discussion items (35 min)
+			*Parsing stock data
+				=> Using Java's build in HTML parser?
+			*Parsing stock data from google finance?
+			*Protecting against SQL injections?
+			*Fix "initial support (aktiers tekniskt stöd)" in the robot's core functionality, OR in the algorithms?
+			*Using Window Builder?
+			*Commenting code?
+				=> Using javadoc
+					=> ALL methods AND ALL class files have to have javadoc comments
+		
+	4.	Outcomes and assignments (5 min)
+			* Long term issues
+				=> We will use Google Code's issue tracker
+			* Short term issues
+				=> TODO's in the code
+			* We will start designing the databases (2 designs, stock prices, specific portfolios)
+			* The Buy/Sell API
+				=> We will post pone further discussion of this to the next meeting
+			
+			+++ Specific delegations:
+			*Kristian
+				=> Designing and implementing the database, including Java_Database_Connectivity wrappers and SQL hacking
+				=> Config file for the stock prices database
+			*Mattias
+				=> Looking at the MVC pattern, Window handling, etc
+					(We decided to give time to the GUI at this point to speed things up later when the SDD is complete)
+			*Erik
+				=> Parsing for stock data, currently from Avaza Bank using Java's built in HTML parser
+			*Daniel
+				=> Algorithm loading to the robot, settings for the algorithms
+				=> Portfolio handler (Daniel will now demo the portfolio handler on white boardz)
+			
+	5.	Wrap up
+			Sunday 18:th
+				* Come back to The Buy/Sell API
+				* Post pone: Start discussing the actual robot
+				* We have to have pushed forward until this
+				* We will discuss the outcomes of Thursday's assisted meeting
