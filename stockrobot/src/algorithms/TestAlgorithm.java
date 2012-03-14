@@ -5,10 +5,9 @@ import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
 
 /**
- * A simple test algorithm based on a algorithm Kristian has come up with
- * 
  * @author daniel
  *
+ * A simple test algorithm based on a algorithm Kristian has come up with
  */
 public class TestAlgorithm implements IAlgorithm{
 	
@@ -19,7 +18,7 @@ public class TestAlgorithm implements IAlgorithm{
 		this.robot = robot;
 		this.portfolio = portfolio;
 		
-		System.out.println("hej");
+		System.out.println("garrr");
 	}
 	public static IAlgorithm init(IRobot_Algorithms robot, IPortfolio portfolio) {
 		return new TestAlgorithm(robot, portfolio);
@@ -62,9 +61,9 @@ public class TestAlgorithm implements IAlgorithm{
 	public String getSettingText(int id) {
 		switch (id) {
 		case 0:
-			return "Köp efter X pluss:";
+			return "Buy stock after it has climbed X times:";
 		default:
-			System.out.println("hepp");
+			System.out.println("garrr");
 		}
 			
 		return null;

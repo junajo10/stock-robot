@@ -16,12 +16,12 @@ public class SettingsGUITest extends StandardDialog {
 	private JTextArea myAddressField = new JTextArea(3, 20);
 	
 	public SettingsGUITest() {
-		 myContentPane.addItem("Inställning 1", setting1);
-		 myContentPane.addItem("Inställning 2", setting2);
-		 myContentPane.addItem("Inställning 3", setting3);
-		 myContentPane.addItem("Inställning 4", setting4);
-		 myContentPane.addItem("Inställning 5", setting5);
-		 myContentPane.addItem("Inställning 6", new JScrollPane(myAddressField,
+		 myContentPane.addItem("Setting 1", setting1);
+		 myContentPane.addItem("Setting 2", setting2);
+		 myContentPane.addItem("Setting 3", setting3);
+		 myContentPane.addItem("Setting 4", setting4);
+		 myContentPane.addItem("Setting 5", setting5);
+		 myContentPane.addItem("Setting 6", new JScrollPane(myAddressField,
 		            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 		            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
 		 setContentPane(myContentPane);
@@ -33,7 +33,7 @@ public class SettingsGUITest extends StandardDialog {
 		test.setVisible(true);
 		
 		if (test.hasUserCancelled()) {
-			System.out.println("HEJ");
+			System.out.println("Test");
 		}
 	}
 }

@@ -10,6 +10,11 @@ import database.IDatabase;
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
 
+/**
+ * @author daniel
+ *
+ * This class will be in charge of loading algorithms
+ */
 public class AlgorithmsLoader {
 
 	IRobot_Algorithms robot;
@@ -21,9 +26,9 @@ public class AlgorithmsLoader {
 		this.database = database;
 		
 		
-		loadAlgorithm("algorithms.TestAlgorithm"); // "algorithms.TestAlgorithm"
+		loadAlgorithm("algorithms.TestAlgorithm");
 		
-		// TODO: kolla om algorithmbiblotekets databas finns annars skapa och initiera den
+		// TODO: If algorithm wants a database and none exists create it
 	}
 	@SuppressWarnings("rawtypes")
 	private IAlgorithm loadAlgorithm(String algortihm) {
@@ -66,8 +71,6 @@ public class AlgorithmsLoader {
 		if (algorithmId > 0)
 			return loadAlgorithm("algorithms.TestAlgorithm");
 		
-		// TODO: Hämta algorithmens namn från databasen
-		// TODO: Lägg till i listan
 		
 		return null;
 	}
