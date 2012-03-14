@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 
 import stock.IStock;
 
-// Interfacet mot roboten från algoritmerna
+// Interface to the framework from algorithms
 public interface IRobot_Algorithms {
 	int buyStock(IStock s, int amount);
 	int buyStock(IStock s, int amount, int atLeastN);

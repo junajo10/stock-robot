@@ -10,6 +10,11 @@ import javax.swing.JTextField;
 
 import algorithms.IAlgorithm;
 
+/**
+ * 
+ * @author daniel
+ * This class will manage the settings of an algorithm
+ */
 public class AlgorithmSettings {
 	IAlgorithm algorithm;
 	List<Pair<Integer, Integer>> integerSettings = new LinkedList<Pair<Integer, Integer>>();
@@ -56,14 +61,14 @@ public class AlgorithmSettings {
 				System.out.println("ASDFASDFASDF");
 			}
 		}
-		//TODO: starta i en ny tråd + singleton
+		//TODO: start in new thread + singleton
 		
 		dialog.setContentPane(myContentPane);
 		dialog.setVisible(true);
 		
-		// Hämta ut datan
+		//TODO: Fetch the data
 		if (dialog.hasUserCancelled()) {
-			System.out.println("cancell");
+			System.out.println("cancel");
 		}
 		else {
 			System.out.println("bepa ok");
@@ -81,7 +86,7 @@ public class AlgorithmSettings {
 			allGood = allGood && algorithm.giveSetting(pair.getLeft(), pair.getRight());
 		}
 		
-		// TODO: om inte allgood => sätt default settings/det föregående och i så fall stoppa undan det innan
+		// TODO: if !allgood => set defalut settings/previous
 		return allGood;
 	}
 

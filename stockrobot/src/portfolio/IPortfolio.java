@@ -75,8 +75,25 @@ public interface IPortfolio {
 	boolean setStocksToWatch(List<IStock> stocks);
 	
 	
+	/**
+	 * Will set the stop buying flag
+	 * @param flag 
+	 */
 	void stopBuying(boolean flag);
+	
+	/**
+	 * Will set the stop selling flag
+	 * @param flag
+	 */
 	void stopSelling(boolean flag);
+	
+	/**
+	 * @return True if stopBuying flag is set
+	 */
 	boolean isStopBuyingFlagSet();
+	
+	/**
+	 * @return True if stopSelling flag is set
+	 */
 	boolean isStopSellingFlagSet();
 }
