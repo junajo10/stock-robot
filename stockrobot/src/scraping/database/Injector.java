@@ -1,6 +1,19 @@
 package scraping.database;
 
-public class Injector {
+public class Injector implements IInjector {
+	
+	/**
+	 * Receive 
+	 */
+	public boolean injectStockData( PriceDataRepresentation[] s ) {
+		
+		for( PriceDataRepresentation pdr : s ) {
+			
+			
+		}
+		
+		return true;
+	}
 	
 	/**
 	 * Given a stock name and a price;
