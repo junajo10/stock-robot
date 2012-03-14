@@ -1,14 +1,14 @@
 package generic;
 
-public class Pair<T,R> {
-	private T left;
+public class Pair<L, R> {
+	private L left;
 	private R right;
 	
-	public Pair(T left, R right) {
+	public Pair(L left, R right) {
 		this.left = left;
 		this.right = right;
 	}
-	public T getLeft() {
+	public L getLeft() {
 		return left;
 	}
 	public R getRight() {

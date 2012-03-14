@@ -1,5 +1,10 @@
 package algorithms;
-
+/**
+ * 
+ * @author daniel
+ * 
+ * Interface to algorithms
+ */
 public interface IAlgorithm {
 	
 	boolean update(); // Returns true when done

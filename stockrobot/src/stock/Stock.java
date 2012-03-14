@@ -2,14 +2,21 @@ package stock;
 
 import generic.Pair;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Stock implements IStock {
 
+	private final int stockId;
+	private final Timestamp time;
+	
+	public Stock(int stockId, Timestamp time) {
+		this.stockId = stockId;
+		this.time = time;
+	}
 	@Override
 	public int getStockId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return stockId;
 	}
 
 	@Override

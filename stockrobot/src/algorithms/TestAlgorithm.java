@@ -4,7 +4,12 @@ package algorithms;
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
 
-
+/**
+ * A simple test algorithm based on a algorithm Kristian has come up with
+ * 
+ * @author daniel
+ *
+ */
 public class TestAlgorithm implements IAlgorithm{
 	
 	IRobot_Algorithms robot;
@@ -30,7 +35,7 @@ public class TestAlgorithm implements IAlgorithm{
 	}
 	@Override
 	public String getDescription() {
-		return "Test algorithm1\n\nKöper när en post har gått upp X gånger i rad, säljer när den gått ned Y gånger i rad.";
+		return "Test algorithm1\n\nBuys when a stock has gone up 3 times in a row\nSells when a stock has gone down 3 times in a row";
 	}
 	
 	

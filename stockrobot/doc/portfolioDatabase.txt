@@ -1,0 +1,30 @@
+CREATE TABLE portfolios (
+    portfolioId     INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name            VARCHAR(20) NOT NULL,
+    algorithmName   VARCHAR(20),
+    balance         INT,
+    watchAllStocks  BOOLEAN
+);
+
+CREATE TABLE portfolioStocksToWatch (
+    portfolioId     INT,
+    stock           INT,
+
+    UNIQUE KEY (portfolioId, stock)
+);
+
+CREATE TABLE portfolioHistory (
+    portfolioId     INT NOT NULL,
+    buyDate         DATETIME,
+    soldDate        DATETIME,       # IF NULL => The stocks are in the portfolio
+    amount          INT NOT NULL,
+    stock           INT,
+
+    bought          BOOLEAN         # IF TRUE => bought ELSE => sold
+);
+
+CREATE TABLE portfolioInvestment (
+    portfolioId     INT NOT NULL,
+	amount			INT,
+	invested		BOOLEAN			# IF TRUE => invested ELSE => removed money
+);

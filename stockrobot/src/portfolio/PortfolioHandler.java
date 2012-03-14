@@ -7,7 +7,7 @@ public class PortfolioHandler implements IPortfolioHandler{
 	IPortfolio[] arrayOfPortfolios;
 
 	private PortfolioHandler() {
-		// TODO: Hämta portfolios från databasen
+		// TODO: Get all portfolios from the database
 	}
 	@Override
 	public IPortfolio createNewPortfolio(String name) {
@@ -21,8 +21,7 @@ public class PortfolioHandler implements IPortfolioHandler{
 
 	@Override
 	public boolean removePortfolio(IPortfolio portfolio) {
-		//endast om inga pengar finns kvar i den
-		
+		// Only possible if no money left in portfolio
 		
 		return false;
 	}
