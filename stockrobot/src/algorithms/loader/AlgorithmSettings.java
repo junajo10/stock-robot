@@ -57,21 +57,18 @@ public class AlgorithmSettings {
 				settingFields.add(textField);
 				myContentPane.addItem(algorithm.getSettingText(currentSetting), textField);
 			}
-			else {
-				System.out.println("ASDFASDFASDF");
-			}
 		}
 		//TODO: start in new thread + singleton
 		
 		dialog.setContentPane(myContentPane);
 		dialog.setVisible(true);
 		
-		//TODO: Fetch the data
+		
 		if (dialog.hasUserCancelled()) {
 			System.out.println("cancel");
 		}
 		else {
-			System.out.println("bepa ok");
+			//TODO: Fetch the data and store it
 		}
 	}
 	public boolean setNewSettings() {

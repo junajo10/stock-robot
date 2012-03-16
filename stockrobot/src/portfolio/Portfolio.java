@@ -159,4 +159,8 @@ public class Portfolio implements IPortfolio {
 		return name;
 	}
 
+	@Override
+	public int getPortfolioId() {
+		return portfolioId;
+	}
 }
