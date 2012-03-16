@@ -1,8 +1,6 @@
 package algorithms.loader;
 
 import generic.Pair;
-import gui.LabelledItemPanel;
-import gui.StandardDialog;
 
 import java.util.*;
 
@@ -17,16 +15,25 @@ import algorithms.IAlgorithm;
  * This class will manage the setting of an algorithm
  */
 public class AlgorithmSettings {
-	IAlgorithm algorithm;
-	List<Pair<Integer, JTextField>> settingIntegerFields = new LinkedList<Pair<Integer, JTextField>>();
-	List<Pair<Integer, JTextField>> settingStringFields = new LinkedList<Pair<Integer, JTextField>>();
-	List<Pair<Integer, JTextField>> settingDoubleFields = new LinkedList<Pair<Integer, JTextField>>();
+	final private IAlgorithm algorithm;
+	private List<Pair<Integer, JTextField>> settingIntegerFields = new LinkedList<Pair<Integer, JTextField>>();
+	private List<Pair<Integer, JTextField>> settingStringFields = new LinkedList<Pair<Integer, JTextField>>();
+	private List<Pair<Integer, JTextField>> settingDoubleFields = new LinkedList<Pair<Integer, JTextField>>();
 	
-	List<String> settings = new LinkedList<String>();
+	private List<String> settings = new LinkedList<String>();
 	
+	/**
+	 * Starts the settings GUI to a given algorithm
+	 * @param algorithm
+	 */
 	public AlgorithmSettings(IAlgorithm algorithm) {
 		this.algorithm = algorithm;
+		
+		showSettingsDialog();
 	}
+	/**
+	 * Starts up the GUI and fills in the textboxes with its current values
+	 */
 	public void showSettingsDialog() {
 		int i = algorithm.getNumberOfSettings();
 
@@ -54,7 +61,10 @@ public class AlgorithmSettings {
 			
 			@Override
 			public void run() {
-				AlgorithmSettingsGUI settingGUI = new AlgorithmSettingsGUI(algorithm.getNumberOfSettings(), settingStringFields, settingIntegerFields, settingDoubleFields);
+				AlgorithmSettingsGUI settingGUI = new AlgorithmSettingsGUI(settingStringFields, 
+																			settingIntegerFields, 
+																			settingDoubleFields, 
+																			settings);
 				settingGUI.pack();
 				settingGUI.setVisible(true);
 				
