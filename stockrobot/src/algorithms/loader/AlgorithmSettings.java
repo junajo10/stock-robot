@@ -17,9 +17,14 @@ import algorithms.IAlgorithm;
  */
 public class AlgorithmSettings {
 	IAlgorithm algorithm;
-	List<Pair<Integer, Integer>> integerSettings = new LinkedList<Pair<Integer, Integer>>();
-	List<Pair<Integer, String>> stringSettings = new LinkedList<Pair<Integer, String>>();
-	List<Pair<Integer, Double>> doubleSettings = new LinkedList<Pair<Integer, Double>>();
+	//List<Pair<Integer, Integer>> integerSettings = new LinkedList<Pair<Integer, Integer>>();
+	//List<Pair<Integer, String>> stringSettings = new LinkedList<Pair<Integer, String>>();
+	//List<Pair<Integer, Double>> doubleSettings = new LinkedList<Pair<Integer, Double>>();
+	
+	List<Pair<Integer, JTextField>> settingIntegerFields = new LinkedList<Pair<Integer, JTextField>>();
+	List<Pair<Integer, JTextField>> settingStringFields = new LinkedList<Pair<Integer, JTextField>>();
+	List<Pair<Integer, JTextField>> settingDoubleFields = new LinkedList<Pair<Integer, JTextField>>();
+	
 	List<String> settings = new LinkedList<String>();
 	
 	public AlgorithmSettings(IAlgorithm algorithm) {
@@ -29,7 +34,9 @@ public class AlgorithmSettings {
 		int i = algorithm.getNumberOfSettings();
 		
 		LabelledItemPanel myContentPane = new LabelledItemPanel();
-		List<JTextField> settingFields = new LinkedList<JTextField>();
+		
+
+		//TODO: wrap dialog in new thread
 		StandardDialog dialog = new StandardDialog();
 		
 		for (int currentSetting = 0; currentSetting <= i; currentSetting++) {
@@ -37,28 +44,28 @@ public class AlgorithmSettings {
 			settings.add(algorithm.getSettingText(currentSetting));
 
 			if (type.equalsIgnoreCase("String")) {
-				stringSettings.add(new Pair<Integer, String>(currentSetting, algorithm.getCurrentStringSetting(currentSetting)));
+				JTextField textField = new JTextField(algorithm.getCurrentStringSetting(currentSetting), 20);
 				
-				JTextField textField = new JTextField(20);
-				settingFields.add(textField);
+				settingStringFields.add(new Pair<Integer, JTextField> (currentSetting, textField));
+				
 				myContentPane.addItem(algorithm.getSettingText(currentSetting), textField);
 			}
 			else if (type.equalsIgnoreCase("Int")) {
-				integerSettings.add(new Pair<Integer, Integer>(currentSetting, algorithm.getCurrentIntSetting(currentSetting)));
+				JTextField textField = new JTextField("" + algorithm.getCurrentIntSetting(currentSetting), 20);
 				
-				JTextField textField = new JTextField(20);
-				settingFields.add(textField);
+				settingIntegerFields.add(new Pair<Integer, JTextField> (currentSetting, textField));
+				
 				myContentPane.addItem(algorithm.getSettingText(currentSetting), textField);
 			}
 			else if (type.equalsIgnoreCase("Double")) {
-				doubleSettings.add(new Pair<Integer, Double>(currentSetting, algorithm.getCurrentDoubleSetting(currentSetting)));
+				JTextField textField = new JTextField("" + algorithm.getCurrentDoubleSetting(currentSetting), 20);
 				
-				JTextField textField = new JTextField(20);
-				settingFields.add(textField);
+				settingDoubleFields.add(new Pair<Integer, JTextField> (currentSetting, textField));
+				
 				myContentPane.addItem(algorithm.getSettingText(currentSetting), textField);
 			}
 		}
-		//TODO: start in new thread + singleton
+		
 		
 		dialog.setContentPane(myContentPane);
 		dialog.setVisible(true);
@@ -68,22 +75,71 @@ public class AlgorithmSettings {
 			System.out.println("cancel");
 		}
 		else {
-			//TODO: Fetch the data and store it
+			if (!setNewSettings()) {
+				//TODO: Report error to user
+			}
 		}
 	}
+	
+	/**
+	 * Sets the new settings entered by the user
+	 * @return True if the new settings were valid to the algorithm
+	 */
 	public boolean setNewSettings() {
 		boolean allGood = true;
-		for (Pair<Integer, Integer> pair : integerSettings) {
-			allGood = allGood && algorithm.giveSetting(pair.getLeft(), pair.getRight());
-		}
-		for (Pair<Integer, String> pair : stringSettings) {
-			allGood = allGood && algorithm.giveSetting(pair.getLeft(), pair.getRight());
-		}
-		for (Pair<Integer, Double> pair : doubleSettings) {
-			allGood = allGood && algorithm.giveSetting(pair.getLeft(), pair.getRight());
+		
+		List<Pair<Integer, Integer>> oldIntegerSettings = new LinkedList<Pair<Integer,Integer>>();
+		List<Pair<Integer, String>> oldStringSettings = new LinkedList<Pair<Integer,String>>();
+		List<Pair<Integer, Double>> oldDoubleSettings = new LinkedList<Pair<Integer,Double>>();
+		
+		
+		// Store old settings if the new settings will be invalid
+		for (int i = 0; i < algorithm.getNumberOfSettings(); i++) {
+			String type = algorithm.getSettingType(i); 
+			if (type.equalsIgnoreCase("String")) {
+				oldStringSettings.add(new Pair<Integer, String>(i, algorithm.getCurrentStringSetting(i)));
+			}
+			else if (type.equalsIgnoreCase("Int")) {
+				oldIntegerSettings.add(new Pair<Integer, Integer>(i, algorithm.getCurrentIntSetting(i)));
+			}
+			else if (type.equalsIgnoreCase("Double")) {
+				oldDoubleSettings.add(new Pair<Integer, Double>(i, algorithm.getCurrentDoubleSetting(i)));
+			}
 		}
 		
-		// TODO: if !allgood => set defalut settings/previous
+		for (Pair<Integer, JTextField> pair : settingIntegerFields) {
+			try {
+				allGood = allGood && algorithm.giveSetting(pair.getLeft(), Integer.parseInt(pair.getRight().getText()));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		for (Pair<Integer, JTextField> pair : settingStringFields) {
+			allGood = allGood && algorithm.giveSetting(pair.getLeft(), pair.getRight().getText());
+		}
+		for (Pair<Integer, JTextField> pair : settingDoubleFields) {
+			try {
+				allGood = allGood && algorithm.giveSetting(pair.getLeft(), Double.parseDouble(pair.getRight().getText()));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		if (!allGood) {
+			for (Pair<Integer, Integer> pair : oldIntegerSettings) {
+				algorithm.giveSetting(pair.getLeft(), pair.getRight());
+			}
+			for (Pair<Integer, String> pair : oldStringSettings) {
+				algorithm.giveSetting(pair.getLeft(), pair.getRight());
+			}
+			for (Pair<Integer, Double> pair : oldDoubleSettings) {
+				algorithm.giveSetting(pair.getLeft(), pair.getRight());
+			}
+		}
+		
 		return allGood;
 	}
 
