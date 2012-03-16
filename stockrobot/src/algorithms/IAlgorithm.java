@@ -1,6 +1,5 @@
 package algorithms;
 /**
- * 
  * @author daniel
  * 
  * Interface to algorithms

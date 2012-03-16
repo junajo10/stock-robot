@@ -62,7 +62,7 @@ public class AlgorithmsLoader {
 	}
 	public IAlgorithm loadAlgorithm(IPortfolio portfolio) {
 		if (portfolio == null) {
-			System.out.println("sdg");
+			//TODO: Report error
 			return null;
 		}
 		

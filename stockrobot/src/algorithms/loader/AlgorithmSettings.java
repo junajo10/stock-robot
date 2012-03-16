@@ -11,9 +11,9 @@ import javax.swing.JTextField;
 import algorithms.IAlgorithm;
 
 /**
- * 
  * @author daniel
- * This class will manage the settings of an algorithm
+ * 
+ * This class will manage the setting of an algorithm
  */
 public class AlgorithmSettings {
 	IAlgorithm algorithm;
