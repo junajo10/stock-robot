@@ -7,20 +7,17 @@ import gui.StandardDialog;
 import java.util.*;
 
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import algorithms.IAlgorithm;
 
 /**
- * @author daniel
+ * @author Daniel
  * 
  * This class will manage the setting of an algorithm
  */
 public class AlgorithmSettings {
 	IAlgorithm algorithm;
-	//List<Pair<Integer, Integer>> integerSettings = new LinkedList<Pair<Integer, Integer>>();
-	//List<Pair<Integer, String>> stringSettings = new LinkedList<Pair<Integer, String>>();
-	//List<Pair<Integer, Double>> doubleSettings = new LinkedList<Pair<Integer, Double>>();
-	
 	List<Pair<Integer, JTextField>> settingIntegerFields = new LinkedList<Pair<Integer, JTextField>>();
 	List<Pair<Integer, JTextField>> settingStringFields = new LinkedList<Pair<Integer, JTextField>>();
 	List<Pair<Integer, JTextField>> settingDoubleFields = new LinkedList<Pair<Integer, JTextField>>();
@@ -32,13 +29,7 @@ public class AlgorithmSettings {
 	}
 	public void showSettingsDialog() {
 		int i = algorithm.getNumberOfSettings();
-		
-		LabelledItemPanel myContentPane = new LabelledItemPanel();
-		
 
-		//TODO: wrap dialog in new thread
-		StandardDialog dialog = new StandardDialog();
-		
 		for (int currentSetting = 0; currentSetting <= i; currentSetting++) {
 			String type = algorithm.getSettingType(currentSetting);
 			settings.add(algorithm.getSettingText(currentSetting));
@@ -47,38 +38,33 @@ public class AlgorithmSettings {
 				JTextField textField = new JTextField(algorithm.getCurrentStringSetting(currentSetting), 20);
 				
 				settingStringFields.add(new Pair<Integer, JTextField> (currentSetting, textField));
-				
-				myContentPane.addItem(algorithm.getSettingText(currentSetting), textField);
 			}
 			else if (type.equalsIgnoreCase("Int")) {
 				JTextField textField = new JTextField("" + algorithm.getCurrentIntSetting(currentSetting), 20);
 				
 				settingIntegerFields.add(new Pair<Integer, JTextField> (currentSetting, textField));
-				
-				myContentPane.addItem(algorithm.getSettingText(currentSetting), textField);
 			}
 			else if (type.equalsIgnoreCase("Double")) {
 				JTextField textField = new JTextField("" + algorithm.getCurrentDoubleSetting(currentSetting), 20);
 				
 				settingDoubleFields.add(new Pair<Integer, JTextField> (currentSetting, textField));
+			}
+		}
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				AlgorithmSettingsGUI settingGUI = new AlgorithmSettingsGUI(algorithm.getNumberOfSettings(), settingStringFields, settingIntegerFields, settingDoubleFields);
+				settingGUI.pack();
+				settingGUI.setVisible(true);
 				
-				myContentPane.addItem(algorithm.getSettingText(currentSetting), textField);
+				if (!settingGUI.hasUserCancelled()) {
+					if (!setNewSettings()) {
+						//TODO: Report error to user
+					}
+				}
 			}
-		}
-		
-		
-		dialog.setContentPane(myContentPane);
-		dialog.setVisible(true);
-		
-		
-		if (dialog.hasUserCancelled()) {
-			System.out.println("cancel");
-		}
-		else {
-			if (!setNewSettings()) {
-				//TODO: Report error to user
-			}
-		}
+		});
 	}
 	
 	/**
