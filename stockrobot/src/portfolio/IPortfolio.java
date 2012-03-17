@@ -5,26 +5,25 @@ import java.util.List;
 import stock.IStock;
 
 /**
- * 
- * @author daniel
+ * @author Daniel
  *
  * Interface for portfolios
  */
 public interface IPortfolio {
 	/**
-	 * Will retrive a list of stocks avalible to the algorithm in charge of this portfolio
+	 * Will retrieve a list of stock id's available to the algorithm in charge of this portfolio
 	 * @return A list of stockId's
 	 */
 	List<Integer> getAvalibleStocks();
 	
 	/**
-	 * Will retrive a list of all the stocks that are currently in this portfolio
+	 * Will retrieve a list of all the stocks that are currently in this portfolio
 	 * @return A list of stocks
 	 */
 	List<IStock> getCurrentStocks();
 	
 	/**
-	 * Will retrive a list of all the stocks that has previosly been in this portfolio
+	 * Will retrieve a list of all the stocks that has previosly been in this portfolio
 	 * @return A list of stocks
 	 */
 	List<IStock> getHistoryStocks();
@@ -50,7 +49,7 @@ public interface IPortfolio {
 	int getInvestedAmount();
 	
 	/**
-	 * Will retrive the current unused amount
+	 * Will retrieve the current unused amount
 	 * @return The unused amount currently in the portfolio
 	 */
 	int getUnusedAmount();

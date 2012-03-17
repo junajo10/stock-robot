@@ -2,6 +2,7 @@ package portfolio;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,16 +16,62 @@ import stock.Stock;
  *
  * An object of this class will hold one portfolio.
  */
+//TODO: Implement with JDO when database system supports it 
 public class Portfolio implements IPortfolio {
 	private int portfolioId;
 	private IDatabase db;
 	private int algorithmId;
 	private boolean stopBuying, stopSelling;
 	
-	
+	/**
+	 * Start up a existing portfolio
+	 * @param portfolioId
+	 * @param db
+	 */
+	public Portfolio(int portfolioId, IDatabase db) {
+		this.portfolioId = portfolioId;
+		this.db = db;
+		this.algorithmId = getAlgorithmId();
+	}
+	/**
+	 * Create a new portfolio
+	 * @param name Name of the new portfolio
+	 * @param db
+	 */
+	public Portfolio(String name, IDatabase db) {
+		this.db = db;
+		if (!db.statement("INSERT INTO portfolios (name, algorithmId) VALUES (" + name + ", -1)")) {
+			//TODO: error name conflict, enter new name in some JOptionPane or something
+		}
+		this.algorithmId = -1;
+	}
 	@Override
 	public List<Integer> getAvalibleStocks() {
-		
+		ResultSet result = db.askQuery("SELECT watchAllStocks FROM portfolios WHERE portfolioId = " + portfolioId);
+		List<Integer> listOfStockIds = new ArrayList<Integer>();
+		try {
+			if (result.next()) {
+				if (result.getBoolean("watchAllStocks")) {
+					result.close();
+					result = db.askQuery("SELECT id FROM allStockNames");
+					
+					while (result.next()) {
+						listOfStockIds.add(result.getInt("id"));
+					}
+					return listOfStockIds;
+				}
+				else {
+					result = db.askQuery("SELECT stock FROM portfolioStocksToWatch WHERE portfolioId = " + portfolioId);
+					while (result.next()) {
+						listOfStockIds.add(result.getInt("stock"));
+					}
+					return listOfStockIds;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -61,6 +108,16 @@ public class Portfolio implements IPortfolio {
 
 	@Override
 	public int getAlgorithmId() {
+		ResultSet result = db.askQuery("SELECT algorithmId FROM portfolios WHERE portfolioId = " + portfolioId);
+		
+		try {
+			if (result.next()) {
+				return result.getInt("algorithmId");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return algorithmId;
 	}
 
@@ -162,5 +219,9 @@ public class Portfolio implements IPortfolio {
 	@Override
 	public int getPortfolioId() {
 		return portfolioId;
+	}
+	
+	public String toString() {
+		return "AlgorithmId: " + getAlgorithmId() + "\nName: " + getName() + "\n";
 	}
 }
