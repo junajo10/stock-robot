@@ -167,6 +167,7 @@ public class AvanzaParser implements IParser {
 				}
 				else if(counter==8){
 					stock.volume = Integer.valueOf(input);
+					counter++;
 				}
 				else if(counter ==9){
 					stockList.add(stock);
