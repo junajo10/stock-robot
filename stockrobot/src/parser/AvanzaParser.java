@@ -90,7 +90,6 @@ public class AvanzaParser implements IParser {
 
 			    avanzaCb.setStockList(stockList);
 			    parser.parse(br, avanzaCb, true);
-	
 
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -100,16 +99,6 @@ public class AvanzaParser implements IParser {
 
 	}
 	
-	private ArrayList<AvanzaStock> getStockList(URL url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private ArrayList<String> getStockNames(URL url){
-		ArrayList<String> stocks = new ArrayList<String>();
-		return null;
-		
-	}
 	/**
 	 * 
 	 * @author Erik

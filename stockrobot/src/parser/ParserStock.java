@@ -10,7 +10,7 @@ import scraping.database.PriceDataRepresentation;
  * @author Erik
  * 
  */
-public class ParserStock /*extends PriceDataRepresentation*/ {
+public class ParserStock {
 	public String	name;
 	public int 		volume;
 	public double 	buy;
