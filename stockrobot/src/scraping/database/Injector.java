@@ -4,11 +4,32 @@ import parser.ParserStock;
 
 public class Injector implements IInjector {
 	
+	public static void main( String[] args ) {
+		
+		System.out.println( "Injector!!!!" );
+		
+		Injector i = new Injector();
+		
+		ParserStock s1 = new ParserStock("STOCK1");
+		ParserStock s2 = new ParserStock("STOCK2");
+		ParserStock s3 = new ParserStock("STOCK3");
+		
+		ParserStock[] apa = { s1, s2, s3 };
+		
+		i.injectStockData( apa );
+	}
+	
 	/**
 	 * Receive 
 	 */
 	@Override
 	public boolean injectStockData( ParserStock[] stocks ) {
+		
+		System.out.println( "injectStockData" );
+		
+		
+		
+		//First off, get a list of all currently registered stocks
 		
 		for( ParserStock s : stocks ) {
 			
@@ -16,34 +37,6 @@ public class Injector implements IInjector {
 		}
 		
 		return true;
-	}
-	
-	/**
-	 * Given a stock name and a price;
-	 * 
-	 * +If a table with the same name as name exists
-	 * 		=> Insert current date and price
-	 * +Otherwise
-	 * 		=> Create a table named name and insert current date and price
-	 * 
-	 * @param name
-	 * @param price
-	 */
-	public static void insertStockPrice( String name, float price ) {
-		
-		createStockTable( name );
-	}
-	
-	/**
-	 * Create a table with the following specification
-	 * 
-	 * [ name : Varchar(50) | date : Date | price : Float ]
-	 * 
-	 * @param name
-	 */
-	private static void createStockTable( String name ) {
-		
-		
 	}
 	
 	/**
