@@ -2,7 +2,12 @@ package scraping.database;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,8 +28,23 @@ import parser.ParserStock;
  */
 public class Injector implements IInjector {
 	
+	private final String XML_SETTINGS_URL	= "config/priceinfo_db.xml"; 
+	private final String DB_USER_TAGNAME	= "dbuser";
+	private final String DB_PASS_TAGNAME	= "dbpass";
+	private final String DB_PORT_TAGNAME	= "dbport";
+	private final String DB_NAME_TAGNAME	= "dbname";
+	private final String DB_ADDRESS_TAGNAME = "dbaddress";
+	
+	private final String SQL_STOCKNAME_TAB	= "allStockNames";
+	private final String SQL_STOCKPRICE_HIS	= "stockPriceHistory";
+	
 	private String dbuser;
 	private String dbpass;
+	private String dbport;
+	private String dbname;
+	private String dbaddress;
+	
+	private HashMap<Integer, String> idToName = new HashMap<Integer, String>();
 	
 	public static void main( String[] args ) {
 		
@@ -64,7 +84,7 @@ public class Injector implements IInjector {
 			System.out.println( "ERROR: Injector: Constructor! New Document Builder" );
 		}
 		
-		String fileName = "config/priceinfo_db.xml";
+		String fileName = XML_SETTINGS_URL;
 		
 		File f = new File( fileName );
 		
@@ -87,8 +107,11 @@ public class Injector implements IInjector {
 		//Store the database username and password params
 		if( builder != null ) {
 			
-			dbuser = doc.getDocumentElement().getElementsByTagName("dbuser").item(0).getTextContent();
-			dbpass = doc.getDocumentElement().getElementsByTagName("dbpass").item(0).getTextContent();
+			dbuser = doc.getDocumentElement().getElementsByTagName(DB_USER_TAGNAME).item(0).getTextContent();
+			dbpass = doc.getDocumentElement().getElementsByTagName(DB_PASS_TAGNAME).item(0).getTextContent();
+			dbport = doc.getDocumentElement().getElementsByTagName(DB_PORT_TAGNAME).item(0).getTextContent();
+			dbname = doc.getDocumentElement().getElementsByTagName(DB_NAME_TAGNAME).item(0).getTextContent();
+			dbaddress = doc.getDocumentElement().getElementsByTagName(DB_ADDRESS_TAGNAME).item(0).getTextContent();
 		}
 	}
 	
@@ -100,16 +123,93 @@ public class Injector implements IInjector {
 		
 		System.out.println( "injectStockData" );
 		
+		String connectionInfo = "jdbc:mysql://" + dbaddress + ":" + dbport + "/" + dbname;
 		
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		StringBuilder SQLtoInsert = new StringBuilder();
+		
+		String d = "'";
+		
+		//Try to register the mysql driver
+		//Also, connect to the db
+		try {
+			
+			DriverManager.registerDriver( new com.mysql.jdbc.Driver() );
+			
+			System.out.println( "dbuser: " + dbuser );
+			System.out.println( "dbpass: " + dbpass );
+			
+			String url = "jdbc:mysql://" + dbaddress + ":" + dbport + "/" + dbname;
+			Class.forName( "com.mysql.jdbc.Driver" ).newInstance();
+			conn = DriverManager.getConnection(url,dbuser,dbpass);
+			
+			st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = st.executeQuery( "SELECT * FROM " + SQL_STOCKNAME_TAB );
+			
+			//Loop through all current corporations from the allNames table
+			while( rs.next() ) {
+				
+				//Store the names 
+				String name = rs.getString("name");
+				String market = rs.getString("market");
+				int id = rs.getInt( "id" );
+				
+				idToName.put( id, name );
+				
+				System.out.println( "name: " + rs.getString( "name" ) + ", market: " + rs.getString( "market" ) );
+			}
+			
+			for( ParserStock s : stocks ) {
+				
+				/*
+				SQLtoInsert.append( "INSERT INTO " + SQL_STOCKPRICE_HIS + " VALUES (" + 
+												addApo( idToName.get(s.name)) + //Name (id)
+												addApo( Integer.toString( s.volume ) ) + //volume
+												addApo( s. ) + //volume
+												" )"  );
+												
+				*/
+			}
+			
+		} catch ( SQLException e ) {
+			
+			e.printStackTrace();
+			
+		} catch ( ClassNotFoundException cnfE ) {
+			
+			cnfE.printStackTrace();
+			
+		} catch ( InstantiationException iE ) {
+			
+			iE.printStackTrace();
+			
+		} catch ( IllegalAccessException iaE ) {
+			
+			iaE.printStackTrace();
+		}
 		
 		//First off, get a list of all currently registered stocks
 		
-		for( ParserStock s : stocks ) {
+		//for( ParserStock s : stocks ) {
 			
 			//System.out.println( "Injector: Price data Representation, Hoho!" );
-		}
+		//}
 		
 		return true;
+	}
+	
+	/**
+	 * Surround str with 'str'
+	 * 
+	 * @param str
+	 * @return
+	 */
+	private static String addApo( String str ) {
+		
+		return "'" + str + "'";
 	}
 	
 	/**
