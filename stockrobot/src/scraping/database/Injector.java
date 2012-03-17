@@ -1,8 +1,30 @@
 package scraping.database;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
 import parser.ParserStock;
 
+/**
+ * Class for injecting stock information to 
+ * our already defined price database.
+ * 
+ * @see /doc/priceDatabase.sql
+ * @author kristian
+ *
+ */
 public class Injector implements IInjector {
+	
+	private String dbuser;
+	private String dbpass;
 	
 	public static void main( String[] args ) {
 		
@@ -20,6 +42,57 @@ public class Injector implements IInjector {
 	}
 	
 	/**
+	 * Constructor:
+	 * 
+	 * Loads the XML settings for priceDB,
+	 * Connects to the database
+	 */
+	public Injector() {
+		
+	//Load XML with settings!
+		//Define parsing helpers
+		DocumentBuilderFactory 	factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = null;
+		
+		//Try to create a new document builder
+		try {
+			
+			builder = factory.newDocumentBuilder();
+			
+		} catch (ParserConfigurationException e) {
+			
+			System.out.println( "ERROR: Injector: Constructor! New Document Builder" );
+		}
+		
+		String fileName = "config/priceinfo_db.xml";
+		
+		File f = new File( fileName );
+		
+		Document doc = null;
+		
+		try {
+			
+			if( builder != null )
+				doc = builder.parse( f );
+		
+		} catch( IOException ioE ) {
+			
+			System.out.println( "ERROR: Injector: Constructor! IOException XML settings" );
+			
+		} catch( SAXException saE ) {
+			
+			System.out.println( "ERROR: Injector: Constructor! SAXException?" );
+		}
+		
+		//Store the database username and password params
+		if( builder != null ) {
+			
+			dbuser = doc.getDocumentElement().getElementsByTagName("dbuser").item(0).getTextContent();
+			dbpass = doc.getDocumentElement().getElementsByTagName("dbpass").item(0).getTextContent();
+		}
+	}
+	
+	/**
 	 * Receive 
 	 */
 	@Override
@@ -33,7 +106,7 @@ public class Injector implements IInjector {
 		
 		for( ParserStock s : stocks ) {
 			
-			System.out.println( "Injector: Price data Representation, Hoho!" );
+			//System.out.println( "Injector: Price data Representation, Hoho!" );
 		}
 		
 		return true;
@@ -50,7 +123,7 @@ public class Injector implements IInjector {
 	 * @param name
 	 * @param market
 	 */
-	public static void updateMarket( String name, String market ) {
+	private static void updateMarket( String name, String market ) {
 		
 		
 	}
