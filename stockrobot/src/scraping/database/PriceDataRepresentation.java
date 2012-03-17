@@ -36,11 +36,11 @@ public class PriceDataRepresentation {
 	}
 	
 	//Getters
-	public int 		getVolume() { return _volume; }
-	public float	getHigh() 	{ return _high; }
-	public float	getLow() 	{ return _low; }
-	public float	getLatest() { return _latest; }
-	public float	getBuy() 	{ return _buy; }
-	public float	getSell()	{ return _sell; }
-	public Date		getDate()	{ return _date; }
+	public int 		getVolume() { return _volume; 	}
+	public float	getHigh() 	{ return _high; 	}
+	public float	getLow() 	{ return _low; 		}
+	public float	getLatest() { return _latest; 	}
+	public float	getBuy() 	{ return _buy;	 	}
+	public float	getSell()	{ return _sell; 	}
+	public Date		getDate()	{ return _date; 	}
 }

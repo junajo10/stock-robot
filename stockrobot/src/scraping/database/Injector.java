@@ -1,15 +1,18 @@
 package scraping.database;
 
+import parser.ParserStock;
+
 public class Injector implements IInjector {
 	
 	/**
 	 * Receive 
 	 */
-	public boolean injectStockData( PriceDataRepresentation[] s ) {
+	@Override
+	public boolean injectStockData( ParserStock[] stocks ) {
 		
-		for( PriceDataRepresentation pdr : s ) {
+		for( ParserStock s : stocks ) {
 			
-			
+			System.out.println( "Injector: Price data Representation, Hoho!" );
 		}
 		
 		return true;

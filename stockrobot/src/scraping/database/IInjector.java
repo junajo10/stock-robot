@@ -1,5 +1,7 @@
 package scraping.database;
 
+import parser.ParserStock;
+
 public interface IInjector {
 	
 	/**
@@ -11,5 +13,5 @@ public interface IInjector {
 	 * @param s
 	 * @return
 	 */
-	public boolean injectStockData( PriceDataRepresentation[] s );
+	public boolean injectStockData( ParserStock[] s );
 }
