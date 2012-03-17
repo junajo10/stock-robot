@@ -40,3 +40,4 @@ SELECT stockPriceHistory.id, volume, latest, buy, sell, time, name, market FROM 
 JOIN allStockNames ON allStockNames.id = stockPriceHistory.id
 
 # :-)
+#
