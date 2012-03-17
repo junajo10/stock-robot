@@ -20,7 +20,7 @@ public class PortfolioHandler implements IPortfolioHandler{
 	private PortfolioHandler(IDatabase db) {
 		this.db = db;
 		
-		ResultSet result = db.askQuery("SELECT * from portfolios");
+		ResultSet result = db.askQuery("SELECT portfolioId from portfolios");
 		
 		try {
 			while (result.next()) {
@@ -51,6 +51,9 @@ public class PortfolioHandler implements IPortfolioHandler{
 					listOfPortfolios.remove(portfolio);
 					return true;
 				}
+				else {
+					//TODO: Report to user that the balance > 0
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,5 +65,13 @@ public class PortfolioHandler implements IPortfolioHandler{
 			instance = new PortfolioHandler(null);
 		}
 		return instance;
+	}
+	@Override
+	public boolean setupPortfolio(IPortfolio portfolio) {
+		PortfolioSetupGUI setupGUI = new PortfolioSetupGUI(db, portfolio);
+		
+		
+		
+		return false;
 	}
 }
