@@ -5,16 +5,14 @@ import java.sql.Date;
 import scraping.database.PriceDataRepresentation;
 
 /**
+ * Class representing a parsed stock from Avanza.
  * 
  * @author Erik
  * 
- * Class representing a parsed stock from Avanza.
- *
  */
 public class AvanzaStock /*extends PriceDataRepresentation*/ {
 	public String	name;
 	public int 		volume;
-	public double 	latest;
 	public double 	buy;
 	public double 	sell;
 	public Date		date;
@@ -30,6 +28,7 @@ public class AvanzaStock /*extends PriceDataRepresentation*/ {
 	
 	@Override 
 	public String toString(){
-		return name;
+		String str = "Aktie: " + name + " Köp: " + buy + " Sälj: " + sell + " volym: " + volume;
+		return str;
 	}
 }
