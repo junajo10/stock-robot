@@ -96,4 +96,6 @@ public interface IPortfolio {
 	 * @return True if stopSelling flag is set
 	 */
 	boolean isStopSellingFlagSet();
+	
+	int getPortfolioId();
 }

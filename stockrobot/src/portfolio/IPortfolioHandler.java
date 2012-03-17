@@ -7,7 +7,4 @@ public interface IPortfolioHandler {
 	
 	boolean removePortfolio(IPortfolio portfolio);
 	
-	IPortfolioHandler getInstance();
-	
-	
 }

@@ -25,8 +25,7 @@ public class PortfolioHandler implements IPortfolioHandler{
 		
 		return false;
 	}
-	@Override
-	public IPortfolioHandler getInstance() {
+	public static IPortfolioHandler getInstance() {
 		if(instance == null) {
 			instance = new PortfolioHandler();
 		}
