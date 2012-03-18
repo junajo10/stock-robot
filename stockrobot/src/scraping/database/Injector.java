@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -28,23 +29,23 @@ import parser.ParserStock;
  */
 public class Injector implements IInjector {
 	
-	private final String XML_SETTINGS_URL	= "config/priceinfo_db.xml"; 
-	private final String DB_USER_TAGNAME	= "dbuser";
-	private final String DB_PASS_TAGNAME	= "dbpass";
-	private final String DB_PORT_TAGNAME	= "dbport";
-	private final String DB_NAME_TAGNAME	= "dbname";
-	private final String DB_ADDRESS_TAGNAME = "dbaddress";
+	private static final String XML_SETTINGS_URL	= "config/priceinfo_db.xml"; 
+	private static final String DB_USER_TAGNAME	= "dbuser";
+	private static final String DB_PASS_TAGNAME	= "dbpass";
+	private static final String DB_PORT_TAGNAME	= "dbport";
+	private static final String DB_NAME_TAGNAME	= "dbname";
+	private static final String DB_ADDRESS_TAGNAME = "dbaddress";
 	
-	private final String SQL_STOCKNAME_TAB	= "allStockNames";
-	private final String SQL_STOCKPRICE_HIS	= "stockPriceHistory";
+	private static final String SQL_STOCKNAME_TAB	= "allStockNames";
+	private static final String SQL_STOCKPRICE_HIS	= "stockPriceHistory";
 	
-	private String dbuser;
-	private String dbpass;
-	private String dbport;
-	private String dbname;
-	private String dbaddress;
+	private static String dbuser;
+	private static String dbpass;
+	private static String dbport;
+	private static String dbname;
+	private static String dbaddress;
 	
-	private HashMap<Integer, String> idToName = new HashMap<Integer, String>();
+	private HashMap<String, String> idToName = new HashMap<String, String>();
 	
 	public static void main( String[] args ) {
 		
@@ -53,8 +54,8 @@ public class Injector implements IInjector {
 		Injector i = new Injector();
 		
 		ParserStock s1 = new ParserStock("STOCK1");
-		ParserStock s2 = new ParserStock("STOCK2");
-		ParserStock s3 = new ParserStock("STOCK3");
+		ParserStock s2 = new ParserStock("Bepa");
+		ParserStock s3 = new ParserStock("STOCK2");
 		
 		ParserStock[] apa = { s1, s2, s3 };
 		
@@ -123,10 +124,10 @@ public class Injector implements IInjector {
 		
 		System.out.println( "injectStockData" );
 		
-		String connectionInfo = "jdbc:mysql://" + dbaddress + ":" + dbport + "/" + dbname;
-		
-		Connection conn = null;
-		Statement st = null;
+		Connection readConn = null;
+		Connection writeConn = null;
+		Statement readst = null;
+		Statement writest = null;
 		ResultSet rs = null;
 		StringBuilder SQLtoInsert = new StringBuilder();
 		
@@ -141,13 +142,17 @@ public class Injector implements IInjector {
 			System.out.println( "dbuser: " + dbuser );
 			System.out.println( "dbpass: " + dbpass );
 			
-			String url = "jdbc:mysql://" + dbaddress + ":" + dbport + "/" + dbname;
+			String url = "jdbc:mysql://" + dbaddress + ":" + dbport + "/" + dbname + "?allowMultiQueries=true";
 			Class.forName( "com.mysql.jdbc.Driver" ).newInstance();
-			conn = DriverManager.getConnection(url,dbuser,dbpass);
+			readConn = DriverManager.getConnection(url,dbuser,dbpass);
+			writeConn = DriverManager.getConnection(url,dbuser,dbpass);
 			
-			st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			readst = readConn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			writest = writeConn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 			
-			rs = st.executeQuery( "SELECT * FROM " + SQL_STOCKNAME_TAB );
+			addAllNewStocks(url,stocks);
+			
+			rs = readst.executeQuery( "SELECT * FROM " + SQL_STOCKNAME_TAB );
 			
 			//Loop through all current corporations from the allNames table
 			while( rs.next() ) {
@@ -155,24 +160,33 @@ public class Injector implements IInjector {
 				//Store the names 
 				String name = rs.getString("name");
 				String market = rs.getString("market");
-				int id = rs.getInt( "id" );
+				String id = rs.getString( "id" );
 				
-				idToName.put( id, name );
+				idToName.put( name, id );
 				
 				System.out.println( "name: " + rs.getString( "name" ) + ", market: " + rs.getString( "market" ) );
 			}
 			
 			for( ParserStock s : stocks ) {
 				
-				/*
+				String companyId = idToName.get( s.name ) == null? "-1" : idToName.get( s.name );
+				
 				SQLtoInsert.append( "INSERT INTO " + SQL_STOCKPRICE_HIS + " VALUES (" + 
-												addApo( idToName.get(s.name)) + //Name (id)
-												addApo( Integer.toString( s.volume ) ) + //volume
-												addApo( s. ) + //volume
-												" )"  );
-												
-				*/
+									addApo( companyId ) + "," + //Name (id)
+									addApo( Integer.toString( s.volume ) ) + ", " +//volume
+									addApo( Double.toString( s.lastClose ) ) + ", " +//last close price
+									addApo( Double.toString( s.buy ) ) + ", " +//last close price
+									addApo( Double.toString( s.sell ) ) + ", " +//last close price
+									addApo("3000-03-03 19:29:00") +//Date, TODO: FIX REAL TIME!
+									" ); " );
+				
+				writest.execute( SQLtoInsert.toString() );
 			}
+			
+			System.out.println( SQLtoInsert );
+			
+			readConn.close();
+			writeConn.close();
 			
 		} catch ( SQLException e ) {
 			
@@ -191,13 +205,6 @@ public class Injector implements IInjector {
 			iaE.printStackTrace();
 		}
 		
-		//First off, get a list of all currently registered stocks
-		
-		//for( ParserStock s : stocks ) {
-			
-			//System.out.println( "Injector: Price data Representation, Hoho!" );
-		//}
-		
 		return true;
 	}
 	
@@ -212,6 +219,57 @@ public class Injector implements IInjector {
 		return "'" + str + "'";
 	}
 	
+	private static void addAllNewStocks( String url, ParserStock[] stocks ) {
+		
+		Connection readConn = null;
+		Connection writeConn = null;
+		Statement readst = null;
+		Statement writest = null;
+		ResultSet rs = null;
+		
+		try {
+		
+			readConn = DriverManager.getConnection(url,dbuser,dbpass);
+			writeConn = DriverManager.getConnection(url,dbuser,dbpass);
+			
+			readst = readConn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			writest = writeConn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+			
+			ResultSet allNames = readst.executeQuery( "SELECT * FROM " + SQL_STOCKNAME_TAB );
+			ArrayList<String> existingNames = new ArrayList<String>();
+			
+			
+			while( allNames.next() ) {
+				
+				existingNames.add( allNames.getString("name") );
+			}
+			
+			System.out.println( "Existing names: " + existingNames );
+			
+			StringBuilder sb = new StringBuilder();
+			
+			for( ParserStock s : stocks ) {
+				
+				//If this stock is not already in there, then add it!
+				if( !existingNames.contains( s.name ) ) {
+					
+					sb.append( "INSERT INTO " + SQL_STOCKNAME_TAB + " VALUES (" + "'0'," + addApo( s.name ) + ", " + addApo( s.market ) + ");" );
+				}
+			}
+			
+			System.out.println( "sb: " + sb );
+			
+			writest.execute( sb.toString() );
+			
+			readConn.close();
+			writeConn.close();
+			
+		} catch( SQLException e ) {
+			
+			
+		}
+	}
+	
 	/**
 	 * Updates the market associated to a stock
 	 * 
@@ -223,7 +281,12 @@ public class Injector implements IInjector {
 	 * @param name
 	 * @param market
 	 */
-	private static void updateMarket( String name, String market ) {
+	private static void updateMarket( Statement st, String name, String market ) {
+		
+		
+	}
+	
+	private static void addStockName( Statement st, String name, String market ) {
 		
 		
 	}

@@ -12,6 +12,7 @@ import scraping.database.PriceDataRepresentation;
  */
 public class ParserStock {
 	public String	name;
+	public String 	market = "";
 	public int 		volume;
 	public double	lastClose;
 	public double 	buy;
