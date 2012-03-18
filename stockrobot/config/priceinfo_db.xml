@@ -1,4 +1,7 @@
 <xml>
-	<dbuser></dbuser>
-	<dbpass></dbpass>
+	<dbuser>user</dbuser>
+	<dbpass>pass</dbpass>
+	<dbport>0</dbport>
+	<dbname>db</dbname>
+	<dbaddress>localhost</dbaddress>
 </xml>
