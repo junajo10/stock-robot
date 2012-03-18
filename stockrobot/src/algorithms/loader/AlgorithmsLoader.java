@@ -38,7 +38,7 @@ public class AlgorithmsLoader {
 		
 		IPortfolioHandler portfolioHandler = PortfolioHandler.getInstance();
 		
-		IPortfolio[] portfolios = portfolioHandler.getPortfolios();
+		List<IPortfolio> portfolios = portfolioHandler.getPortfolios();
 		
 		
 		for (IPortfolio p : portfolios) {

@@ -1,6 +1,6 @@
 CREATE TABLE portfolios (
     portfolioId     INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name            VARCHAR(20) NOT NULL,
+    name            VARCHAR(20) UNIQUE NOT NULL,
     algorithmId     SMALLINT,
     balance         INT,
     watchAllStocks  BOOLEAN

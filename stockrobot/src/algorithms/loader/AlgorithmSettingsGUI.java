@@ -32,14 +32,17 @@ public class AlgorithmSettingsGUI  extends StandardDialog {
 			List<String> settingTexts) {
 		
 		for (int i = 0; i < settingTexts.size(); i++) {
-			if (settingStringFields.get(i).getLeft().compareTo(i) == 0) {
-				settingsContentPane.addItem(settingTexts.get(i), settingStringFields.get(i).getRight());
+			if (settingStringFields.get(0).getLeft().compareTo(i) == 0) {
+				settingsContentPane.addItem(settingTexts.get(i), settingStringFields.get(0).getRight());
+				settingStringFields.remove(0);
 			}
-			else if (settingIntegerFields.get(i).getLeft().compareTo(i) == 0) {
-				settingsContentPane.addItem(settingTexts.get(i), settingStringFields.get(i).getRight());
+			else if (settingIntegerFields.get(0).getLeft().compareTo(i) == 0) {
+				settingsContentPane.addItem(settingTexts.get(i), settingIntegerFields.get(0).getRight());
+				settingIntegerFields.remove(0);
 			}
-			else if (settingDoubleFields.get(i).getLeft().compareTo(i) == 0) {
-				settingsContentPane.addItem(settingTexts.get(i), settingStringFields.get(i).getRight());
+			else if (settingDoubleFields.get(0).getLeft().compareTo(i) == 0) {
+				settingsContentPane.addItem(settingTexts.get(i), settingDoubleFields.get(0).getRight());
+				settingDoubleFields.remove(0);
 			}
 		}
 		setContentPane(settingsContentPane);
