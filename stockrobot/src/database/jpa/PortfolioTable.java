@@ -3,21 +3,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * @author Daniel
  *
  */
 @Entity
+@Table(name="PortfolioTable")
 public class PortfolioTable {
 	@Id @GeneratedValue
 	private int portfolioId;
 	
-	@Column
+	@Column(name="name", nullable=false, length=20, insertable=true)
 	private String name;
 	
-	@Column
-	private int algorithmId;
+	@OneToOne
+	private AlgorithmsTable algorithm;
 	
 	@Column
 	private long balance;
@@ -25,12 +29,14 @@ public class PortfolioTable {
 	@Column
 	private boolean watchAllStocks;
 	
+	
+	
 	public PortfolioTable() {
 		
 	}
 	public PortfolioTable(String name) {
 		this.name = name;
-		algorithmId = -1;
+		algorithm = null;
 		balance = 0;
 		watchAllStocks = false;
 	}
@@ -50,7 +56,7 @@ public class PortfolioTable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setAlgorithmId(int algorithmId) {
-		this.algorithmId = algorithmId;
+	public void setAlgorithmId(AlgorithmsTable algorithm) {
+		this.algorithm = algorithm;
 	}
 }

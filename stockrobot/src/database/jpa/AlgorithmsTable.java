@@ -3,20 +3,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Daniel
  *
  */
 @Entity
+@Table(name="AlgorithmsTable")
 public class AlgorithmsTable {
 	@Id @GeneratedValue
 	private int id;
 	
-	@Column
+	@Column(name="name", nullable=false, length=20, insertable=true)
 	private String name;
 	
-	@Column
+	@Column(name="path", nullable=true, length=255, insertable=true)
 	private String path;
 	
 	public AlgorithmsTable() {
