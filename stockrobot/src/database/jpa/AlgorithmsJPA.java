@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 public class AlgorithmsJPA {
-	@Id
+	@Id @GeneratedValue
 	private int id;
 	
 	@Column
@@ -22,5 +22,15 @@ public class AlgorithmsJPA {
 	public AlgorithmsJPA(String name, String path) {
 		this.name = name;
 		this.path = path;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getPath() {
+		return path;
 	}
 }
