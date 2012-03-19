@@ -1,12 +1,15 @@
 package database.jpa;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * @author Daniel
  *
  */
 @Entity
-public class AlgorithmsJPA {
+public class AlgorithmsTable {
 	@Id @GeneratedValue
 	private int id;
 	
@@ -16,10 +19,10 @@ public class AlgorithmsJPA {
 	@Column
 	private String path;
 	
-	public AlgorithmsJPA() {
+	public AlgorithmsTable() {
 		
 	}
-	public AlgorithmsJPA(String name, String path) {
+	public AlgorithmsTable(String name, String path) {
 		this.name = name;
 		this.path = path;
 	}
