@@ -13,7 +13,7 @@ public class Harvester {
 	 */
 	public static void main(String[] args) {
 
-		System.out.println("*** ASTRo Parser started. ***");
+		System.out.println("*** ASTRo Harvester started. ***");
 		System.out.println("*** Write help for help. ***");
 		//parserThread.run();
 		while(true){
@@ -24,6 +24,11 @@ public class Harvester {
 		}
 	}
 	
+	/**
+	 * Takes a command from the Harvester and executes it.
+	 * 
+	 * @param str command to the Harvester from the console.
+	 */
 	private static void takeCommand(String str){
 		if(str.equals("help")){
 			System.out.println("*** ASTRo commandline help ***");
@@ -31,6 +36,7 @@ public class Harvester {
 			System.out.println("status => Prints status on scheduler and parser");
 			System.out.println("stop => Temporarly stop the parser thread.");				
 			System.out.println("restart_parser => Restarts the parser.");		
+			System.out.println("exit => Exits the entire program.");		
 			System.out.println("*** END OF HELP ***");
 		}			
 		else if(str.equals("restart_parser")){
@@ -58,11 +64,26 @@ public class Harvester {
 				System.out.println("*** Parser already stopped or not started.");
 			}
 		}
+		else if(str.equals("start")){
+			startParser();
+			System.out.println("*** Parser started successfully. ***");	
+		}
+		else if(str.equals("exit")){
+			System.out.println("*** Exiting Harvester. ***");
+			System.exit(0);
+		}
 		else{
 			System.out.println("*** Unknown command, write help for help. ***");
 		}
 	}
 	
+	
+	/**
+	 * Force a start of the parser thread.
+	 * @return True if thread started.
+	 * <p>
+	 * Otherwise false.
+	 */
 	private static boolean startParser(){
 		AvanzaParser parser = new AvanzaParser();
 		parserThread = new Thread(parser);
@@ -70,6 +91,14 @@ public class Harvester {
 		return true;
 	}
 	
+	
+	/**
+	 * Stops the parser temporarly.
+	 * <p>
+	 * @return True if the parser was running and was successfully stopped.
+	 * <p>
+	 * Otherwise false.
+	 */
 	private static boolean stopParser(){
 		if(parserThread==null){
 			return false;
