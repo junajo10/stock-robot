@@ -20,7 +20,7 @@ bin
 *.dmg
 *.gz
 *.iso
-*.jar
+#*.jar
 *.rar
 *.tar
 *.zip
@@ -37,3 +37,6 @@ bin
 ehthumbs.db
 Icon?
 Thumbs.db
+
+
+persistence.xml
