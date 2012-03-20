@@ -1,10 +1,14 @@
 package database.jpa.tables;
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -15,12 +19,13 @@ import javax.persistence.Table;
 @Table(name="PortfolioTable")
 public class PortfolioTable {
 	@Id @GeneratedValue
+	@Column(name = "PORTFOLIO_ID", nullable = false)
 	private int portfolioId;
 	
 	@Column(name="name", nullable=false, length=20, insertable=true)
 	private String name;
 	
-	@OneToOne
+	@ManyToOne
 	private AlgorithmsTable algorithm;
 	
 	@Column
@@ -29,7 +34,8 @@ public class PortfolioTable {
 	@Column
 	private boolean watchAllStocks;
 	
-	
+	@OneToMany(mappedBy="portfoliotable",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
+    private Collection<PortfolioHistory> history;    
 	
 	public PortfolioTable() {
 		
@@ -56,7 +62,13 @@ public class PortfolioTable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setAlgorithmId(AlgorithmsTable algorithm) {
+	public void setAlgorithm(AlgorithmsTable algorithm) {
 		this.algorithm = algorithm;
+	}
+	public Collection<PortfolioHistory> getHistory() {
+		return history;
+	}
+	public void invest(EntityManager em, long amount, boolean invest) {
+		em.persist(new PortfolioInvestment(this, amount, invest));
 	}
 }

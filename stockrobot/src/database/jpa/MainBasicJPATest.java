@@ -1,11 +1,13 @@
 package database.jpa;
 
 
-import java.util.*;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import database.jpa.tables.AlgorithmsTable;
+import database.jpa.tables.PortfolioTable;
 
 
 public class MainBasicJPATest {
@@ -22,20 +24,30 @@ public class MainBasicJPATest {
 		em.getTransaction().begin();
 		// we'll put some codes here later
 		
-
-		em.persist(new AlgorithmsTable("TestAlgorithm", "algorithms.TestAlgotihm"));
+		
+		PortfolioTable portfolio = new PortfolioTable("portfolio 1");
+		
+		AlgorithmsTable algorithm = new AlgorithmsTable("TestAlgorithm", "algorithms.TestAlgotihm");
+		
+		em.persist(algorithm);
+		em.persist(portfolio);
+		
+		
+		portfolio.setAlgorithm(algorithm);
+		
+		portfolio.invest(em, 10000, true);
+		
+		
 		
 		em.getTransaction().commit();
 		
-		
+		/*
 		Query q = em.createQuery("select a from AlgorithmsTable a");
 
-        // Go through each of the entities and print out each of their
-        // messages, as well as the date on which it was created 
         for (AlgorithmsTable a : (List<AlgorithmsTable>) q.getResultList()) {
             System.out.println("ID: " + a.getId() + " Name: " + a.getName() + " Path: " + a.getPath()); 
         }
-		
+		*/
 		em.close();
 		
 		factory.close();

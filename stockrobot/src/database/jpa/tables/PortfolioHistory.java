@@ -5,6 +5,9 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,6 +19,7 @@ import javax.persistence.Table;
 public class PortfolioHistory {
 
 	@Id
+	@Column(name = "PORTFOLIO_HISTORY_ID", nullable = false)
 	private int id;
 	
 	@Column
@@ -27,6 +31,9 @@ public class PortfolioHistory {
 	@Column
 	private int amount;
 	
+	@ManyToOne(optional=false)
+    @JoinColumn(name="PORTFOLIO_ID",referencedColumnName="CUST_ID")
+    private PortfolioTable portfolio;
 	
 	public PortfolioHistory() {
 		
@@ -46,5 +53,8 @@ public class PortfolioHistory {
 	}
 	public boolean stillInPortFolio() {
 		return soldDate == null;
+	}
+	public PortfolioTable getPortfolio() {
+		return portfolio;
 	}
 }
