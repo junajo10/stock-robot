@@ -32,7 +32,7 @@ public class PortfolioHistory {
 	private int amount;
 	
 	@ManyToOne(optional=false)
-    @JoinColumn(name="PORTFOLIO_ID",referencedColumnName="CUST_ID")
+    @JoinColumn(name="portfolioId",referencedColumnName="PORTFOLIO_ID")
     private PortfolioTable portfolio;
 	
 	public PortfolioHistory() {

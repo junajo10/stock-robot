@@ -34,7 +34,7 @@ public class PortfolioTable {
 	@Column
 	private boolean watchAllStocks;
 	
-	@OneToMany(mappedBy="portfoliotable",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="portfolio",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
     private Collection<PortfolioHistory> history;    
 	
 	public PortfolioTable() {
