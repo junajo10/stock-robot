@@ -1,14 +1,25 @@
-package database.jpa;
+package database.jpa.tables;
 
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class PortfolioInvestmentJPA {
+/**
+ * @author Daniel
+ *
+ */
+@Entity
+@Table(name="PortfolioInvested")
+public class PortfolioInvestment {
 	@Id
 	private int id;
 	
+	@OneToOne
+	private PortfolioTable portfolio;
 	
 	@Column
 	private Date date;
@@ -19,11 +30,13 @@ public class PortfolioInvestmentJPA {
 	@Column
 	private boolean invested;
 	
-	public PortfolioInvestmentJPA() {
+	public PortfolioInvestment() {
 		
 	}
-	public PortfolioInvestmentJPA(long amount, boolean invest) {
+	public PortfolioInvestment(PortfolioTable portfolio, long amount, boolean invest) {
 		this.amount = amount;
+		this.portfolio = portfolio;
+		
 		if (invest) {
 			this.invested = true;
 		}
@@ -46,5 +59,8 @@ public class PortfolioInvestmentJPA {
 	}
 	public boolean didRemoveMoney() {
 		return !invested;
+	}
+	public PortfolioTable getPortfolio() {
+		return portfolio;
 	}
 }

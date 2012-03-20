@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import database.jpa.tables.AlgorithmsTable;
+
 
 public class MainBasicJPATest {
 

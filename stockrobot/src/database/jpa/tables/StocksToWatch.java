@@ -1,11 +1,11 @@
-package database.jpa;
+package database.jpa.tables;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 
-public class StocksToWatchJPA {
+public class StocksToWatch {
 	@Id
 	private int id;
 	@Column @OneToOne

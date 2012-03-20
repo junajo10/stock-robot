@@ -1,15 +1,19 @@
-package database.jpa;
+package database.jpa.tables;
 
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Daniel
  *
  */
-public class PortfolioHistoryJPA {
+@Entity
+@Table(name="PortfolioHistory")
+public class PortfolioHistory {
 
 	@Id
 	private int id;
@@ -24,7 +28,7 @@ public class PortfolioHistoryJPA {
 	private int amount;
 	
 	
-	public PortfolioHistoryJPA() {
+	public PortfolioHistory() {
 		
 	}
 	
