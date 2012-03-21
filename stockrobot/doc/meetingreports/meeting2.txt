@@ -1,0 +1,59 @@
+Meeting Agenda
+
+Location: Room 5207
+Date: 2012-03-18
+Time: 16:00
+Facilitator: Kristian Sällberg
+Note taker: Mattias Markehed
+
+Attendees: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
+
+Participants:
+    1.    Objectives (5 min)
+    
+   		 *Wednesday:
+   			 => Change name of the class IInjector and Injector to something more describing.
+   			 => Complete SDD and usecase.
+   			 => Extend RAD.
+   			 => Mockup for GUI.
+   			 => Every one should read up on JPA.
+   		 *3 week goal:
+   			 => We aim to have a working alpha prototype, together with a simple algorithm for testing all parts of the system.
+   			 
+    2.    Reports (15 min)
+   		 *Everyone have done what they should.
+   		 *(Mattias) Discussed how we should implement the MVC.
+   		 *(Daniel) Made progress in the in the algorithm loader and portfolio.
+   		 *(Erik) Made progress in the avanza parser.
+   		 *(Kristian) Made an interface and back end class for inserting stock into a database. And designed the database.
+
+    3.    Discussion items (35 min)
+   		 *Discussed the MVC and how to implement it.
+   		 *Made some progress in deciding what the GUI should include.
+   		 
+
+    4.    Outcomes and assignments (5 min)
+   		 
+   		 * Decided on GUI elements
+   		 * Decided on design the Buy/Sell API postponed from last meeting
+   		 * Progress in team building.
+   		 * First version of database is complete
+   		 
+   		 +++ Specific delegations:
+   		 *Kristian
+   			 => Make scheduler
+   			 => Fix database access for project members
+   		 *Mattias
+   			 => Buy/Sell API
+   			 => Extend the portfolio a bit.
+   		 *Erik
+   			 => Make main program for parser program. (Command line program)
+   		 *Daniel
+   			 => Fix JPA for at least one database.
+   			 => Find a good framework to use for JPA.
+   		 
+    5.    Wrap up
+   		 Wednesday 21:th
+   			 * Make SDD.
+   			 * Work on the RAD.
+   			 * Make usecases for the GUI
