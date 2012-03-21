@@ -70,6 +70,10 @@ public class PortfolioTable {
 		return history;
 	}
 	public void invest(EntityManager em, long amount, boolean invest) {
+		//TODO: add amount to this and update
 		em.persist(new PortfolioInvestment(this, amount, invest));
+	}
+	public AlgorithmsTable getAlgorithm() {
+		return algorithm;
 	}
 }
