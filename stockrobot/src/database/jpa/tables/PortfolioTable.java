@@ -18,7 +18,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="PortfolioTable")
 public class PortfolioTable {
-	@Id @GeneratedValue
+	@Id 
+	@GeneratedValue
 	@Column(name = "PORTFOLIO_ID", nullable = false)
 	private int portfolioId;
 	

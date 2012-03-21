@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="AllStockNames")
-public class AllStockNames {
+@Table(name="StockNames")
+public class StockNames {
 	@Id 
 	@GeneratedValue
 	private int id;
@@ -19,11 +19,20 @@ public class AllStockNames {
 	@Column(name="name", nullable=false, length=10, insertable=true)
 	private String market;
 	
-	public AllStockNames() {
+	public StockNames() {
 		
 	}
-	public AllStockNames(String name, String market) {
+	public StockNames(String name, String market) {
 		this.name = name;
 		this.market = market;
 	}
+	public int getId() {
+		return id;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getMarket() {
+		return market;
+	}	
 }
