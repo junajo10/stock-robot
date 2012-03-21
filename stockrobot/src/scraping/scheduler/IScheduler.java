@@ -23,7 +23,7 @@ public interface IScheduler {
 	 * @param start
 	 * @return
 	 */
-	public boolean setStartTime( Date start );
+	public void setStartTime( Date start );
 	
 	/**
 	 * A date that represents what the end time for a specific data source should be
@@ -31,7 +31,7 @@ public interface IScheduler {
 	 * @param end
 	 * @return
 	 */
-	public boolean setEndTime( Date end );
+	public void setEndTime( Date end );
 	
 	/**
 	 * Ignore time, can be set to true or false,
