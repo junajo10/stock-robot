@@ -3,6 +3,8 @@ package scraping.core;
 import java.util.Scanner;
 
 import scraping.parser.AvanzaParser;
+import scraping.parser.IParserRunner;
+import scraping.parser.ParserRunner;
 
 public class Harvester {
 	private static Thread parserThread;
@@ -85,8 +87,8 @@ public class Harvester {
 	 * Otherwise false.
 	 */
 	private static boolean startParser(){
-		AvanzaParser parser = new AvanzaParser();
-		parserThread = new Thread(parser);
+		IParserRunner parserRunner = new ParserRunner();
+		parserThread = new Thread(parserRunner);
 		parserThread.start();
 		return true;
 	}
