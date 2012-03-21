@@ -1,6 +1,6 @@
 package scraping.database;
 
-import scraping.parser.ParserStock;
+import scraping.model.ParserStock;
 
 public interface IInserter {
 	

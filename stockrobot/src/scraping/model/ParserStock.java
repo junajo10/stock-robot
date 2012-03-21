@@ -1,4 +1,4 @@
-package scraping.parser;
+package scraping.model;
 
 import java.sql.Date;
 

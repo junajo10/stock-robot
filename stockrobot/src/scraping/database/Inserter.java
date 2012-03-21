@@ -15,7 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import scraping.parser.ParserStock;
+import scraping.model.ParserStock;
 
 /**
  * Class for injecting stock information to 

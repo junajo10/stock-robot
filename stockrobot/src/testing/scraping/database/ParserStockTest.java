@@ -5,7 +5,7 @@ import java.sql.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
-import scraping.parser.ParserStock;
+import scraping.model.ParserStock;
 
 /**
  * Test the PriceDataRepresentation

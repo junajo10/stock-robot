@@ -1,5 +1,7 @@
 package scraping.parser;
 
+import scraping.model.ParserStock;
+
 /**
  * Class representing a parsed stock from Avanza.
  * 
