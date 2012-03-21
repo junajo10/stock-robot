@@ -2,6 +2,7 @@
 ###################
 bin
 .settings
+config/priceinfo_db.xml
 
 # Compiled source #
 ###################
