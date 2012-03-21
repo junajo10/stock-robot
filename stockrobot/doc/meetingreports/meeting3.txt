@@ -1,0 +1,62 @@
+Meeting Agenda
+Location: Room 5209
+Date: 2012-03-21
+Time: 09:00
+Facilitator: Daniel Malmqvist
+Note taker: Erik Ramqvist
+Attendees: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
+Participants:
+
+1.	Objectives (5 min)
+        	*Thursday:
+            	=> At least one Use Case
+            	=> Complete the first part of the RDD document
+   		 => Show a GUI-mockup for our customer.
+        	*One week goal:
+            	=> We aim to have a working alpha prototype, together with a simple algorithm for testing all parts of the
+   		 
+        	*Presentation this day of RAD and domain-model.
+ 
+2.	Reports (15 min)
+
+        	*Erik have done what he was supposed to.
+    	*Mattias has made an interface to the buy and sell api, he made a scheduler for the algorithms instead.
+    	*Daniel got started on the JPA system, and will continue on it.
+    	*Kristian has been very busy with a programming conference.
+   	 
+      	 
+3.	Discussion items (35 min)
+
+    	*We will need some kind of pulse from the Parser to the algorithms to know when theres new data available.
+    	*We need to design so that the scheduler and the parser works good together.
+    	*We have scale down the program abit, to have a working prototype.
+      	 
+4.	Outcomes and assignments (5 min)
+
+        	* Long term issues
+            	=> We will use Google Code's issue tracker
+        	* Short term issues
+            	=> Deal with the customer to know what he need in the alpha-version.
+   	 	=> Show our customer our domain-model and RAD.
+        	
+
+        	+++ Specific delegations:
+        	*Kristian
+            	=> Open a SQL-server.
+            	=> Program a scheduler.
+=> Discuss with Erik about the design of how the Scheduler works together with   the parser.
+        	*Mattias
+            	=> Fix buy sell api.
+   	            => Scheduler for running the algorithms.
+
+        	*Erik
+            	=> Merge Harvester with Scheduler.
+		=> Split Parser into Parser and ParserHandler
+   	            => Read up on the algorithms.
+        	*Daniel
+            	=> Will continue working the the JPA-implementation.
+  	 
+	5.	Wrap up 
+Friday 23:th
+            	* Discuss the outcome of the meeting in Thursday with our customer.
+   		* Merge the program, so that we will have a working program.
