@@ -2,8 +2,6 @@ package scraping.parser;
 
 import java.sql.Date;
 
-import scraping.database.PriceDataRepresentation;
-
 /**
  * Class representing a parsed stock from Avanza.
  * 
