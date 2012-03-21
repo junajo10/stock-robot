@@ -143,19 +143,19 @@ public class AvanzaParser implements IParser {
 				}
 				else if(counter==3){
 					input = input.replace(',', '.');
-					stock.buy = Double.valueOf(input);
+					stock.setBuy(Double.valueOf(input));
 					counter++;
 				}
 				else if(counter==4){
 					input = input.replace(',', '.');
-					stock.sell = Double.valueOf(input);
+					stock.setSell(Double.valueOf(input));
 					counter++;
 				}
 				else if(counter>4 && counter<8){
 					counter++;
 				}
 				else if(counter==8){
-					stock.volume = Integer.valueOf(input);
+					stock.setVolume(Integer.valueOf(input));
 					counter++;
 				}
 				else if(counter ==9){

@@ -54,10 +54,10 @@ public class Inserter implements IInserter {
 		Inserter i = new Inserter();
 		
 		ParserStock s1 = new ParserStock("STOCK_NEW");
-		s1.market = "CapCap";
+		s1.setMarket("CapCap");
 		ParserStock s2 = new ParserStock("Bepa");
 		ParserStock s3 = new ParserStock("STOCK2");
-		s3.market = "SmallCap";
+		s3.setMarket("SmallCap");
 		
 		ParserStock[] apa = { s1, s2, s3 };
 		
@@ -188,14 +188,14 @@ public class Inserter implements IInserter {
 			//Values from stocks
 			for( ParserStock s : stocks ) {
 				
-				String companyId = nameToId.get( s.name );
+				String companyId = nameToId.get( s.getName() );
 				
 				SQLtoInsert.append( "INSERT INTO " + SQL_STOCKPRICE_HIS + " VALUES (" + 
 									addApo( companyId ) + "," + //Name (id)
-									addApo( Integer.toString( s.volume ) ) + ", " +//volume
-									addApo( Double.toString( s.lastClose ) ) + ", " +//last close price
-									addApo( Double.toString( s.buy ) ) + ", " +//last close price
-									addApo( Double.toString( s.sell ) ) + ", " +//last close price
+									addApo( Integer.toString( s.getVolume() ) ) + ", " +//volume
+									addApo( Double.toString( s.getLastClose() ) ) + ", " +//last close price
+									addApo( Double.toString( s.getBuy() ) ) + ", " +//last close price
+									addApo( Double.toString( s.getSell() ) ) + ", " +//last close price
 									addApo("5000-03-03 19:29:00") +//Date, TODO: FIX REAL TIME!
 									" ); " );
 				
@@ -277,8 +277,8 @@ public class Inserter implements IInserter {
 			for( ParserStock s : stocks ) {
 				
 				//If this stock is not already in there, then add it!
-				if( !existingNames.contains( s.name ) )
-					sb.append( "INSERT INTO " + SQL_STOCKNAME_TAB + " VALUES (" + "'0'," + addApo( s.name ) + ", " + addApo( s.market ) + ");" );
+				if( !existingNames.contains( s.getName() ) )
+					sb.append( "INSERT INTO " + SQL_STOCKNAME_TAB + " VALUES (" + "'0'," + addApo( s.getName() ) + ", " + addApo( s.getMarket() ) + ");" );
 			}
 			
 			//Send to DB, if not empty
@@ -334,10 +334,10 @@ public class Inserter implements IInserter {
 				
 				//Find the matching stock in stocks
 				for( ParserStock stock : stocks )
-					if( name.equals( stock.name ) )
+					if( name.equals( stock.getName() ) )
 						//The name matches, if the market does NOT match, change the market in the DB
-						if( !market.equals( stock.market ) )
-							sb.append( "UPDATE " + SQL_STOCKNAME_TAB + " SET market=" + addApo(stock.market) + " WHERE name=" + addApo(name) + "; " );
+						if( !market.equals( stock.getMarket() ) )
+							sb.append( "UPDATE " + SQL_STOCKNAME_TAB + " SET market=" + addApo(stock.getMarket()) + " WHERE name=" + addApo(name) + "; " );
 			}
 			
 			//Send to DB, if not empty
