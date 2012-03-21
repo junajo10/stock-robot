@@ -45,7 +45,7 @@ public class RobotHandler {
 	 * 
 	 * @return true if started
 	 */
-	public void startHandler(){
+	public void runAlgorithms(){
 		
 		if(!isRunning){
 			isRunning = true;
