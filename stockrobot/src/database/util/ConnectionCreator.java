@@ -1,4 +1,4 @@
-package scraping.database;
+package database.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
