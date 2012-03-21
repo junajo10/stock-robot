@@ -12,7 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="AlgorithmsTable")
 public class AlgorithmsTable {
-	@Id @GeneratedValue
+	@Id 
+	@GeneratedValue
 	private int id;
 	
 	@Column(name="name", nullable=false, length=20, insertable=true)
@@ -37,5 +38,8 @@ public class AlgorithmsTable {
 	}
 	public String getPath() {
 		return path;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }
