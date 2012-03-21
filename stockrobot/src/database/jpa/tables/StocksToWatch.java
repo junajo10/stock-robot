@@ -2,7 +2,6 @@ package database.jpa.tables;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -13,13 +12,20 @@ public class StocksToWatch {
 	private PortfolioTable portfolio;
 	
 	@Column
-	private int stockId;
+	private StockNames stockName;
 
 	
+	public StocksToWatch() {
+		
+	}
+	public StocksToWatch(PortfolioTable portfolio, StockNames stockName) {
+		this.portfolio = portfolio;
+		this.stockName = stockName;
+	}
 	public PortfolioTable getPortfolio() {
 		return portfolio;
 	}
-	public int getStockId() {
-		return stockId;
+	public StockNames getStockName() {
+		return stockName;
 	}
 }

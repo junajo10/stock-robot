@@ -1,17 +1,14 @@
 package database.jpa.tables;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * @author Daniel
- *
- */
 @Entity
-@Table(name="AlgorithmsTable")
-public class AlgorithmsTable {
+@Table(name="StockNames")
+public class StockNames {
 	@Id 
 	@GeneratedValue
 	private int id;
@@ -19,27 +16,23 @@ public class AlgorithmsTable {
 	@Column(name="name", nullable=false, length=20, insertable=true)
 	private String name;
 	
-	@Column(name="path", nullable=true, length=255, insertable=true)
-	private String path;
+	@Column(name="name", nullable=false, length=10, insertable=true)
+	private String market;
 	
-	public AlgorithmsTable() {
+	public StockNames() {
 		
 	}
-	public AlgorithmsTable(String name, String path) {
+	public StockNames(String name, String market) {
 		this.name = name;
-		this.path = path;
+		this.market = market;
 	}
-	
 	public int getId() {
 		return id;
 	}
 	public String getName() {
 		return name;
 	}
-	public String getPath() {
-		return path;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	public String getMarket() {
+		return market;
+	}	
 }
