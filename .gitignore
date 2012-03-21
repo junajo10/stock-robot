@@ -2,7 +2,6 @@
 ###################
 bin
 .settings
-priceinfo_db.xml
 
 # Compiled source #
 ###################
@@ -41,3 +40,4 @@ Thumbs.db
 
 
 persistence.xml
+priceinfo_db.xml
