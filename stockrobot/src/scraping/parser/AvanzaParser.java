@@ -16,6 +16,8 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 import javax.swing.text.html.parser.ParserDelegator;
 
+import scraping.model.ParserStock;
+
 
 /**
  * @author Erik
@@ -37,7 +39,7 @@ public class AvanzaParser implements IParser {
 		}
 		while(true){
 			while(run){
-				ArrayList<AvanzaStock> stockList = null;
+				ArrayList<ParserStock> stockList = null;
 				Long timeBefore = System.currentTimeMillis();
 				for(URL url : avanzaURLList){
 					stockList = parse(url);
@@ -46,7 +48,7 @@ public class AvanzaParser implements IParser {
 				}
 				Long timeElapsed = System.currentTimeMillis() - timeBefore;
 				System.out.println("Parsing done in:" +timeElapsed + " ms.");
-				for(AvanzaStock stock : stockList){
+				for(ParserStock stock : stockList){
 					System.out.println(stock);
 				}
 				try {
@@ -74,10 +76,10 @@ public class AvanzaParser implements IParser {
 	
 	/** Parses the given Avanza-URL
 	 * @param URL to be parsed */
-	private ArrayList<AvanzaStock> parse(URL url){
+	private ArrayList<ParserStock> parse(URL url){
 			URLConnection connection;
 			HTMLDocument htmlDoc;
-			ArrayList<AvanzaStock> stockList = new ArrayList<AvanzaStock>();
+			ArrayList<ParserStock> stockList = new ArrayList<ParserStock>();
 			try {
 				connection = url.openConnection();
 			    InputStream is = connection.getInputStream();
@@ -105,16 +107,16 @@ public class AvanzaParser implements IParser {
 	 * A private class of which the AvanzaParser uses to parse a URL.
 	 */
 	private class AvanzaCallback extends ParserCallback {
-		private ArrayList<AvanzaStock> stockList;
+		private ArrayList<ParserStock> stockList;
 		boolean startNewStock = false;
 		String lastInput = "";
-		private AvanzaStock stock;
+		private ParserStock stock;
 		int counter = 0;
 		
-		public void setStockList(ArrayList<AvanzaStock> stockList){
+		public void setStockList(ArrayList<ParserStock> stockList){
 			this.stockList = stockList;
 		}
-		public ArrayList<AvanzaStock> getStockList(){
+		public ArrayList<ParserStock> getStockList(){
 			return stockList;
 		}
 
@@ -134,7 +136,7 @@ public class AvanzaParser implements IParser {
 			}
 			else if(startNewStock){
 				if(counter==0){
-					stock = new AvanzaStock(input);
+					stock = new ParserStock(input);
 					counter++;
 				}
 				else if(counter==1 || counter==2){
