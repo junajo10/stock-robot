@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 
 
 import database.jpa.tables.AlgorithmsTable;
+import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.PortfolioTable;
 import database.jpa.tables.StockNames;
@@ -201,16 +202,13 @@ public class JPAHelper {
 	 * @return A list of stockNames
 	 */
 	public List<StockNames> getStockNames(PortfolioTable portfolioTable) {
-		//TODO: fix this
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<StockNames> q2 = cb.createQuery(StockNames.class);
-        
-        Root<StockNames> c = q2.from(StockNames.class);
-        
-        q2.select(c);
-        
-        TypedQuery<StockNames> query = em.createQuery(q2);
-        return query.getResultList();
+
+		if (portfolioTable.watchAllStocks()) {
+			return getAllStockNames();
+		}
+		else {
+			return portfolioTable.getStocksToWatch();
+		}
 	}
 	/**
 	 * Returns a list of currently owned stocks.
@@ -218,15 +216,21 @@ public class JPAHelper {
 	 * @return A List of currently owned stocks.
 	 */
 	public List<StockPrices> getCurrentStocks(PortfolioTable portfolioTable) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
-        
-        Root<StockPrices> c = q2.from(StockPrices.class);
-        
-        q2.select(c);
-        
-        TypedQuery<StockPrices> query = em.createQuery(q2);
-        return query.getResultList();
+		// SELECT * FROM PortfolioHistory WHERE PORTFOLIO_HISTORY_ID = portfolioTable.getID() AND soldDate = null
+		List result = em.createQuery("select o.stockPrice from PortfolioHistory o where "
+				+ "o.id=:porthistid"
+				+ " and o.soldDate = :sellTime").
+				setParameter("porthistid","2").
+				setParameter("sellTime", null).getResultList();
+		return result;
+		/*
+		Exception in thread "main" <openjpa-2.2.0-r422266:1244990 nonfatal user error> 
+		org.apache.openjpa.persistence.ArgumentException: An error occurred while parsing 
+		the query filter 
+		"select o.stockName from PortfolioHistory o where o.PORTFOLIO_HISTORY_ID=:porthistid and o.soldDate = :sellTime". 
+		Error message: No field named "PORTFOLIO_HISTORY_ID" in "PortfolioHistory". Did you mean "amount"? 
+		Expected one of the available field names in "database.jpa.tables.PortfolioHistory": "[amount, buyDate, id, portfolio, soldDate]".
+		*/
 	}
 	/**
 	 * Returns a list of pairs with old stocks, left is the stockpoint when it was bought

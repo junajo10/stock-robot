@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import database.jpa.tables.AlgorithmsTable;
+import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioTable;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -64,13 +65,19 @@ public class MainBasicJPATest {
 			stockName = new StockNames("apa", "bepa");
 			jpaHelper.storeObject(stockName);
 			
+			
+			
 		}
 		else {
 			stockName = jpaHelper.getAllStockNames().get(0); 
 		}
 		Random r = new Random(System.currentTimeMillis());
-		jpaHelper.storeObject(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis())));
+		StockPrices sp = new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis()));
+		jpaHelper.storeObject(sp);
 		
+		
+		PortfolioHistory ph = new PortfolioHistory(sp, new Date(System.currentTimeMillis()), null, 10, portfolios.get(0));
+		jpaHelper.storeObject(ph);
 		
 		//---- Duplicate test
 		List<StockPrices> duplicateTest = new LinkedList<StockPrices>();
@@ -86,6 +93,11 @@ public class MainBasicJPATest {
 		for (StockPrices s : prices) {
 			System.out.println(s);
 		}
+		
+		
+		
+		List bla = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
+		System.out.println(bla.size());
 		
 		jpaHelper.stopJPASystem();
 		
