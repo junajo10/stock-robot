@@ -17,7 +17,7 @@ public class StockNames {
 	@GeneratedValue
 	private int id;
 	
-	@Column(name="name", nullable=false, length=20, insertable=true)
+	@Column(name="name", nullable=false, length=100, insertable=true)
 	private String name;
 	
 	@Column(name="market", nullable=false, length=10, insertable=true)
