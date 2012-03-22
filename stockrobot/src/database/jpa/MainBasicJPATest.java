@@ -110,6 +110,11 @@ public class MainBasicJPATest {
 		System.out.println(jpaHelper.getTotalInvestedAmount(jpaHelper.getAllPortfolios().get(0)));
 		
 		
+		System.out.println(jpaHelper.getStockInfo(10).size() + " " + jpaHelper.getStockInfo(10).get(0).getRight().size());
+		
+		for (StockPrices sp2 : jpaHelper.getStockInfo(10).get(0).getRight()) {
+			System.out.println(sp2);
+		}
 		jpaHelper.stopJPASystem();
 		
 	}

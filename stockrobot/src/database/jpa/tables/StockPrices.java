@@ -78,6 +78,6 @@ public final class StockPrices {
 		return time;
 	}
 	public String toString() {
-		return stockName.getName() + " | Buy: " + buy + " | Sell: " + sell + " | Market: " + stockName.getMarket();
+		return stockName.getName() + " | Buy: " + buy + " | Sell: " + sell + " | Market: " + stockName.getMarket() + " | Time: " + time;
 	}
 }

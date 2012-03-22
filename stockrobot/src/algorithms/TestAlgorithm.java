@@ -1,8 +1,15 @@
 package algorithms;
 
 
+import java.util.List;
+
+import generic.Pair;
+import database.jpa.JPAHelper;
+import database.jpa.tables.StockNames;
+import database.jpa.tables.StockPrices;
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
+import trader.ITrader;
 
 /**
  * @author daniel
@@ -13,21 +20,43 @@ public class TestAlgorithm implements IAlgorithm{
 	
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
+	ITrader trader = null;
+	JPAHelper jpaHelper = null;
 	
-	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio) {
+	
+	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
-		
+		this.trader = trader;
+		this.jpaHelper = JPAHelper.getInstance();
 		System.out.println("garrr");
-	}
-	public static IAlgorithm init(IRobot_Algorithms robot, IPortfolio portfolio) {
-		return new TestAlgorithm(robot, portfolio);
 	}
 	
 	@Override
 	public boolean update() {
-		return false;
+		if (portfolio.getPortfolioTable().getBalance() < 1000) {
+			return false;
+		}
+		
+		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(2)) {
+			boolean buy = true;
+			long last = Long.MAX_VALUE;
+			for (int i = 0; i < stockInfo.getRight().size(); i++) {
+				if (stockInfo.getRight().get(i).getBuy() > last)
+					buy = false;
+				last = stockInfo.getRight().get(i).getBuy();
+			}
+			if (buy)
+				buyStock(stockInfo.getRight().get(0), portfolio.getPortfolioTable().getBalance()/10/stockInfo.getRight().get(0).getBuy());
+		}
+		
+		return true;
 	}
+	private void buyStock(StockPrices stockPrices, long amount) {
+		trader.buyStock(stockPrices, amount, portfolio.getPortfolioTable());
+		
+	}
+
 	@Override
 	public String getName() {
 		return "TestAlgoritm1";

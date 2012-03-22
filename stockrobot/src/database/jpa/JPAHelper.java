@@ -107,6 +107,47 @@ public class JPAHelper {
         return query.getResultList();
 	}
 	/**
+	 * Will give back stockInformation in the form of: A list of pairs, where the left side is the StockName, and the right part is a list of nLatest maxSize with StockPrices
+	 * @return A list Pairs of StockNames, List of StockPrices
+	 */
+	public List<Pair<StockNames, List<StockPrices>>> getStockInfo(int nLatest) {
+		List<Pair<StockNames, List<StockPrices>>> output = new LinkedList<Pair<StockNames,List<StockPrices>>>();
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StockNames> q2 = cb.createQuery(StockNames.class);
+        
+        Root<StockNames> c = q2.from(StockNames.class);
+        
+        q2.select(c);
+        
+        TypedQuery<StockNames> query = em.createQuery(q2);
+        
+        
+        List<StockNames> stockNames = query.getResultList(); 
+        
+        for (StockNames sn : stockNames) {
+        	CriteriaQuery<StockPrices> q3 = cb.createQuery(StockPrices.class);
+        	
+        	Root<StockPrices> r = q3.from(StockPrices.class);
+        	Predicate p = em.getCriteriaBuilder().equal(r.get("stockName"), sn);
+        	
+        	q3.select(r);
+        	q3.where(p);
+        	q3.orderBy(cb.desc(r.get("time")));
+        	
+        	TypedQuery<StockPrices> query2 = em.createQuery(q3);
+        	
+        	query2.setMaxResults(nLatest);
+        	
+        	List<StockPrices> re = query2.getResultList();
+        	if (re.size()>0) {
+        		output.add(new Pair<StockNames, List<StockPrices>>(sn, re));
+        	}
+        }
+        
+        return output;
+	}
+	/**
 	 * Will give a list of all the diffrent StockNames
 	 * @return A list of stockNames
 	 */
@@ -140,6 +181,17 @@ public class JPAHelper {
 	public boolean storeObject(Object o) {
 		em.getTransaction().begin();
 		em.persist(o);
+		em.getTransaction().commit();
+		return true;
+	}
+	public boolean storeObjectIfPossible(Object o) {
+		em.getTransaction().begin();
+		try {
+			em.persist(o);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		em.getTransaction().commit();
 		return true;
 	}
@@ -300,4 +352,5 @@ public class JPAHelper {
 	public AlgorithmEntitys getAlgorithmTable(PortfolioEntitys portfolioTable) {
 		return portfolioTable.getAlgorithm();
 	}
+	
 }

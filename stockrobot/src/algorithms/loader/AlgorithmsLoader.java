@@ -7,6 +7,8 @@ import algorithms.IAlgorithm;
 import database.jpa.tables.AlgorithmEntitys;
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
+import trader.ITrader;
+import trader.TraderSimulator;
 
 /**
  * @author Daniel
@@ -30,9 +32,9 @@ public class AlgorithmsLoader {
 		try {
 			Class<?> c = Class.forName(algortihmPath);
 
-			Constructor con = c.getConstructor(new Class[] {IRobot_Algorithms.class, IPortfolio.class });
+			Constructor con = c.getConstructor(new Class[] {IRobot_Algorithms.class, IPortfolio.class, ITrader.class });
 			
-			IAlgorithm algorithm = (IAlgorithm) con.newInstance(new Object[] {robot, portfolio});
+			IAlgorithm algorithm = (IAlgorithm) con.newInstance(new Object[] {robot, portfolio, TraderSimulator.getInstance()});
 			
 			System.out.println(algorithm.getName() + " is started.");
 			

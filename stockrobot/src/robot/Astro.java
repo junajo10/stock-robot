@@ -1,13 +1,20 @@
 package robot;
 
 import java.sql.ResultSet;
+import java.util.Date;
+import java.util.Random;
 
+import database.jpa.JPAHelper;
+import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
 import algorithms.loader.AlgorithmsLoader;
 
+import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
 import portfolio.PortfolioHandler;
+import trader.ITrader;
+import trader.TraderSimulator;
 
 
 /**
@@ -19,6 +26,9 @@ public class Astro implements IRobot_Algorithms{
 
 	IPortfolioHandler portfolioHandler = null;
 	AlgorithmsLoader algorithmsLoader = null;
+	ITrader trader = null;
+	JPAHelper jpaHelper = null;
+	Random rand = new Random(System.currentTimeMillis());
 	/**
 	 * Starts the system up
 	 */
@@ -26,51 +36,44 @@ public class Astro implements IRobot_Algorithms{
 	private void start() {
 		System.out.println("ASTRo is starting up.");
 
+		trader = TraderSimulator.getInstance();
+		
 		algorithmsLoader = AlgorithmsLoader.getInstance(this);
 		
 		portfolioHandler = PortfolioHandler.getInstance();
 		
-		//TODO: Init TraderAPI
+		jpaHelper = JPAHelper.getInstance();
 		
-		//TODO: Init GUI
-		
-		/*
 		while(true) {
-			// Let the robot do its work.
+			simulateNewStock();
 			
+			
+			for (IPortfolio p : portfolioHandler.getPortfolios()) {
+				if (rand.nextInt(10) == 1) {
+					long newInvestment = ((long)rand.nextInt(1000)*1000);
+					System.out.println("More money invested: " + newInvestment);
+					p.investAmount(newInvestment);
+				}
+				
+				p.getAlgorithm().update();
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		*/
+		
 	}
 
-	@Override
-	public int buyStock(StockPrices s, int amount) {
-		// TODO Auto-generated method stub
-		return 0;
+
+	private void simulateNewStock() {
+		StockNames s = jpaHelper.getAllStockNames().get(0);
+		StockPrices sp = new StockPrices(s, rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), new Date(System.currentTimeMillis()));
+		jpaHelper.storeObjectIfPossible(sp);		
 	}
 
-	@Override
-	public int buyStock(StockPrices s, int amount, int atLeastN) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int sellStock(StockPrices s, int amount) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int sellStock(StockPrices s, int amount, int atLeastN) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getCourtagePrice(StockPrices s, int amount, boolean buying) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public boolean reportToUser(String message) {
@@ -78,11 +81,6 @@ public class Astro implements IRobot_Algorithms{
 		return false;
 	}
 
-	@Override
-	public ResultSet askQuery(String query) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	public static void main(String args[]) {
 		Astro astro = new Astro();
 		astro.start();

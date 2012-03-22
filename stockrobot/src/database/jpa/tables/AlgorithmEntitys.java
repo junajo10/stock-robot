@@ -25,6 +25,7 @@ public class AlgorithmEntitys {
 	public AlgorithmEntitys() {
 		
 	}
+	
 	public AlgorithmEntitys(String name, String path) {
 		this.name = name;
 		this.path = path;

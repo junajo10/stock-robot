@@ -35,7 +35,7 @@ public class PortfolioHistory {
 	private Date soldDate;
 	
 	@Column
-	private int amount; 
+	private long amount; 
 	
 	@ManyToOne
     @JoinColumn(name="portfolioId",referencedColumnName="PORTFOLIO_ID")
@@ -52,7 +52,7 @@ public class PortfolioHistory {
 	 * @param amount
 	 * @param portfolioTable
 	 */
-	public PortfolioHistory(StockPrices stockPrice, Date buyDate, Date soldDate, int amount, PortfolioEntitys portfolioTable) {
+	public PortfolioHistory(StockPrices stockPrice, Date buyDate, Date soldDate, long amount, PortfolioEntitys portfolioTable) {
 		this.stockPrice = stockPrice;
 		this.buyDate = buyDate;
 		this.soldDate = soldDate;
@@ -71,7 +71,7 @@ public class PortfolioHistory {
 	public Date getSoldDate() {
 		return soldDate;
 	}
-	public int getAmount() {
+	public long getAmount() {
 		return amount;
 	}
 	public boolean stillInPortFolio() {

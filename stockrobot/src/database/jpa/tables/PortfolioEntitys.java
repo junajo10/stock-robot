@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import database.jpa.JPAHelper;
+
 /**
  * @author Daniel
  *
@@ -53,7 +55,6 @@ public class PortfolioEntitys {
 	
 	@OneToMany  
 	List<StockNames> stocksToWatch;
-	
 	public PortfolioEntitys() {
 		
 	}
@@ -108,5 +109,9 @@ public class PortfolioEntitys {
 	}
 	public List<StockNames> getStocksToWatch() {
 		return stocksToWatch;
+	}
+	public void bougthFor(long l) {
+		balance -= l;
+		JPAHelper.getInstance().updateObject(this);
 	}
 }
