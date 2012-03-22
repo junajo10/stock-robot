@@ -1,6 +1,6 @@
 package scraping.scheduler;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Class that can be asked whether something should happen or not
@@ -26,14 +26,23 @@ public class Scheduler implements IScheduler {
 	public boolean shouldRun() {
 		
 		//For now, always run!
-		return true;
+		//return true;
 		
-		/*
+		
 		if( !shouldRun )
 			return false;
 		
-		return true;
-		*/
+		Date currentTime = new Date();
+		
+		//If the current time is outside of the specified day time:
+		if( currentTime.before( startTime ) || currentTime.after( endTime ) ) {
+			
+			return false;
+		
+		} else {
+			
+			return true;
+		}
 	}
 
 	@Override
