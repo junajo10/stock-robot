@@ -15,7 +15,7 @@ public class Scheduler implements IScheduler {
 
 	private Date startTime;
 	private Date endTime;
-	private boolean shouldRun = true;
+	private boolean _shouldRun = true;
 	
 	/**
 	 * When called, shouldRun will return true or false depending on how
@@ -24,26 +24,38 @@ public class Scheduler implements IScheduler {
 	 */
 	@Override
 	public boolean shouldRun() {
-		
-		//For now, always run!
-		//return true;
-		
-		
-		if( !shouldRun )
-			return false;
-		
-		Date currentTime = new Date();
-		
-		//If the current time is outside of the specified day time:
-		if( currentTime.before( startTime ) || currentTime.after( endTime ) ) {
 			
-			return false;
+			if( !_shouldRun )
+				return false;
 		
-		} else {
+			Date d = new Date();
 			
+			//Only run all queries, scraping etc between 08:58 AM and 17:47
+			
+			//Cases when it's now allowed to run:
+			//If it's before 8AM
+			if( d.getHours() < 8 )
+				return false;
+				
+			//If it's 8 AM and before 8:58
+			if( d.getHours() == 8 && d.getMinutes() < 58 )
+				return false;
+					
+			//If it's after 17 PM
+			if( d.getHours() > 17 )
+				return false;
+					
+			//If it's 17 PM and after 17:47
+			if( d.getHours() == 17 && d.getMinutes() > 47 )
+				return false;
+			
+			//If saturday or sunday!
+			if( d.getDay() == 6 || d.getDay() == 0 )
+				return false;
+			
+			//Otherwise, just go for it!
 			return true;
 		}
-	}
 
 	@Override
 	public void setStartTime(Date start) {
@@ -58,8 +70,8 @@ public class Scheduler implements IScheduler {
 	}
 
 	@Override
-	public void ignoreTime(boolean ignore) {
+	public void shouldRun(boolean run) {
 		
-		shouldRun = !ignore;
+		_shouldRun = run;
 	}
 }

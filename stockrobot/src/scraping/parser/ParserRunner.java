@@ -9,6 +9,7 @@ import scraping.database.Inserter;
 import scraping.database.JPAInserter;
 import scraping.model.ParserStock;
 import scraping.scheduler.IScheduler;
+import scraping.scheduler.Scheduler;
 
 /**
  * Parser runner.
@@ -26,7 +27,7 @@ public class ParserRunner implements IParserRunner {
 	public ParserRunner(){
 		parser = new AvanzaParser();
 		inserter = new JPAInserter();
-		//scheduler = new Scheduler();
+		scheduler = new Scheduler();
 		
 	}
 	@Override
@@ -41,23 +42,28 @@ public class ParserRunner implements IParserRunner {
 		}
 		while(!close){
 			while(run){
-				ArrayList<ParserStock> stockList = null;
-				Long timeBefore = System.currentTimeMillis();
-				for(URL url : avanzaURLList){
-					stockList = parser.parse(url, "LargeCap");
-//					for(ParserStock s : stockList){
-//						System.out.println(s);
-//					}
+				
+				//Should run right now?
+				if( scheduler.shouldRun() ) {
 					
-				    inserter.insertStockData(stockList);
+					ArrayList<ParserStock> stockList = null;
+					Long timeBefore = System.currentTimeMillis();
+					for(URL url : avanzaURLList){
+						stockList = parser.parse(url, "LargeCap");
+//						for(ParserStock s : stockList){
+//							System.out.println(s);
+//						}
+						
+					    inserter.insertStockData(stockList);
 
-				}
-				Long timeElapsed = System.currentTimeMillis() - timeBefore;
-				System.out.println("Parsing done in:" +timeElapsed + " ms.");
-				try {
-					Thread.sleep(60000-timeElapsed);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+					}
+					Long timeElapsed = System.currentTimeMillis() - timeBefore;
+					System.out.println("Parsing done in:" +timeElapsed + " ms.");
+					try {
+						Thread.sleep(60000-timeElapsed);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			while(!run){
