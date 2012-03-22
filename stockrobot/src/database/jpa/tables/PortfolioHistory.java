@@ -59,9 +59,28 @@ public class PortfolioHistory {
 		this.amount = amount;
 		this.portfolio = portfolioTable;
 	}
+	/**
+	 * @return The stockPrice at buying time
+	 */
 	public StockPrices getStockPrice() {
 		return stockPrice;
 	}
+	/**
+	 * Returns the stockPrice at selling time
+	 * @param em 
+	 * @return the stockPrice at selling time
+	 */
+	public StockPrices getSoldStockPrice(EntityManager em) {
+		if (soldDate == null)
+			return null;
+		
+		List<StockPrices> l = em.createQuery("SELECT sp FROM StockPrices sp WHERE sp.time = :tid AND sp.stockName = :namn").setParameter("tid", soldDate).setParameter("namn", stockPrice.getStockName()).getResultList();
+		
+		return l.get(0);
+	}
+	/**
+	 * @return The id of this portfolioHistory
+	 */
 	public int getId() {
 		return id;
 	}
@@ -80,12 +99,5 @@ public class PortfolioHistory {
 	public PortfolioEntitys getPortfolio() {
 		return portfolio;
 	}
-	public StockPrices getSoldStockPrice(EntityManager em) {
-		if (soldDate == null)
-			return null;
-		
-		List<StockPrices> l = em.createQuery("SELECT sp FROM StockPrices sp WHERE sp.time = :tid AND sp.stockName = :namn").setParameter("tid", soldDate).setParameter("namn", stockPrice.getStockName()).getResultList();
-		
-		return l.get(0);
-	}
+	
 }

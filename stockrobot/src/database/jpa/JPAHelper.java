@@ -35,6 +35,9 @@ public class JPAHelper {
 	
 	private static JPAHelper instance = null;
 	
+	private JPAHelper() {
+		
+	}
 	/**
 	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance.
 	 * @return An instance of JPAHelper

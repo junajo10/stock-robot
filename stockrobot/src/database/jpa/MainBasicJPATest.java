@@ -22,7 +22,7 @@ import database.jpa.tables.StockPrices;
 public class MainBasicJPATest {
 	public static void main(String[] args) {
 
-		JPAHelper jpaHelper = new JPAHelper();
+		JPAHelper jpaHelper = JPAHelper.getInstance();
 		
 		jpaHelper.initJPASystem();
 

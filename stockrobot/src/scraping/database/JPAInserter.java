@@ -41,7 +41,7 @@ public class JPAInserter implements IInserter {
 	public JPAInserter() {
 		
 		//Instantiate helper
-		helper = new JPAHelper();
+		helper = JPAHelper.getInstance();
 		helper.initJPASystem();
 	}
 	

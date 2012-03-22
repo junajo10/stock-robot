@@ -5,6 +5,11 @@ import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockPrices;
 
+/**
+ * @author Daniel
+ *
+ * A very simple TraderSimulator that currently only supports buying.
+ */
 public class TraderSimulator implements ITrader{
 	private static TraderSimulator instance = null;
 	

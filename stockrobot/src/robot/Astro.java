@@ -1,6 +1,5 @@
 package robot;
 
-import java.sql.ResultSet;
 import java.util.Date;
 import java.util.Random;
 
@@ -67,7 +66,9 @@ public class Astro implements IRobot_Algorithms{
 		
 	}
 
-
+	/**
+	 * Just add a new stock
+	 */
 	private void simulateNewStock() {
 		StockNames s = jpaHelper.getAllStockNames().get(0);
 		StockPrices sp = new StockPrices(s, rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), new Date(System.currentTimeMillis()));
