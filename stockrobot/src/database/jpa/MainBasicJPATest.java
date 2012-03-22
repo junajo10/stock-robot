@@ -3,6 +3,7 @@ package database.jpa;
 
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -59,10 +60,17 @@ public class MainBasicJPATest {
 		jpaHelper.storeObject(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis())));
 		
 		
+		//---- Duplicate test
+		List<StockPrices> duplicateTest = new LinkedList<StockPrices>();
+		Date d = new Date(System.currentTimeMillis()+1000);
+		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
+		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
+		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
 		
+		System.out.println("#duplicates: " + jpaHelper.storeListOfObjectsDuplicates(duplicateTest));
+		//-------------------
 		
 		List<StockPrices> prices = jpaHelper.getAllStockPrices();
-		
 		for (StockPrices s : prices) {
 			System.out.println(s);
 		}

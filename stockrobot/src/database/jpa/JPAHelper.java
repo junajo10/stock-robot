@@ -2,6 +2,7 @@ package database.jpa;
 
 import java.util.List;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -90,13 +91,26 @@ public class JPAHelper {
 		em.getTransaction().commit();
 		return true;
 	}
-	public boolean storeListOfObjects(List<Object> list) {
+	public boolean storeListOfObjects(List list) {
 		em.getTransaction().begin();
 		for (Object o : list) {
 			em.persist(o);
 		}
 		em.getTransaction().commit();
 		return true;
+	}
+	public int storeListOfObjectsDuplicates(List list) {
+		int dup = 0;
+		for (Object o : list) {
+			try {
+				em.getTransaction().begin();
+				em.merge(o);
+				em.getTransaction().commit();
+			} catch (Exception e) {
+				dup++;
+			}
+		}
+		return dup;
 	}
 	public boolean investMoney(long amount, PortfolioTable portfolio) {
 		em.getTransaction().begin();

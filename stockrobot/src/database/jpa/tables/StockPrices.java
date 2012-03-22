@@ -19,7 +19,7 @@ public final class StockPrices {
 	private long id;
 	
 	@OneToOne
-	@Column
+	@Column(name="stockName")
 	private StockNames stockName;
 	
 	@Column
@@ -34,7 +34,7 @@ public final class StockPrices {
 	@Column
 	private long sell;
 	
-	@Column
+	@Column(name="time")
 	private Date time;
 	
 	public StockPrices() {
