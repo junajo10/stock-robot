@@ -2,6 +2,8 @@ package scraping.database;
 
 import scraping.model.ParserStock;
 
+import java.util.List;
+
 public interface IInserter {
 	
 	/**
@@ -13,7 +15,7 @@ public interface IInserter {
 	 * @param s
 	 * @return
 	 */
-	public boolean insertStockData( ParserStock[] s );
+	public boolean insertStockData( List<ParserStock> s );
 	
 	/**
 	 * Given an array with stock data formatted according to PriceDataRepresentation
@@ -24,5 +26,5 @@ public interface IInserter {
 	 * @param s
 	 * @return
 	 */
-	public boolean updateAllMarkets( ParserStock[] s );
+	public boolean updateAllMarkets( List<ParserStock> s );
 }

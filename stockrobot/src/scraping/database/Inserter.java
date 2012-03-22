@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -150,7 +151,7 @@ public class Inserter implements IInserter {
 	 * Do not care if the stock's market is changed here
 	 */
 	@Override
-	public boolean insertStockData( ParserStock[] stocks ) {
+	public boolean insertStockData( List<ParserStock> stocks ) {
 		
 		//Try to register the mysql driver
 		//Also, connect to the db
@@ -256,7 +257,7 @@ public class Inserter implements IInserter {
 	 * @param url
 	 * @param stocks
 	 */
-	private static boolean addAllNewStocks( String url, ParserStock[] stocks ) {
+	private static boolean addAllNewStocks( String url, List<ParserStock> stocks ) {
 		
 		//Connections for reading and writing to the DB
 		ConnectionCreator reader = ConnectionCreator.getWriteConnection(url, dbuser, dbpass, ConnectionCreator.READ);
@@ -315,7 +316,7 @@ public class Inserter implements IInserter {
 	 * @param name
 	 * @param market
 	 */
-	public boolean updateAllMarkets( ParserStock[] stocks ) {
+	public boolean updateAllMarkets( List<ParserStock> stocks ) {
 		
 		//Get a list of all current companies
 		//Connections for reading and writing to the DB
