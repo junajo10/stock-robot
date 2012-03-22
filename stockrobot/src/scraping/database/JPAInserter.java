@@ -139,6 +139,29 @@ public class JPAInserter implements IInserter {
 	@Override
 	public boolean updateAllMarkets(List<ParserStock> s) {
 		
+		//Create entityFactory
+		Map<Object,Object> factoryMap 	= new HashMap<Object, Object>(); 
+				
+		//Create manager
+		factory							= Persistence.createEntityManagerFactory( "astropricelist", factoryMap );
+		em 								= factory.createEntityManager();
+		
+		//Get a list of all current stock names
+		List<StockNames> allStockNames = helper.getAllStockNames();
+		
+		for( StockNames stockName : allStockNames ) {
+			
+			//If something should replace this one:
+			for( ParserStock ps : s ) {
+				
+				if( ps.getMarket().equals( stockName.getMarket() ) ) {
+					
+					//Replace the market in stockName with the market in ps
+					
+				}
+			}
+		}
+		
 		return false;
 	}	
 }
