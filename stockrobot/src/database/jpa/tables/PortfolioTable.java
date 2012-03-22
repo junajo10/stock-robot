@@ -26,6 +26,7 @@ public class PortfolioTable {
 	private String name;
 	
 	@ManyToOne
+	@Column(name = "algorithm")
 	private AlgorithmsTable algorithm;
 	
 	@Column

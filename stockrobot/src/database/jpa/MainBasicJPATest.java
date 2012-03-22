@@ -19,12 +19,14 @@ public class MainBasicJPATest {
 		JPAHelper jpaHelper = new JPAHelper();
 		
 		jpaHelper.initJPASystem();
-		
+
+		AlgorithmsTable testAlgorithm = null;
 		
 		List<AlgorithmsTable> algorithms = jpaHelper.getAllAlgorithms();
 		
 		if (algorithms.size() == 0) {
-			jpaHelper.storeObject(new AlgorithmsTable("hej", "ho"));
+			testAlgorithm = new AlgorithmsTable("hej", "algorithms.TestAlgorithm");
+			jpaHelper.storeObject(testAlgorithm);
 			algorithms = jpaHelper.getAllAlgorithms();
 		}
 		
@@ -41,6 +43,11 @@ public class MainBasicJPATest {
 		if (portfolios.size() == 0) {
 			jpaHelper.storeObject(new PortfolioTable("portfolio 1"));
 			portfolios = jpaHelper.getAllPortfolios();
+			
+			if (testAlgorithm != null)
+				portfolios.get(0).setAlgorithm(testAlgorithm);
+				
+			jpaHelper.updateObject(portfolios.get(0));
 		}
 		
 		for (PortfolioTable p : portfolios) {

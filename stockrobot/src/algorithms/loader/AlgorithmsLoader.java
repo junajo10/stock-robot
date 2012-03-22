@@ -32,7 +32,11 @@ public class AlgorithmsLoader {
 
 			Constructor con = c.getConstructor(new Class[] {IRobot_Algorithms.class, IPortfolio.class });
 			
-			return (IAlgorithm) con.newInstance(new Object[] {robot, portfolio});
+			IAlgorithm algorithm = (IAlgorithm) con.newInstance(new Object[] {robot, portfolio});
+			
+			System.out.println(algorithm.getName() + " is started.");
+			
+			return algorithm;
 			
 			//TODO: Report error to GUI
 		} catch (ClassNotFoundException e) {
