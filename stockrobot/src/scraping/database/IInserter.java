@@ -2,18 +2,20 @@ package scraping.database;
 
 import scraping.model.ParserStock;
 
+import java.util.List;
+
 public interface IInserter {
 	
 	/**
 	 * Given an array with stock data formatted according to PriceDataRepresentation
-	 * try to inject this data to the price database
+	 * try to insert this data to the price database
 	 * 
 	 * Returns true if everything was successful, and false if an error occurred. 
 	 * 
 	 * @param s
 	 * @return
 	 */
-	public boolean injectStockData( ParserStock[] s );
+	public boolean insertStockData( List<ParserStock> s );
 	
 	/**
 	 * Given an array with stock data formatted according to PriceDataRepresentation
@@ -24,5 +26,5 @@ public interface IInserter {
 	 * @param s
 	 * @return
 	 */
-	public boolean updateAllMarkets( ParserStock[] s );
+	public boolean updateAllMarkets( List<ParserStock> s );
 }

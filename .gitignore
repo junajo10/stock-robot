@@ -2,6 +2,7 @@
 ###################
 bin
 .settings
+.classpath
 
 # Compiled source #
 ###################
@@ -39,5 +40,6 @@ Icon?
 Thumbs.db
 
 
+
 persistence.xml
-priceinfo_db.xml
+*priceinfo_db.xml

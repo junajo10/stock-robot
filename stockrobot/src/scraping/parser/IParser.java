@@ -1,11 +1,16 @@
 package scraping.parser;
+
+import java.net.URL;
+import java.util.ArrayList;
+
+import scraping.model.ParserStock;
+
 /**
- * @author Erik
- *
- * This interface will be the base of the running parser.
- * The class extending IParser should run as a thread.
+ * @author Erik,kristian
+ * 
+ * Interface for parsing some data source
  */
-public interface IParser extends Runnable {
-	public void run();
-	public void hold();
+public interface IParser {
+	
+	public ArrayList<ParserStock> parse(URL url, String market);
 }
