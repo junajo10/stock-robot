@@ -1,5 +1,6 @@
 package database.jpa.tables;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -47,6 +48,10 @@ public class PortfolioTable {
     */    
 	@OneToMany  
 	Set<PortfolioHistory> history;  
+	
+	
+	@OneToMany  
+	List<StockNames> stocksToWatch;
 	
 	public PortfolioTable() {
 		
@@ -99,5 +104,8 @@ public class PortfolioTable {
 	}
 	public String toString() {
 		return name + " | " + balance;
+	}
+	public List<StockNames> getStocksToWatch() {
+		return stocksToWatch;
 	}
 }

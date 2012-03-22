@@ -23,7 +23,8 @@ public class PortfolioHistory {
 	@Column(name = "PORTFOLIO_HISTORY_ID", nullable = false)
 	private int id;
 	
-	@Column
+	//@Column(name = "stockPrice")
+	@ManyToOne
 	private StockPrices stockPrice;
 	
 	@Column
@@ -42,11 +43,12 @@ public class PortfolioHistory {
 	public PortfolioHistory() {
 		
 	}
-	public PortfolioHistory(StockPrices stockPrice, Date buyDate, Date soldDate, int amount) {
+	public PortfolioHistory(StockPrices stockPrice, Date buyDate, Date soldDate, int amount, PortfolioTable portfolioTable) {
 		this.stockPrice = stockPrice;
 		this.buyDate = buyDate;
 		this.soldDate = soldDate;
 		this.amount = amount;
+		this.portfolio = portfolioTable;
 	}
 	public StockPrices getStockPrice() {
 		return stockPrice;
