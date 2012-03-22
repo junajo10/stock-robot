@@ -4,29 +4,45 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import scraping.database.IInserter;
+import scraping.database.Inserter;
 import scraping.model.ParserStock;
+import scraping.scheduler.IScheduler;
 
+/**
+ * Parser runner.
+ * @author Erik
+ *
+ */
 public class ParserRunner implements IParserRunner {
 	
-	boolean run = true;
-	AvanzaParser parser = new AvanzaParser();
+	boolean run = false;
+	boolean close = false;
+	AvanzaParser parser;
+	IScheduler scheduler;
+	IInserter inserter;
 	
+	public ParserRunner(){
+		parser = new AvanzaParser();
+		inserter = new Inserter();
+		//scheduler = new Scheduler();
+		
+	}
 	@Override
 	public void run() {
-		run = true;
 		ArrayList<URL> avanzaURLList = new ArrayList<URL>();
 		try {
 			avanzaURLList.add(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=LargeCap.SE"));
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		}
-		while(true){
+		while(!close){
 			while(run){
 				ArrayList<ParserStock> stockList = null;
 				Long timeBefore = System.currentTimeMillis();
 				for(URL url : avanzaURLList){
 					stockList = parser.parse(url);
-				    //DB.insertNewStockData(stockList);
+				    inserter.insertStockData(stockList.toArray());
 
 				}
 				Long timeElapsed = System.currentTimeMillis() - timeBefore;
@@ -56,4 +72,49 @@ public class ParserRunner implements IParserRunner {
 		//TODO: Delete?
 		run = false;
 	}
+	
+	/**
+	 *  Stops the Runner
+	 */
+	public boolean stopRunner() {
+		//TODO: Delete?
+		if(!close){
+			close = true;
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/**
+	 *  Stops the parser
+	 *  
+	 */
+	public boolean stopParser() {
+		//TODO: Delete?
+		if(run){
+			run = false;
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/**
+	 *  Stops the parser
+	 *  
+	 */
+	public boolean startParser() {
+		//TODO: Delete?
+		if(!run){
+			run = true;
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 }

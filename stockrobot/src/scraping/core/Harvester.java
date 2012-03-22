@@ -8,6 +8,8 @@ import scraping.parser.ParserRunner;
 
 public class Harvester {
 	private static Thread parserThread;
+	private static IParserRunner parserRunner;
+	
 	/**
 	 * Main class for the Parsing part of the program.
 	 * @param args
@@ -17,12 +19,12 @@ public class Harvester {
 
 		System.out.println("*** ASTRo Harvester started. ***");
 		System.out.println("*** Write help for help. ***");
-		//parserThread.run();
 		while(true){
 			System.out.print("*** ASTRo command: ");
 			Scanner in = new Scanner(System.in);
 			String input = in.nextLine();
 			takeCommand(input);
+			
 		}
 	}
 	
@@ -48,6 +50,8 @@ public class Harvester {
 		else if(str.equals("status")){
 				System.out.println("*** STATUS ***");
 				if(parserThread==null){
+					System.out.println(parserThread);
+					System.out.println(parserRunner);
 					System.out.println("*** Parser not started or dead. ***");
 				}
 				else if(parserThread.isAlive()){
@@ -87,9 +91,10 @@ public class Harvester {
 	 * Otherwise false.
 	 */
 	private static boolean startParser(){
-		IParserRunner parserRunner = new ParserRunner();
+		parserRunner = new ParserRunner();
 		parserThread = new Thread(parserRunner);
 		parserThread.start();
+		parserRunner.startParser();
 		return true;
 	}
 	
@@ -101,12 +106,33 @@ public class Harvester {
 	 * <p>
 	 * Otherwise false.
 	 */
-	private static boolean stopParser(){
+	private static boolean forceStop(){
 		if(parserThread==null){
 			return false;
 		}
 		else if(parserThread.isAlive()){
 			parserThread.stop();
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Stops the parser temporarly.
+	 * <p>
+	 * @return True if the parser was running and was successfully stopped.
+	 * <p>
+	 * Otherwise false.
+	 */
+	private static boolean stopParser(){
+		
+		if(parserThread==null){
+			return false;
+		}
+		else if(parserThread != null){
+			parserRunner.stopParser();
 			return true;
 		}
 		else{

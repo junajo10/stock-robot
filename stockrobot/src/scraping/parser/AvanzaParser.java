@@ -17,9 +17,11 @@ import scraping.model.ParserStock;
 
 
 /**
- * @author Erik
- *
+ * 
+ * 
  * A parser made specifically for the Avanza homepage.
+ * 
+ * @author Erik
  * 
  * 
  */
