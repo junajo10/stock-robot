@@ -156,12 +156,14 @@ public class JPAInserter implements IInserter {
 				
 				if( ps.getMarket().equals( stockName.getMarket() ) ) {
 					
-					//Replace the market in stockName with the market in ps
+					stockName.setMarket( ps.getMarket() );
 					
+					//Replace the market in stockName with the market in ps
+					helper.updateObject( stockName );
 				}
 			}
 		}
 		
-		return false;
+		return true;
 	}	
 }

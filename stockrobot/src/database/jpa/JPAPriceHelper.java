@@ -65,4 +65,15 @@ public class JPAPriceHelper {
         return query.getResultList();
 	}
 	
+	/**
+	 * Updates an object to the database
+	 * @param o The object to be updated.
+	 * @return True if it went ok.
+	 */
+	public boolean updateObject(Object o) {
+		em.getTransaction().begin();
+		em.merge(o);
+		em.getTransaction().commit();
+		return true;
+	}
 }

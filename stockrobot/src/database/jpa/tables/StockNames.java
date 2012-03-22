@@ -49,4 +49,7 @@ public class StockNames {
 	public String toString() {
 		return name + " | " + market;
 	}
+	public void setMarket( String _market ) {
+		market = _market;
+	}
 }
