@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import scraping.database.IInserter;
 import scraping.database.Inserter;
+import scraping.database.JPAInserter;
 import scraping.model.ParserStock;
 import scraping.scheduler.IScheduler;
 
@@ -24,7 +25,7 @@ public class ParserRunner implements IParserRunner {
 	
 	public ParserRunner(){
 		parser = new AvanzaParser();
-		inserter = new Inserter();
+		inserter = new JPAInserter();
 		//scheduler = new Scheduler();
 		
 	}
@@ -44,9 +45,9 @@ public class ParserRunner implements IParserRunner {
 				Long timeBefore = System.currentTimeMillis();
 				for(URL url : avanzaURLList){
 					stockList = parser.parse(url, "LargeCap");
-					for(ParserStock s : stockList){
-						System.out.println(s);
-					}
+//					for(ParserStock s : stockList){
+//						System.out.println(s);
+//					}
 					
 				    inserter.insertStockData(stockList);
 

@@ -31,7 +31,8 @@ public class JPAInserter implements IInserter {
 		List<ParserStock> test 	= new ArrayList<ParserStock>();
 		
 		ParserStock ps			= new ParserStock("apa");
-		ps.setDate( "2012-02-02 20:20:21" );
+		ps.setDate( new Date(293333292) );
+		//ps.setDate( "2012-02-02 20:20:21" );
 		
 		test.add( ps );
 		ins.insertStockData( test );
@@ -57,19 +58,6 @@ public class JPAInserter implements IInserter {
 		//For all stock data sent here
 		for( ParserStock stock : s ) {
 			
-			/*
-			System.out.println( ":::" + stock.getDate().substring(0, 4) );
-			System.out.println( ":::" + stock.getDate().substring(0, 4) );
-			
-			Calendar cal = new GregorianCalendar();
-			cal.set(	Integer.parseInt( stock.getDate().substring(0, 3) ), //Year
-						Integer.parseInt( stock.getDate().substring(4, 6) ), //Month
-						Integer.parseInt( stock.getDate().substring(7, 9) )  //Day
-					);
-			
-			System.out.println( "Time: " + cal.getTime() );
-			*/
-			
 			//Get a list of all stocknames so we can see if the current
 			List<StockNames> allStockNames = helper.getAllStockNames();
 			
@@ -87,7 +75,7 @@ public class JPAInserter implements IInserter {
 																(int)stock.getLastClose(),
 																(long)stock.getBuy(),
 																(long)stock.getSell(),
-																new Date(2929933)
+																stock.getDate()
 															);
 					
 					try {
@@ -121,7 +109,7 @@ public class JPAInserter implements IInserter {
 					(int)stock.getLastClose(),
 					(long)stock.getBuy(),
 					(long)stock.getSell(),
-					new Date(2929933)
+					stock.getDate()
 				);
 				
 				//Add the new stock and a price to DB
@@ -138,12 +126,11 @@ public class JPAInserter implements IInserter {
 					System.out.println( "JPAInserter: insert stockData: Trouble adding a new stock" );
 				}
 			}
-			
-			em.close();
-			
-			factory.close();
-			
 		}
+		
+		em.close();
+		
+		factory.close();
 		
 		//Everything seems to have worked
 		return true;
