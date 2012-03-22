@@ -1,0 +1,49 @@
+Meeting Agenda
+Location: Room 3209
+Date: 2012-03-23
+Time: 12:00
+Facilitator: Erik Ramqvist
+Note taker: Daniel Malmqvist
+Attendees: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
+Participants:
+
+1.	Objectives (5 min)
+		Next thursday:
+			*PROTOTYPE with a small working GUI.
+			*Fix the domainmodel
+		
+		Meeting with the customer was really productive.
+
+2.	Reports (15 min)
+
+	*Erik and Kristian has merged the parser
+	*Mattias has started with the Trader API, and the RobotHandler
+	*Daniel has exented JPA system   	 
+      	 
+3.	Discussion items (35 min)
+
+   	*We will also use JPA for the parser.
+	*How we are gonna fix the robot to a working prototype.
+
+      	 
+4.	Outcomes and assignments (5 min)
+
+        	* Long term issues
+            	=> We will use Google Code's issue tracker
+        	* Short term issues
+            	=> Next weeks goal to have a working prototype.
+
+        	+++ Specific delegations:
+        	*Kristian
+            	=> Fix JPA to the parser
+            	=> Program a scheduler.
+        	*Mattias
+            	=> Start with a GUI, scheduler, TraderAPI
+        	*Erik
+            	=> Merge ParseRunner with Scheduler.
+			*Daniel
+            	=> Will continue working the the JPA-implementation.
+  	 
+	5.	Wrap up 
+	Monday 26:th
+   		* Merge the program, so that we will have a working program.
