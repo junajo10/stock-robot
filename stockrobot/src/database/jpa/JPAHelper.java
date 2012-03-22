@@ -17,10 +17,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 
-import database.jpa.tables.AlgorithmsTable;
+import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioInvestment;
-import database.jpa.tables.PortfolioTable;
+import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
@@ -65,30 +65,30 @@ public class JPAHelper {
 	 * Returns a list of all the algorithms.
 	 * @return a list of all the algorithms.
 	 */
-	public List<AlgorithmsTable> getAllAlgorithms() {
+	public List<AlgorithmEntitys> getAllAlgorithms() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<AlgorithmsTable> q2 = cb.createQuery(AlgorithmsTable.class);
+        CriteriaQuery<AlgorithmEntitys> q2 = cb.createQuery(AlgorithmEntitys.class);
         
-        Root<AlgorithmsTable> c = q2.from(AlgorithmsTable.class);
+        Root<AlgorithmEntitys> c = q2.from(AlgorithmEntitys.class);
         
         q2.select(c);
         
-        TypedQuery<AlgorithmsTable> query = em.createQuery(q2);
+        TypedQuery<AlgorithmEntitys> query = em.createQuery(q2);
         return query.getResultList();
 	}
 	/**
 	 * Will give back all portfolios in the JPA system.
 	 * @return A list with PortfolioTables
 	 */
-	public List<PortfolioTable> getAllPortfolios() {
+	public List<PortfolioEntitys> getAllPortfolios() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<PortfolioTable> q2 = cb.createQuery(PortfolioTable.class);
+        CriteriaQuery<PortfolioEntitys> q2 = cb.createQuery(PortfolioEntitys.class);
         
-        Root<PortfolioTable> c = q2.from(PortfolioTable.class);
+        Root<PortfolioEntitys> c = q2.from(PortfolioEntitys.class);
         
         q2.select(c);
         
-        TypedQuery<PortfolioTable> query = em.createQuery(q2);
+        TypedQuery<PortfolioEntitys> query = em.createQuery(q2);
         return query.getResultList();
 	}
 	/**
@@ -180,7 +180,7 @@ public class JPAHelper {
 	 * @param portfolio The portfolio to invest to
 	 * @return Returns true if everything went ok
 	 */
-	public boolean investMoney(long amount, PortfolioTable portfolio) {
+	public boolean investMoney(long amount, PortfolioEntitys portfolio) {
 		em.getTransaction().begin();
 		
 		em.persist(new PortfolioInvestment(portfolio, amount, true));
@@ -205,7 +205,7 @@ public class JPAHelper {
 	 * @param portfolioTable The portfolio
 	 * @return A list of stockNames
 	 */
-	public List<StockNames> getStockNames(PortfolioTable portfolioTable) {
+	public List<StockNames> getStockNames(PortfolioEntitys portfolioTable) {
 
 		if (portfolioTable.watchAllStocks()) {
 			return getAllStockNames();
@@ -219,7 +219,7 @@ public class JPAHelper {
 	 * @param portfolioTable The portfolio.
 	 * @return A List of currently owned stocks.
 	 */
-	public List<StockPrices> getCurrentStocks(PortfolioTable portfolioTable) {
+	public List<StockPrices> getCurrentStocks(PortfolioEntitys portfolioTable) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
         
@@ -250,7 +250,7 @@ public class JPAHelper {
 	 * @return
 	 */
 	public List<Pair<StockPrices, StockPrices>> getOldStocks(
-			PortfolioTable portfolioTable) {
+			PortfolioEntitys portfolioTable) {
 		
 		List<Pair<StockPrices, StockPrices>> oldStocks = new LinkedList<Pair<StockPrices,StockPrices>>();
 		for (PortfolioHistory ph : portfolioTable.getHistory()) {
@@ -269,7 +269,7 @@ public class JPAHelper {
 	 * @param portfolioTable The portfolio to be audited.
 	 * @return The total amount invested
 	 */
-	public long getTotalInvestedAmount(PortfolioTable portfolioTable) {
+	public long getTotalInvestedAmount(PortfolioEntitys portfolioTable) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
         
@@ -297,7 +297,7 @@ public class JPAHelper {
 	 * @param portfolioTable The portfolioTable to get the AlgorithmTable from
 	 * @return An algorithmTable
 	 */
-	public AlgorithmsTable getAlgorithmTable(PortfolioTable portfolioTable) {
+	public AlgorithmEntitys getAlgorithmTable(PortfolioEntitys portfolioTable) {
 		return portfolioTable.getAlgorithm();
 	}
 }

@@ -17,8 +17,8 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="PortfolioTable")
-public class PortfolioTable {
+@Table(name="PortfolioEntitys")
+public class PortfolioEntitys {
 	@Id 
 	@GeneratedValue
 	@Column(name = "PORTFOLIO_ID", nullable = false)
@@ -29,7 +29,7 @@ public class PortfolioTable {
 	
 	@ManyToOne
 	@Column(name = "algorithm")
-	private AlgorithmsTable algorithm;
+	private AlgorithmEntitys algorithm;
 	
 	@Column
 	private long balance;
@@ -54,10 +54,10 @@ public class PortfolioTable {
 	@OneToMany  
 	List<StockNames> stocksToWatch;
 	
-	public PortfolioTable() {
+	public PortfolioEntitys() {
 		
 	}
-	public PortfolioTable(String name) {
+	public PortfolioEntitys(String name) {
 		this.name = name;
 		algorithm = null;
 		balance = 0;
@@ -79,7 +79,7 @@ public class PortfolioTable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setAlgorithm(AlgorithmsTable algorithm) {
+	public void setAlgorithm(AlgorithmEntitys algorithm) {
 		this.algorithm = algorithm;
 	}
 	public Collection<PortfolioHistory> getHistory() {
@@ -88,7 +88,7 @@ public class PortfolioTable {
 	public void invest(long amount, boolean invest) {
 		this.balance += amount;
 	}
-	public AlgorithmsTable getAlgorithm() {
+	public AlgorithmEntitys getAlgorithm() {
 		return algorithm;
 	}
 	public boolean isStopBuying() {

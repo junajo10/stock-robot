@@ -10,8 +10,8 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="AlgorithmsTable")
-public class AlgorithmsTable {
+@Table(name="AlgorithmEntitys")
+public class AlgorithmEntitys {
 	@Id 
 	@GeneratedValue
 	private int id;
@@ -22,10 +22,10 @@ public class AlgorithmsTable {
 	@Column(name="path", nullable=true, length=255, insertable=true)
 	private String path;
 	
-	public AlgorithmsTable() {
+	public AlgorithmEntitys() {
 		
 	}
-	public AlgorithmsTable(String name, String path) {
+	public AlgorithmEntitys(String name, String path) {
 		this.name = name;
 		this.path = path;
 	}

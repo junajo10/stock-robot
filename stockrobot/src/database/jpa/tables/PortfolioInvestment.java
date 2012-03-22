@@ -21,7 +21,7 @@ public class PortfolioInvestment {
 	private int id;
 	
 	@OneToOne
-	private PortfolioTable portfolio;
+	private PortfolioEntitys portfolio;
 	
 	@Column
 	private Date date;
@@ -35,7 +35,7 @@ public class PortfolioInvestment {
 	public PortfolioInvestment() {
 		
 	}
-	public PortfolioInvestment(PortfolioTable portfolio, long amount, boolean invest) {
+	public PortfolioInvestment(PortfolioEntitys portfolio, long amount, boolean invest) {
 		this.amount = amount;
 		this.portfolio = portfolio;
 		
@@ -62,7 +62,7 @@ public class PortfolioInvestment {
 	public boolean didRemoveMoney() {
 		return !invested;
 	}
-	public PortfolioTable getPortfolio() {
+	public PortfolioEntitys getPortfolio() {
 		return portfolio;
 	}
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.jpa.JPAHelper;
-import database.jpa.tables.PortfolioTable;
+import database.jpa.tables.PortfolioEntitys;
 /**
  * @author Daniel
  *
@@ -21,16 +21,16 @@ public class PortfolioHandler implements IPortfolioHandler{
 		jpaHelper = JPAHelper.getInstance();
 		jpaHelper.initJPASystem();
 		
-		List<PortfolioTable> portfolioTables = JPAHelper.getInstance().getAllPortfolios();
+		List<PortfolioEntitys> portfolioTables = JPAHelper.getInstance().getAllPortfolios();
 		
-		for (PortfolioTable pt : portfolioTables) {
+		for (PortfolioEntitys pt : portfolioTables) {
 			listOfPortfolios.add(new Portfolio(pt));
 		}
 		
 	}
 	@Override
 	public IPortfolio createNewPortfolio(String name) {
-		PortfolioTable pt = new PortfolioTable(name);
+		PortfolioEntitys pt = new PortfolioEntitys(name);
 		jpaHelper.storeObject(pt);
 		
 		return new Portfolio(pt);

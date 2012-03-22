@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import algorithms.IAlgorithm;
-import database.jpa.tables.AlgorithmsTable;
+import database.jpa.tables.AlgorithmEntitys;
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
 
@@ -64,7 +64,7 @@ public class AlgorithmsLoader {
 			return null;
 		}
 		
-		AlgorithmsTable algorithmTable = portfolio.getAlgorithmTable();
+		AlgorithmEntitys algorithmTable = portfolio.getAlgorithmTable();
 		
 		if (algorithmTable != null && algorithmTable.getPath() != null)
 			return loadAlgorithm(algorithmTable.getPath(), portfolio);

@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -19,27 +17,6 @@ import javax.persistence.Table;
  *
  */
 @Entity
-
-
-
-
-/*
-@NamedQueries({
-@NamedQuery(name="getBoughtAndSold",query="SELECT apa,bepa FROM PortfolioHistory ph  " + 
-"JOIN StockPrices AS apa ON PortfolioHistory.stockPrice = StockPrices.id " +
-"JOIN StockPrices AS bepa ON PortfolioHistory.soldDate = StockPrices.time AND StockPrices.name = apa.name   " +  
-"WHERE PortfolioHistory.id = :id AND PortfolioSoldDate != null")
-})
-*/
-/*
-SELECT apa,bepa FROM PortfolioHistory ph 
-JOIN StockPrices AS apa ON PortfolioHistory.stockPrice = StockPrices.id
-JOIN StockPrices AS bepa ON PortfolioHistory.soldDate = StockPrices.time AND StockPrices.name = apa.name  
- 
-WHERE PortfolioHistory.id = :id AND PortfolioSoldDate != null
- */
-
-
 @Table(name="PortfolioHistory")
 public class PortfolioHistory {
 
@@ -48,7 +25,6 @@ public class PortfolioHistory {
 	@Column(name = "PORTFOLIO_HISTORY_ID", nullable = false)
 	private int id;
 	
-	//@Column(name = "stockPrice")
 	@ManyToOne
 	private StockPrices stockPrice;
 	
@@ -63,12 +39,20 @@ public class PortfolioHistory {
 	
 	@ManyToOne
     @JoinColumn(name="portfolioId",referencedColumnName="PORTFOLIO_ID")
-    private PortfolioTable portfolio;
+    private PortfolioEntitys portfolio;
 	
 	public PortfolioHistory() {
 		
 	}
-	public PortfolioHistory(StockPrices stockPrice, Date buyDate, Date soldDate, int amount, PortfolioTable portfolioTable) {
+	/**
+	 * The constuctor for a PortfolioHistory entity.
+	 * @param stockPrice
+	 * @param buyDate
+	 * @param soldDate
+	 * @param amount
+	 * @param portfolioTable
+	 */
+	public PortfolioHistory(StockPrices stockPrice, Date buyDate, Date soldDate, int amount, PortfolioEntitys portfolioTable) {
 		this.stockPrice = stockPrice;
 		this.buyDate = buyDate;
 		this.soldDate = soldDate;
@@ -93,7 +77,7 @@ public class PortfolioHistory {
 	public boolean stillInPortFolio() {
 		return soldDate == null;
 	}
-	public PortfolioTable getPortfolio() {
+	public PortfolioEntitys getPortfolio() {
 		return portfolio;
 	}
 	public StockPrices getSoldStockPrice(EntityManager em) {

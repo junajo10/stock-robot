@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import database.jpa.tables.AlgorithmsTable;
+import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioHistory;
-import database.jpa.tables.PortfolioTable;
+import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
@@ -26,17 +26,17 @@ public class MainBasicJPATest {
 		
 		jpaHelper.initJPASystem();
 
-		AlgorithmsTable testAlgorithm = null;
+		AlgorithmEntitys testAlgorithm = null;
 		
-		List<AlgorithmsTable> algorithms = jpaHelper.getAllAlgorithms();
+		List<AlgorithmEntitys> algorithms = jpaHelper.getAllAlgorithms();
 		
 		if (algorithms.size() == 0) {
-			testAlgorithm = new AlgorithmsTable("hej", "algorithms.TestAlgorithm");
+			testAlgorithm = new AlgorithmEntitys("hej", "algorithms.TestAlgorithm");
 			jpaHelper.storeObject(testAlgorithm);
 			algorithms = jpaHelper.getAllAlgorithms();
 		}
 		
-		for (AlgorithmsTable a : algorithms) {
+		for (AlgorithmEntitys a : algorithms) {
 			//a.setName(a.getName() + "1");
 			//jpaHelper.updateObject(a);
 			System.out.println(a);
@@ -44,10 +44,10 @@ public class MainBasicJPATest {
 		}
 		
 		
-		List<PortfolioTable> portfolios = jpaHelper.getAllPortfolios();
+		List<PortfolioEntitys> portfolios = jpaHelper.getAllPortfolios();
 		
 		if (portfolios.size() == 0) {
-			jpaHelper.storeObject(new PortfolioTable("portfolio 1"));
+			jpaHelper.storeObject(new PortfolioEntitys("portfolio 1"));
 			portfolios = jpaHelper.getAllPortfolios();
 			
 			if (testAlgorithm != null)
@@ -56,7 +56,7 @@ public class MainBasicJPATest {
 			jpaHelper.updateObject(portfolios.get(0));
 		}
 		
-		for (PortfolioTable p : portfolios) {
+		for (PortfolioEntitys p : portfolios) {
 			jpaHelper.investMoney(100, p);
 			System.out.println(p);
 		}

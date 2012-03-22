@@ -8,8 +8,8 @@ import algorithms.IAlgorithm;
 import algorithms.loader.AlgorithmsLoader;
 
 import database.jpa.JPAHelper;
-import database.jpa.tables.AlgorithmsTable;
-import database.jpa.tables.PortfolioTable;
+import database.jpa.tables.AlgorithmEntitys;
+import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
@@ -21,7 +21,7 @@ import database.jpa.tables.StockPrices;
  */
 public class Portfolio implements IPortfolio {
 	private int portfolioId;
-	private PortfolioTable portfolioTable;
+	private PortfolioEntitys portfolioTable;
 	JPAHelper jpaHelper;
 	IAlgorithm algorithm;
 	
@@ -29,7 +29,7 @@ public class Portfolio implements IPortfolio {
 	 * Start up an existing portfolio
 	 * @param portfolioTable The table with this portfolio
 	 */
-	public Portfolio(PortfolioTable portfolioTable) {
+	public Portfolio(PortfolioEntitys portfolioTable) {
 		this.portfolioTable = portfolioTable;
 		jpaHelper = JPAHelper.getInstance();
 		algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
@@ -55,7 +55,7 @@ public class Portfolio implements IPortfolio {
 	}
 
 	@Override
-	public boolean setAlgorithm(AlgorithmsTable algorithm) {
+	public boolean setAlgorithm(AlgorithmEntitys algorithm) {
 		portfolioTable.setAlgorithm(algorithm);
 		jpaHelper.updateObject(portfolioTable);
 		
@@ -122,11 +122,11 @@ public class Portfolio implements IPortfolio {
 		return "Name: " + getName() + "Algorithm: " + algorithm.getName()  + "\n";
 	}
 	@Override
-	public PortfolioTable getPortfolioTable() {
+	public PortfolioEntitys getPortfolioTable() {
 		return portfolioTable;
 	}
 	@Override
-	public AlgorithmsTable getAlgorithmTable() {
+	public AlgorithmEntitys getAlgorithmTable() {
 		return jpaHelper.getAlgorithmTable(portfolioTable);
 	}
 }
