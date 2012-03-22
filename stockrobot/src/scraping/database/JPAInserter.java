@@ -25,6 +25,7 @@ public class JPAInserter implements IInserter {
 	EntityManager em;
 	JPAHelper helper;
 	
+	/*
 	public static void main( String[] args ) {
 		
 		JPAInserter ins 		= new JPAInserter();
@@ -36,12 +37,12 @@ public class JPAInserter implements IInserter {
 		
 		test.add( ps );
 		ins.insertStockData( test );
-	}
+	}*/
 	
 	public JPAInserter() {
 		
 		//Instantiate helper
-		helper = new JPAHelper();
+		helper = JPAHelper.getInstance();
 		helper.initJPASystem();
 	}
 	

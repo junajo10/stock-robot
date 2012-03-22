@@ -45,6 +45,9 @@ public class JPAHelper {
 		}
 		return instance;
 	}
+	
+	private JPAHelper() {}
+	
 	/**
 	 * Inits the jpa system.
 	 */
