@@ -34,6 +34,12 @@ public class PortfolioTable {
 	@Column
 	private boolean watchAllStocks;
 	
+	@Column
+	private boolean stopBuying;
+	
+	@Column
+	private boolean stopSelling;
+	
 	/*
 	@OneToMany(mappedBy="portfolio",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
     private Collection<PortfolioHistory> history;
@@ -77,6 +83,18 @@ public class PortfolioTable {
 	}
 	public AlgorithmsTable getAlgorithm() {
 		return algorithm;
+	}
+	public boolean isStopBuying() {
+		return stopBuying;
+	}
+	public void setStopBuying(boolean stopBuying) {
+		this.stopBuying = stopBuying;
+	}
+	public boolean isStopSelling() {
+		return stopSelling;
+	}
+	public void setStopSelling(boolean stopSelling) {
+		this.stopSelling = stopSelling;
 	}
 	public String toString() {
 		return name + " | " + balance;

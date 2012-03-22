@@ -1,6 +1,15 @@
 package portfolio;
 
+import generic.Pair;
+
 import java.util.List;
+
+import algorithms.IAlgorithm;
+
+import database.jpa.tables.AlgorithmsTable;
+import database.jpa.tables.PortfolioTable;
+import database.jpa.tables.StockNames;
+import database.jpa.tables.StockPrices;
 
 import stock.IStock;
 
@@ -11,48 +20,47 @@ import stock.IStock;
  */
 public interface IPortfolio {
 	/**
-	 * Will retrieve a list of stock id's available to the algorithm in charge of this portfolio
+	 * Will retrieve a list of stockNames available to the algorithm in charge of this portfolio
 	 * @return A list of stockId's
 	 */
-	List<Integer> getAvalibleStocks();
+	List<StockNames> getAvalibleStocks();
 	
 	/**
 	 * Will retrieve a list of all the stocks that are currently in this portfolio
 	 * @return A list of stocks
 	 */
-	List<IStock> getCurrentStocks();
+	List<StockPrices> getCurrentStocks();
 	
 	/**
 	 * Will retrieve a list of all the stocks that has previosly been in this portfolio
 	 * @return A list of stocks
 	 */
-	List<IStock> getHistoryStocks();
+	List<Pair<StockPrices, StockPrices>> getHistoryStocks();
 	
 	/**
-	 * Gets the id of the algorithm in charge of the portfolio
-	 * Will give -1 if no algorithm is set yet.
-	 * @return The algorithmId
+	 * Gets the algorithm to this portfolio
+	 * @return The algorithm
 	 */
-	int getAlgorithmId();
+	IAlgorithm getAlgorithm();
 	
 	/**
 	 * Sets a new algorithm to a portfolio
 	 * @param algorithmId Id of the new algorithm
 	 * @return returns True if the change was able to be completed
 	 */
-	boolean setAlgorithm(int algorithmId);
+	boolean setAlgorithm(AlgorithmsTable algorithm);
 	
 	/**
 	 * Will look up how much money has been put in to a portfolio
 	 * @return Total invested amount
 	 */
-	int getInvestedAmount();
+	long getInvestedAmount();
 	
 	/**
 	 * Will retrieve the current unused amount
 	 * @return The unused amount currently in the portfolio
 	 */
-	int getUnusedAmount();
+	long getUnusedAmount();
 	
 	/**
 	 * @return name of the portfolio
@@ -64,14 +72,14 @@ public interface IPortfolio {
 	 * @param n Amount to invest
 	 * @return True if investment went ok
 	 */
-	boolean investAmount(int n);
+	boolean investAmount(long n);
 	
 	/**
 	 * 
 	 * @param stocks A list of stocks this portfolio will watch
 	 * @return True if setting was ok
 	 */
-	boolean setStocksToWatch(List<IStock> stocks);
+	boolean setStocksToWatch(List<StockNames> stocks);
 	
 	
 	/**
@@ -97,4 +105,6 @@ public interface IPortfolio {
 	boolean isStopSellingFlagSet();
 	
 	int getPortfolioId();
+
+	PortfolioTable getPortfolioTable();
 }
