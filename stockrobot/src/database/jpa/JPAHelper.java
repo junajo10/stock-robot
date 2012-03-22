@@ -269,8 +269,28 @@ public class JPAHelper {
 	 * @param portfolioTable The portfolio to be audited.
 	 * @return The total amount invested
 	 */
-	public long getInvestedAmount(PortfolioTable portfolioTable) {
-		return 0;
+	public long getTotalInvestedAmount(PortfolioTable portfolioTable) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
+        
+        Root<PortfolioInvestment> c = q2.from(PortfolioInvestment.class);
+        
+        q2.select(c);
+        
+        TypedQuery<PortfolioInvestment> query = em.createQuery(q2);
+        
+        Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio").get("portfolioId"), portfolioTable.getPortfolioId());
+        Predicate p2 = em.getCriteriaBuilder().notEqual(c.get("invested"), false);
+        
+        q2.where(p, p2);
+        
+        List<PortfolioInvestment> result = query.getResultList();
+        
+        long sum = 0;
+        for (PortfolioInvestment ph : result)
+        	sum += ph.getAmount();
+		
+		return sum;
 	}
 	/**
 	 * Gives the AlgorithmTable for a given portfolio

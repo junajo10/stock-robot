@@ -106,6 +106,10 @@ public class MainBasicJPATest {
 		System.out.println(jpaHelper.getOldStocks((jpaHelper.getAllPortfolios().get(0))).size());
 		
 		
+		
+		System.out.println(jpaHelper.getTotalInvestedAmount(jpaHelper.getAllPortfolios().get(0)));
+		
+		
 		jpaHelper.stopJPASystem();
 		
 	}
