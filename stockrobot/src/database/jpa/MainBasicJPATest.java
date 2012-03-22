@@ -12,7 +12,12 @@ import database.jpa.tables.PortfolioTable;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
-
+/**
+ * @author Daniel
+ *
+ *This is manily a test class for learning jpa.
+ *However it will also initzialise a working state for the JPA System.
+ */
 public class MainBasicJPATest {
 	public static void main(String[] args) {
 
