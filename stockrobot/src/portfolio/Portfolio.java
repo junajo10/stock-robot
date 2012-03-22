@@ -5,6 +5,7 @@ import generic.Pair;
 import java.util.List;
 
 import algorithms.IAlgorithm;
+import algorithms.loader.AlgorithmsLoader;
 
 import database.jpa.JPAHelper;
 import database.jpa.tables.AlgorithmsTable;
@@ -31,6 +32,7 @@ public class Portfolio implements IPortfolio {
 	public Portfolio(PortfolioTable portfolioTable) {
 		this.portfolioTable = portfolioTable;
 		jpaHelper = JPAHelper.getInstance();
+		algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
 	}
 	@Override
 	public List<StockNames> getAvalibleStocks() {
