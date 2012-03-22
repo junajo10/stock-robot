@@ -20,7 +20,7 @@ public class Harvester {
 		System.out.println("*** ASTRo Harvester started. ***");
 		System.out.println("*** Write help for help. ***");
 		while(true){
-			System.out.print("*** ASTRo command: ");
+			System.out.print("ASTRo: ");
 			Scanner in = new Scanner(System.in);
 			String input = in.nextLine();
 			takeCommand(input);
@@ -106,6 +106,7 @@ public class Harvester {
 	 * <p>
 	 * Otherwise false.
 	 */
+	@SuppressWarnings("deprecation")
 	private static boolean forceStop(){
 		if(parserThread==null){
 			return false;
