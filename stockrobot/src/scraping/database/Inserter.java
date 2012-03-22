@@ -153,6 +153,8 @@ public class Inserter implements IInserter {
 	@Override
 	public boolean insertStockData( List<ParserStock> stocks ) {
 		
+		System.out.println( "size: " + stocks.size() );
+		
 		//Try to register the mysql driver
 		//Also, connect to the db
 		try {
@@ -201,7 +203,7 @@ public class Inserter implements IInserter {
 									addApo( Double.toString( s.getLastClose() ) ) + ", " +//last close price
 									addApo( Double.toString( s.getBuy() ) ) + ", " +//last close price
 									addApo( Double.toString( s.getSell() ) ) + ", " +//last close price
-									addApo("5000-03-03 19:29:00") +//Date, TODO: FIX REAL TIME!
+									addApo( s.getDate() ) +//Date, TODO: FIX REAL TIME!
 									" ); " );
 				
 				//Send to DB!

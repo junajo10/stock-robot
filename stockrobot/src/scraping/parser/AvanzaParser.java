@@ -77,24 +77,28 @@ public class AvanzaParser implements IParser {
 		public ArrayList<ParserStock> getStockList(){
 			return stockList;
 		}
-
+		
+		private String replaceAvanzaCharacters( String input ) {
+			return input.replaceAll("ˆ","ö").replaceAll("÷","Ö").replaceAll("≈","Å").replaceAll("‰","ä").replaceAll("Â","å");
+		}
+		
 		/**Method is called once the parser finds a String in the given HTML-page.
 		  */
 		@Override
 		public void handleText(char[] data, int pos) {
 			String input = new StringBuffer().append(data).toString();
-			if(input.equals("S‰lj")){
+			if(input.equals("Sälj")){
 				startNewStock = false;
 				lastInput = input; 
 				//System.out.print("Hittat S‰lj!");
 			}
-			else if(input.length()==1 && lastInput.equals("S‰lj")){
+			else if(input.length()==1 && lastInput.equals("Sälj")){
 				startNewStock = true;
 				lastInput = input;
 			}
 			else if(startNewStock){
 				if(counter==0){
-					stock = new ParserStock(input);
+					stock = new ParserStock(replaceAvanzaCharacters(input));
 					counter++;
 				}
 				else if(counter==1 || counter==2){
