@@ -9,15 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="StockNames")
+@Table(name="StockNames", uniqueConstraints=@UniqueConstraint(columnNames={"name"}))
 public class StockNames {
 	@Id 
 	@GeneratedValue
 	private int id;
 	
-	@Column(name="name", nullable=false, length=40, insertable=true)
+	@Column(name="name", nullable=false, length=100, insertable=true)
 	private String name;
 	
 	@Column(name="market", nullable=false, length=10, insertable=true)
