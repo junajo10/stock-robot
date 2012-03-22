@@ -43,18 +43,18 @@ public class JPAInserter implements IInserter {
 		//Instantiate helper
 		helper = new JPAPriceHelper();
 		helper.initJPASystem();
-		
-		//Create entityFactory
-		Map<Object,Object> factoryMap 	= new HashMap<Object, Object>(); 
-		factory							= Persistence.createEntityManagerFactory( "astropricelist", factoryMap );
-		
-		//Create manager
-		em 								= factory.createEntityManager();
 	}
 	
 	@Override
 	public boolean insertStockData(List<ParserStock> s) {
-			
+		
+		//Create entityFactory
+		Map<Object,Object> factoryMap 	= new HashMap<Object, Object>(); 
+		
+		//Create manager
+		factory							= Persistence.createEntityManagerFactory( "astropricelist", factoryMap );
+		em 								= factory.createEntityManager();
+		
 		//For all stock data sent here
 		for( ParserStock stock : s ) {
 			
