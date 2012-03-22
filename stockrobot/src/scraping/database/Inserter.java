@@ -20,7 +20,7 @@ import database.util.ConnectionCreator;
 import scraping.model.ParserStock;
 
 /**
- * Class for injecting stock information to 
+ * Class for inserting stock information to 
  * our already defined price database.
  * 
  * @see /doc/priceDatabase.sql
@@ -51,23 +51,25 @@ public class Inserter implements IInserter {
 	//Map the database name and market
 	private HashMap<String, String> nameToMarket = new HashMap<String, String>();
 	
+	/*
 	public static void main( String[] args ) {
 		
 		Inserter i = new Inserter();
 		
-		ParserStock s1 = new ParserStock("STOCK_NEW");
-		s1.setMarket("CapCap");
-		ParserStock s2 = new ParserStock("Bepa");
-		ParserStock s3 = new ParserStock("STOCK2");
-		s3.setMarket("SmallCap");
+		ParserStock s1 = new ParserStock( "KALLES" );
+		s1.setMarket( "LolCap" );
+		ParserStock s2 = new ParserStock( "ROliga" );
+		ParserStock s3 = new ParserStock( "kaviar" );
+		s3.setMarket( "TestCap" );
 		
 		ParserStock[] apa = { s1, s2, s3 };
 		
-		boolean result = i.injectStockData( apa );
+		boolean result = i.insertStockData( apa );
 		//boolean result = i.updateAllMarkets( apa );
 		
 		System.out.println( "Run this code, did it work? " + result );
 	}
+	*/
 	
 	/**
 	 * Constructor:
@@ -99,7 +101,7 @@ public class Inserter implements IInserter {
 			
 		} catch (ParserConfigurationException e) {
 			
-			System.out.println( "ERROR: Injector: Constructor! New Document Builder" );
+			System.out.println( "ERROR: Inserter: Constructor! New Document Builder" );
 		}
 		
 		//File name
@@ -117,11 +119,11 @@ public class Inserter implements IInserter {
 		
 		} catch( IOException ioE ) {
 			
-			System.out.println( "ERROR: Injector: Constructor! IOException XML settings" );
+			System.out.println( "ERROR: Inserter: Constructor! IOException XML settings" );
 			
 		} catch( SAXException saE ) {
 			
-			System.out.println( "ERROR: Injector: Constructor! SAXException?" );
+			System.out.println( "ERROR: Inserter: Constructor! SAXException?" );
 		}
 		
 		//If parsing was successful, store the XML data to local variables
@@ -139,16 +141,16 @@ public class Inserter implements IInserter {
 	}
 	
 	/**
-	 * Inject stock data!
+	 * Inserter stock data!
 	 * 
 	 * +Connect to the databas,
-	 * +Inject all companies in stocks not already in the database
+	 * +Inserter all companies in stocks not already in the database
 	 * +Insert all new values for the stocks in the list
 	 * 
 	 * Do not care if the stock's market is changed here
 	 */
 	@Override
-	public boolean injectStockData( ParserStock[] stocks ) {
+	public boolean insertStockData( ParserStock[] stocks ) {
 		
 		//Try to register the mysql driver
 		//Also, connect to the db
@@ -213,22 +215,22 @@ public class Inserter implements IInserter {
 		//Error handling!
 		} catch ( SQLException e ) {
 			
-			System.out.println( "ERROR: Injector: injectStockData! SQL Exception" );
+			System.out.println( "ERROR: Inserter: insertStockData! SQL Exception" );
 			return false; //Insertion not successful
 			
 		} catch ( ClassNotFoundException cnfE ) {
 			
-			System.out.println( "ERROR: Injector: injectStockData! ClassNotFoundException" );
+			System.out.println( "ERROR: Inserter: insertStockData! ClassNotFoundException" );
 			return false; //Insertion not successful
 			
 		} catch ( InstantiationException iE ) {
 			
-			System.out.println( "ERROR: Injector: injectStockData! InstantiationException" );
+			System.out.println( "ERROR: Inserter: insertStockData! InstantiationException" );
 			return false; //Insertion not successful
 			
 		} catch ( IllegalAccessException iaE ) {
 			
-			System.out.println( "ERROR: Injector: injectStockData! IllegalAccessException" );
+			System.out.println( "ERROR: Inserter: insertStockData! IllegalAccessException" );
 			return false; //Insertion not successful
 		}
 	}
