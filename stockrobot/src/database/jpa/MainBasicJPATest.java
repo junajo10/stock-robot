@@ -75,8 +75,11 @@ public class MainBasicJPATest {
 		StockPrices sp = new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis()));
 		jpaHelper.storeObject(sp);
 		
-		
-		PortfolioHistory ph = new PortfolioHistory(sp, new Date(System.currentTimeMillis()), null, 10, portfolios.get(0));
+		PortfolioHistory ph;
+		if (r.nextBoolean())
+			ph = new PortfolioHistory(sp, new Date(System.currentTimeMillis()), null, 10, portfolios.get(0));
+		else
+			ph = new PortfolioHistory(sp, new Date(System.currentTimeMillis()-10000), new Date(System.currentTimeMillis()), 10, portfolios.get(0));
 		jpaHelper.storeObject(ph);
 		
 		//---- Duplicate test
@@ -98,6 +101,10 @@ public class MainBasicJPATest {
 		
 		List bla = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
 		System.out.println(bla.size());
+		
+		
+		System.out.println(jpaHelper.getOldStocks((jpaHelper.getAllPortfolios().get(0))).size());
+		
 		
 		jpaHelper.stopJPASystem();
 		

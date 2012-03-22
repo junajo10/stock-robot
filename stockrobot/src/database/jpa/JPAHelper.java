@@ -2,7 +2,10 @@ package database.jpa;
 
 import generic.Pair;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,6 +13,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 
@@ -45,7 +49,7 @@ public class JPAHelper {
 	 * Inits the jpa system.
 	 */
 	public void initJPASystem() {
-		java.util.Map<Object,Object> map = new java.util.HashMap<Object,Object>();
+		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
 		factory = Persistence.createEntityManagerFactory("astroportfolio", map);
 		
 		em = factory.createEntityManager();
@@ -216,21 +220,28 @@ public class JPAHelper {
 	 * @return A List of currently owned stocks.
 	 */
 	public List<StockPrices> getCurrentStocks(PortfolioTable portfolioTable) {
-		// SELECT * FROM PortfolioHistory WHERE PORTFOLIO_HISTORY_ID = portfolioTable.getID() AND soldDate = null
-		List result = em.createQuery("select o.stockPrice from PortfolioHistory o where "
-				+ "o.id=:porthistid"
-				+ " and o.soldDate = :sellTime").
-				setParameter("porthistid","2").
-				setParameter("sellTime", null).getResultList();
-		return result;
-		/*
-		Exception in thread "main" <openjpa-2.2.0-r422266:1244990 nonfatal user error> 
-		org.apache.openjpa.persistence.ArgumentException: An error occurred while parsing 
-		the query filter 
-		"select o.stockName from PortfolioHistory o where o.PORTFOLIO_HISTORY_ID=:porthistid and o.soldDate = :sellTime". 
-		Error message: No field named "PORTFOLIO_HISTORY_ID" in "PortfolioHistory". Did you mean "amount"? 
-		Expected one of the available field names in "database.jpa.tables.PortfolioHistory": "[amount, buyDate, id, portfolio, soldDate]".
-		*/
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
+        
+        Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
+        
+        q2.select(c);
+        
+        TypedQuery<PortfolioHistory> query = em.createQuery(q2);
+        
+        Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio").get("portfolioId"), portfolioTable.getPortfolioId());
+        Predicate p2 = em.getCriteriaBuilder().equal(c.get("soldDate"), null);
+        
+        q2.where(p, p2);
+        
+        List<PortfolioHistory> result = query.getResultList();
+        
+        List<StockPrices> sp = new ArrayList<StockPrices>();
+        
+        for (PortfolioHistory ph : result)
+        	sp.add(ph.getStockPrice());
+        
+        return sp;
 	}
 	/**
 	 * Returns a list of pairs with old stocks, left is the stockpoint when it was bought
@@ -241,7 +252,17 @@ public class JPAHelper {
 	public List<Pair<StockPrices, StockPrices>> getOldStocks(
 			PortfolioTable portfolioTable) {
 		
-		return null;
+		List<Pair<StockPrices, StockPrices>> oldStocks = new LinkedList<Pair<StockPrices,StockPrices>>();
+		for (PortfolioHistory ph : portfolioTable.getHistory()) {
+			if (ph.getSoldDate() != null) {
+				StockPrices old = ph.getStockPrice();
+				StockPrices ny = ph.getSoldStockPrice(em);
+				
+				oldStocks.add(new Pair<StockPrices, StockPrices>(old, ny));
+			}
+		}
+		
+		return oldStocks;
 	}
 	/**
 	 * Returns the total amount invested in this portfolio

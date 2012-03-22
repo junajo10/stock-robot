@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -42,13 +43,13 @@ public class PortfolioTable {
 	@Column
 	private boolean stopSelling;
 	
-	/*
+	
 	@OneToMany(mappedBy="portfolio",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
     private Collection<PortfolioHistory> history;
-    */    
-	@OneToMany  
+        
+	/*@OneToMany  
 	Set<PortfolioHistory> history;  
-	
+	*/
 	
 	@OneToMany  
 	List<StockNames> stocksToWatch;

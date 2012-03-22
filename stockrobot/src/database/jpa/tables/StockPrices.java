@@ -6,12 +6,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 
 @Entity
+
+
+
+@NamedQueries({
+@NamedQuery(name="getStockPrice",query="SELECT sp FROM StockPrices sp WHERE sp.stockName = :sname AND time = :sdate")
+})
+
+
 @Table(name="StockPrices", uniqueConstraints=@UniqueConstraint(columnNames={"time", "stockName"}))
 public final class StockPrices {
 	@Id
