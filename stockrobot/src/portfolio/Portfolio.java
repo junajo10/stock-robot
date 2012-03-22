@@ -123,4 +123,8 @@ public class Portfolio implements IPortfolio {
 	public PortfolioTable getPortfolioTable() {
 		return portfolioTable;
 	}
+	@Override
+	public AlgorithmsTable getAlgorithmTable() {
+		return jpaHelper.getAlgorithmTable(portfolioTable);
+	}
 }

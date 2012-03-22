@@ -180,4 +180,9 @@ public class JPAHelper {
 	public long getInvestedAmount(PortfolioTable portfolioTable) {
 		return 0;
 	}
+
+	public AlgorithmsTable getAlgorithmTable(PortfolioTable portfolioTable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

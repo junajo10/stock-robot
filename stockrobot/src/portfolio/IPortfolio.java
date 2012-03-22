@@ -107,4 +107,6 @@ public interface IPortfolio {
 	int getPortfolioId();
 
 	PortfolioTable getPortfolioTable();
+
+	AlgorithmsTable getAlgorithmTable();
 }
