@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.print.attribute.IntegerSyntax;
 
+import database.jpa.JPAHelper;
 import database.jpa.JPAPriceHelper;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -23,7 +24,7 @@ public class JPAInserter implements IInserter {
 	
 	EntityManagerFactory factory;
 	EntityManager em;
-	JPAPriceHelper helper;
+	JPAHelper helper;
 	
 	public static void main( String[] args ) {
 		
@@ -41,7 +42,7 @@ public class JPAInserter implements IInserter {
 	public JPAInserter() {
 		
 		//Instantiate helper
-		helper = new JPAPriceHelper();
+		helper = new JPAHelper();
 		helper.initJPASystem();
 	}
 	
@@ -52,7 +53,7 @@ public class JPAInserter implements IInserter {
 		Map<Object,Object> factoryMap 	= new HashMap<Object, Object>(); 
 		
 		//Create manager
-		factory							= Persistence.createEntityManagerFactory( "astropricelist", factoryMap );
+		factory							= Persistence.createEntityManagerFactory( "astroportfolio", factoryMap );
 		em 								= factory.createEntityManager();
 		
 		//For all stock data sent here
