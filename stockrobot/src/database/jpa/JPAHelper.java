@@ -7,11 +7,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 
@@ -32,23 +30,36 @@ public class JPAHelper {
 	
 	private static JPAHelper instance = null;
 	
+	/**
+	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance.
+	 * @return An instance of JPAHelper
+	 */
 	public static JPAHelper getInstance() {
 		if(instance == null) {
 			instance = new JPAHelper();
 		}
 		return instance;
 	}
-	
+	/**
+	 * Inits the jpa system.
+	 */
 	public void initJPASystem() {
 		java.util.Map<Object,Object> map = new java.util.HashMap<Object,Object>();
 		factory = Persistence.createEntityManagerFactory("astroportfolio", map);
 		
 		em = factory.createEntityManager();
 	}
+	/*
+	 * Stops the jpa system
+	 */
 	public void stopJPASystem() {
 		em.close();
 		factory.close();
 	}
+	/**
+	 * Returns a list of all the algorithms.
+	 * @return a list of all the algorithms.
+	 */
 	public List<AlgorithmsTable> getAllAlgorithms() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<AlgorithmsTable> q2 = cb.createQuery(AlgorithmsTable.class);
@@ -60,6 +71,10 @@ public class JPAHelper {
         TypedQuery<AlgorithmsTable> query = em.createQuery(q2);
         return query.getResultList();
 	}
+	/**
+	 * Will give back all portfolios in the JPA system.
+	 * @return A list with PortfolioTables
+	 */
 	public List<PortfolioTable> getAllPortfolios() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PortfolioTable> q2 = cb.createQuery(PortfolioTable.class);
