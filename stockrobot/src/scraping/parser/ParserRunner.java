@@ -42,7 +42,7 @@ public class ParserRunner implements IParserRunner {
 				Long timeBefore = System.currentTimeMillis();
 				for(URL url : avanzaURLList){
 					stockList = parser.parse(url);
-				    inserter.insertStockData(stockList.toArray());
+				    inserter.insertStockData(stockList);
 
 				}
 				Long timeElapsed = System.currentTimeMillis() - timeBefore;
