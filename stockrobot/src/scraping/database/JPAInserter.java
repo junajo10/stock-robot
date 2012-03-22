@@ -14,7 +14,6 @@ import javax.persistence.Persistence;
 import javax.print.attribute.IntegerSyntax;
 
 import database.jpa.JPAHelper;
-import database.jpa.JPAPriceHelper;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
