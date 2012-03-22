@@ -2,23 +2,24 @@ package database.jpa.tables;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 
 @Entity
-@Table(name="StockPrices")
+@Table(name="StockPrices", uniqueConstraints=@UniqueConstraint(columnNames={"time", "stockName"}))
 public final class StockPrices {
 	@Id
 	@GeneratedValue
 	private long id;
 	
 	@OneToOne
-	@Column
+	@Column(name="stockName")
 	private StockNames stockName;
 	
 	@Column
@@ -33,7 +34,7 @@ public final class StockPrices {
 	@Column
 	private long sell;
 	
-	@Column
+	@Column(name="time")
 	private Date time;
 	
 	public StockPrices() {
@@ -66,6 +67,6 @@ public final class StockPrices {
 		return time;
 	}
 	public String toString() {
-		return stockName.getName() + " | " + buy + " | " + sell;
+		return stockName.getName() + " | Buy: " + buy + " | Sell: " + sell + " | Market: " + stockName.getMarket();
 	}
 }

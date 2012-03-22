@@ -17,7 +17,7 @@ public class StockNames {
 	@GeneratedValue
 	private int id;
 	
-	@Column(name="name", nullable=false, length=100, insertable=true)
+	@Column(name="name", nullable=false, length=40, insertable=true)
 	private String name;
 	
 	@Column(name="market", nullable=false, length=10, insertable=true)
@@ -44,5 +44,8 @@ public class StockNames {
 	}
 	public List<StockPrices> getStockPrices() {
 		return stockPrices;
+	}
+	public String toString() {
+		return name + " | " + market;
 	}
 }

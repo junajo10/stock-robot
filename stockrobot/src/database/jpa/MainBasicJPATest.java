@@ -3,6 +3,7 @@ package database.jpa;
 
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,12 +19,14 @@ public class MainBasicJPATest {
 		JPAHelper jpaHelper = new JPAHelper();
 		
 		jpaHelper.initJPASystem();
-		
+
+		AlgorithmsTable testAlgorithm = null;
 		
 		List<AlgorithmsTable> algorithms = jpaHelper.getAllAlgorithms();
 		
 		if (algorithms.size() == 0) {
-			jpaHelper.storeObject(new AlgorithmsTable("hej", "ho"));
+			testAlgorithm = new AlgorithmsTable("hej", "algorithms.TestAlgorithm");
+			jpaHelper.storeObject(testAlgorithm);
 			algorithms = jpaHelper.getAllAlgorithms();
 		}
 		
@@ -40,6 +43,11 @@ public class MainBasicJPATest {
 		if (portfolios.size() == 0) {
 			jpaHelper.storeObject(new PortfolioTable("portfolio 1"));
 			portfolios = jpaHelper.getAllPortfolios();
+			
+			if (testAlgorithm != null)
+				portfolios.get(0).setAlgorithm(testAlgorithm);
+				
+			jpaHelper.updateObject(portfolios.get(0));
 		}
 		
 		for (PortfolioTable p : portfolios) {
@@ -59,10 +67,17 @@ public class MainBasicJPATest {
 		jpaHelper.storeObject(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis())));
 		
 		
+		//---- Duplicate test
+		List<StockPrices> duplicateTest = new LinkedList<StockPrices>();
+		Date d = new Date(System.currentTimeMillis()+1000);
+		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
+		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
+		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
 		
+		System.out.println("#duplicates: " + jpaHelper.storeListOfObjectsDuplicates(duplicateTest));
+		//-------------------
 		
 		List<StockPrices> prices = jpaHelper.getAllStockPrices();
-		
 		for (StockPrices s : prices) {
 			System.out.println(s);
 		}
