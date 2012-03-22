@@ -2,12 +2,13 @@ package robot;
 
 import java.sql.ResultSet;
 
+import database.jpa.tables.StockPrices;
+
 import algorithms.loader.AlgorithmsLoader;
 
 import portfolio.IPortfolioHandler;
 import portfolio.PortfolioHandler;
 
-import stock.IStock;
 
 /**
  * @author Daniel
@@ -42,31 +43,31 @@ public class Astro implements IRobot_Algorithms{
 	}
 
 	@Override
-	public int buyStock(IStock s, int amount) {
+	public int buyStock(StockPrices s, int amount) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int buyStock(IStock s, int amount, int atLeastN) {
+	public int buyStock(StockPrices s, int amount, int atLeastN) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int sellStock(IStock s, int amount) {
+	public int sellStock(StockPrices s, int amount) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int sellStock(IStock s, int amount, int atLeastN) {
+	public int sellStock(StockPrices s, int amount, int atLeastN) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getCourtagePrice(IStock s, int amount, boolean buying) {
+	public int getCourtagePrice(StockPrices s, int amount, boolean buying) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

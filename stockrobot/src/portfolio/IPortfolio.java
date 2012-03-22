@@ -11,7 +11,6 @@ import database.jpa.tables.PortfolioTable;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
-import stock.IStock;
 
 /**
  * @author Daniel
