@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -137,13 +138,21 @@ public class AvanzaParser implements IParser {
 		}
 	}
 	
-	private String getDate( String time ){
+	private Date getDate( String time ) {
+		
 		Date d = new Date();
-		int day = d.getDate();
-		int year = d.getYear() + 1900;
-		int month = d.getMonth() + 1;
-		String dateStr = "" + year + "-" + month + "-" + day + " "+ time + ":00";
-		return dateStr;
+		
+		Calendar cal = new GregorianCalendar();
+		cal.set(d.getYear() + 1900, 
+				d.getMonth(), 
+				d.getDate(), 
+				Integer.parseInt(time.substring(0,2)), 
+				Integer.parseInt(time.substring(3,5)), 
+				0);
+		
+		//System.out.println( "getDate:::" + cal.getTime() );
+		
+		return cal.getTime();
 	}
 
 }

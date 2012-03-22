@@ -203,7 +203,7 @@ public class Inserter implements IInserter {
 									addApo( Double.toString( s.getLastClose() ) ) + ", " +//last close price
 									addApo( Double.toString( s.getBuy() ) ) + ", " +//last close price
 									addApo( Double.toString( s.getSell() ) ) + ", " +//last close price
-									addApo( s.getDate() ) +//Date, TODO: FIX REAL TIME!
+									addApo( s.getDate().toGMTString() ) +//Date, TODO: FIX REAL TIME!
 									" ); " );
 				
 				//Send to DB!

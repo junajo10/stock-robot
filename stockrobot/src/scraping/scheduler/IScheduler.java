@@ -35,10 +35,10 @@ public interface IScheduler {
 	
 	/**
 	 * Ignore time, can be set to true or false,
-	 * true will make the shouldRun method to always return true
-	 * false will make shouldRun to return true according to time of day 
+	 * true will make the method check whether to run
+	 * false will always return false
 	 * 
 	 * @param ignore
 	 */
-	public void ignoreTime(boolean ignore);
+	public void shouldRun(boolean run);
 }
