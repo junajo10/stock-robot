@@ -16,7 +16,7 @@ public class AlgorithmsTable {
 	@GeneratedValue
 	private int id;
 	
-	@Column(name="name", nullable=false, length=20, insertable=true)
+	@Column(name="name", nullable=false, length=40, insertable=true)
 	private String name;
 	
 	@Column(name="path", nullable=true, length=255, insertable=true)
@@ -41,5 +41,8 @@ public class AlgorithmsTable {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String toString() {
+		return name + " | " + path;
 	}
 }

@@ -4,10 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,11 +19,11 @@ import javax.persistence.Table;
 public class PortfolioHistory {
 
 	@Id
+	@GeneratedValue
 	@Column(name = "PORTFOLIO_HISTORY_ID", nullable = false)
 	private int id;
 	
 	@Column
-	@OneToOne
 	private StockPrices stockPrice;
 	
 	@Column

@@ -2,15 +2,23 @@ package database.jpa.tables;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="StockPrices")
 public final class StockPrices {
+	@Id
+	@GeneratedValue
+	private long id;
+	
 	@OneToOne
+	@Column
 	private StockNames stockName;
 	
 	@Column

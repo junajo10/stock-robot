@@ -1,10 +1,9 @@
 package database.jpa.tables;
 import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -35,8 +34,12 @@ public class PortfolioTable {
 	@Column
 	private boolean watchAllStocks;
 	
+	/*
 	@OneToMany(mappedBy="portfolio",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
-    private Collection<PortfolioHistory> history;    
+    private Collection<PortfolioHistory> history;
+    */    
+	@OneToMany  
+	Set<PortfolioHistory> history;  
 	
 	public PortfolioTable() {
 		
@@ -69,11 +72,13 @@ public class PortfolioTable {
 	public Collection<PortfolioHistory> getHistory() {
 		return history;
 	}
-	public void invest(EntityManager em, long amount, boolean invest) {
-		//TODO: add amount to this and update
-		em.persist(new PortfolioInvestment(this, amount, invest));
+	public void invest(long amount, boolean invest) {
+		this.balance += amount;
 	}
 	public AlgorithmsTable getAlgorithm() {
 		return algorithm;
+	}
+	public String toString() {
+		return name + " | " + balance;
 	}
 }

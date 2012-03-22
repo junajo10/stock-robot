@@ -4,62 +4,48 @@ package database.jpa;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
 import database.jpa.tables.AlgorithmsTable;
 import database.jpa.tables.PortfolioTable;
 
 
 public class MainBasicJPATest {
-
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 
-		java.util.Map<Object,Object> map = new java.util.HashMap<Object,Object>();
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("getstarted", map);
+		JPAHelper jpaHelper = new JPAHelper();
+		
+		jpaHelper.initJPASystem();
 		
 		
-		EntityManager em = factory.createEntityManager();
+		List<AlgorithmsTable> algorithms = jpaHelper.getAllAlgorithms();
 		
-		em.getTransaction().begin();
-		// we'll put some codes here later
+		if (algorithms.size() == 0) {
+			jpaHelper.storeObject(new AlgorithmsTable("hej", "ho"));
+			algorithms = jpaHelper.getAllAlgorithms();
+		}
 		
-		
-		PortfolioTable portfolio = new PortfolioTable("portfolio 1");
-		
-		AlgorithmsTable algorithm = new AlgorithmsTable("TestAlgorithm", "algorithms.TestAlgotihm");
-		
-		em.persist(algorithm);
-		em.persist(portfolio);
-		
-		
-		portfolio.setAlgorithm(algorithm);
-		
-		portfolio.invest(em, 10000, true);
+		for (AlgorithmsTable a : algorithms) {
+			//a.setName(a.getName() + "1");
+			//jpaHelper.updateObject(a);
+			System.out.println(a);
+			
+		}
 		
 		
+		List<PortfolioTable> portfolios = jpaHelper.getAllPortfolios();
 		
-		em.getTransaction().commit();
+		if (portfolios.size() == 0) {
+			jpaHelper.storeObject(new PortfolioTable("portfolio 1"));
+			portfolios = jpaHelper.getAllPortfolios();
+		}
+		
+		for (PortfolioTable p : portfolios) {
+			jpaHelper.investMoney(100, p);
+			System.out.println(p);
+		}
 		
 		
-		Query q = em.createQuery("select a from AlgorithmsTable a");
-
-		em.getTransaction().begin();
-		  
-		  
-        for (AlgorithmsTable a : (List<AlgorithmsTable>) q.getResultList()) {
-            System.out.println("ID: " + a.getId() + " Name: " + a.getName() + " Path: " + a.getPath()); 
-            a.setName("testtest");
-            
-        }
-        em.getTransaction().commit();
-        em.close();
-
-		factory.close();
-
+		jpaHelper.stopJPASystem();
+		
 	}
 
 }
