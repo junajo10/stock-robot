@@ -7,7 +7,8 @@ import javax.persistence.Table;
 
 /**
  * @author Daniel
- *
+ * A entity class representing an algorithm.
+ * It has the very important field path, wich is where the class file of an algorithm is.
  */
 @Entity
 @Table(name="AlgorithmEntitys")
@@ -25,24 +26,46 @@ public class AlgorithmEntitys {
 	public AlgorithmEntitys() {
 		
 	}
-	
+	/**
+	 * The main constuctor for an AlgorithmEntity
+	 * @param name Name of this algorithm
+	 * @param path The Path to the algorithm
+	 */
 	public AlgorithmEntitys(String name, String path) {
 		this.name = name;
 		this.path = path;
 	}
-	
+	/**
+	 * Will return the id to this entity
+	 * @return The id to this entity
+	 */
 	public int getId() {
 		return id;
 	}
+	/**
+	 * Will return the name of this algorithm
+	 * @return name of the algorithm
+	 */
 	public String getName() {
 		return name;
 	}
+	/**
+	 * Returns the path to the algorithm
+	 * @return the path to the algorithm
+	 */
 	public String getPath() {
 		return path;
 	}
+	/**
+	 * Sets a new name for this algorithm
+	 * @param name The new name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+	/**
+	 * Mainly a debug text representation of an AlgorithmEntity
+	 */
 	public String toString() {
 		return name + " | " + path;
 	}

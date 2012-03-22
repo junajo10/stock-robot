@@ -15,6 +15,7 @@ import javax.persistence.Table;
 /**
  * @author Daniel
  *
+ * A class representing PortfolioHistory entitys
  */
 @Entity
 @Table(name="PortfolioHistory")

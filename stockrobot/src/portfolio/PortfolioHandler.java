@@ -10,6 +10,7 @@ import database.jpa.tables.PortfolioEntitys;
  *
  * Will manage all portfolios.
  * It will start by creating all the portfolio objects.
+ * Each portfolio will then create a algorithm instance.
  */
 public class PortfolioHandler implements IPortfolioHandler{
 
@@ -56,7 +57,7 @@ public class PortfolioHandler implements IPortfolioHandler{
 	}
 	@Override
 	public boolean setupPortfolio(IPortfolio portfolio) {
-		PortfolioSetupGUI setupGUI = new PortfolioSetupGUI(null, portfolio);
+		PortfolioSetupGUI setupGUI = new PortfolioSetupGUI(portfolio);
 		
 		return false;
 	}

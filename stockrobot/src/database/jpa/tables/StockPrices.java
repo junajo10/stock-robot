@@ -3,7 +3,6 @@ package database.jpa.tables;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,15 +13,16 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 
+/**
+ * @author Daniel
+ *
+ * A class representation of the StockPrice entity.
+ * This is the entity that holds the information about what the selling/buying price was at a given time.
+ */
 @Entity
-
-
-
 @NamedQueries({
 @NamedQuery(name="getStockPrice",query="SELECT sp FROM StockPrices sp WHERE sp.stockName = :sname AND time = :sdate")
 })
-
-
 @Table(name="StockPrices", uniqueConstraints=@UniqueConstraint(columnNames={"time", "stockName"}))
 public final class StockPrices {
 	@Id

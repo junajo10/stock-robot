@@ -28,6 +28,8 @@ import database.jpa.tables.StockPrices;
  * @author Daniel
  *
  * Basicly the main JPA system we will use.
+ * 
+ * It has methods for most of the things we want to accomplish.
  */
 public class JPAHelper {
 	EntityManager em = null;
@@ -48,9 +50,6 @@ public class JPAHelper {
 		}
 		return instance;
 	}
-	
-	private JPAHelper() {}
-	
 	/**
 	 * Inits the jpa system.
 	 */

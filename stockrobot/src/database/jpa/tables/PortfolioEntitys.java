@@ -16,6 +16,7 @@ import database.jpa.JPAHelper;
 /**
  * @author Daniel
  *
+ * A class representing a PortfolioEntity
  */
 @Entity
 @Table(name="PortfolioEntitys")
@@ -48,9 +49,6 @@ public class PortfolioEntitys {
 	@OneToMany(mappedBy="portfolio",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
     private Collection<PortfolioHistory> history;
         
-	/*@OneToMany  
-	Set<PortfolioHistory> history;  
-	*/
 	
 	@OneToMany  
 	List<StockNames> stocksToWatch;

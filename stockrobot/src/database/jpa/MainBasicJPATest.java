@@ -16,8 +16,8 @@ import database.jpa.tables.StockPrices;
 /**
  * @author Daniel
  *
- *This is manily a test class for learning jpa.
- *However it will also initzialise a working state for the JPA System.
+ * This is manily a test class for learning jpa.
+ * However it will also initzialise a working state for the JPA System.
  */
 public class MainBasicJPATest {
 	public static void main(String[] args) {
