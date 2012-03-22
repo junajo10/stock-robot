@@ -13,7 +13,6 @@ import portfolio.IPortfolioHandler;
  * filename: RobotHandler.java
  * Description:
  * RobotHandler takes care of running the stock algorithms 
- * on a frequent basis. 
  */
 public class RobotHandler {
 
@@ -21,9 +20,7 @@ public class RobotHandler {
 	private IPortfolioHandler portfolioHandler;
 	private List<AlgorithmAdapter> algorithms;
 	
-	
-	private boolean isRunning = false;
-	
+		
 	//TODO Implement a shedueler for the handler
 	
 	/**
@@ -47,26 +44,7 @@ public class RobotHandler {
 	 */
 	public void runAlgorithms(){
 		
-		if(!isRunning){
-			isRunning = true;
-		}
-	}
-
-	/**
-	 * Stop the handler after current run of
-	 * algorithms are finished.
-	 */
-	public void stopHandler(){
-		isRunning = false;
-	}
-	
-	/**
-	 * The loop that starts and runs the algorithms
-	 * for each portfolio.
-	 */
-	private void runLoop(){
-		
-		///TODO implement runloop
+		//TODO make code to run algorithms
 	}
 	
 	/**
