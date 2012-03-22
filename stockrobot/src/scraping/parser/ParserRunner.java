@@ -33,6 +33,8 @@ public class ParserRunner implements IParserRunner {
 		ArrayList<URL> avanzaURLList = new ArrayList<URL>();
 		try {
 			avanzaURLList.add(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=LargeCap.SE"));
+			avanzaURLList.add(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=MidCap.SE"));
+			avanzaURLList.add(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=SmallCap.SE"));
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		}
@@ -41,15 +43,16 @@ public class ParserRunner implements IParserRunner {
 				ArrayList<ParserStock> stockList = null;
 				Long timeBefore = System.currentTimeMillis();
 				for(URL url : avanzaURLList){
-					stockList = parser.parse(url);
+					stockList = parser.parse(url, "LargeCap");
+					for(ParserStock s : stockList){
+						System.out.println(s);
+					}
+					
 				    inserter.insertStockData(stockList);
 
 				}
 				Long timeElapsed = System.currentTimeMillis() - timeBefore;
 				System.out.println("Parsing done in:" +timeElapsed + " ms.");
-				for(ParserStock stock : stockList){
-					System.out.println(stock);
-				}
 				try {
 					Thread.sleep(60000-timeElapsed);
 				} catch (InterruptedException e) {

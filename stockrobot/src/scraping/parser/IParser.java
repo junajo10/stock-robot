@@ -12,5 +12,5 @@ import scraping.model.ParserStock;
  */
 public interface IParser {
 	
-	public ArrayList<ParserStock> parse(URL url);
+	public ArrayList<ParserStock> parse(URL url, String market);
 }

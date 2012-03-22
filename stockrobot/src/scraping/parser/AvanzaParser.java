@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -27,9 +29,12 @@ import scraping.model.ParserStock;
  */
 public class AvanzaParser implements IParser {
 	
+	String market; 
+	
 	/** Parses the given Avanza-URL
 	 * @param URL to be parsed */
-	public ArrayList<ParserStock> parse(URL url){
+	public ArrayList<ParserStock> parse(URL url, String market){
+			this.market = market;
 			URLConnection connection;
 			HTMLDocument htmlDoc;
 			ArrayList<ParserStock> stockList = new ArrayList<ParserStock>();
@@ -114,6 +119,8 @@ public class AvanzaParser implements IParser {
 					counter++;
 				}
 				else if(counter ==9){
+					stock.setMarket(market);
+					stock.setDate(getDate(input));
 					stockList.add(stock);
 					counter=0;
 					startNewStock = false;
@@ -126,5 +133,13 @@ public class AvanzaParser implements IParser {
 		}
 	}
 	
+	private String getDate( String time ){
+		Date d = new Date();
+		int day = d.getDate();
+		int year = d.getYear() + 1900;
+		int month = d.getMonth() + 1;
+		String dateStr = "" + year + "-" + month + "-" + day + " "+ time + ":00";
+		return dateStr;
+	}
 
 }
