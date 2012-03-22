@@ -64,7 +64,7 @@ public class Portfolio implements IPortfolio {
 
 	@Override
 	public long getInvestedAmount() {
-		return jpaHelper.getInvestedAmount(portfolioTable);
+		return jpaHelper.getTotalInvestedAmount(portfolioTable);
 	}
 
 	@Override
