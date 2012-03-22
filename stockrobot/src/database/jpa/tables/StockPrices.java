@@ -39,7 +39,7 @@ public final class StockPrices {
 	public StockPrices() {
 		
 	}
-	public StockPrices(StockNames stockName, int id, int volume, int latest, long buy, long sell, Date time) {
+	public StockPrices(StockNames stockName, int volume, int latest, long buy, long sell, Date time) {
 		this.stockName = stockName;
 		this.volume = volume;
 		this.latest = latest;
@@ -64,5 +64,8 @@ public final class StockPrices {
 	}
 	public Date getTime() {
 		return time;
+	}
+	public String toString() {
+		return stockName.getName() + " | " + buy + " | " + sell;
 	}
 }

@@ -13,6 +13,8 @@ import javax.persistence.criteria.Root;
 import database.jpa.tables.AlgorithmsTable;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.PortfolioTable;
+import database.jpa.tables.StockNames;
+import database.jpa.tables.StockPrices;
 
 /**
  * @author Daniel
@@ -52,6 +54,28 @@ public class JPAHelper {
         q2.select(c);
         
         TypedQuery<PortfolioTable> query = em.createQuery(q2);
+        return query.getResultList();
+	}
+	public List<StockPrices> getAllStockPrices() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
+        
+        Root<StockPrices> c = q2.from(StockPrices.class);
+        
+        q2.select(c);
+        
+        TypedQuery<StockPrices> query = em.createQuery(q2);
+        return query.getResultList();
+	}
+	public List<StockNames> getAllStockNames() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StockNames> q2 = cb.createQuery(StockNames.class);
+        
+        Root<StockNames> c = q2.from(StockNames.class);
+        
+        q2.select(c);
+        
+        TypedQuery<StockNames> query = em.createQuery(q2);
         return query.getResultList();
 	}
 	public boolean updateObject(Object o) {

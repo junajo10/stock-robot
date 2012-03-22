@@ -20,7 +20,7 @@ public class StockNames {
 	@Column(name="name", nullable=false, length=20, insertable=true)
 	private String name;
 	
-	@Column(name="name", nullable=false, length=10, insertable=true)
+	@Column(name="market", nullable=false, length=10, insertable=true)
 	private String market;
 	
 	@OneToMany(cascade=CascadeType.ALL)
@@ -41,5 +41,8 @@ public class StockNames {
 	}
 	public String getMarket() {
 		return market;
-	}	
+	}
+	public List<StockPrices> getStockPrices() {
+		return stockPrices;
+	}
 }

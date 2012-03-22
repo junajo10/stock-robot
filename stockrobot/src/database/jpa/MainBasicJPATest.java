@@ -2,10 +2,14 @@ package database.jpa;
 
 
 
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import database.jpa.tables.AlgorithmsTable;
 import database.jpa.tables.PortfolioTable;
+import database.jpa.tables.StockNames;
+import database.jpa.tables.StockPrices;
 
 
 public class MainBasicJPATest {
@@ -42,7 +46,26 @@ public class MainBasicJPATest {
 			jpaHelper.investMoney(100, p);
 			System.out.println(p);
 		}
+		StockNames stockName;
+		if (jpaHelper.getAllStockNames().size() == 0) {
+			stockName = new StockNames("apa", "bepa");
+			jpaHelper.storeObject(stockName);
+			
+		}
+		else {
+			stockName = jpaHelper.getAllStockNames().get(0); 
+		}
+		Random r = new Random(System.currentTimeMillis());
+		jpaHelper.storeObject(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis())));
 		
+		
+		
+		
+		List<StockPrices> prices = jpaHelper.getAllStockPrices();
+		
+		for (StockPrices s : prices) {
+			System.out.println(s);
+		}
 		
 		jpaHelper.stopJPASystem();
 		
