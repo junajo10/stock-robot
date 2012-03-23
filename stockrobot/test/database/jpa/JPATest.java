@@ -1,6 +1,5 @@
 package database.jpa;
 
-import static org.junit.Assert.*;
 
 import java.util.Date;
 import java.util.Random;
@@ -9,18 +8,14 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import portfolio.Portfolio;
 
 import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioEntitys;
-import database.jpa.tables.PortfolioHistory;
-import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
-import database.jpa.tables.StocksToWatch;
 
 
-public class JPAHelperTest {
+public class JPATest {
 	static JPAHelper jpaHelper;
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
