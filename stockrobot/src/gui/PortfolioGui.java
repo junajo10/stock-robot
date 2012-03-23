@@ -15,13 +15,12 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Component;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.Box;
-import java.awt.event.ActionEvent;
+
+import portfolio.IPortfolioHandler;
 
 public class PortfolioGui extends JFrame implements Observer {
 
@@ -30,6 +29,9 @@ public class PortfolioGui extends JFrame implements Observer {
 	private JButton btn_AlgorithmChange;
 	private JComboBox cmb_portfolio;
 	
+	//The model portfolio handler
+	private IPortfolioHandler portfolioHandler;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -37,7 +39,7 @@ public class PortfolioGui extends JFrame implements Observer {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PortfolioGui frame = new PortfolioGui();
+					PortfolioGui frame = new PortfolioGui(null);
 					new PortfolioController(frame);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -50,7 +52,10 @@ public class PortfolioGui extends JFrame implements Observer {
 	/**
 	 * Create the frame.
 	 */
-	public PortfolioGui() {
+	public PortfolioGui(IPortfolioHandler portfolioHandler) {
+		
+		this.portfolioHandler = portfolioHandler;
+		
 		setResizable(false);
 		setForeground(Color.WHITE);
 		setBackground(Color.BLACK);

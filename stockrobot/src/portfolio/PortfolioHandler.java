@@ -1,5 +1,9 @@
 package portfolio;
 
+import gui.IObservable;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +16,12 @@ import database.jpa.tables.PortfolioEntitys;
  * It will start by creating all the portfolio objects.
  * Each portfolio will then create a algorithm instance.
  */
-public class PortfolioHandler implements IPortfolioHandler{
+public class PortfolioHandler implements IPortfolioHandler, IObservable{
 
 	private static PortfolioHandler instance = null;
 	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
 	private JPAHelper jpaHelper;
+	private PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
 	
 	private PortfolioHandler() {
 		jpaHelper = JPAHelper.getInstance();
@@ -33,7 +38,7 @@ public class PortfolioHandler implements IPortfolioHandler{
 	public IPortfolio createNewPortfolio(String name) {
 		PortfolioEntitys pt = new PortfolioEntitys(name);
 		jpaHelper.storeObject(pt);
-		
+		propertyChangeSuport.removePropertyChangeListener(listener)
 		return new Portfolio(pt);
 	}
 
@@ -60,5 +65,14 @@ public class PortfolioHandler implements IPortfolioHandler{
 		PortfolioSetupGUI setupGUI = new PortfolioSetupGUI(portfolio);
 		
 		return false;
+	}
+	@Override
+	public void addAddObserver(PropertyChangeListener listener) {
+		propertyChangeSuport.addPropertyChangeListener(listener);
+	}
+	@Override
+	public void removeObserver(PropertyChangeListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }
