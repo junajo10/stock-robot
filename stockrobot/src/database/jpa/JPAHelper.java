@@ -335,6 +335,11 @@ public class JPAHelper {
 		
 		return oldStocks;
 	}
+	/**
+	 * Given a StockPrice will return the latest stockprice with the same name.
+	 * @param from The old stockPrice
+	 * @return The latest stockPrice with same name as given stockPrice
+	 */
 	public StockPrices getLatestStockPrice(StockPrices from) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
@@ -343,22 +348,16 @@ public class JPAHelper {
         
         q2.select(c);
         
-        
         Predicate p = em.getCriteriaBuilder().equal(c.get("stockName"), from.getStockName());
         
         q2.where(p);
-        
-        
         q2.orderBy(cb.desc(c.get("time")));
-        
-        
         
         TypedQuery<StockPrices> query = em.createQuery(q2);
         
         query.setMaxResults(1);
         
         return query.getSingleResult();
-        
 	}
 	/**
 	 * Returns the total amount invested in this portfolio
@@ -395,6 +394,29 @@ public class JPAHelper {
 	 */
 	public AlgorithmEntitys getAlgorithmTable(PortfolioEntitys portfolioTable) {
 		return portfolioTable.getAlgorithm();
+	}
+
+
+	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio) {
+		
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
+        
+        Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
+        
+        q2.select(c);
+        
+        Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolio);
+        Predicate p2 = em.getCriteriaBuilder().equal(c.get("stockPrice"), stockPrice);
+        
+        q2.where(p, p2);
+        
+        TypedQuery<PortfolioHistory> query = em.createQuery(q2);
+        
+        query.setMaxResults(1);
+		
+		return query.getSingleResult();
 	}
 	
 }

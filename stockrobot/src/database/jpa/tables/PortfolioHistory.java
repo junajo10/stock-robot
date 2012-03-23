@@ -100,5 +100,8 @@ public class PortfolioHistory {
 	public PortfolioEntitys getPortfolio() {
 		return portfolio;
 	}
+	public void setSoldDate(Date soldDate) {
+		this.soldDate = soldDate;
+	}
 	
 }

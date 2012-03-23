@@ -34,14 +34,20 @@ public class TraderSimulator implements ITrader{
 
 	@Override
 	public boolean sellStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
-		// TODO Auto-generated method stub
+		
+		StockPrices latest = JPAHelper.getInstance().getLatestStockPrice(s);
+		portfolio.soldFor(s.getBuy()*amount);
+		
+		PortfolioHistory ph = JPAHelper.getInstance().getSpecificPortfolioHistory(s, portfolio);
+		
+		ph.setSoldDate(latest.getTime());
+		
 		return true;
 	}
 
 	@Override
-	public boolean getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntitys portfolio) {
-		// TODO Auto-generated method stub
-		return true;
+	public long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntitys portfolio) {
+		return (long) (s.getBuy()*amount*0.1);
 	}
 
 }

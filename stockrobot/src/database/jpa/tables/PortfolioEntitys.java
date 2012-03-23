@@ -174,4 +174,8 @@ public class PortfolioEntitys {
 		balance -= amount;
 		JPAHelper.getInstance().updateObject(this);
 	}
+	public void soldFor(long amount) {
+		balance -= amount;
+		JPAHelper.getInstance().updateObject(this);
+	}
 }

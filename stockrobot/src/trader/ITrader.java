@@ -22,5 +22,5 @@ public interface ITrader {
 	
 	boolean sellStock(StockPrices s, long amount, PortfolioEntitys portfolio);
 	
-	boolean getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntitys portfolio);
+	long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntitys portfolio);
 }
