@@ -4,13 +4,33 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+
+/**
+ * @author Daniel
+ *
+ * A class representation of the StockPrice entity.
+ * This is the entity that holds the information about what the selling/buying price was at a given time.
+ */
 @Entity
-@Table(name="StockPrices")
+@NamedQueries({
+@NamedQuery(name="getStockPrice",query="SELECT sp FROM StockPrices sp WHERE sp.stockName = :sname AND time = :sdate")
+})
+@Table(name="StockPrices", uniqueConstraints=@UniqueConstraint(columnNames={"time", "stockName"}))
 public final class StockPrices {
+	@Id
+	@GeneratedValue
+	private long id;
+	
 	@OneToOne
+	@Column(name="stockName")
 	private StockNames stockName;
 	
 	@Column
@@ -25,13 +45,13 @@ public final class StockPrices {
 	@Column
 	private long sell;
 	
-	@Column
+	@Column(name="time")
 	private Date time;
 	
 	public StockPrices() {
 		
 	}
-	public StockPrices(StockNames stockName, int id, int volume, int latest, long buy, long sell, Date time) {
+	public StockPrices(StockNames stockName, int volume, int latest, long buy, long sell, Date time) {
 		this.stockName = stockName;
 		this.volume = volume;
 		this.latest = latest;
@@ -56,5 +76,8 @@ public final class StockPrices {
 	}
 	public Date getTime() {
 		return time;
+	}
+	public String toString() {
+		return stockName.getName() + " | Buy: " + buy + " | Sell: " + sell + " | Market: " + stockName.getMarket() + " | Time: " + time;
 	}
 }

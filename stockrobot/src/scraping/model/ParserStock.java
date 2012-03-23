@@ -1,6 +1,6 @@
 package scraping.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Class representing a parsed stock from Avanza.
@@ -16,7 +16,7 @@ public class ParserStock {
 	private double	lastClose;
 	private double 	buy;
 	private double 	sell;
-	private String	date;
+	private Date	date;
 	
 	public ParserStock(String name){
 		this.name = name;
@@ -40,7 +40,7 @@ public class ParserStock {
 	public void setLastClose( 	double _lastClose ) { lastClose = _lastClose; }
 	public void setBuy( 		double _buy ) 		{ buy = _buy; }
 	public void setSell( 		double _sell ) 		{ sell = _sell; }
-	public void setDate( 		String _date ) 		{ date = _date; }
+	public void setDate( 		Date _date ) 		{ date = _date; }
 	
 	//getters
 	public String	getName() 		{ return name; }
@@ -49,5 +49,5 @@ public class ParserStock {
 	public double	getLastClose() 	{ return lastClose; }
 	public double	getBuy() 		{ return buy; }
 	public double	getSell() 		{ return sell; }
-	public String		getDate() 	{ return date; }
+	public Date		getDate() 		{ return date; }
 }

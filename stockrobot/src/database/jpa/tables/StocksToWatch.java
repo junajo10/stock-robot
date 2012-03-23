@@ -5,11 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Daniel
+ *
+ * A representation of the StocksToWatch entity.
+ * This entity will hold what stocks are beeing watched by a given portfolio
+ */
 @Entity
 @Table(name="StocksToWatch")
 public class StocksToWatch {
 	@Column @OneToOne
-	private PortfolioTable portfolio;
+	private PortfolioEntitys portfolio;
 	
 	@Column
 	private StockNames stockName;
@@ -18,11 +24,11 @@ public class StocksToWatch {
 	public StocksToWatch() {
 		
 	}
-	public StocksToWatch(PortfolioTable portfolio, StockNames stockName) {
+	public StocksToWatch(PortfolioEntitys portfolio, StockNames stockName) {
 		this.portfolio = portfolio;
 		this.stockName = stockName;
 	}
-	public PortfolioTable getPortfolio() {
+	public PortfolioEntitys getPortfolio() {
 		return portfolio;
 	}
 	public StockNames getStockName() {

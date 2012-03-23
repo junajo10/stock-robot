@@ -2,17 +2,13 @@ package algorithms.loader;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 
 import algorithms.IAlgorithm;
-import database.IDatabase;
+import database.jpa.tables.AlgorithmEntitys;
 import portfolio.IPortfolio;
-import portfolio.IPortfolioHandler;
-import portfolio.PortfolioHandler;
 import robot.IRobot_Algorithms;
+import trader.ITrader;
+import trader.TraderSimulator;
 
 /**
  * @author Daniel
@@ -20,58 +16,29 @@ import robot.IRobot_Algorithms;
  * This class will be in charge of loading algorithms
  */
 
-//TODO: Implement with JDO when database system supports it 
 public class AlgorithmsLoader {
 
 	IRobot_Algorithms robot;
-	IDatabase db;
-	List<IAlgorithm> listOfAlgorthms = new LinkedList<IAlgorithm>();
-	
+	private static AlgorithmsLoader instance = null;
 	/**
-	 * Loads up all algorithms in use by portfolios and stores them in listOfAlgorithms
+	 * Loads up the algorithmLoaderSystem
 	 * @param robot Interface to the framework
-	 * @param database Interface to the database
 	 */
-	public AlgorithmsLoader(IRobot_Algorithms robot, IDatabase database) {
+	private AlgorithmsLoader(IRobot_Algorithms robot) {
 		this.robot = robot;
-		this.db = database;
-		
-		IPortfolioHandler portfolioHandler = PortfolioHandler.getInstance();
-		
-		List<IPortfolio> portfolios = portfolioHandler.getPortfolios();
-		
-		
-		for (IPortfolio p : portfolios) {
-			ResultSet result = db.askQuery("SELECT path FROM portfolios " +
-					"JOIN algorithms ON id = algorithmId" +
-					"WHERE portfolioId = " + p.getPortfolioId());
-			
-			try {
-				if (result.next()) {
-					String algorithmPath = result.getString("path");
-					
-					IAlgorithm newAlgorithm = loadAlgorithm(algorithmPath, p);
-					
-					if (newAlgorithm != null) {
-						listOfAlgorthms.add(newAlgorithm);
-					}
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 	@SuppressWarnings("rawtypes")
 	private IAlgorithm loadAlgorithm(String algortihmPath, IPortfolio portfolio) {
 		try {
 			Class<?> c = Class.forName(algortihmPath);
 
-			Constructor con = c.getConstructor(new Class[] {IRobot_Algorithms.class, IPortfolio.class });
+			Constructor con = c.getConstructor(new Class[] {IRobot_Algorithms.class, IPortfolio.class, ITrader.class });
 			
-			return (IAlgorithm) con.newInstance(new Object[] {robot, portfolio});
+			IAlgorithm algorithm = (IAlgorithm) con.newInstance(new Object[] {robot, portfolio, TraderSimulator.getInstance()});
 			
+			System.out.println(algorithm.getName() + " is started.");
 			
+			return algorithm;
 			
 			//TODO: Report error to GUI
 		} catch (ClassNotFoundException e) {
@@ -99,17 +66,20 @@ public class AlgorithmsLoader {
 			return null;
 		}
 		
-		int algorithmId = portfolio.getAlgorithmId();
+		AlgorithmEntitys algorithmTable = portfolio.getAlgorithmTable();
 		
-		if (algorithmId > 0)
-			return loadAlgorithm("algorithms.TestAlgorithm", portfolio);
+		if (algorithmTable != null && algorithmTable.getPath() != null)
+			return loadAlgorithm(algorithmTable.getPath(), portfolio);
 		
 		return null;
 	}
 	public AlgorithmSettings getSettings(IAlgorithm algorithm) {
 		return new AlgorithmSettings(algorithm);
 	}
-	public List<IAlgorithm> getAlgorithms() {
-		return listOfAlgorthms;
+	public static AlgorithmsLoader getInstance(IRobot_Algorithms robot) {
+		if(instance == null) {
+			instance = new AlgorithmsLoader(robot);
+		}
+		return instance;
 	}
 }

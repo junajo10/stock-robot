@@ -26,7 +26,7 @@ public class ParserStockTest {
 		float 	latest 	= (float) 123.344	* multiplier;
 		float 	buy 	= (float) 1383.44	* multiplier;
 		float 	sell 	= (float) 294.33	* multiplier;
-		String 	date 	= "2012-02-02 20:20:20";
+		Date 	date 	= new Date(2884444);
 		
 		//Price to test
 		ParserStock pdr = new ParserStock( "VOLVO" );
