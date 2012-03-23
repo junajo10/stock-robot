@@ -88,6 +88,7 @@ public class AvanzaParser implements IParser {
 		@Override
 		public void handleText(char[] data, int pos) {
 			String input = new StringBuffer().append(data).toString();
+			
 			if(input.equals("SŠlj")){
 				startNewStock = false;
 				lastInput = input; 
