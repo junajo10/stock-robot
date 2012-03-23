@@ -1,6 +1,7 @@
 package robot;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import database.jpa.JPAHelper;
@@ -49,7 +50,7 @@ public class Astro implements IRobot_Algorithms{
 		jpaHelper = JPAHelper.getInstance();
 		
 		while(true) {
-			simulateNewStock();
+			simulateNewStocks();
 			
 			
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
@@ -74,10 +75,16 @@ public class Astro implements IRobot_Algorithms{
 	/**
 	 * Just add a new stock
 	 */
-	private void simulateNewStock() {
-		StockNames s = jpaHelper.getAllStockNames().get(0);
-		StockPrices sp = new StockPrices(s, rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), new Date(System.currentTimeMillis()));
-		jpaHelper.storeObjectIfPossible(sp);		
+	private void simulateNewStocks() {
+		List<StockNames> stockNames = jpaHelper.getAllStockNames();
+		
+		for (StockNames sn : stockNames) {
+			if (rand.nextBoolean()) {
+				StockPrices sp = new StockPrices(sn, rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), new Date(System.currentTimeMillis()));
+				//System.out.println("New stockPrice created: " + sp);
+				jpaHelper.storeObjectIfPossible(sp);
+			}
+		}
 	}
 
 

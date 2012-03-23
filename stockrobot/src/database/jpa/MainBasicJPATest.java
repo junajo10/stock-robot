@@ -125,12 +125,6 @@ public class MainBasicJPATest {
 		
 		
 		
-		
-		
-		
-		
-		
-		
 		//-------- Test get latest StockPrice from any stockPrice
 		StockPrices old = jpaHelper.getAllStockPrices().get(0);
 		StockPrices newestPrice = jpaHelper.getLatestStockPrice(jpaHelper.getAllStockPrices().get(0));

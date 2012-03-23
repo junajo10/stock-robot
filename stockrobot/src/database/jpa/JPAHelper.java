@@ -206,12 +206,11 @@ public class JPAHelper {
 		em.getTransaction().begin();
 		try {
 			em.persist(o);
-			em.getTransaction().commit();
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
-		
+		em.getTransaction().commit();
 		return true;
 	}
 	/**
@@ -269,7 +268,9 @@ public class JPAHelper {
 	 * @param objectToBeRemoved The object to be removed.
 	 */
 	public void remove(Object objectToBeRemoved) {
+		em.getTransaction().begin();
 		em.remove(objectToBeRemoved);
+		em.getTransaction().commit();
 	}
 	/**
 	 * Gets the stockNames this portfolio is set to watch.
