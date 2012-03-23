@@ -73,7 +73,7 @@ public class JPAHelper {
 	/**
 	 * Inits the jpa system.
 	 */
-	public void initJPASystem() {
+	private void initJPASystem() {
 		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
 		factory = Persistence.createEntityManagerFactory("astroportfolio", map);
 		
