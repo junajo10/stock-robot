@@ -1,5 +1,7 @@
 package scraping.parser;
 
+import generic.FinancialLongConverter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -109,15 +111,17 @@ public class AvanzaParser implements IParser {
 				}
 				else if(counter==3){
 					input = input.replace(',', '.');
-					stock.setBuy(Double.valueOf(input));
+					stock.setBuy(FinancialLongConverter.fromDouble(Double.valueOf(input)));
 					counter++;
 				}
 				else if(counter==4){
 					input = input.replace(',', '.');
-					stock.setSell(Double.valueOf(input));
+					stock.setSell(FinancialLongConverter.fromDouble(Double.valueOf(input)));
 					counter++;
 				}
 				else if(counter>4 && counter<8){
+					input = input.replace(',', '.');
+					stock.setLastClose(FinancialLongConverter.fromDouble(Double.valueOf(input)));
 					counter++;
 				}
 				else if(counter==8){
