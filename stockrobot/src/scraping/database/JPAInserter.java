@@ -73,7 +73,7 @@ public class JPAInserter implements IInserter {
 					//Create a new stock for the price
 					StockPrices priceTable = new StockPrices(	stockFromDB,
 																stock.getVolume(),
-																(int)stock.getLastClose(),
+																(long)stock.getLastClose(),
 																(long)stock.getBuy(),
 																(long)stock.getSell(),
 																stock.getDate()

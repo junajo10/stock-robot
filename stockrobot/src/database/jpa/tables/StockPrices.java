@@ -37,7 +37,7 @@ public final class StockPrices {
 	private int volume;
 	
 	@Column
-	private int latest;
+	private long latest;
 	
 	@Column
 	private long buy;
@@ -51,7 +51,7 @@ public final class StockPrices {
 	public StockPrices() {
 		
 	}
-	public StockPrices(StockNames stockName, int volume, int latest, long buy, long sell, Date time) {
+	public StockPrices(StockNames stockName, int volume, long latest, long buy, long sell, Date time) {
 		this.stockName = stockName;
 		this.volume = volume;
 		this.latest = latest;
@@ -65,7 +65,7 @@ public final class StockPrices {
 	public int getVolume() {
 		return volume;
 	}
-	public int getLatest() {
+	public long getLatest() {
 		return latest;
 	}
 	public long getBuy() {
