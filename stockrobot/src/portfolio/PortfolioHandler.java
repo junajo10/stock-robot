@@ -38,7 +38,6 @@ public class PortfolioHandler implements IPortfolioHandler, IObservable{
 	public IPortfolio createNewPortfolio(String name) {
 		PortfolioEntitys pt = new PortfolioEntitys(name);
 		jpaHelper.storeObject(pt);
-		propertyChangeSuport.removePropertyChangeListener(listener)
 		return new Portfolio(pt);
 	}
 
@@ -72,7 +71,6 @@ public class PortfolioHandler implements IPortfolioHandler, IObservable{
 	}
 	@Override
 	public void removeObserver(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
-		
+		propertyChangeSuport.addPropertyChangeListener(listener);
 	}
 }
