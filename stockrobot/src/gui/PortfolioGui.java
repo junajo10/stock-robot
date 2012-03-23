@@ -15,6 +15,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,7 +24,7 @@ import javax.swing.Box;
 
 import portfolio.IPortfolioHandler;
 
-public class PortfolioGui extends JFrame implements Observer {
+public class PortfolioGui extends JFrame implements PropertyChangeListener {
 
 	private JPanel contentPane;
 	private JButton btn_BalanceHistory;
@@ -201,9 +203,9 @@ public class PortfolioGui extends JFrame implements Observer {
 		cmb_portfolio.addActionListener(listener);
 	}
 	
-	
 	@Override
-	public void update(Observable o, Object arg) {
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
 		
 	}
 }
