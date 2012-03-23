@@ -38,11 +38,7 @@ public class JPAHelper {
 	private static JPAHelper instance = null;
 	
 	
-	/**
-	 * Just for testing purposes!
-	 * @param database
-	 */
-	public JPAHelper(String database) {
+	private JPAHelper(String database) {
 		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
 		factory = Persistence.createEntityManagerFactory(database, map);
 		
@@ -51,15 +47,26 @@ public class JPAHelper {
 	
 	
 	private JPAHelper() {
-		
+		initJPASystem();
 	}
 	/**
-	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance.
+	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance of it.
 	 * @return An instance of JPAHelper
 	 */
 	public static JPAHelper getInstance() {
 		if(instance == null) {
 			instance = new JPAHelper();
+		}
+		return instance;
+	}
+	/**
+	 * Just for testing purposes!
+	 * @param database
+	 * @return an instance of the testing JPAHelper
+	 */
+	public static JPAHelper getInstance(String database) {
+		if(instance == null) {
+			instance = new JPAHelper(database);
 		}
 		return instance;
 	}

@@ -25,7 +25,7 @@ public class JPAHelperTest {
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = new JPAHelper("testdb");
+		jpaHelper = JPAHelper.getInstance("testdb");
 	}
 	@Test(expected=Exception.class)
 	public void testDuplicateEntry() {
@@ -35,7 +35,7 @@ public class JPAHelperTest {
 	}
 	@Test
 	public void testDuplicateSafeEntry() {
-		StockNames stockName = new StockNames("Stock2"+rand.nextFloat(), "marketB");
+		StockNames stockName = new StockNames("Stock2" + rand.nextFloat(), "marketB");
 		StockPrices sp = new StockPrices(stockName, 100, 100, 100, 100, new Date(123231));
 		System.out.println(sp);
 		jpaHelper.storeObjectIfPossible(stockName);
@@ -43,12 +43,22 @@ public class JPAHelperTest {
 		jpaHelper.storeObjectIfPossible(sp);
 	}
 	@Test
+	public void testNewPortfolio() {
+		AlgorithmEntitys algorithm = new AlgorithmEntitys("AlgorithmName", "path");
+		PortfolioEntitys portfolio = new PortfolioEntitys("Portfolio");
+		portfolio.setAlgorithm(algorithm);
+		jpaHelper.storeObject(algorithm);
+		jpaHelper.storeObject(portfolio);		
+	}
+	@Test
 	public void testNewPortfolioAndDelete() {
 		PortfolioEntitys testPortfolio = new PortfolioEntitys("testPortfolio");
 		jpaHelper.storeObject(testPortfolio);
 		
 		jpaHelper.remove(testPortfolio);
+		
 		for (PortfolioEntitys p : jpaHelper.getAllPortfolios()) {
+			System.out.println(jpaHelper.getAllPortfolios().size());
 			if (p.getName().contentEquals("testPortfolio"))
 				throw new IllegalArgumentException("Still in the system");
 		}
@@ -58,12 +68,12 @@ public class JPAHelperTest {
 		// TODO: PortfolioInvestment
 		// TODO: StocksToWatch
 		
-		for (PortfolioEntitys p : jpaHelper.getAllPortfolios()) {
-			for (PortfolioHistory ph : p.getHistory()) {
-	    		jpaHelper.remove(ph);
-	    	}
-	    	jpaHelper.remove(p);
-	    }
+		while (jpaHelper.getAllPortfolios().size() > 0) {
+			PortfolioEntitys p = jpaHelper.getAllPortfolios().get(0);
+			if (p.getHistory() != null)
+				if (p.getHistory().iterator().hasNext())
+					jpaHelper.remove(p.getHistory().iterator().next());
+		}
 	    for (AlgorithmEntitys a : jpaHelper.getAllAlgorithms())
 			jpaHelper.remove(a);
 		

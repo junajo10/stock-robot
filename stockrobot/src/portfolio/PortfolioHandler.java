@@ -20,7 +20,6 @@ public class PortfolioHandler implements IPortfolioHandler{
 	
 	private PortfolioHandler() {
 		jpaHelper = JPAHelper.getInstance();
-		jpaHelper.initJPASystem();
 		
 		List<PortfolioEntitys> portfolioTables = JPAHelper.getInstance().getAllPortfolios();
 		

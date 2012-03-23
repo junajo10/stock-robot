@@ -33,7 +33,10 @@ public class Portfolio implements IPortfolio {
 	public Portfolio(PortfolioEntitys portfolioTable) {
 		this.portfolioTable = portfolioTable;
 		jpaHelper = JPAHelper.getInstance();
-		algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
+		if (portfolioTable.getAlgorithm() != null)
+			algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
+		else
+			System.out.println("No algorithm set yet for " + getName());
 		
 		System.out.println(portfolioTable);
 	}
