@@ -3,6 +3,8 @@ package scraping.parser;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import scraping.database.IInserter;
 import scraping.database.Inserter;
@@ -32,11 +34,11 @@ public class ParserRunner implements IParserRunner {
 	}
 	@Override
 	public void run() {
-		ArrayList<URL> avanzaURLList = new ArrayList<URL>();
+		Map<URL, String> avanzaStockMarkets = new HashMap<URL, String>();
 		try {
-			avanzaURLList.add(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=LargeCap.SE"));
-			avanzaURLList.add(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=MidCap.SE"));
-			avanzaURLList.add(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=SmallCap.SE"));
+			avanzaStockMarkets.put(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=LargeCap.SE"), "LargeCap");
+			avanzaStockMarkets.put(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=MidCap.SE"), "MidCap");
+			avanzaStockMarkets.put(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=SmallCap.SE"), "SmallCap");
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		}
@@ -45,20 +47,14 @@ public class ParserRunner implements IParserRunner {
 				
 				//Should run right now?
 				if( scheduler.shouldRun() ) {
-					
 					ArrayList<ParserStock> stockList = null;
 					Long timeBefore = System.currentTimeMillis();
-					for(URL url : avanzaURLList){
-						stockList = parser.parse(url, "LargeCap");
-//						for(ParserStock s : stockList){
-//							System.out.println(s);
-//						}
-						
+					for(URL url : avanzaStockMarkets.keySet()){
+						stockList = parser.parse(url, avanzaStockMarkets.get(url));			
 					    inserter.insertStockData(stockList);
-
 					}
 					Long timeElapsed = System.currentTimeMillis() - timeBefore;
-					System.out.println("Parsing done in:" +timeElapsed + " ms.");
+					System.out.println("Parsing done in: " +timeElapsed + " ms.");
 					try {
 						Thread.sleep(60000-timeElapsed);
 					} catch (InterruptedException e) {
@@ -113,7 +109,7 @@ public class ParserRunner implements IParserRunner {
 	}
 	
 	/**
-	 *  Stops the parser
+	 *  Starts the parser.
 	 *  
 	 */
 	public boolean startParser() {
