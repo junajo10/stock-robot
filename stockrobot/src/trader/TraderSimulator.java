@@ -28,7 +28,6 @@ public class TraderSimulator implements ITrader{
 			System.out.println("BUY: " + amount + " of " + s);
 			portfolio.bougthFor(amount * s.getBuy());
 			JPAHelper.getInstance().storeObject(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
-			
 		}
 		return true;
 	}

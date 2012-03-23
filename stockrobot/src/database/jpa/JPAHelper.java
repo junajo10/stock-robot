@@ -206,11 +206,12 @@ public class JPAHelper {
 		em.getTransaction().begin();
 		try {
 			em.persist(o);
+			em.getTransaction().commit();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		em.getTransaction().commit();
+		
 		return true;
 	}
 	/**
@@ -333,6 +334,31 @@ public class JPAHelper {
 		}
 		
 		return oldStocks;
+	}
+	public StockPrices getLatestStockPrice(StockPrices from) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
+        
+        Root<StockPrices> c = q2.from(StockPrices.class);
+        
+        q2.select(c);
+        
+        
+        Predicate p = em.getCriteriaBuilder().equal(c.get("stockName"), from.getStockName());
+        
+        q2.where(p);
+        
+        
+        q2.orderBy(cb.desc(c.get("time")));
+        
+        
+        
+        TypedQuery<StockPrices> query = em.createQuery(q2);
+        
+        query.setMaxResults(1);
+        
+        return query.getSingleResult();
+        
 	}
 	/**
 	 * Returns the total amount invested in this portfolio
