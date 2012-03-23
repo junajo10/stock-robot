@@ -37,6 +37,19 @@ public class JPAHelper {
 	
 	private static JPAHelper instance = null;
 	
+	
+	/**
+	 * Just for testing purposes!
+	 * @param database
+	 */
+	public JPAHelper(String database) {
+		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
+		factory = Persistence.createEntityManagerFactory(database, map);
+		
+		em = factory.createEntityManager();
+	}
+	
+	
 	private JPAHelper() {
 		
 	}
@@ -172,7 +185,7 @@ public class JPAHelper {
 	 * @param o The object to be updated.
 	 * @return True if it went ok.
 	 */
-	public boolean updateObject(Object o) {
+	public synchronized boolean updateObject(Object o) {
 		em.getTransaction().begin();
 		em.merge(o);
 		em.getTransaction().commit();
@@ -183,21 +196,22 @@ public class JPAHelper {
 	 * @param o Object to be stored
 	 * @return True if it went ok
 	 */
-	public boolean storeObject(Object o) {
+	public synchronized boolean storeObject(Object o) {
 		em.getTransaction().begin();
 		em.persist(o);
 		em.getTransaction().commit();
 		return true;
 	}
-	public boolean storeObjectIfPossible(Object o) {
+	public synchronized boolean storeObjectIfPossible(Object o) {
 		em.getTransaction().begin();
 		try {
 			em.persist(o);
+			em.getTransaction().commit();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		em.getTransaction().commit();
+		
 		return true;
 	}
 	/**
@@ -205,7 +219,7 @@ public class JPAHelper {
 	 * @param list List of objects
 	 * @return True if it went ok
 	 */
-	public boolean storeListOfObjects(List list) {
+	public synchronized boolean storeListOfObjects(List list) {
 		em.getTransaction().begin();
 		for (Object o : list) {
 			em.persist(o);
@@ -218,7 +232,7 @@ public class JPAHelper {
 	 * @param list List of objects
 	 * @return the number of objects not stored.
 	 */
-	public int storeListOfObjectsDuplicates(List list) {
+	public synchronized int storeListOfObjectsDuplicates(List list) {
 		int dup = 0;
 		for (Object o : list) {
 			try {
@@ -237,7 +251,7 @@ public class JPAHelper {
 	 * @param portfolio The portfolio to invest to
 	 * @return Returns true if everything went ok
 	 */
-	public boolean investMoney(long amount, PortfolioEntitys portfolio) {
+	public synchronized boolean investMoney(long amount, PortfolioEntitys portfolio) {
 		em.getTransaction().begin();
 		
 		em.persist(new PortfolioInvestment(portfolio, amount, true));
@@ -322,6 +336,30 @@ public class JPAHelper {
 		return oldStocks;
 	}
 	/**
+	 * Given a StockPrice will return the latest stockprice with the same name.
+	 * @param from The old stockPrice
+	 * @return The latest stockPrice with same name as given stockPrice
+	 */
+	public StockPrices getLatestStockPrice(StockPrices from) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
+        
+        Root<StockPrices> c = q2.from(StockPrices.class);
+        
+        q2.select(c);
+        
+        Predicate p = em.getCriteriaBuilder().equal(c.get("stockName"), from.getStockName());
+        
+        q2.where(p);
+        q2.orderBy(cb.desc(c.get("time")));
+        
+        TypedQuery<StockPrices> query = em.createQuery(q2);
+        
+        query.setMaxResults(1);
+        
+        return query.getSingleResult();
+	}
+	/**
 	 * Returns the total amount invested in this portfolio
 	 * @param portfolioTable The portfolio to be audited.
 	 * @return The total amount invested
@@ -356,6 +394,64 @@ public class JPAHelper {
 	 */
 	public AlgorithmEntitys getAlgorithmTable(PortfolioEntitys portfolioTable) {
 		return portfolioTable.getAlgorithm();
+	}
+
+	/**
+	 * Given a stockPrice and a portfolio, will find the PortfolioHistory that has the StockPrice as buying price, 
+	 * and coupled with the same portfolio.
+	 * 
+	 * This method will be used for example in the TraderSimulator to get the right PortfolioHistory.
+	 * 
+	 * @param stockPrice The buying stockPrice
+	 * @param portfolio The portfolio
+	 * @return A PortfolioHistory.
+	 */
+	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio) {
+		
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
+        
+        Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
+        
+        q2.select(c);
+        
+        Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolio);
+        Predicate p2 = em.getCriteriaBuilder().equal(c.get("stockPrice"), stockPrice);
+        
+        q2.where(p, p2);
+        
+        TypedQuery<PortfolioHistory> query = em.createQuery(q2);
+        
+        query.setMaxResults(1);
+		
+		return query.getSingleResult();
+	}
+	/**
+	 * Returns a list of Stockprices with same name as a given StockPrice, with max size of a given value.
+	 * @param from The StockPrice that has the same name 
+	 * @param n How many max results
+	 * @return A list of stockPrices
+	 */
+	public List<StockPrices> getNLatest(StockPrices from, int n) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
+        
+        Root<StockPrices> c = q2.from(StockPrices.class);
+        
+        q2.select(c);
+        
+        Predicate p = em.getCriteriaBuilder().equal(c.get("stockName"), from.getStockName());
+        
+        q2.where(p);
+        
+        q2.orderBy(cb.desc(c.get("time")));
+        
+        TypedQuery<StockPrices> query = em.createQuery(q2);
+        
+        query.setMaxResults(n);
+		
+		return query.getResultList();
 	}
 	
 }

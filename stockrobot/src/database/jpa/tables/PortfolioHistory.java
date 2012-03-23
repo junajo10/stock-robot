@@ -91,6 +91,9 @@ public class PortfolioHistory {
 	public Date getSoldDate() {
 		return soldDate;
 	}
+	/**
+	 * @return The amount of stocks in this entity
+	 */
 	public long getAmount() {
 		return amount;
 	}
@@ -99,6 +102,9 @@ public class PortfolioHistory {
 	}
 	public PortfolioEntitys getPortfolio() {
 		return portfolio;
+	}
+	public void setSoldDate(Date soldDate) {
+		this.soldDate = soldDate;
 	}
 	
 }

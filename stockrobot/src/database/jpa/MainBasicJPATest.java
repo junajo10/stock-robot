@@ -115,6 +115,24 @@ public class MainBasicJPATest {
 		for (StockPrices sp2 : jpaHelper.getStockInfo(10).get(0).getRight()) {
 			System.out.println(sp2);
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//-------- Test get latest StockPrice from any stockPrice
+		StockPrices old = jpaHelper.getAllStockPrices().get(0);
+		StockPrices newestPrice = jpaHelper.getLatestStockPrice(jpaHelper.getAllStockPrices().get(0));
+		System.out.println("Given stockPrice: " + old);
+		System.out.println("Latest stockPrice: " + newestPrice);
+		//------
+		
+		
+		
 		jpaHelper.stopJPASystem();
 		
 	}

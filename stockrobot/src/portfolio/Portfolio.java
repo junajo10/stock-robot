@@ -18,12 +18,13 @@ import database.jpa.tables.StockPrices;
  * @author Daniel
  *
  * An object of this class will hold one portfolio.
+ * When a object of this class is loaded, it will load the algorithm coupled with it.
  */
 public class Portfolio implements IPortfolio {
 	private int portfolioId;
 	private PortfolioEntitys portfolioTable;
-	JPAHelper jpaHelper;
-	IAlgorithm algorithm;
+	private JPAHelper jpaHelper;
+	private IAlgorithm algorithm;
 	
 	/**
 	 * Start up an existing portfolio

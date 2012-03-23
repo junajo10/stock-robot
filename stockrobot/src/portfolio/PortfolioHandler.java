@@ -15,8 +15,8 @@ import database.jpa.tables.PortfolioEntitys;
 public class PortfolioHandler implements IPortfolioHandler{
 
 	private static PortfolioHandler instance = null;
-	List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
-	JPAHelper jpaHelper;
+	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
+	private JPAHelper jpaHelper;
 	
 	private PortfolioHandler() {
 		jpaHelper = JPAHelper.getInstance();
