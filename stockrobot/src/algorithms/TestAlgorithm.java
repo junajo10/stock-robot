@@ -38,6 +38,26 @@ public class TestAlgorithm implements IAlgorithm{
 			return false;
 		}
 		
+		List<StockPrices> ownedStockes = jpaHelper.getCurrentStocks(portfolio.getPortfolioTable());
+		
+		for (StockPrices sp : ownedStockes ) {
+			
+			List<StockPrices> cs = jpaHelper.getNLast(sp, 5);
+			
+			long last = 0;
+			boolean sell = true;
+			for (int i = cs.size()-1; i > 0; i--) {
+				if (last > cs.get(i).getBuy()) {
+					sell = false;
+					break;
+				}
+				last = cs.get(i).getBuy();
+			}
+			
+			if (sell) {
+				trader.sellStock(sp, 10, portfolio.getPortfolioTable());
+			}
+		}
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
@@ -49,6 +69,9 @@ public class TestAlgorithm implements IAlgorithm{
 			if (buy)
 				buyStock(stockInfo.getRight().get(0), portfolio.getPortfolioTable().getBalance()/10/stockInfo.getRight().get(0).getBuy());
 		}
+		
+		
+		
 		
 		return true;
 	}

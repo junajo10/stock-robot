@@ -427,5 +427,31 @@ public class JPAHelper {
 		
 		return query.getSingleResult();
 	}
+	/**
+	 * Returns a list of Stockprices with same name as a given StockPrice, with max size of a given value.
+	 * @param from The StockPrice that has the same name 
+	 * @param n How many max results
+	 * @return A list of stockPrices
+	 */
+	public List<StockPrices> getNLast(StockPrices from, int n) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
+        
+        Root<StockPrices> c = q2.from(StockPrices.class);
+        
+        q2.select(c);
+        
+        Predicate p = em.getCriteriaBuilder().equal(c.get("stockName"), from.getStockName());
+        
+        q2.where(p);
+        
+        q2.orderBy(cb.desc(c.get("time")));
+        
+        TypedQuery<StockPrices> query = em.createQuery(q2);
+        
+        query.setMaxResults(n);
+		
+		return query.getResultList();
+	}
 	
 }
