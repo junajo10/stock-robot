@@ -31,7 +31,12 @@ public class MainBasicJPATest {
 		List<AlgorithmEntitys> algorithms = jpaHelper.getAllAlgorithms();
 		
 		if (algorithms.size() == 0) {
-			testAlgorithm = new AlgorithmEntitys("hej", "algorithms.TestAlgorithm");
+			testAlgorithm = new AlgorithmEntitys("Algorithm1", "algorithms.TestAlgorithm");
+			jpaHelper.storeObject(testAlgorithm);
+			algorithms = jpaHelper.getAllAlgorithms();
+		}
+		else if (algorithms.size() == 1) {
+			testAlgorithm = new AlgorithmEntitys("Algorithm2", "algorithms.TestAlgorithm2");
 			jpaHelper.storeObject(testAlgorithm);
 			algorithms = jpaHelper.getAllAlgorithms();
 		}
@@ -40,7 +45,6 @@ public class MainBasicJPATest {
 			//a.setName(a.getName() + "1");
 			//jpaHelper.updateObject(a);
 			System.out.println(a);
-			
 		}
 		
 		
@@ -48,6 +52,15 @@ public class MainBasicJPATest {
 		
 		if (portfolios.size() == 0) {
 			jpaHelper.storeObject(new PortfolioEntitys("portfolio 1"));
+			portfolios = jpaHelper.getAllPortfolios();
+			
+			if (testAlgorithm != null)
+				portfolios.get(0).setAlgorithm(testAlgorithm);
+				
+			jpaHelper.updateObject(portfolios.get(0));
+		}
+		else if (portfolios.size() == 1) {
+			jpaHelper.storeObject(new PortfolioEntitys("portfolio 2"));
 			portfolios = jpaHelper.getAllPortfolios();
 			
 			if (testAlgorithm != null)
@@ -64,9 +77,6 @@ public class MainBasicJPATest {
 		if (jpaHelper.getAllStockNames().size() == 0) {
 			stockName = new StockNames("apa", "bepa");
 			jpaHelper.storeObject(stockName);
-			
-			
-			
 		}
 		else {
 			stockName = jpaHelper.getAllStockNames().get(0); 
