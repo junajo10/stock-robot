@@ -1,34 +1,35 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.border.BevelBorder;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
-import javax.swing.JSpinner;
-import javax.swing.JScrollBar;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Button;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyListener;
+import java.util.Observable;
+import java.util.Observer;
 
-public class PortfolioGui extends JFrame {
+import javax.swing.Box;
+import java.awt.event.ActionEvent;
+
+public class PortfolioGui extends JFrame implements Observer {
 
 	private JPanel contentPane;
-
+	private JButton btn_BalanceHistory;
+	private JButton btn_AlgorithmChange;
+	private JComboBox cmb_portfolio;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -37,6 +38,7 @@ public class PortfolioGui extends JFrame {
 			public void run() {
 				try {
 					PortfolioGui frame = new PortfolioGui();
+					new PortfolioController(frame);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,9 +74,9 @@ public class PortfolioGui extends JFrame {
 		JLabel lbl_Portfolio = new JLabel("Portfolio");
 		pnl_menu.add(lbl_Portfolio);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Portfolio1", "Portfolio2", "Portfolio3"}));
-		pnl_menu.add(comboBox);
+		cmb_portfolio = new JComboBox();
+		cmb_portfolio.setModel(new DefaultComboBoxModel(new String[] {"Portfolio1", "Portfolio2", "Portfolio3"}));
+		pnl_menu.add(cmb_portfolio);
 		contentPane.add(pnl_menu);
 		contentPane.add(pnl_BoxContainer);
 		pnl_BoxContainer.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
@@ -110,9 +112,9 @@ public class PortfolioGui extends JFrame {
 		pnl_AlgorithmContainer.add(pnl_AlgorithmChange);
 		pnl_AlgorithmChange.setBackground((Color) null);
 		
-		JButton btn_AlgorithmChange2 = new JButton("Change");
-		btn_AlgorithmChange2.setBackground(Color.WHITE);
-		pnl_AlgorithmChange.add(btn_AlgorithmChange2);
+		btn_AlgorithmChange = new JButton("Change");
+		btn_AlgorithmChange.setBackground(Color.WHITE);
+		pnl_AlgorithmChange.add(btn_AlgorithmChange);
 		
 		PortfolioContainer pnl_BalanceContainer = new PortfolioContainer();
 		pnl_BoxContainer.add(pnl_BalanceContainer);
@@ -159,13 +161,44 @@ public class PortfolioGui extends JFrame {
 		pnl_BalanceContainer.add(pnl_BalanceHistory);
 		pnl_BalanceHistory.setBackground(null);
 		
-		JButton btn_balanceHistory = new JButton("History");
-		btn_balanceHistory.setForeground(Color.BLACK);
-		pnl_BalanceHistory.add(btn_balanceHistory);
-		btn_balanceHistory.setBackground(Color.WHITE);
+		btn_BalanceHistory = new JButton("History");
+		btn_BalanceHistory.setForeground(Color.BLACK);
+		pnl_BalanceHistory.add(btn_BalanceHistory);
+		btn_BalanceHistory.setBackground(Color.WHITE);
 		
 		JButton button = new JButton("Change");
 		button.setBackground(Color.WHITE);
-		btn_balanceHistory.setBackground(Color.WHITE);
+		btn_BalanceHistory.setBackground(Color.WHITE);
+		
+		this.setVisible(true);
+	}
+
+	/**
+	 * Adds a listener that listens for presses on button Balance History
+	 * 
+	 * @param listener
+	 */
+	public void addBalanceHistoryListener(ActionListener listener){
+		btn_BalanceHistory.addActionListener(listener);
+	}
+	
+	/**
+	 * Adds a listener that listens for presses on button change algorithm
+	 * 
+	 * @param listener
+	 */
+	public void addChangeAlgorithmListener(ActionListener listener){
+		btn_AlgorithmChange.addActionListener(listener);
+		
+	}
+	
+	public void addChangePortfolioListener(ActionListener listener){
+		cmb_portfolio.addActionListener(listener);
+	}
+	
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		
 	}
 }
