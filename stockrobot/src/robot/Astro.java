@@ -1,5 +1,8 @@
 package robot;
 
+import gui.PortfolioController;
+import gui.PortfolioGui;
+
 import java.util.Date;
 import java.util.Random;
 
@@ -30,6 +33,8 @@ public class Astro implements IRobot_Algorithms{
 
 	IPortfolioHandler portfolioHandler = null;
 	AlgorithmsLoader algorithmsLoader = null;
+	PortfolioGui portfolioGui = null;
+	PortfolioController portfolioController = null;
 	ITrader trader = null;
 	JPAHelper jpaHelper = null;
 	Random rand = new Random(System.currentTimeMillis());
@@ -45,6 +50,10 @@ public class Astro implements IRobot_Algorithms{
 		algorithmsLoader = AlgorithmsLoader.getInstance(this);
 		
 		portfolioHandler = PortfolioHandler.getInstance();
+		
+		portfolioGui = new PortfolioGui(portfolioHandler);
+		
+		portfolioController = new PortfolioController(portfolioGui,portfolioHandler);
 		
 		jpaHelper = JPAHelper.getInstance();
 		

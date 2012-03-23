@@ -5,10 +5,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
+import portfolio.IPortfolioHandler;
+import portfolio.PortfolioHandler;
+
 public class PortfolioController {
 
-	public PortfolioController(PortfolioGui gui){
+	public PortfolioController(PortfolioGui gui, IPortfolioHandler portfolioHandler){
 		
+		portfolioHandler.addAddObserver(gui);
 		gui.addBalanceHistoryListener(new BalanceHistoryListener());
 		gui.addChangeAlgorithmListener(new ChangeAlgorithmListener());
 		gui.addChangePortfolioListener(new ChangePortfolioListener());

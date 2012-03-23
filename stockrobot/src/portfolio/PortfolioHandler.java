@@ -16,7 +16,7 @@ import database.jpa.tables.PortfolioEntitys;
  * It will start by creating all the portfolio objects.
  * Each portfolio will then create a algorithm instance.
  */
-public class PortfolioHandler implements IPortfolioHandler, IObservable{
+public class PortfolioHandler implements IPortfolioHandler{
 
 	private static PortfolioHandler instance = null;
 	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();

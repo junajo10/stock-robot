@@ -1,12 +1,14 @@
 package portfolio;
 
+import gui.IObservable;
+
 import java.util.List;
 
 /**
  * @author Daniel
  *
  */
-public interface IPortfolioHandler {
+public interface IPortfolioHandler extends IObservable {
 
 	/**
 	 * Creates a new portfolio with default settings, and a given name

@@ -36,7 +36,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	
 	/**
 	 * Launch the application.
-	 */
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -49,7 +49,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
@@ -205,7 +205,6 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
 		
 	}
 }
