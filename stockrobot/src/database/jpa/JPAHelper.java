@@ -433,7 +433,7 @@ public class JPAHelper {
 	 * @param n How many max results
 	 * @return A list of stockPrices
 	 */
-	public List<StockPrices> getNLast(StockPrices from, int n) {
+	public List<StockPrices> getNLatest(StockPrices from, int n) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
         

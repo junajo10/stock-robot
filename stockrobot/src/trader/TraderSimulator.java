@@ -8,7 +8,7 @@ import database.jpa.tables.StockPrices;
 /**
  * @author Daniel
  *
- * A very simple TraderSimulator that currently only supports buying.
+ * A very simple TraderSimulator.
  */
 public class TraderSimulator implements ITrader{
 	private static TraderSimulator instance = null;
