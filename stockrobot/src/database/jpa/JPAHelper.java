@@ -396,7 +396,16 @@ public class JPAHelper {
 		return portfolioTable.getAlgorithm();
 	}
 
-
+	/**
+	 * Given a stockPrice and a portfolio, will find the PortfolioHistory that has the StockPrice as buying price, 
+	 * and coupled with the same portfolio.
+	 * 
+	 * This method will be used for example in the TraderSimulator to get the right PortfolioHistory.
+	 * 
+	 * @param stockPrice The buying stockPrice
+	 * @param portfolio The portfolio
+	 * @return A PortfolioHistory.
+	 */
 	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio) {
 		
 		
