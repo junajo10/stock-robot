@@ -37,8 +37,9 @@ public class Harvester {
 		if(str.equals("help")){
 			System.out.println("*** ASTRo commandline help ***");
 			System.out.println("Syntax: (command) => (explanation)");
-			System.out.println("status => Prints status on scheduler and parser");
-			System.out.println("stop => Temporarly stop the parser thread.");				
+			System.out.println("status         => Prints status on the parse.");
+			System.out.println("stop           => Temporarly stop the parser thread.");	
+			System.out.println("force stop     => Forces the parser to stop parse. Warning! May corrupt database.");	
 			System.out.println("restart_parser => Restarts the parser.");		
 			System.out.println("exit => Exits the entire program.");		
 			System.out.println("*** END OF HELP ***");
@@ -64,6 +65,15 @@ public class Harvester {
 		else if(str.equals("stop")){
 			System.out.println("*** STATUS ***");
 			if(stopParser()){
+				System.out.println("*** Parser thread stopped successfully. ***");
+			}
+			else{
+				System.out.println("*** Parser already stopped or not started.");
+			}
+		}
+		else if(str.equals("force stop")){
+			System.out.println("*** STATUS ***");
+			if(forceStop()){
 				System.out.println("*** Parser thread stopped successfully. ***");
 			}
 			else{
@@ -100,7 +110,8 @@ public class Harvester {
 	
 	
 	/**
-	 * Stops the parser temporarly.
+	 * Force the parser to stop, without waiting 
+	 * for it to complete a parsing loop.
 	 * <p>
 	 * @return True if the parser was running and was successfully stopped.
 	 * <p>
@@ -121,7 +132,7 @@ public class Harvester {
 	}
 	
 	/**
-	 * Stops the parser temporarly.
+	 * Stops the parser temporarily.
 	 * <p>
 	 * @return True if the parser was running and was successfully stopped.
 	 * <p>
