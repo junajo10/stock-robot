@@ -37,6 +37,19 @@ public class JPAHelper {
 	
 	private static JPAHelper instance = null;
 	
+	
+	/**
+	 * Just for testing purposes!
+	 * @param database
+	 */
+	public JPAHelper(String database) {
+		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
+		factory = Persistence.createEntityManagerFactory(database, map);
+		
+		em = factory.createEntityManager();
+	}
+	
+	
 	private JPAHelper() {
 		
 	}
