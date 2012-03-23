@@ -172,7 +172,7 @@ public class JPAHelper {
 	 * @param o The object to be updated.
 	 * @return True if it went ok.
 	 */
-	public boolean updateObject(Object o) {
+	public synchronized boolean updateObject(Object o) {
 		em.getTransaction().begin();
 		em.merge(o);
 		em.getTransaction().commit();
@@ -183,13 +183,13 @@ public class JPAHelper {
 	 * @param o Object to be stored
 	 * @return True if it went ok
 	 */
-	public boolean storeObject(Object o) {
+	public synchronized boolean storeObject(Object o) {
 		em.getTransaction().begin();
 		em.persist(o);
 		em.getTransaction().commit();
 		return true;
 	}
-	public boolean storeObjectIfPossible(Object o) {
+	public synchronized boolean storeObjectIfPossible(Object o) {
 		em.getTransaction().begin();
 		try {
 			em.persist(o);
@@ -205,7 +205,7 @@ public class JPAHelper {
 	 * @param list List of objects
 	 * @return True if it went ok
 	 */
-	public boolean storeListOfObjects(List list) {
+	public synchronized boolean storeListOfObjects(List list) {
 		em.getTransaction().begin();
 		for (Object o : list) {
 			em.persist(o);
@@ -218,7 +218,7 @@ public class JPAHelper {
 	 * @param list List of objects
 	 * @return the number of objects not stored.
 	 */
-	public int storeListOfObjectsDuplicates(List list) {
+	public synchronized int storeListOfObjectsDuplicates(List list) {
 		int dup = 0;
 		for (Object o : list) {
 			try {
@@ -237,7 +237,7 @@ public class JPAHelper {
 	 * @param portfolio The portfolio to invest to
 	 * @return Returns true if everything went ok
 	 */
-	public boolean investMoney(long amount, PortfolioEntitys portfolio) {
+	public synchronized boolean investMoney(long amount, PortfolioEntitys portfolio) {
 		em.getTransaction().begin();
 		
 		em.persist(new PortfolioInvestment(portfolio, amount, true));
