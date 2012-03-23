@@ -20,6 +20,11 @@ import trader.TraderSimulator;
  * @author Daniel
  *
  * The starting point of the ASTRo System.
+ * 
+ * It will currently insert a new stock in the system each second, 
+ * and then start the algorithms in all portfolios.
+ * 
+ * This is the very very first basic prototype of the system.
  */
 public class Astro implements IRobot_Algorithms{
 
