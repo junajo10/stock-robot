@@ -31,7 +31,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 		this.portfolio = portfolio;
 		this.trader = trader;
 		this.jpaHelper = JPAHelper.getInstance();
-		System.out.println("garrr");
+		System.out.println("Inside TestAlgorithm2 constructor");
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 				trader.sellStock(sp, ph.getAmount(), portfolio.getPortfolioTable());
 			}
 		}
-		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
+		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(5)) {
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {

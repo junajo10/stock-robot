@@ -2,6 +2,7 @@ package database.jpa.tables;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,7 @@ public class PortfolioEntitys {
 	@Column(name="name", nullable=false, length=20, insertable=true)
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@Column(name = "algorithm")
 	private AlgorithmEntitys algorithm;
 	
@@ -157,7 +158,7 @@ public class PortfolioEntitys {
 	 * A helper method to easy get the text representation.
 	 */
 	public String toString() {
-		return name + " | " + balance;
+		return name + " | " + balance + " | Algorithm: " + algorithm;
 	}
 	/**
 	 * Will return a list of StockNames this portfolio is set to watch

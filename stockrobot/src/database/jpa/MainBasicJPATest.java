@@ -26,56 +26,32 @@ public class MainBasicJPATest {
 		
 		jpaHelper.initJPASystem();
 
-		AlgorithmEntitys testAlgorithm = null;
-		
-		List<AlgorithmEntitys> algorithms = jpaHelper.getAllAlgorithms();
-		
-		if (algorithms.size() == 0) {
-			testAlgorithm = new AlgorithmEntitys("Algorithm1", "algorithms.TestAlgorithm");
-			jpaHelper.storeObject(testAlgorithm);
-			algorithms = jpaHelper.getAllAlgorithms();
-		}
-		else if (algorithms.size() == 1) {
-			testAlgorithm = new AlgorithmEntitys("Algorithm2", "algorithms.TestAlgorithm2");
-			jpaHelper.storeObject(testAlgorithm);
-			algorithms = jpaHelper.getAllAlgorithms();
-		}
-		
-		for (AlgorithmEntitys a : algorithms) {
-			//a.setName(a.getName() + "1");
-			//jpaHelper.updateObject(a);
-			System.out.println(a);
-		}
-		
 		
 		List<PortfolioEntitys> portfolios = jpaHelper.getAllPortfolios();
 		
 		if (portfolios.size() == 0) {
-			jpaHelper.storeObject(new PortfolioEntitys("portfolio 1"));
-			portfolios = jpaHelper.getAllPortfolios();
+			PortfolioEntitys portfolio = new PortfolioEntitys("portfolio 1");
+			jpaHelper.storeObject(portfolio);
+			portfolio.setAlgorithm(new AlgorithmEntitys("algorithm1", "algorithms.TestAlgorithm"));
+			jpaHelper.updateObject(portfolio);
+		//}
+		//else if (portfolios.size() == 1) {
 			
-			if (testAlgorithm != null)
-				portfolios.get(0).setAlgorithm(testAlgorithm);
-				
-			jpaHelper.updateObject(portfolios.get(0));
-		}
-		else if (portfolios.size() == 1) {
-			jpaHelper.storeObject(new PortfolioEntitys("portfolio 2"));
-			portfolios = jpaHelper.getAllPortfolios();
+			portfolio = new PortfolioEntitys("portfolio 2");
+			jpaHelper.storeObject(portfolio);
+			portfolio.setAlgorithm(new AlgorithmEntitys("algorithm2", "algorithms.TestAlgorithm2"));
+			jpaHelper.updateObject(portfolio);
 			
-			if (testAlgorithm != null)
-				portfolios.get(0).setAlgorithm(testAlgorithm);
-				
-			jpaHelper.updateObject(portfolios.get(0));
+			portfolios = jpaHelper.getAllPortfolios();
 		}
 		
 		for (PortfolioEntitys p : portfolios) {
-			jpaHelper.investMoney(100, p);
+			jpaHelper.investMoney(10000000, p);
 			System.out.println(p);
 		}
 		StockNames stockName;
 		if (jpaHelper.getAllStockNames().size() == 0) {
-			stockName = new StockNames("apa", "bepa");
+			stockName = new StockNames("Stock1", "MarketA");
 			jpaHelper.storeObject(stockName);
 		}
 		else {

@@ -34,6 +34,8 @@ public class Portfolio implements IPortfolio {
 		this.portfolioTable = portfolioTable;
 		jpaHelper = JPAHelper.getInstance();
 		algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
+		
+		System.out.println(portfolioTable);
 	}
 	@Override
 	public List<StockNames> getAvalibleStocks() {

@@ -30,7 +30,7 @@ public class TestAlgorithm implements IAlgorithm{
 		this.portfolio = portfolio;
 		this.trader = trader;
 		this.jpaHelper = JPAHelper.getInstance();
-		System.out.println("garrr");
+		System.out.println("Inside TestAlgorithm constructor");
 	}
 	
 	@Override

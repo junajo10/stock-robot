@@ -55,7 +55,7 @@ public class Astro implements IRobot_Algorithms{
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
 				if (rand.nextInt(10) == 1) {
 					long newInvestment = ((long)rand.nextInt(1000)*1000);
-					System.out.println("More money invested: " + newInvestment);
+					System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
 					p.investAmount(newInvestment);
 				}
 				
