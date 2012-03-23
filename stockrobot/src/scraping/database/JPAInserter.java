@@ -81,14 +81,21 @@ public class JPAInserter implements IInserter {
 					
 					try {
 						
+						helper.updateObject(stockFromDB);
+                        
+					} catch( Exception e) {
+					
+						e.printStackTrace();
+					}
+                    
+					try {
+						
 						//Create transaction for inserting a new stock price
-						em.getTransaction().begin();
-						em.persist(priceTable);
-						em.getTransaction().commit();
+						helper.storeObject( priceTable );
 						
 					} catch( Exception e ) {
 						
-						//e.printStackTrace();
+						e.printStackTrace();
 						System.out.println( "JPAInserter: insert stockData: Trouble adding a new price" );
 					}
 					
