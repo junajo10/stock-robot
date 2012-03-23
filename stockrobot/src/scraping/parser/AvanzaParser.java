@@ -80,7 +80,7 @@ public class AvanzaParser implements IParser {
 		}
 		
 		private String replaceAvanzaCharacters( String input ) {
-			return input.replaceAll("ˆ","ö").replaceAll("÷","Ö").replaceAll("≈","Å").replaceAll("‰","ä").replaceAll("Â","å");
+			return input.replaceAll("ÀÜ","√∂").replaceAll("√∑","√ñ").replaceAll("‚âà","√Ö").replaceAll("‚Ä∞","√§").replaceAll("√Ç","√•");
 		}
 		
 		/**Method is called once the parser finds a String in the given HTML-page.
@@ -89,12 +89,12 @@ public class AvanzaParser implements IParser {
 		public void handleText(char[] data, int pos) {
 			String input = new StringBuffer().append(data).toString();
 			
-			if(input.equals("Sälj")){
+			if(input.equals("S√§lj")){
 				startNewStock = false;
 				lastInput = input; 
-				//System.out.print("Hittat S‰lj!");
+				//System.out.print("Hittat SÔøΩlj!");
 			}
-			else if(input.length()==1 && lastInput.equals("Sälj")){
+			else if(input.length()==1 && lastInput.equals("S√§lj")){
 				startNewStock = true;
 				lastInput = input;
 			}
