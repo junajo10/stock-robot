@@ -85,7 +85,7 @@ public class JPAInserter implements IInserter {
                         
 					} catch( Exception e) {
 					
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
                     
 					try {
@@ -95,7 +95,7 @@ public class JPAInserter implements IInserter {
 						
 					} catch( Exception e ) {
 						
-						e.printStackTrace();
+						//e.printStackTrace();
 						System.out.println( "JPAInserter: insert stockData: Trouble adding a new price" );
 					}
 					
