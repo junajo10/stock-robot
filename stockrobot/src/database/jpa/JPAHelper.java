@@ -38,11 +38,7 @@ public class JPAHelper {
 	private static JPAHelper instance = null;
 	
 	
-	/**
-	 * Just for testing purposes!
-	 * @param database
-	 */
-	public JPAHelper(String database) {
+	private JPAHelper(String database) {
 		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
 		factory = Persistence.createEntityManagerFactory(database, map);
 		
@@ -51,10 +47,10 @@ public class JPAHelper {
 	
 	
 	private JPAHelper() {
-		
+		initJPASystem();
 	}
 	/**
-	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance.
+	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance of it.
 	 * @return An instance of JPAHelper
 	 */
 	public static JPAHelper getInstance() {
@@ -64,9 +60,20 @@ public class JPAHelper {
 		return instance;
 	}
 	/**
+	 * Just for testing purposes!
+	 * @param database
+	 * @return an instance of the testing JPAHelper
+	 */
+	public static JPAHelper getInstance(String database) {
+		if(instance == null) {
+			instance = new JPAHelper(database);
+		}
+		return instance;
+	}
+	/**
 	 * Inits the jpa system.
 	 */
-	public void initJPASystem() {
+	private void initJPASystem() {
 		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
 		factory = Persistence.createEntityManagerFactory("astroportfolio", map);
 		
@@ -206,12 +213,11 @@ public class JPAHelper {
 		em.getTransaction().begin();
 		try {
 			em.persist(o);
-			em.getTransaction().commit();
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
-		
+		em.getTransaction().commit();
 		return true;
 	}
 	/**
@@ -269,7 +275,9 @@ public class JPAHelper {
 	 * @param objectToBeRemoved The object to be removed.
 	 */
 	public void remove(Object objectToBeRemoved) {
+		em.getTransaction().begin();
 		em.remove(objectToBeRemoved);
+		em.getTransaction().commit();
 	}
 	/**
 	 * Gets the stockNames this portfolio is set to watch.

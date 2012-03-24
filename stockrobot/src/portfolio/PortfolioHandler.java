@@ -25,10 +25,10 @@ public class PortfolioHandler implements IPortfolioHandler{
 	
 	private PortfolioHandler() {
 		jpaHelper = JPAHelper.getInstance();
-		jpaHelper.initJPASystem();
 		
 		List<PortfolioEntitys> portfolioTables = JPAHelper.getInstance().getAllPortfolios();
 		
+		System.out.println(portfolioTables);
 		for (PortfolioEntitys pt : portfolioTables) {
 			listOfPortfolios.add(new Portfolio(pt));
 		}

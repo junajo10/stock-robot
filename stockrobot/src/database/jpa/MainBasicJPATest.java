@@ -16,78 +16,83 @@ import database.jpa.tables.StockPrices;
 /**
  * @author Daniel
  *
- * This is manily a test class for learning jpa.
- * However it will also initzialise a working state for the JPA System.
+ * This is mainly a test class for learning JPA.
+ * However it will also initialize  a working state for the JPA System.
  */
 public class MainBasicJPATest {
 	public static void main(String[] args) {
 
 		JPAHelper jpaHelper = JPAHelper.getInstance();
 		
-		jpaHelper.initJPASystem();
-
-		AlgorithmEntitys testAlgorithm = null;
-		
-		List<AlgorithmEntitys> algorithms = jpaHelper.getAllAlgorithms();
-		
-		if (algorithms.size() == 0) {
-			testAlgorithm = new AlgorithmEntitys("hej", "algorithms.TestAlgorithm");
-			jpaHelper.storeObject(testAlgorithm);
-			algorithms = jpaHelper.getAllAlgorithms();
-		}
-		
-		for (AlgorithmEntitys a : algorithms) {
-			//a.setName(a.getName() + "1");
-			//jpaHelper.updateObject(a);
-			System.out.println(a);
-			
-		}
-		
 		
 		List<PortfolioEntitys> portfolios = jpaHelper.getAllPortfolios();
 		
 		if (portfolios.size() == 0) {
-			jpaHelper.storeObject(new PortfolioEntitys("portfolio 1"));
-			portfolios = jpaHelper.getAllPortfolios();
+			PortfolioEntitys portfolio = new PortfolioEntitys("portfolio 1");
+			jpaHelper.storeObject(portfolio);
+			portfolio.setAlgorithm(new AlgorithmEntitys("algorithm1", "algorithms.TestAlgorithm"));
+			jpaHelper.updateObject(portfolio);
+
 			
-			if (testAlgorithm != null)
-				portfolios.get(0).setAlgorithm(testAlgorithm);
-				
-			jpaHelper.updateObject(portfolios.get(0));
+			portfolio = new PortfolioEntitys("portfolio 2");
+			jpaHelper.storeObject(portfolio);
+			portfolio.setAlgorithm(new AlgorithmEntitys("algorithm2", "algorithms.TestAlgorithm2"));
+			jpaHelper.updateObject(portfolio);
+			
+			portfolios = jpaHelper.getAllPortfolios();
 		}
 		
 		for (PortfolioEntitys p : portfolios) {
-			jpaHelper.investMoney(100, p);
+			jpaHelper.investMoney(10000000, p);
 			System.out.println(p);
 		}
-		StockNames stockName;
-		if (jpaHelper.getAllStockNames().size() == 0) {
-			stockName = new StockNames("apa", "bepa");
+		List<StockNames> stockNames = jpaHelper.getAllStockNames();
+		if (stockNames.size() == 0) {
+			StockNames stockName = new StockNames("Stock1", "MarketA");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock2", "MarketB");
 			jpaHelper.storeObject(stockName);
 			
 			
+			stockName = new StockNames("Stock3", "MarketB");
+			jpaHelper.storeObject(stockName);
 			
-		}
-		else {
-			stockName = jpaHelper.getAllStockNames().get(0); 
+			stockName = new StockNames("Stock4", "MarketA");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock5", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock6", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockNames = jpaHelper.getAllStockNames(); 
 		}
 		Random r = new Random(System.currentTimeMillis());
-		StockPrices sp = new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis()));
-		jpaHelper.storeObject(sp);
+		
+		// create one stockPrice for each stockName
+		for (StockNames stockName : stockNames) {
+			StockPrices sp = new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis()));
+			jpaHelper.storeObject(sp);
+		}
+		
+		StockPrices aStock = jpaHelper.getAllStockPrices().get(0);
 		
 		PortfolioHistory ph;
 		if (r.nextBoolean())
-			ph = new PortfolioHistory(sp, new Date(System.currentTimeMillis()), null, 10, portfolios.get(0));
+			ph = new PortfolioHistory(aStock, new Date(System.currentTimeMillis()), null, 10, portfolios.get(0));
 		else
-			ph = new PortfolioHistory(sp, new Date(System.currentTimeMillis()-10000), new Date(System.currentTimeMillis()), 10, portfolios.get(0));
+			ph = new PortfolioHistory(aStock, new Date(System.currentTimeMillis()-10000), new Date(System.currentTimeMillis()), 10, portfolios.get(0));
 		jpaHelper.storeObject(ph);
 		
 		//---- Duplicate test
 		List<StockPrices> duplicateTest = new LinkedList<StockPrices>();
 		Date d = new Date(System.currentTimeMillis()+1000);
-		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
-		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
-		duplicateTest.add(new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
+		
+		duplicateTest.add(new StockPrices(aStock.getStockName(), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
+		duplicateTest.add(new StockPrices(aStock.getStockName(), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
+		duplicateTest.add(new StockPrices(aStock.getStockName(), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
 		
 		System.out.println("#duplicates: " + jpaHelper.storeListOfObjectsDuplicates(duplicateTest));
 		//-------------------
@@ -115,12 +120,6 @@ public class MainBasicJPATest {
 		for (StockPrices sp2 : jpaHelper.getStockInfo(10).get(0).getRight()) {
 			System.out.println(sp2);
 		}
-		
-		
-		
-		
-		
-		
 		
 		
 		
