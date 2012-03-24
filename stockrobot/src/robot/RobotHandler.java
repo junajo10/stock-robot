@@ -2,8 +2,10 @@ package robot;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import algorithms.IAlgorithm;
+import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
 
 /**
@@ -19,6 +21,7 @@ public class RobotHandler {
 	//Used to retrieve the algorithms and portfolios that are used
 	private IPortfolioHandler portfolioHandler;
 	private List<AlgorithmAdapter> algorithms;
+	
 	
 		
 	//TODO Implement a shedueler for the handler
@@ -45,6 +48,28 @@ public class RobotHandler {
 	public void runAlgorithms(){
 		
 		//TODO make code to run algorithms
+		List<AlgorithmAdapter> stillRunning = new LinkedList<AlgorithmAdapter>();
+		for(AlgorithmAdapter a : algorithms){
+			
+			if(a.isRunning())
+				stillRunning.add(a);
+		}
+		algorithms = new LinkedList<AlgorithmAdapter>();
+		algorithms.addAll(stillRunning);
+		
+		//Only adds algorithms that isnt curently running
+		for(IPortfolio portfolio : portfolioHandler.getPortfolios()){
+			boolean found = false;
+			for(AlgorithmAdapter adapter : stillRunning){
+				if(adapter.getPortfolio() == portfolio){
+					found = true;
+				}
+			}
+			if(!found){
+				algorithms.add(new AlgorithmAdapter(portfolio));
+			}
+		}
+		//TODO runt the treads
 	}
 	
 	/**
@@ -63,9 +88,10 @@ public class RobotHandler {
 		
 		public static final long NON_VALID_TIME = -1;
 		
-		private IAlgorithm algorithm;
+		private IPortfolio portfolio;
 		private boolean running = false;
 		private long time = NON_VALID_TIME;
+		private long startTime = NON_VALID_TIME;
 		
 		/**
 		 * Creates an adapter class for IAlgorithms so they can be
@@ -73,9 +99,13 @@ public class RobotHandler {
 		 * 
 		 * @param algorithm the algorithm to run
 		 */
-		public AlgorithmAdapter(IAlgorithm algorithm){
+		public AlgorithmAdapter(IPortfolio portfolio){
 			
-			this.algorithm = algorithm;
+			this.portfolio = portfolio;
+		}
+		
+		public IPortfolio getPortfolio(){
+			return portfolio;
 		}
 		
 		/**
@@ -83,8 +113,17 @@ public class RobotHandler {
 		 * 
 		 * @return >= 0 if finished : else < 0
 		 */
-		public long getLastRunTime(){
-			return time;
+		public long getRunTime(){
+			
+			long runTime = NON_VALID_TIME;
+			
+			if(time != NON_VALID_TIME){
+				runTime = time;
+			}else if(startTime != NON_VALID_TIME){
+				runTime = System.currentTimeMillis() - startTime;
+			}
+			
+			return runTime;
 		}
 		
 		/**
@@ -101,8 +140,8 @@ public class RobotHandler {
 			time = NON_VALID_TIME;
 			
 			running = true;
-			long startTime = System.currentTimeMillis();
-			algorithm.update();
+			startTime = System.currentTimeMillis();
+			portfolio.getAlgorithm().update();
 			time = System.currentTimeMillis() - startTime;
 			running = false;
 		}
