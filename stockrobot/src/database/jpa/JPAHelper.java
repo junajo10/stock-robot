@@ -200,6 +200,7 @@ public class JPAHelper {
 	 */
 	public List<StockPrices> getPricesForStockPeriod( StockNames st, Date start, Date end ) {
 		
+		//TODO: Fix this to be type safe! I couldn't find a way to compare dates without using JPQL.
 		//Get all prices WITHIN (including ends) start -> end, that are of the company defined in st
 		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery( "SELECT o FROM StockPrices o WHERE o.time >= :startTime AND o.time <= :endTime AND o.stockName.id = :stockId" )
 																	.setParameter("startTime", start)
