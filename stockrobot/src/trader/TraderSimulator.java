@@ -1,5 +1,10 @@
 package trader;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+import gui.IObservable;
+import gui.mvc.Constants;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.PortfolioHistory;
@@ -12,6 +17,7 @@ import database.jpa.tables.StockPrices;
  */
 public class TraderSimulator implements ITrader{
 	private static TraderSimulator instance = null;
+	private PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
 	
 	private TraderSimulator() {
 		
@@ -28,6 +34,8 @@ public class TraderSimulator implements ITrader{
 			System.out.println("BUY: " + amount + " of " + s);
 			portfolio.bougthFor(amount * s.getBuy());
 			JPAHelper.getInstance().storeObject(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
+			
+			propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.BUY_STOCK, null, portfolio);
 		}
 		return true;
 	}
@@ -42,12 +50,25 @@ public class TraderSimulator implements ITrader{
 		
 		System.out.println("Selling: " + amount + " of " + s + " for: " + s.getBuy()*amount);
 		
+		propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.SELL_STOCK, null, portfolio);
+		
 		return true;
 	}
 
 	@Override
 	public long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntitys portfolio) {
 		return (long) (s.getBuy()*amount*0.1);
+	}
+	@Override
+	public void addAddObserver(PropertyChangeListener listener) {
+
+		propertyChangeSuport.addPropertyChangeListener(listener);
+	}
+	@Override
+	public void removeObserver(PropertyChangeListener listener) {
+		
+		propertyChangeSuport.removePropertyChangeListener(listener);
+
 	}
 
 }

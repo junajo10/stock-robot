@@ -5,14 +5,23 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
+import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
-import portfolio.PortfolioHandler;
+import trader.ITrader;
 
 public class PortfolioController {
 
-	public PortfolioController(PortfolioGui gui, IPortfolioHandler portfolioHandler){
+	private PortfolioGui gui;
+	private IPortfolioHandler portfolioHandler;
+	
+	public PortfolioController(PortfolioGui gui, IPortfolioHandler portfolioHandler, ITrader trader){
+		
+		this.gui = gui;
+		this.portfolioHandler = portfolioHandler;
+		
 		
 		portfolioHandler.addAddObserver(gui);
+		trader.addAddObserver(gui);
 		gui.addBalanceHistoryListener(new BalanceHistoryListener());
 		gui.addChangeAlgorithmListener(new ChangeAlgorithmListener());
 		gui.addChangePortfolioListener(new ChangePortfolioListener());
@@ -49,8 +58,10 @@ public class PortfolioController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String portfolio = (String)((JComboBox)e.getSource()).getSelectedItem();
+			IPortfolio portfolio = ((PortfolioGui.Item_cmb_Portfolio)((JComboBox)e.getSource()).getSelectedItem()).getPortfolio();
+			gui.setPortfolio(portfolio);
 			System.out.println(portfolio);
+			gui.updateCash();
 		}
 
 

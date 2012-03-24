@@ -1,5 +1,6 @@
 package trader;
 
+import gui.IObservable;
 import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.StockPrices;
 
@@ -13,7 +14,7 @@ import database.jpa.tables.StockPrices;
  * This will be used by the algorithms to for 
  * buying new stock or selling old one.
  */
-public interface ITrader {
+public interface ITrader extends IObservable{
 
 	//TODO Add buy and sell methods.  
 	

@@ -46,14 +46,14 @@ public class Astro implements IRobot_Algorithms{
 		System.out.println("ASTRo is starting up.");
 
 		trader = TraderSimulator.getInstance();
-		
+		 
 		algorithmsLoader = AlgorithmsLoader.getInstance(this);
 		
 		portfolioHandler = PortfolioHandler.getInstance();
 		
 		portfolioGui = new PortfolioGui(portfolioHandler);
 		
-		portfolioController = new PortfolioController(portfolioGui,portfolioHandler);
+		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 		
 		jpaHelper = JPAHelper.getInstance();
 		
