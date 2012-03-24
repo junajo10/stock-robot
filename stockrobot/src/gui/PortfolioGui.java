@@ -198,9 +198,11 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		
 		updatePortfolios();
 
-		cmb_portfolio.setSelectedIndex(0);
-		currentPortfolio = portfolioHandler.getPortfolios().get(0);
-		updateCash();
+		if (cmb_portfolio.getItemCount() > 0) {
+			cmb_portfolio.setSelectedIndex(0);
+			currentPortfolio = portfolioHandler.getPortfolios().get(0);
+			updateCash();
+		}
 		
 		this.setVisible(true);
 	}

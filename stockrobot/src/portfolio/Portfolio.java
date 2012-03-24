@@ -1,5 +1,6 @@
 package portfolio;
 
+import generic.FinancialLongConverter;
 import generic.Pair;
 
 import java.util.List;
@@ -125,7 +126,7 @@ public class Portfolio implements IPortfolio {
 	}
 	
 	public String toString() {
-		return "Name: " + getName() + "Algorithm: " + algorithm.getName()  + "\n";
+		return "Name: " + getName() + "Algorithm: " + algorithm.getName() + " Balance: " + FinancialLongConverter.toStringTwoDecimalPoints(getUnusedAmount()) + "\n";
 	}
 	@Override
 	public PortfolioEntitys getPortfolioTable() {
