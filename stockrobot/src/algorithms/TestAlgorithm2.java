@@ -15,9 +15,10 @@ import trader.ITrader;
 /**
  * @author daniel
  *
- * A simple test algorithm based on a algorithm Kristian has come up with
+ * A copy of TestAlgorithm
+ * This is to really test that we can have several algorithms in the system.
  */
-public class TestAlgorithm implements IAlgorithm{
+public class TestAlgorithm2 implements IAlgorithm{
 	
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
@@ -25,12 +26,12 @@ public class TestAlgorithm implements IAlgorithm{
 	JPAHelper jpaHelper = null;
 	
 	
-	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
+	public TestAlgorithm2(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
 		this.trader = trader;
 		this.jpaHelper = JPAHelper.getInstance();
-		System.out.println("Inside TestAlgorithm constructor");
+		System.out.println("Inside TestAlgorithm2 constructor");
 	}
 	
 	@Override
@@ -61,7 +62,7 @@ public class TestAlgorithm implements IAlgorithm{
 				trader.sellStock(sp, ph.getAmount(), portfolio.getPortfolioTable());
 			}
 		}
-		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
+		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(5)) {
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {

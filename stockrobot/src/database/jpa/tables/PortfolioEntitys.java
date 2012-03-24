@@ -2,14 +2,19 @@ package database.jpa.tables;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.openjpa.persistence.Persistent;
 
 import database.jpa.JPAHelper;
 
@@ -29,7 +34,7 @@ public class PortfolioEntitys {
 	@Column(name="name", nullable=false, length=20, insertable=true)
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@Column(name = "algorithm")
 	private AlgorithmEntitys algorithm;
 	
@@ -47,7 +52,7 @@ public class PortfolioEntitys {
 	
 	
 	@OneToMany(mappedBy="portfolio",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
-    private Collection<PortfolioHistory> history;
+	private Collection<PortfolioHistory> history;
         
 	
 	@OneToMany  
@@ -157,7 +162,7 @@ public class PortfolioEntitys {
 	 * A helper method to easy get the text representation.
 	 */
 	public String toString() {
-		return name + " | " + balance;
+		return name + " | " + balance + " | Algorithm: " + algorithm;
 	}
 	/**
 	 * Will return a list of StockNames this portfolio is set to watch

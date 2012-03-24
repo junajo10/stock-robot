@@ -49,7 +49,6 @@ public class JPAHelperForUnderstanding {
 	public void testGetPricesForStockPeriod() {
 		
 		JPAHelper jpaHelper = JPAHelper.getInstance();
-		jpaHelper.initJPASystem();
 		
 		//Get a stock, one to check for 
 		StockNames firstStock = jpaHelper.getAllStockNames().get(0);

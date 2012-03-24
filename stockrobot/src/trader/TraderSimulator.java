@@ -14,6 +14,7 @@ import database.jpa.tables.StockPrices;
  * @author Daniel
  *
  * A very simple TraderSimulator.
+ * It will always say that all trades went ok!
  */
 public class TraderSimulator implements ITrader{
 	private static TraderSimulator instance = null;
@@ -30,9 +31,9 @@ public class TraderSimulator implements ITrader{
 	}
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
-		if (amount > 0 && amount * s.getBuy() < portfolio.getBalance()) {
+		if (amount > 0 && amount * s.getSell() < portfolio.getBalance()) {
 			System.out.println("BUY: " + amount + " of " + s);
-			portfolio.bougthFor(amount * s.getBuy());
+			portfolio.bougthFor(amount * s.getSell());
 			JPAHelper.getInstance().storeObject(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
 			
 			propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.BUY_STOCK, null, portfolio);
@@ -57,7 +58,7 @@ public class TraderSimulator implements ITrader{
 
 	@Override
 	public long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntitys portfolio) {
-		return (long) (s.getBuy()*amount*0.1);
+		return (long) (s.getSell()*amount*0.1);
 	}
 	@Override
 	public void addAddObserver(PropertyChangeListener listener) {
