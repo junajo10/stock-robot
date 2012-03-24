@@ -3,6 +3,7 @@ package database.jpa;
 import generic.Pair;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -172,6 +173,50 @@ public class JPAHelper {
         
         return output;
 	}
+	
+	/**
+	 * Method for getting ALL prices for a specific stock  
+	 * 
+	 * @param st Stock to get for
+	 * @return List of all prices
+	 */
+	public List<StockPrices> getPricesForStock( StockNames st ) {
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<StockPrices> cri = cb.createQuery(StockPrices.class);
+		
+		Root<StockPrices> root = cri.from(StockPrices.class);
+		
+		Predicate correctName = em.getCriteriaBuilder().equal( root.get("stockName"), st );
+		
+		cri.select(root);
+		cri.where(correctName);
+		
+		TypedQuery<StockPrices> query = em.createQuery(cri);
+		
+		return query.getResultList();
+	}
+	
+	/**
+	 * Method for querying a specific stock's value within a specified timespan. 
+	 * 
+	 * @param st The stock to query for
+	 * @param start Date where to start looking for prices
+	 * @param end Date where to stop looking for prices
+	 * @return
+	 */
+	public List<StockPrices> getPricesForStockPeriod( StockNames st, Date start, Date end ) {
+		
+		//TODO: Fix this to be type safe! I couldn't find a way to compare dates without using JPQL.
+		//Get all prices WITHIN (including ends) start -> end, that are of the company defined in st
+		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery( "SELECT o FROM StockPrices o WHERE o.time >= :startTime AND o.time <= :endTime AND o.stockName.id = :stockId" )
+																	.setParameter("startTime", start)
+																	.setParameter("endTime",   end)
+																	.setParameter("stockId", st.getId() );
+		
+		return query.getResultList();
+	}
+	
 	/**
 	 * Will give a list of all the diffrent StockNames
 	 * @return A list of stockNames
