@@ -64,4 +64,25 @@ public class FinancialLongConverter {
 		
 		return Long.parseLong( numbers + decimals );
 	}
+	private static String negativeToStringTwoDecimalPoints(long input) {
+		return "-" + toStringTwoDecimalPoints(Math.abs(input));
+	}
+	public static String toStringTwoDecimalPoints(long input) {
+		if (input < 0)
+			return negativeToStringTwoDecimalPoints(input);
+		
+		String s = "" + input;
+		
+		if (s.length()-1 > decimalLength-2) {
+			return s.substring(0, s.length()-decimalLength) + "." + 
+					s.substring(s.length()-decimalLength, s.length()-decimalLength+2);
+		}
+		else {
+			long decimals = (long) (input/(Math.pow(10, decimalLength-2)));
+			
+			if (decimals < 10)
+					return "0.0" + decimals;
+			return "0." + decimals;
+		}
+	}
 }

@@ -39,7 +39,7 @@ public class PortfolioEntitys {
 	private AlgorithmEntitys algorithm;
 	
 	@Column
-	private long balance;
+	private Long balance;
 	
 	@Column
 	private boolean watchAllStocks;
@@ -67,7 +67,7 @@ public class PortfolioEntitys {
 	public PortfolioEntitys(String name) {
 		this.name = name;
 		algorithm = null;
-		balance = 0;
+		balance = (long)0;
 		watchAllStocks = false;
 	}
 	/**
