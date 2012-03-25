@@ -1,5 +1,7 @@
 package generic;
 
+import java.text.DecimalFormat;
+
 /**
  * 
  * FinancialLongConverter
@@ -63,5 +65,12 @@ public class FinancialLongConverter {
 			decimals += "0";
 		
 		return Long.parseLong( numbers + decimals );
+	}
+	public static double toDouble(long input) {
+		return input/(Math.pow(10, decimalLength));
+	}
+	public static String toStringTwoDecimalPoints(long input) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		return df.format(toDouble(input));
 	}
 }

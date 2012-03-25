@@ -1,5 +1,6 @@
 package gui;
 
+import generic.FinancialLongConverter;
 import gui.mvc.Constants;
 
 import java.awt.Dimension;
@@ -26,6 +27,7 @@ import database.jpa.tables.PortfolioEntitys;
 
 import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
+import portfolio.Portfolio;
 
 /**
  * @author Mattias Markehed
@@ -193,7 +195,14 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		btn_AlgorithmChange.setBackground(Color.WHITE);
 		pnl_AlgorithmChange.add(btn_AlgorithmChange);
 		
+		
 		updatePortfolios();
+
+		if (cmb_portfolio.getItemCount() > 0) {
+			cmb_portfolio.setSelectedIndex(0);
+			currentPortfolio = portfolioHandler.getPortfolios().get(0);
+			updateCash();
+		}
 		
 		this.setVisible(true);
 	}
@@ -263,7 +272,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	public void updateCash(){
 		
 		if(currentPortfolio != null)
-			lbl_CashValue.setText(""+currentPortfolio.getUnusedAmount());
+			lbl_CashValue.setText(FinancialLongConverter.toStringTwoDecimalPoints(currentPortfolio.getUnusedAmount()));
 		else{
 			lbl_CashValue.setText("NaN");
 		}
