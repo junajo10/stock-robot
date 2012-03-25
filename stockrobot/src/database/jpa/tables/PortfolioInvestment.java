@@ -52,6 +52,8 @@ public class PortfolioInvestment {
 		else {
 			this.invested = false;
 		}
+		portfolio.invest(amount, invest);
+		
 		this.date = new Date(System.currentTimeMillis());
 	}
 	/**

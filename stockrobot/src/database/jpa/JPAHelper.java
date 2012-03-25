@@ -24,6 +24,7 @@ import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
+import database.jpa.tables.StocksToWatch;
 
 /**
  * @author Daniel
@@ -130,6 +131,36 @@ public class JPAHelper {
         q2.select(c);
         
         TypedQuery<StockPrices> query = em.createQuery(q2);
+        return query.getResultList();
+	}
+	/**
+	 * Will give back all PortfolioInvestment
+	 * @return A list of PortfolioInvestment
+	 */
+	public List<PortfolioInvestment> getAllPortfolioInvestment() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
+        
+        Root<PortfolioInvestment> c = q2.from(PortfolioInvestment.class);
+        
+        q2.select(c);
+        
+        TypedQuery<PortfolioInvestment> query = em.createQuery(q2);
+        return query.getResultList();
+	}
+	/**
+	 * Will give back all StocksToWatch
+	 * @return A list of StocksToWatch
+	 */
+	public List<StocksToWatch> getAllStocksToWatch() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StocksToWatch> q2 = cb.createQuery(StocksToWatch.class);
+        
+        Root<StocksToWatch> c = q2.from(StocksToWatch.class);
+        
+        q2.select(c);
+        
+        TypedQuery<StocksToWatch> query = em.createQuery(q2);
         return query.getResultList();
 	}
 	/**

@@ -55,8 +55,10 @@ public class PortfolioEntitys {
 	private Collection<PortfolioHistory> history;
         
 	
-	@OneToMany  
+	@OneToMany(targetEntity=StockNames.class, fetch=FetchType.EAGER)
 	List<StockNames> stocksToWatch;
+	
+	
 	public PortfolioEntitys() {
 		
 	}
