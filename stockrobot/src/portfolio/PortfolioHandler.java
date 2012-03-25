@@ -55,7 +55,10 @@ public class PortfolioHandler implements IPortfolioHandler{
 	}
 	public static IPortfolioHandler getInstance() {
 		if(instance == null) {
-			instance = new PortfolioHandler();
+			synchronized (PortfolioHandler.class) {
+				if (instance == null)
+					instance = new PortfolioHandler();
+			}
 		}
 		return instance;
 	}
