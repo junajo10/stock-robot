@@ -131,5 +131,14 @@ public class ParserRunner implements IParserRunner {
 			return false;
 		}
 	}
+	@Override
+	public boolean status() {
+		if(run && !close){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 }

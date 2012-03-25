@@ -40,25 +40,20 @@ public class Harvester {
 			System.out.println("status         => Prints status on the parse.");
 			System.out.println("stop           => Temporarly stop the parser thread.");	
 			System.out.println("force stop     => Forces the parser to stop parse. Warning! May corrupt database.");	
-			System.out.println("restart_parser => Restarts the parser.");		
+			System.out.println("restart parser => Restarts the parser.");		
 			System.out.println("exit => Exits the entire program.");		
 			System.out.println("*** END OF HELP ***");
 		}			
-		else if(str.equals("restart_parser")){
+		else if(str.equals("restart parser")){
 			startParser();
 			System.out.println("*** Parser started successfully. ***");	
 		}
 		else if(str.equals("status")){
 				System.out.println("*** STATUS ***");
-				if(parserThread==null){
-					System.out.println(parserThread);
-					System.out.println(parserRunner);
-					System.out.println("*** Parser not started or dead. ***");
-				}
-				else if(parserThread.isAlive()){
+				if(status()){
 					System.out.println("*** Parser is up and running. ***");
 				}
-				else{
+				else {
 					System.out.println("*** Parser not started or dead. ***");
 				}
 		}
@@ -146,6 +141,26 @@ public class Harvester {
 		else if(parserThread != null){
 			parserRunner.stopParser();
 			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Checks if the parser is running.
+	 * <p>
+	 * @return True if the parser is running
+	 * <p>
+	 * Otherwise false.
+	 */
+	private static boolean status(){
+		
+		if(parserThread==null){
+			return false;
+		}
+		else if(parserThread != null && parserRunner != null && parserThread.isAlive()){
+			return parserRunner.status();
 		}
 		else{
 			return false;

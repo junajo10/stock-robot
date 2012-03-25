@@ -13,4 +13,5 @@ public interface IParserRunner extends Runnable {
 	public boolean stopParser();
 	public boolean stopRunner();
 	public boolean startParser();
+	public boolean status();
 }
