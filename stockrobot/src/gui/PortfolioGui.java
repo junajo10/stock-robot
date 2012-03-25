@@ -252,7 +252,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 				PortfolioEntitys portfolio = (PortfolioEntitys) evt.getNewValue();
 				
 				//TODO make the comparison check with id instead of name. Did'nt work at the time im writing this
-				if(portfolio.getName() == currentPortfolio.getName()){
+				if(currentPortfolio != null && portfolio.getName() == currentPortfolio.getName()){
 					updateCash();
 				}
 			}
