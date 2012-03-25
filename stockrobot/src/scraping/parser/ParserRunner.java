@@ -14,7 +14,13 @@ import scraping.scheduler.IScheduler;
 import scraping.scheduler.Scheduler;
 
 /**
- * Parser runner.
+ * Uses class AvanzaParser to parse a URL and inserts it
+ * using class Inserter.
+ * <p>
+ * This class will run as a Thread. Harvester calls method stopRunner, to stop this Thread.
+ * Or stopParser, to stop the parsing.
+ * <p>
+ *  
  * @author Erik
  *
  */
@@ -94,7 +100,9 @@ public class ParserRunner implements IParserRunner {
 	}
 	
 	/**
-	 *  Stops the parser
+	 *  Stops the parser.
+	 *  This method is thread-safe. So it wont stop immediately,
+	 *  it will wait until parser finishes a loop and then it will stop.
 	 *  
 	 */
 	public boolean stopParser() {
@@ -109,7 +117,8 @@ public class ParserRunner implements IParserRunner {
 	}
 	
 	/**
-	 *  Starts the parser.
+	 *  Starts the parser. 
+	 *  By default parser is not running.
 	 *  
 	 */
 	public boolean startParser() {
