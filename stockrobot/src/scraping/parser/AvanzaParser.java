@@ -25,6 +25,8 @@ import scraping.model.ParserStock;
  * 
  * 
  * A parser made specifically for the Avanza homepage.
+ * Uses the build in HTML-parser by Oracle, to parse a HTML page.
+ * 
  * 
  * @author Erik
  * 
@@ -35,7 +37,11 @@ public class AvanzaParser implements IParser {
 	String market; 
 	
 	/** Parses the given Avanza-URL
-	 * @param URL to be parsed */
+	 * <p>
+	 * @param url to be parsed
+	 * @param market the URL belongs to.
+	 * 
+	 *  */
 	public ArrayList<ParserStock> parse(URL url, String market){
 			this.market = market;
 			URLConnection connection;
@@ -63,9 +69,13 @@ public class AvanzaParser implements IParser {
 	}
 	
 	/**
+	 * A private class of which the AvanzaParser uses to parse a URL.
+	 * <p>
+	 * Each method is called once the corresponding type is found in the parsed document.
+	 * For example handleText() is called once the parser finds a text string.
 	 * 
 	 * @author Erik
-	 * A private class of which the AvanzaParser uses to parse a URL.
+	 * 
 	 */
 	private class AvanzaCallback extends ParserCallback {
 		private ArrayList<ParserStock> stockList;
@@ -143,6 +153,12 @@ public class AvanzaParser implements IParser {
 		}
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param time 
+	 * @return
+	 */
 	private Date getDate( String time ) {
 		
 		Date d = new Date();
