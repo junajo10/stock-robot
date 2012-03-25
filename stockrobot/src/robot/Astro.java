@@ -3,13 +3,9 @@ package robot;
 import gui.PortfolioController;
 import gui.PortfolioGui;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import database.jpa.JPAHelper;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
 
 import algorithms.loader.AlgorithmsLoader;
 
@@ -59,17 +55,17 @@ public class Astro implements IRobot_Algorithms{
 		jpaHelper = JPAHelper.getInstance();
 		
 		while(true) {
-			simulateNewStocks();
+//			simulateNewStocks();
 			
 			
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
-				if (rand.nextInt(10) == 1) {
-					long newInvestment = ((long)rand.nextInt(1000)*10000);
+//				if (rand.nextInt(10) == 1) {
+//					long newInvestment = ((long)rand.nextInt(1000)*10000);
 					
-					p.investAmount(newInvestment);
-					System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
-					portfolioGui.updateCash();
-				}
+//					p.investAmount(newInvestment);
+//					System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
+//					portfolioGui.updateCash();
+//				}
 				
 				p.getAlgorithm().update();
 			}
@@ -86,7 +82,7 @@ public class Astro implements IRobot_Algorithms{
 	/**
 	 * Just add a new stock
 	 */
-	private void simulateNewStocks() {
+/*	private void simulateNewStocks() {
 		List<StockNames> stockNames = jpaHelper.getAllStockNames();
 		
 		for (StockNames sn : stockNames) {
@@ -97,7 +93,7 @@ public class Astro implements IRobot_Algorithms{
 			}
 		}
 	}
-
+*/
 
 	@Override
 	public boolean reportToUser(String message) {
