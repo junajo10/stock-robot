@@ -3,9 +3,13 @@ package robot;
 import gui.PortfolioController;
 import gui.PortfolioGui;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import database.jpa.JPAHelper;
+import database.jpa.tables.StockNames;
+import database.jpa.tables.StockPrices;
 
 import algorithms.loader.AlgorithmsLoader;
 
@@ -35,6 +39,9 @@ public class Astro implements IRobot_Algorithms{
 	ITrader trader = null;
 	JPAHelper jpaHelper = null;
 	Random rand = new Random(System.currentTimeMillis());
+	
+	private static boolean simulate = false;
+	private static int timeBetweenUpdates = 1000;
 	/**
 	 * Starts the system up
 	 */
@@ -55,22 +62,25 @@ public class Astro implements IRobot_Algorithms{
 		jpaHelper = JPAHelper.getInstance();
 		
 		while(true) {
-//			simulateNewStocks();
+			if (simulate)
+				simulateNewStocks();
 			
 			
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
-//				if (rand.nextInt(10) == 1) {
-//					long newInvestment = ((long)rand.nextInt(1000)*10000);
-					
-//					p.investAmount(newInvestment);
-//					System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
-//					portfolioGui.updateCash();
-//				}
+				if (simulate) {
+				if (rand.nextInt(10) == 1) {
+					long newInvestment = ((long)rand.nextInt(1000)*10000);
+				
+					p.investAmount(newInvestment);
+					System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
+					portfolioGui.updateCash();
+				}
+				}
 				
 				p.getAlgorithm().update();
 			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(timeBetweenUpdates);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -82,7 +92,7 @@ public class Astro implements IRobot_Algorithms{
 	/**
 	 * Just add a new stock
 	 */
-/*	private void simulateNewStocks() {
+	private void simulateNewStocks() {
 		List<StockNames> stockNames = jpaHelper.getAllStockNames();
 		
 		for (StockNames sn : stockNames) {
@@ -93,7 +103,7 @@ public class Astro implements IRobot_Algorithms{
 			}
 		}
 	}
-*/
+
 
 	@Override
 	public boolean reportToUser(String message) {
@@ -103,6 +113,35 @@ public class Astro implements IRobot_Algorithms{
 
 	public static void main(String args[]) {
 		Astro astro = new Astro();
+		
+		for (int i = 0; i < args.length; i++) {
+			String s = args[i];
+			
+			if (s.contentEquals("--simulate") || s.contentEquals("-s"))
+				simulate = true;
+			else if (s.contentEquals("-t") || s.contentEquals("--time")) {
+				if (args.length < i+3) {
+					try {
+						timeBetweenUpdates = Math.abs(Integer.parseInt(args[i+1]));
+						System.out.println("Algorithm update time set to: " + timeBetweenUpdates + "ms.");
+						i++;
+					} catch (NumberFormatException e) {
+						System.out.println("No valid update time.");
+						System.exit(1);
+					}
+				}
+			}
+			else if (s.contentEquals("--help")) {
+				System.out.println("ASTRo\nAlgorithm Stock Trading Robot\n\n\t-s or --simulate" + 
+						"\tTo simulate new stocks and more investments.\n" +
+						"\t--time x or -t x\tSet the time between algorithm updates to x ms.\n");
+			}
+			else {
+				System.out.println("Unknown parameter, aborting\n");
+				System.exit(1);
+			}
+		}
+		
 		astro.start();
 	}
 }
