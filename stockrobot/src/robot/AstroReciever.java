@@ -1,4 +1,4 @@
-package scraping.connect;
+package robot;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,11 +7,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Reciever implements Runnable {
+public class AstroReciever implements Runnable {
 
 	private boolean newData;
 	/**
-	 * Test class to see if it recieves data from Connector class.
+	 * Class to see if it recieves data from Connector class.
 	 * Recieves message from Harvester saying that new data is available.
 	 * <p>
 	 * Part of this class should be somewhere in the algorithms package.
@@ -28,7 +28,7 @@ public class Reciever implements Runnable {
 				//BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
 				//Send ping upwards saying that new data is available.
 				newData = true;
-				System.out.println("Have recieved data!");
+				System.out.println("Have recieved new stock data!");
 				newDataSocket.close();
 			}
 		} catch (UnknownHostException e) {
@@ -42,8 +42,12 @@ public class Reciever implements Runnable {
 	
 	/**
 	 * Checks if new stockdata is available.
+	 * <p>
+	 * Thread safe method.
+	 * <P>
 	 * @return true if new stock data is available.
-	 * otherwise false
+	 * <p>
+	 * Otherwise false.
 	 */
 	public boolean newStockData(){
 		if(newData){

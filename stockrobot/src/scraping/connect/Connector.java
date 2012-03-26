@@ -14,13 +14,9 @@ import java.net.UnknownHostException;
 public class Connector implements IConnector {
 	private Socket sendRefresh;
 	
-	public Connector(){
-
-	}
-	
 	/**
 	 * Sends a message to the robot saying that new data is available.
-	 * @return
+	 * @return true if it was sent successfully.
 	 */
 	public boolean sendRefresh() {
 		DataOutputStream outToServer;
