@@ -1,10 +1,7 @@
 package database.jpa;
 
 
-import java.util.Date;
 import java.util.Random;
-
-import junit.framework.Assert;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -18,7 +15,11 @@ import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
-
+/**
+ * @author Daniel
+ *
+ *
+ */
 public class testJPASlice {
 	static JPAHelper jpaHelper;
 	static Random rand = new Random(System.currentTimeMillis());
@@ -29,14 +30,18 @@ public class testJPASlice {
 	
 	@Test
 	public void testApa() {
+		// Stored in portfolio database
 		AlgorithmEntitys a = new AlgorithmEntitys("", "");
 		jpaHelper.storeObject(a);
+		
+		// Stored in stock database
+		StockNames sn = new StockNames("apa", "bepa");
+		jpaHelper.storeObject(sn);
 	}
-	
 	
 	/**
 	 * Removes all entitys from the database
-	 
+	*/
 	@AfterClass
 	public static void afterClass() {
 		for (PortfolioInvestment investment : jpaHelper.getAllPortfolioInvestment()) {
@@ -73,5 +78,5 @@ public class testJPASlice {
 	    	jpaHelper.remove(sn);
 		}
 	}
-	*/
+	
 }
