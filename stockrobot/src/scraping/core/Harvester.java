@@ -2,7 +2,6 @@ package scraping.core;
 
 import java.util.Scanner;
 
-import scraping.parser.AvanzaParser;
 import scraping.parser.IParserRunner;
 import scraping.parser.ParserRunner;
 
@@ -12,6 +11,9 @@ public class Harvester {
 	
 	/**
 	 * Main class for the Parsing part of the program.
+	 * <p>
+	 * Reads commands from the commandline.
+	 * <p>
 	 * @param args
 	 * @author Erik
 	 */

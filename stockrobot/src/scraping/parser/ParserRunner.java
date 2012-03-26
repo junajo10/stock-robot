@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import scraping.database.IInserter;
-import scraping.database.Inserter;
 import scraping.database.JPAInserter;
 import scraping.model.ParserStock;
 import scraping.scheduler.IScheduler;
@@ -60,7 +59,7 @@ public class ParserRunner implements IParserRunner {
 					    inserter.insertStockData(stockList);
 					}
 					Long timeElapsed = System.currentTimeMillis() - timeBefore;
-					System.out.println("Parsing done in: " +timeElapsed + " ms.");
+					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
 					try {
 						Thread.sleep(60000-timeElapsed);
 					} catch (InterruptedException e) {
@@ -80,10 +79,13 @@ public class ParserRunner implements IParserRunner {
 
 	
 	/**
-	 *  Stops the Runner
+	 *  Stops the Runner. 
+	 *  It will end the parsing loop before stopping.
+	 *  <p>
+	 *  @return true is it was successfully close
+	 *  Otherwise false.
 	 */
 	public boolean stopRunner() {
-		//TODO: Delete?
 		if(!close){
 			close = true;
 			return true;
@@ -100,7 +102,6 @@ public class ParserRunner implements IParserRunner {
 	 *  
 	 */
 	public boolean stopParser() {
-		//TODO: Delete?
 		if(run){
 			run = false;
 			return true;
@@ -116,7 +117,6 @@ public class ParserRunner implements IParserRunner {
 	 *  
 	 */
 	public boolean startParser() {
-		//TODO: Delete?
 		if(!run){
 			run = true;
 			return true;
@@ -125,6 +125,14 @@ public class ParserRunner implements IParserRunner {
 			return false;
 		}
 	}
+	/**
+	 *  Checks if the parser is running.
+	 *  <p>
+	 *  @return True
+	 *  if the parser it running and not closing.
+	 *  <p>
+	 *  Otherwise false.
+	 */
 	@Override
 	public boolean status() {
 		if(run && !close){
