@@ -23,8 +23,7 @@ public class Reciever implements Runnable {
 			while(true){
 				Socket newDataSocket = recieve.accept();
 				BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
-				String rec = fromHarvester.readLine();
-				System.out.println("Have recieved: "+rec);
+				System.out.println("Have recieved data!");
 				newDataSocket.close();
 			}
 		} catch (UnknownHostException e) {
@@ -35,5 +34,4 @@ public class Reciever implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 }

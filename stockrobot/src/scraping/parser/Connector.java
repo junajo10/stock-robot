@@ -6,11 +6,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * 
+ * Class for sending messages to robot, through the internet.
  * @author Erik
  *
  */
-
 public class Connector {
 	private Socket sendRefresh;
 	
@@ -18,13 +17,16 @@ public class Connector {
 
 	}
 	
-	
+	/**
+	 * Sends a message to the robot saying that new data is available.
+	 * @return
+	 */
 	public boolean sendRefresh() {
 		DataOutputStream outToServer;
 		try {
 			sendRefresh = new Socket("localhost", 45000);
 			outToServer = new DataOutputStream(sendRefresh.getOutputStream());
-			outToServer.writeBytes("New data available!");
+			outToServer.writeBytes("");
 			outToServer.close();
 			sendRefresh.close();
 		} catch (IOException e) {
