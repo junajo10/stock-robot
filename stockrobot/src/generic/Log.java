@@ -1,7 +1,6 @@
 package generic;
 
 import java.util.HashMap;
-import java.util.logging.Filter;
 
 /**
  * @author Mattias Markehed
@@ -14,7 +13,7 @@ import java.util.logging.Filter;
  */
 public class Log {
 
-	public static Log log = null;
+	private static Log log = null;
 	
 	public static enum TAG{
 		NORMAL,
@@ -78,7 +77,7 @@ public class Log {
 	public static Log instance(){
 		
 		if(log == null){
-			synchronized(log){
+			synchronized(Log.class){
 				if(log == null){
 					log = new Log();
 				}

@@ -34,6 +34,7 @@ public class Scheduler implements IScheduler {
 			
 			//Cases when it's now allowed to run:
 			//If it's before 8AM
+			//TODO Change getHours. The method is depricated
 			if( d.getHours() < 8 )
 				return false;
 				
