@@ -1,5 +1,7 @@
 package robot;
 
+import generic.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,7 +30,7 @@ public class AstroReciever implements Runnable {
 				//BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
 				//Send ping upwards saying that new data is available.
 				newData = true;
-				System.out.println("Have recieved new stock data!");
+				Log.instance().log(Log.TAG.DEBUG, "Have recieved new stock data!");
 				newDataSocket.close();
 			}
 		} catch (UnknownHostException e) {

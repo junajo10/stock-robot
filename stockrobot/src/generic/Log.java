@@ -17,8 +17,8 @@ public class Log {
 	
 	public static enum TAG{
 		NORMAL,
-		VOCAL,
-		VERY_VOCAL,
+		VERBOSE,
+		VERY_VERBOSE,
 		DEBUG,
 		ERROR,
 	}
@@ -42,15 +42,15 @@ public class Log {
 	private void initialize(){
 		filter=new HashMap<Log.TAG, Boolean>();
 		filter.put(TAG.NORMAL, true);
-		filter.put(TAG.VOCAL, false);
-		filter.put(TAG.VERY_VOCAL, false);
+		filter.put(TAG.VERBOSE, false);
+		filter.put(TAG.VERY_VERBOSE, false);
 		filter.put(TAG.DEBUG, false);
 		filter.put(TAG.ERROR, true);
 		
 		shortenerMap=new HashMap<Log.TAG, String>();
 		shortenerMap.put(TAG.NORMAL, "N");
-		shortenerMap.put(TAG.VOCAL, "V");
-		shortenerMap.put(TAG.VERY_VOCAL, "VV");
+		shortenerMap.put(TAG.VERBOSE, "V");
+		shortenerMap.put(TAG.VERY_VERBOSE, "VV");
 		shortenerMap.put(TAG.DEBUG, "D");
 		shortenerMap.put(TAG.ERROR, "E");
 	}
@@ -63,12 +63,12 @@ public class Log {
 	 */
 	public void setFilter(Log.TAG tag, boolean shouldPrint){
 		
-		if(tag == TAG.VERY_VOCAL && shouldPrint){
-			filter.put(TAG.VOCAL, true);
-			filter.put(TAG.VERY_VOCAL, true);
-		}else if(tag == TAG.VOCAL && !shouldPrint){
-			filter.put(TAG.VOCAL, false);
-			filter.put(TAG.VERY_VOCAL, false);
+		if(tag == TAG.VERY_VERBOSE&& shouldPrint){
+			filter.put(TAG.VERBOSE, true);
+			filter.put(TAG.VERY_VERBOSE, true);
+		}else if(tag == TAG.VERBOSE&& !shouldPrint){
+			filter.put(TAG.VERBOSE, false);
+			filter.put(TAG.VERY_VERBOSE, false);
 		}else{
 			filter.put(tag, shouldPrint);
 		}
