@@ -29,6 +29,8 @@ public class RobotScheduler {
 	
 	public RobotScheduler(IPortfolioHandler portfolioHandler){
 		handler = new RobotHandler(portfolioHandler);
+		
+		tRunner = new Thread( new AlgorithmRunner() );
 	}
 	
 	/**
@@ -45,6 +47,7 @@ public class RobotScheduler {
 	 */
 	public void startScheduler(){
 		isRunning = true;
+		tRunner.start();
 	}
 	
 	/**
@@ -115,7 +118,7 @@ public class RobotScheduler {
 					
 					System.out.println( "RobotScheduler pause!" );
 					try {
-						Thread.sleep(RobotScheduler.SECOND * 5);
+						Thread.sleep(RobotScheduler.SECOND * 20);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

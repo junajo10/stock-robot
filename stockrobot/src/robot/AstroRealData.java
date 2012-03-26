@@ -32,7 +32,6 @@ public class AstroRealData implements IRobot_Algorithms {
 	Random rand 								= new Random(System.currentTimeMillis());
 	RobotScheduler scheduler 					= null;
 	
-	private static int timeBetweenUpdates = 4000;
 	/**
 	 * Starts the system up
 	 */
@@ -52,6 +51,7 @@ public class AstroRealData implements IRobot_Algorithms {
 		jpaHelper = JPAHelper.getInstance();
 		
 		scheduler = new RobotScheduler( portfolioHandler );
+		scheduler.startScheduler();
 	}
 
 	@Override
