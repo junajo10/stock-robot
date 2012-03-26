@@ -3,6 +3,7 @@ package algorithms;
 
 import java.util.List;
 
+import generic.FinancialLongConverter;
 import generic.Log;
 import generic.Pair;
 import database.jpa.JPAHelper;
@@ -92,7 +93,13 @@ public class TestAlgorithm implements IAlgorithm{
 					Log.instance().log( Log.TAG.VERY_VOCAL, "Algo1: BOUGHT!" );
 					
 					Log.instance().log( Log.TAG.DEBUG, "TestAlgorithm: Buy: " + stockInfo.getRight().get(0) );
-					buyStock( stockInfo.getRight().get(0),portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice );
+					
+					long amount = Math.round( portfolio.getPortfolioTable().getBalance()/10/FinancialLongConverter.toDouble(firstStockBuyPrice) ); 
+					
+					Log.instance().log( Log.TAG.VERY_VOCAL, "Algo1: Balance: " + portfolio.getPortfolioTable().getBalance() );
+					Log.instance().log( Log.TAG.VERY_VOCAL, "Algo1: Amount: " + amount );
+					
+					buyStock( stockInfo.getRight().get(0),amount );
 				}
 			}
 		}

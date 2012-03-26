@@ -31,6 +31,7 @@ public class TraderSimulator implements ITrader{
 	}
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
+		System.out.println( ":::::::::::::Try to buy!, amount: " + amount + ", portfolio: " + portfolio + "; stockprices: " + s );
 		if (amount > 0 && amount * s.getSell() < portfolio.getBalance()) {
 			System.out.println("BUY: " + amount + " of " + s);
 			portfolio.bougthFor(amount * s.getSell());
