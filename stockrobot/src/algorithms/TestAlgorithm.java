@@ -70,8 +70,6 @@ public class TestAlgorithm implements IAlgorithm{
 		}
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
 			
-			Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: Checking what to buy!" + (stockInfo.getLeft().getName() ));
-			
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {
@@ -84,20 +82,13 @@ public class TestAlgorithm implements IAlgorithm{
 			//Buy!
 			if (buy) {
 				
-				Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: LET'S BUY!" );
+				Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: BUY!" );
 				
 				//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
 				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 				if( firstStockBuyPrice != 0 ) {
 					
-					Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: BOUGHT!" );
-					
-					Log.instance().log( Log.TAG.DEBUG, "TestAlgorithm: Buy: " + stockInfo.getRight().get(0) );
-					
-					long amount = Math.round( portfolio.getPortfolioTable().getBalance()/10/FinancialLongConverter.toDouble(firstStockBuyPrice) ); 
-					
-					Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: Balance: " + portfolio.getPortfolioTable().getBalance() );
-					Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: Amount: " + amount );
+					long amount = Math.round( FinancialLongConverter.toDouble(portfolio.getPortfolioTable().getBalance())/10/FinancialLongConverter.toDouble(firstStockBuyPrice) ); 
 					
 					buyStock( stockInfo.getRight().get(0),amount );
 				}
