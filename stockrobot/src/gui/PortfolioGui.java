@@ -201,9 +201,10 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		pnl_StockContainer.add(horizontalStrut_2);
 		
 		JPanel pnl_ShowStock = new JPanel();
+		pnl_StockContainer.setBackground((Color)null);
 		pnl_StockContainer.add(pnl_ShowStock);
 		
-		JButton btn_Show = new PortfolioButton("New button");
+		JButton btn_Show = new PortfolioButton("Stock");
 		pnl_ShowStock.add(btn_Show);
 		// ===========================
 		
