@@ -1,8 +1,8 @@
 package gui;
 
 import generic.FinancialLongConverter;
-import gui.components.PortfolioButton;
-import gui.components.PortfolioContainer;
+import gui.components.GUIFactory;
+import gui.components.IGUIFactory;
 import gui.mvc.Constants;
 
 import java.awt.Dimension;
@@ -53,6 +53,8 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	private IPortfolioHandler portfolioHandler;
 	private IPortfolio currentPortfolio = null;
 	
+	private IGUIFactory guiFactory = new GUIFactory();
+	
 	/**
 	 * Launch the application.
 	 
@@ -77,142 +79,124 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		
 		this.portfolioHandler = portfolioHandler;
 		
+		guiFactory.modifyDefaultWinow(this);
 		setResizable(false);
-		setForeground(Color.WHITE);
-		setBackground(Color.BLACK);
+		
 		setTitle("Portfolio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 399);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
+		contentPane = guiFactory.getMainContainer();
+		
 		setContentPane(contentPane);
-		JPanel pnl_BoxContainer = new JPanel();
-		pnl_BoxContainer.setBackground(new Color(245, 245, 245));
+		
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
-		PortfolioContainer pnl_menu = new PortfolioContainer();
+		// ====== Top Container ======
+		JPanel pnl_menu = guiFactory.getDefaultContainer();
 		pnl_menu.setMinimumSize(new Dimension(100, 35));
 		pnl_menu.setPreferredSize(new Dimension(300, 35));
 		pnl_menu.setMaximumSize(new Dimension(300,35));
 		FlowLayout flowLayout_3 = (FlowLayout) pnl_menu.getLayout();
 		flowLayout_3.setAlignment(FlowLayout.RIGHT);
 		
-		JLabel lbl_Portfolio = new JLabel("Portfolio");
+		JLabel lbl_Portfolio = guiFactory.getTitleLabel("Portfolio");
 		pnl_menu.add(lbl_Portfolio);
 		
 		cmb_portfolio = new JComboBox();
 		cmb_portfolio.setModel(cmb_hld_portfolio);
 		pnl_menu.add(cmb_portfolio);
 		contentPane.add(pnl_menu);
-		contentPane.add(pnl_BoxContainer);
-		pnl_BoxContainer.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		// ===========================
 		
-		// ======Balance Container======
-		PortfolioContainer pnl_BalanceContainer = new PortfolioContainer();
+		JPanel pnl_BoxContainer = guiFactory.getInvisibleContainer();
+		contentPane.add(pnl_BoxContainer);
+		
+		// ======Balance Container ======
+		JPanel pnl_BalanceContainer = guiFactory.getDefaultContainer();
 		pnl_BoxContainer.add(pnl_BalanceContainer);
 		pnl_BalanceContainer.setLayout(new BoxLayout(pnl_BalanceContainer, BoxLayout.Y_AXIS));
 		
 		Component horizontalStrut = Box.createHorizontalStrut(200);
 		pnl_BalanceContainer.add(horizontalStrut);
 		
-		JPanel pnl_BalancePanel = new JPanel();
-		FlowLayout flowLayout_2 = (FlowLayout) pnl_BalancePanel.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		JPanel pnl_BalancePanel = guiFactory.getInvisibleContainer();
 		pnl_BalanceContainer.add(pnl_BalancePanel);
 		
-		JLabel lbl_Balance = new JLabel("Balance");
-		lbl_Balance.setHorizontalAlignment(SwingConstants.LEFT);
+		JLabel lbl_Balance = guiFactory.getTitleLabel("Balance");
 		pnl_BalancePanel.add(lbl_Balance);
-		pnl_BalancePanel.setBackground(null);
 		
-		JPanel pnl_CashPanel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) pnl_CashPanel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
+		JPanel pnl_CashPanel = guiFactory.getInvisibleContainer();
 		pnl_BalanceContainer.add(pnl_CashPanel);
-		pnl_CashPanel.setBackground(null);
 		
-		JLabel lbl_CashText = new JLabel("Cash: ");
+		JLabel lbl_CashText = guiFactory.getDefaultLabel("Cash: ");
 		pnl_CashPanel.add(lbl_CashText);
 		
-		lbl_CashValue = new JLabel("NaN");
+		lbl_CashValue = guiFactory.getDefaultLabel("NaN");
 		pnl_CashPanel.add(lbl_CashValue);
 		
-		JPanel pnl_StockPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) pnl_StockPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		pnl_StockPanel.setBackground((Color) null);
+		JPanel pnl_StockPanel = guiFactory.getInvisibleContainer();
 		pnl_BalanceContainer.add(pnl_StockPanel);
 		
-		JLabel lbl_StockText = new JLabel("Stock: ");
+		JLabel lbl_StockText = guiFactory.getDefaultLabel("Stock: ");
 		pnl_StockPanel.add(lbl_StockText);
 		
-		JLabel lbl_StockValue = new JLabel("NaN");
+		JLabel lbl_StockValue = guiFactory.getDefaultLabel("NaN");
 		pnl_StockPanel.add(lbl_StockValue);
 		
-		JPanel pnl_BalanceHistory = new JPanel();
+		JPanel pnl_BalanceHistory = guiFactory.getInvisibleContainer();
 		pnl_BalanceContainer.add(pnl_BalanceHistory);
-		pnl_BalanceHistory.setBackground(null);
 		
-		btn_BalanceHistory = new PortfolioButton("History");
+		btn_BalanceHistory = guiFactory.getDefaultButton("History");
 		pnl_BalanceHistory.add(btn_BalanceHistory);
 		// =============================
 		
 		// ======Algorithm Container======
-		PortfolioContainer pnl_AlgorithmContainer = new PortfolioContainer();
+		JPanel pnl_AlgorithmContainer = guiFactory.getDefaultContainer();
 		pnl_BoxContainer.add(pnl_AlgorithmContainer);
 		pnl_AlgorithmContainer.setLayout(new BoxLayout(pnl_AlgorithmContainer, BoxLayout.Y_AXIS));
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(200);
 		pnl_AlgorithmContainer.add(horizontalStrut_1);
 		
-		JPanel pnl_AlgorithmPanel = new JPanel();
-		FlowLayout flowLayout_5 = (FlowLayout) pnl_AlgorithmPanel.getLayout();
-		flowLayout_5.setAlignment(FlowLayout.LEFT);
-		pnl_AlgorithmPanel.setBackground((Color) null);
+		JPanel pnl_AlgorithmPanel = guiFactory.getInvisibleContainer();
 		pnl_AlgorithmContainer.add(pnl_AlgorithmPanel);
 		
-		JLabel lbl_Algorithm = new JLabel("Algorithms");
+		JLabel lbl_Algorithm = guiFactory.getTitleLabel("Algorithms");
 		lbl_Algorithm.setHorizontalAlignment(SwingConstants.LEFT);
 		pnl_AlgorithmPanel.add(lbl_Algorithm);
 		
-		JPanel pnl_AlgorithmName = new JPanel();
-		FlowLayout flowLayout_6 = (FlowLayout) pnl_AlgorithmName.getLayout();
-		flowLayout_6.setAlignment(FlowLayout.LEFT);
+		JPanel pnl_AlgorithmName = guiFactory.getInvisibleContainer();
 		pnl_AlgorithmContainer.add(pnl_AlgorithmName);
-		pnl_AlgorithmName.setBackground((Color) null);
 		
-		JLabel lbl_AlgorithmName = new JLabel("None");
-		lbl_AlgorithmName.setHorizontalAlignment(SwingConstants.LEFT);
+		JLabel lbl_AlgorithmName = guiFactory.getDefaultLabel("None");
 		pnl_AlgorithmName.add(lbl_AlgorithmName);
 		
-		JPanel pnl_AlgorithmChange = new JPanel();
+		JPanel pnl_AlgorithmChange = guiFactory.getInvisibleContainer();
 		pnl_AlgorithmContainer.add(pnl_AlgorithmChange);
-		pnl_AlgorithmChange.setBackground((Color) null);
 		
-		btn_AlgorithmChange = new PortfolioButton("Change");
+		btn_AlgorithmChange = guiFactory.getDefaultButton("Change");
 		pnl_AlgorithmChange.add(btn_AlgorithmChange);
 		// ===============================
 		
 		// ======Stock Container======
-		PortfolioContainer pnl_StockContainer = new PortfolioContainer();
+		JPanel pnl_StockContainer = guiFactory.getDefaultContainer();
 		pnl_BoxContainer.add(pnl_StockContainer);
 		pnl_StockContainer.setLayout(new BoxLayout(pnl_StockContainer, BoxLayout.Y_AXIS));
 		
 		Component horizontalStrut_2 = Box.createHorizontalStrut(200);
 		pnl_StockContainer.add(horizontalStrut_2);
 		
-		JPanel pnl_ShowStock = new JPanel();
-		pnl_ShowStock.setBackground((Color)null);
 		
-		JPanel Pnl_StockName = new JPanel();
-		pnl_StockContainer.add(Pnl_StockName);
-		Pnl_StockName.setBackground(null);
+		JPanel pnl_StockName = guiFactory.getInvisibleContainer();
+		pnl_StockContainer.add(pnl_StockName);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		Pnl_StockName.add(lblNewLabel);
+		JLabel lbl_stocks = guiFactory.getTitleLabel("Stock");
+		pnl_StockName.add(lbl_stocks);
+		
+		JPanel pnl_ShowStock = guiFactory.getInvisibleContainer();
 		pnl_StockContainer.add(pnl_ShowStock);
 		
-		JButton btn_Show = new PortfolioButton("Stock");
+		JButton btn_Show = guiFactory.getDefaultButton("Stock");
 		pnl_ShowStock.add(btn_Show);
 		// ===========================
 		
