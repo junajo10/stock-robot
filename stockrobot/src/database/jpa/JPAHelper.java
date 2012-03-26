@@ -544,4 +544,9 @@ public class JPAHelper {
 		return query.getResultList();
 	}
 
+
+	public EntityManager getEntityManager() {
+		return em;
+	}
+
 }

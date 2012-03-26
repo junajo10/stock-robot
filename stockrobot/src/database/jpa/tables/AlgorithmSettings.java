@@ -7,18 +7,23 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.apache.openjpa.persistence.ElementType;
+
 @Entity
 public class AlgorithmSettings {
 	@Id
 	private int id;
 	
 	@OneToMany
+	@ElementType(Integer.class)
 	private List<AlgorithmSetting<Integer>> intSettings;
 	
 	@OneToMany
+	@ElementType(Double.class)
 	private List<AlgorithmSetting<Double>> doubleSettings;
 	
 	@OneToMany
+	@ElementType(String.class)
 	private List<AlgorithmSetting<String>> stringSettings;
 	
 	@OneToMany

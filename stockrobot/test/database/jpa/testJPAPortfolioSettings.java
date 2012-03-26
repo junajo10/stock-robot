@@ -37,8 +37,8 @@ public class testJPAPortfolioSettings {
 		jpaHelper.updateObject(p);
 		
 		AlgorithmSettings as = new AlgorithmSettings(p, a);
-		
-		
+		jpaHelper.storeObject(as);
+	
 	}
 
 	/**
