@@ -78,7 +78,10 @@ public class AlgorithmsLoader {
 	}
 	public static AlgorithmsLoader getInstance(IRobot_Algorithms robot) {
 		if(instance == null) {
-			instance = new AlgorithmsLoader(robot);
+			synchronized (AlgorithmsLoader.class) {
+				if (instance == null)
+					instance = new AlgorithmsLoader(robot);
+			}
 		}
 		return instance;
 	}

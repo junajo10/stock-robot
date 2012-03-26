@@ -35,6 +35,9 @@ public class TestAlgorithm implements IAlgorithm{
 	
 	@Override
 	public boolean update() {
+		
+		System.out.println( "Algo1: UPDATE!" );
+		
 		if (portfolio.getPortfolioTable().getBalance() < 1000) {
 			return false;
 		}

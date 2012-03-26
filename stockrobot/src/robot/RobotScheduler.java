@@ -1,6 +1,13 @@
 package robot;
 
+<<<<<<< HEAD
 import portfolio.IPortfolioHandler;
+=======
+import javax.swing.text.StyledEditorKit;
+
+import portfolio.IPortfolioHandler;
+import portfolio.PortfolioHandler;
+>>>>>>> 0102877cb30f9bc30ad8ca1db17d71d0a8b449e8
 
 /**
  * @author Mattias Markehed
@@ -19,9 +26,17 @@ public class RobotScheduler implements Runnable{
 	public static final long SECOND = 1000*MILLI_SECOND;
 	public static final long MINUTE = 60*SECOND;
 	
+<<<<<<< HEAD
 	private boolean isRunning = false;
 	private boolean pause = false;
 	private long freq = 0;
+=======
+	public RobotScheduler(IPortfolioHandler portfolioHandler){
+		handler = new RobotHandler(portfolioHandler);
+		
+		tRunner = new Thread( new AlgorithmRunner() );
+	}
+>>>>>>> 0102877cb30f9bc30ad8ca1db17d71d0a8b449e8
 	
 	public RobotScheduler(IPortfolioHandler portfolioHandler){
 		handler = new RobotHandler(portfolioHandler);
@@ -32,12 +47,18 @@ public class RobotScheduler implements Runnable{
 	 * 
 	 * @return true if stopped else false if already stopped
 	 */
+<<<<<<< HEAD
 	public boolean stop(){
 			
 		boolean result = false;
 		if(!pause)
 			result = pause = true;	
 		return result;
+=======
+	public void startScheduler(){
+		isRunning = true;
+		tRunner.start();
+>>>>>>> 0102877cb30f9bc30ad8ca1db17d71d0a8b449e8
 	}
 		
 	/**
@@ -86,8 +107,29 @@ public class RobotScheduler implements Runnable{
 		while(isRunning){
 			System.out.println("run algorithms");
 			
+<<<<<<< HEAD
 			//TODO make run interface to avoid polling
 			while(pause){
+=======
+			System.out.println( "RobotScheduler: RUN!" );
+			
+			while(isRunning){
+				
+				System.out.println( "RobotScheduler!" );
+				
+				//TODO make run interface to avoid polling
+				while(pause){
+					
+					System.out.println( "RobotScheduler pause!" );
+					try {
+						Thread.sleep(RobotScheduler.SECOND * 20);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				RobotScheduler.this.handler.runAlgorithms();
+>>>>>>> 0102877cb30f9bc30ad8ca1db17d71d0a8b449e8
 				try {
 					Thread.sleep(RobotScheduler.SECOND * 5);
 				} catch (InterruptedException e) {

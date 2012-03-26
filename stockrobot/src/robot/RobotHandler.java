@@ -46,10 +46,18 @@ public class RobotHandler {
 	 */
 	public void runAlgorithms(){
 		
+<<<<<<< HEAD
 		Log.instance().log(Log.TAG.VERY_VOCAL, "Running algorithms");
 		
 		List<AlgorithmThread> stillRunning = new LinkedList<AlgorithmThread>();
 		for(AlgorithmThread a : algorithms){
+=======
+		System.out.println( "Run Algorithms!!!" );
+		
+		//TODO make code to run algorithms
+		List<AlgorithmAdapter> stillRunning = new LinkedList<AlgorithmAdapter>();
+		for(AlgorithmAdapter a : algorithms){
+>>>>>>> 0102877cb30f9bc30ad8ca1db17d71d0a8b449e8
 			
 			if(a.isRunning())
 				stillRunning.add(a);
