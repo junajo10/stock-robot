@@ -81,7 +81,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		setBackground(Color.BLACK);
 		setTitle("Portfolio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 300, 281);
+		setBounds(100, 100, 300, 399);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
@@ -106,6 +106,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		contentPane.add(pnl_BoxContainer);
 		pnl_BoxContainer.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
+		// ======Balance Container======
 		PortfolioContainer pnl_BalanceContainer = new PortfolioContainer();
 		pnl_BoxContainer.add(pnl_BalanceContainer);
 		pnl_BalanceContainer.setLayout(new BoxLayout(pnl_BalanceContainer, BoxLayout.Y_AXIS));
@@ -151,15 +152,11 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		pnl_BalanceContainer.add(pnl_BalanceHistory);
 		pnl_BalanceHistory.setBackground(null);
 		
-		btn_BalanceHistory = new JButton("History");
-		btn_BalanceHistory.setForeground(Color.BLACK);
+		btn_BalanceHistory = new PortfolioButton("History");
 		pnl_BalanceHistory.add(btn_BalanceHistory);
-		btn_BalanceHistory.setBackground(Color.WHITE);
+		// =============================
 		
-		JButton button = new JButton("Change");
-		button.setBackground(Color.WHITE);
-		btn_BalanceHistory.setBackground(Color.WHITE);
-		
+		// ======Algorithm Container======
 		PortfolioContainer pnl_AlgorithmContainer = new PortfolioContainer();
 		pnl_BoxContainer.add(pnl_AlgorithmContainer);
 		pnl_AlgorithmContainer.setLayout(new BoxLayout(pnl_AlgorithmContainer, BoxLayout.Y_AXIS));
@@ -191,10 +188,24 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		pnl_AlgorithmContainer.add(pnl_AlgorithmChange);
 		pnl_AlgorithmChange.setBackground((Color) null);
 		
-		btn_AlgorithmChange = new JButton("Change");
-		btn_AlgorithmChange.setBackground(Color.WHITE);
+		btn_AlgorithmChange = new PortfolioButton("Change");
 		pnl_AlgorithmChange.add(btn_AlgorithmChange);
+		// ===============================
 		
+		// ======Stock Container======
+		PortfolioContainer pnl_StockContainer = new PortfolioContainer();
+		pnl_BoxContainer.add(pnl_StockContainer);
+		pnl_StockContainer.setLayout(new BoxLayout(pnl_StockContainer, BoxLayout.Y_AXIS));
+		
+		Component horizontalStrut_2 = Box.createHorizontalStrut(200);
+		pnl_StockContainer.add(horizontalStrut_2);
+		
+		JPanel pnl_ShowStock = new JPanel();
+		pnl_StockContainer.add(pnl_ShowStock);
+		
+		JButton btn_Show = new PortfolioButton("New button");
+		pnl_ShowStock.add(btn_Show);
+		// ===========================
 		
 		updatePortfolios();
 
