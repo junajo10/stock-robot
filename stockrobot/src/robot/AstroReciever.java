@@ -9,9 +9,37 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * 
+ * @author Erik
+ *
+ */
 public class AstroReciever implements Runnable {
-
 	private boolean newData;
+	/** Code should be somewhere in Astro.java
+	 * <p>
+	 * AstroReciever should be run as a thread.
+	 * 
+	 */
+	public static void main(String args[]){
+		AstroReciever reciever = new AstroReciever();
+		Thread recieveThread = new Thread(reciever);
+		recieveThread.start();
+		
+		//Example of a blocking call to AstroReciever.
+		while(!reciever.newData){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		//Rest of the code...
+	}
+
+
 	/**
 	 * Class to see if it recieves data from Connector class.
 	 * Recieves message from Harvester saying that new data is available.
@@ -31,6 +59,7 @@ public class AstroReciever implements Runnable {
 				//Send ping upwards saying that new data is available.
 				newData = true;
 				Log.instance().log(Log.TAG.DEBUG, "Have recieved new stock data!");
+
 				newDataSocket.close();
 			}
 		} catch (UnknownHostException e) {
@@ -43,7 +72,7 @@ public class AstroReciever implements Runnable {
 	}
 	
 	/**
-	 * Checks if new stockdata is available.
+	 * Checks if new stock data is available.
 	 * <p>
 	 * Thread safe method.
 	 * <P>
