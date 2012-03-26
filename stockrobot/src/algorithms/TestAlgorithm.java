@@ -74,7 +74,8 @@ public class TestAlgorithm implements IAlgorithm{
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {
-				if (stockInfo.getRight().get(i).getBuy() > last)
+				
+				if (stockInfo.getRight().get(i).getBuy() >= last)
 					buy = false;
 				last = stockInfo.getRight().get(i).getBuy();
 			}
