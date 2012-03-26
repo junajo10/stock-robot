@@ -35,11 +35,31 @@ public class FinancialLongConverter {
 		
 		String dec = Float.toString( input );
 		
-		String numbers= dec.split( "\\." )[0];
-		String decimals = dec.split( "\\." )[1];
+		String numbers = "";
+		String decimals = "";
+		int limit = 0;
 		
-		//Add as many zero's as needed to get decimalLength decimals
-		int limit = decimalLength - decimals.length();
+		//If we have a large number, java's tostring will insert E^X to make it shorter, then add as many zero's as needed
+		if( dec.contains("E") ) {
+			
+			numbers = dec.split( "E" )[0];
+			limit = Integer.parseInt(dec.split( "E" )[1]) - dec.split("\\.")[1].split("E")[0].length();
+			
+		//Otherwise, add as many zero's as needed 
+		} else {
+			
+			numbers = dec.split( "\\." )[0];
+			decimals = dec.split( "\\." )[1];
+			
+			//Add as many zero's as needed to get decimalLength decimals
+			limit = decimalLength - decimals.length();
+		}
+		
+		//If we have only one decimal, increase the amount of zeros
+		//TODO: Do we have to check this?
+		//if( decimals.length() == 1 )
+		//	limit ++;
+		
 		for( int i = 0; i < limit; i ++ )
 			decimals += "0";
 		
@@ -56,15 +76,43 @@ public class FinancialLongConverter {
 		
 		String dec = Double.toString( input );
 		
-		String numbers= dec.split( "\\." )[0];
-		String decimals = dec.split( "\\." )[1];
+		String numbers = "";
+		String decimals = "";
+		int limit = 0;
 		
-		//Add as many zero's as needed to get decimalLength decimals
-		int limit = decimalLength - decimals.length();
+		System.out.println( "decStr: " + dec );
+		
+		//TODO: FIX THE E^X CONVERSION IN A MORE ELEGANT WAY!!
+		//If we have a large number, java's tostring will insert E^X to make it shorter, then add as many zero's as needed
+		if( dec.contains("E") ) {
+			
+			numbers = dec.split( "E" )[0];
+			limit = Integer.parseInt(dec.split( "E" )[1]) - dec.split("\\.")[1].split("E")[0].length();
+			
+		//Otherwise, add as many zero's as needed 
+		} else {
+			
+			numbers = dec.split( "\\." )[0];
+			decimals = dec.split( "\\." )[1];
+			
+			//Add as many zero's as needed to get decimalLength decimals
+			limit = decimalLength - decimals.length();
+		}
+		
+		//If we have only one decimal, increase the amount of zeros
+		//TODO: Do we have to check this?
+		//if( decimals.length() == 1 )
+		//	limit ++;
+		
 		for( int i = 0; i < limit; i ++ )
 			decimals += "0";
 		
-		return Long.parseLong( numbers + decimals );
+		System.out.println( "nunbers: " + numbers );
+		System.out.println( "decimals: " + decimals );
+		
+		System.out.println( "replaced: " + (numbers + decimals).replaceAll("\\.", "") );
+		
+		return Long.parseLong( (numbers + decimals).replaceAll("\\.", "") );
 	}
 	public static double toDouble(long input) {
 		return input/(Math.pow(10, decimalLength));
