@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * 
+ * @author Erik
+ *
+ */
 public class Connector {
 	private Socket sendRefresh;
 	
@@ -18,7 +23,21 @@ public class Connector {
 			e.printStackTrace();
 		}
 	}
+	
+	/*
+	 * Method only for testing!
+	 */
+	public static void main(String[] args){
+		Reciever rec = new Reciever();
+		Thread recThread = new Thread(rec);
+		
+	}
 }
+
+
+
+
+
 
 
 
