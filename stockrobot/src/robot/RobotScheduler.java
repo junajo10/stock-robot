@@ -2,6 +2,7 @@ package robot;
 
 import javax.swing.text.StyledEditorKit;
 
+import portfolio.IPortfolioHandler;
 import portfolio.PortfolioHandler;
 
 /**
@@ -26,7 +27,7 @@ public class RobotScheduler {
 	public static final long SECOND = 1000*MILLI_SECOND;
 	public static final long MINUTE = 60*SECOND;
 	
-	public RobotScheduler(PortfolioHandler portfolioHandler){
+	public RobotScheduler(IPortfolioHandler portfolioHandler){
 		handler = new RobotHandler(portfolioHandler);
 	}
 	
