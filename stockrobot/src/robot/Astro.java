@@ -68,7 +68,6 @@ public class Astro implements IRobot_Algorithms{
 					
 					p.investAmount(newInvestment);
 					System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
-					portfolioGui.updateCash();
 				}
 				
 				p.getAlgorithm().update();

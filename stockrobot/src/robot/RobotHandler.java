@@ -1,5 +1,7 @@
 package robot;
 
+import generic.Log;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Handler;
@@ -20,12 +22,9 @@ public class RobotHandler {
 
 	//Used to retrieve the algorithms and portfolios that are used
 	private IPortfolioHandler portfolioHandler;
-	private List<AlgorithmAdapter> algorithms;
-	
+	private List<AlgorithmThread> algorithms;
 	
 		
-	//TODO Implement a shedueler for the handler
-	
 	/**
 	 * Create a handler thats runs each algorithms in the
 	 * portfolios frequently.
@@ -35,7 +34,7 @@ public class RobotHandler {
 	public RobotHandler(IPortfolioHandler portfolioHandler){
 		
 		this.portfolioHandler = portfolioHandler;
-		algorithms = new LinkedList<AlgorithmAdapter>();
+		algorithms = new LinkedList<AlgorithmThread>();
 	}
 
 	/**
@@ -47,29 +46,33 @@ public class RobotHandler {
 	 */
 	public void runAlgorithms(){
 		
-		//TODO make code to run algorithms
-		List<AlgorithmAdapter> stillRunning = new LinkedList<AlgorithmAdapter>();
-		for(AlgorithmAdapter a : algorithms){
+		Log.instance().log(Log.TAG.VERY_VOCAL, "Running algorithms");
+		
+		List<AlgorithmThread> stillRunning = new LinkedList<AlgorithmThread>();
+		for(AlgorithmThread a : algorithms){
 			
 			if(a.isRunning())
 				stillRunning.add(a);
 		}
-		algorithms = new LinkedList<AlgorithmAdapter>();
+		algorithms = new LinkedList<AlgorithmThread>();
 		algorithms.addAll(stillRunning);
 		
-		//Only adds algorithms that isnt curently running
+		//Only adds algorithms that isn't currently running
 		for(IPortfolio portfolio : portfolioHandler.getPortfolios()){
 			boolean found = false;
-			for(AlgorithmAdapter adapter : stillRunning){
+			for(AlgorithmThread adapter : stillRunning){
 				if(adapter.getPortfolio() == portfolio){
 					found = true;
 				}
 			}
+			
+			//TODO Make the treads rerunnable
 			if(!found){
-				algorithms.add(new AlgorithmAdapter(portfolio));
+				AlgorithmThread aThread = new AlgorithmThread(portfolio);
+				algorithms.add(aThread);
+				aThread.start();
 			}
 		}
-		//TODO runt the treads
 	}
 	
 	/**
@@ -84,7 +87,7 @@ public class RobotHandler {
 	 * Additional functionality is to see it the algorithm have 
 	 * finished and how long the run took.
 	 */
-	private class AlgorithmAdapter implements Runnable{
+	private class AlgorithmThread extends Thread{
 		
 		public static final long NON_VALID_TIME = -1;
 		
@@ -99,7 +102,7 @@ public class RobotHandler {
 		 * 
 		 * @param algorithm the algorithm to run
 		 */
-		public AlgorithmAdapter(IPortfolio portfolio){
+		public AlgorithmThread(IPortfolio portfolio){
 			
 			this.portfolio = portfolio;
 		}
