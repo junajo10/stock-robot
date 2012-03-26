@@ -30,6 +30,9 @@ public class InitiateAlgorithm1 {
 			AlgorithmEntitys algo = new AlgorithmEntitys( "Algo1", "algorithms.TestAlgorithm" );
 			port.setAlgorithm( algo );
 			help.updateObject( port );
+			
+			//Add some money to the account!
+			help.investMoney(100000, port);
 		}	
 	}
 }
