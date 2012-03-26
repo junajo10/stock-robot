@@ -14,7 +14,7 @@ import algorithms.IAlgorithm;
  * 
  * This class will manage the setting of an algorithm
  */
-public class AlgorithmSettings {
+public class SettingsAlgorithm {
 	final private IAlgorithm algorithm;
 	private List<Pair<Integer, JTextField>> settingIntegerFields = new LinkedList<Pair<Integer, JTextField>>();
 	private List<Pair<Integer, JTextField>> settingStringFields = new LinkedList<Pair<Integer, JTextField>>();
@@ -26,7 +26,7 @@ public class AlgorithmSettings {
 	 * Starts the settings GUI to a given algorithm
 	 * @param algorithm
 	 */
-	public AlgorithmSettings(IAlgorithm algorithm) {
+	public SettingsAlgorithm(IAlgorithm algorithm) {
 		this.algorithm = algorithm;
 		
 		showSettingsDialog();

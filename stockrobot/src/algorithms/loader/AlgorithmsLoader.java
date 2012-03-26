@@ -73,8 +73,8 @@ public class AlgorithmsLoader {
 		
 		return null;
 	}
-	public AlgorithmSettings getSettings(IAlgorithm algorithm) {
-		return new AlgorithmSettings(algorithm);
+	public SettingsAlgorithm getSettings(IAlgorithm algorithm) {
+		return new SettingsAlgorithm(algorithm);
 	}
 	public static AlgorithmsLoader getInstance(IRobot_Algorithms robot) {
 		if(instance == null) {

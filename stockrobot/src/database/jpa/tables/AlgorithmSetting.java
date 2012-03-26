@@ -12,7 +12,7 @@ import javax.persistence.Id;
  * This Entity will hold settings for algorithms
  */
 @Entity
-public class PortfolioAlgorithmSetting<T> {
+public class AlgorithmSetting<T> {
 	@Id
 	private int id;
 	
@@ -31,7 +31,7 @@ public class PortfolioAlgorithmSetting<T> {
 	@Column
 	private T maxValue;
 	
-	public PortfolioAlgorithmSetting() {
+	public AlgorithmSetting() {
 		
 	}
 	/**
@@ -39,7 +39,7 @@ public class PortfolioAlgorithmSetting<T> {
 	 * @param defaultValue The default value, this will also be given as the starting value.
 	 * @param settingText The text for this setting that will be displayed next to the field for it.
 	 */
-	public PortfolioAlgorithmSetting(T defaultValue, String settingText) {
+	public AlgorithmSetting(T defaultValue, String settingText) {
 		this.defaultValue = this.value = defaultValue;
 		this.settingText = settingText;
 	}
