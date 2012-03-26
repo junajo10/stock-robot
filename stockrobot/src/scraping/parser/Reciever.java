@@ -25,6 +25,7 @@ public class Reciever implements Runnable {
 				BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
 				String rec = fromHarvester.readLine();
 				System.out.println("Have recieved: "+rec);
+				newDataSocket.close();
 			}
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

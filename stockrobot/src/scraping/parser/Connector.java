@@ -15,24 +15,18 @@ public class Connector {
 	private Socket sendRefresh;
 	
 	public Connector(){
-		try {
-			sendRefresh = new Socket("localhost", 42000);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 	
 	
 	public boolean sendRefresh() {
 		DataOutputStream outToServer;
 		try {
+			sendRefresh = new Socket("localhost", 45000);
 			outToServer = new DataOutputStream(sendRefresh.getOutputStream());
 			outToServer.writeBytes("New data available!");
 			outToServer.close();
+			sendRefresh.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,8 +41,24 @@ public class Connector {
 		Reciever rec = new Reciever();
 		Thread recThread = new Thread(rec);
 		recThread.start();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Connector conn = new Connector();
-		conn.sendRefresh();
+		while(true){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			conn.sendRefresh();
+		}
+
+		
 		
 	}
 
