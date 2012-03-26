@@ -1,6 +1,8 @@
 package gui;
 
 import generic.FinancialLongConverter;
+import gui.components.PortfolioButton;
+import gui.components.PortfolioContainer;
 import gui.mvc.Constants;
 
 import java.awt.Dimension;
@@ -27,7 +29,6 @@ import database.jpa.tables.PortfolioEntitys;
 
 import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
-import portfolio.Portfolio;
 
 /**
  * @author Mattias Markehed
@@ -201,7 +202,14 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		pnl_StockContainer.add(horizontalStrut_2);
 		
 		JPanel pnl_ShowStock = new JPanel();
-		pnl_StockContainer.setBackground((Color)null);
+		pnl_ShowStock.setBackground((Color)null);
+		
+		JPanel Pnl_StockName = new JPanel();
+		pnl_StockContainer.add(Pnl_StockName);
+		Pnl_StockName.setBackground(null);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		Pnl_StockName.add(lblNewLabel);
 		pnl_StockContainer.add(pnl_ShowStock);
 		
 		JButton btn_Show = new PortfolioButton("Stock");
