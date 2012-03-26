@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
  * @author Erik
  *
  */
-public class Connector {
+public class Connector implements IConnector {
 	private Socket sendRefresh;
 	
 	public Connector(){
@@ -31,14 +31,15 @@ public class Connector {
 			outToServer.close();
 			sendRefresh.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return true;
 	}
 	
-	/*
+	/**
 	 * Method only for testing!
+	 * <p>
+	 * Not to be included in final version.
 	 */
 	public static void main(String[] args){
 		Reciever rec = new Reciever();
@@ -47,7 +48,6 @@ public class Connector {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		Connector conn = new Connector();
@@ -55,7 +55,6 @@ public class Connector {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			conn.sendRefresh();

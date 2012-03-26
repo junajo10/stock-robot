@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import scraping.connect.Connector;
+import scraping.connect.IConnector;
 import scraping.database.IInserter;
 import scraping.database.JPAInserter;
 import scraping.model.ParserStock;
@@ -30,11 +32,13 @@ public class ParserRunner implements IParserRunner {
 	AvanzaParser parser;
 	IScheduler scheduler;
 	IInserter inserter;
+	IConnector connector;
 	
 	public ParserRunner(){
 		parser = new AvanzaParser();
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
+		connector = new Connector();
 		
 	}
 	@Override
@@ -59,6 +63,8 @@ public class ParserRunner implements IParserRunner {
 					    inserter.insertStockData(stockList);
 					}
 					Long timeElapsed = System.currentTimeMillis() - timeBefore;
+					/* Connector on robot not implemented yet, uncomment when. */
+					//connector.sendRefresh();
 					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
 					try {
 						Thread.sleep(60000-timeElapsed);

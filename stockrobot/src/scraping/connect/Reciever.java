@@ -12,7 +12,7 @@ public class Reciever implements Runnable {
 	/**
 	 * Test class to see if it recieves data from Connector class.
 	 * <p>
-	 * This should be somewhere in the algorithms package.
+	 * Part of this class should be somewhere in the algorithms package.
 	 * @author Erik
 	 */
 	@Override
@@ -23,6 +23,7 @@ public class Reciever implements Runnable {
 			while(true){
 				Socket newDataSocket = recieve.accept();
 				BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
+				//Send ping upwards saying new data is available.
 				System.out.println("Have recieved data!");
 				newDataSocket.close();
 			}
