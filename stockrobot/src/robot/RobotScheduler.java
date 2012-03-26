@@ -34,12 +34,14 @@ public class RobotScheduler implements Runnable{
 	 * 
 	 * @return true if stopped else false if already stopped
 	 */
-	public boolean stop(){
+	public synchronized boolean stop(){
 			
 		boolean result = false;
-		if(!pause)
+		if(isRunning){
 			Log.instance().log(Log.TAG.NORMAL , "RobotScheduler Stoped!" );
-			result = pause = true;	
+			isRunning = pause = false;	
+			result = true;
+		}
 		return result;
 	}
 		
@@ -49,10 +51,10 @@ public class RobotScheduler implements Runnable{
 	 * 
 	 * @return true if runner paused else false
 	 */
-	public boolean pause(){
+	public synchronized boolean pause(){
 		
 		boolean result = false;
-		if(!pause){
+		if(!pause && isRunning){
 			Log.instance().log(Log.TAG.VERBOSE , "RobotScheduler pause!" );
 			result = pause = true;
 		}
@@ -65,10 +67,10 @@ public class RobotScheduler implements Runnable{
 	* 
 	* @return return true if runner unpauses else false
 	*/
-	public boolean unpause(){
+	public synchronized boolean unpause(){
 			
 		boolean result = false;
-		if(pause){
+		if(pause && isRunning){
 			Log.instance().log(Log.TAG.VERBOSE , "RobotScheduler unpause!" );
 			pause = false;
 			result = true;
