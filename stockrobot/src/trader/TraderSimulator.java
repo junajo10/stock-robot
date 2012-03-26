@@ -3,7 +3,8 @@ package trader;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import gui.IObservable;
+import generic.FinancialLongConverter;
+import generic.Log;
 import gui.mvc.Constants;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioEntitys;
@@ -31,10 +32,16 @@ public class TraderSimulator implements ITrader{
 	}
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
-		System.out.println( ":::::::::::::Try to buy!, amount: " + amount + ", portfolio: " + portfolio + "; stockprices: " + s );
-		if (amount > 0 && amount * s.getSell() < portfolio.getBalance()) {
-			System.out.println("BUY: " + amount + " of " + s);
-			portfolio.bougthFor(amount * s.getSell());
+		
+		if (amount > 0 && amount * FinancialLongConverter.toDouble(s.getSell()) < portfolio.getBalance()) {
+			
+			portfolio.bougthFor(
+					FinancialLongConverter.fromDouble(
+							amount * FinancialLongConverter.toDouble(s.getSell())
+					)
+			);
+			Log.instance().log(Log.TAG.VERY_VERBOSE, "total price: " + amount * FinancialLongConverter.toDouble(s.getSell()));
+			
 			JPAHelper.getInstance().storeObject(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
 			
 			propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.BUY_STOCK, null, portfolio);
@@ -45,7 +52,13 @@ public class TraderSimulator implements ITrader{
 	@Override
 	public boolean sellStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
 		StockPrices latest = JPAHelper.getInstance().getLatestStockPrice(s);
-		portfolio.soldFor(s.getBuy()*amount);
+		portfolio.soldFor(
+				
+			FinancialLongConverter.fromDouble(
+					FinancialLongConverter.toDouble(s.getBuy())*amount
+			)
+				
+		);
 		PortfolioHistory ph = JPAHelper.getInstance().getSpecificPortfolioHistory(s, portfolio);
 		ph.setSoldDate(latest.getTime());
 		JPAHelper.getInstance().updateObject(ph);
