@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
  * @author Erik
  *
  */
+
 public class Connector {
 	private Socket sendRefresh;
 	
