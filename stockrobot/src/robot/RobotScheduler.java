@@ -52,7 +52,7 @@ public class RobotScheduler implements Runnable{
 		
 		boolean result = false;
 		if(!pause){
-			Log.instance().log(Log.TAG.VOCAL , "RobotScheduler pause!" );
+			Log.instance().log(Log.TAG.VERBOSE , "RobotScheduler pause!" );
 			result = pause = true;
 		}
 			
@@ -68,7 +68,7 @@ public class RobotScheduler implements Runnable{
 			
 		boolean result = false;
 		if(pause){
-			Log.instance().log(Log.TAG.VOCAL , "RobotScheduler unpause!" );
+			Log.instance().log(Log.TAG.VERBOSE , "RobotScheduler unpause!" );
 			pause = false;
 			result = true;
 		}
@@ -88,7 +88,7 @@ public class RobotScheduler implements Runnable{
 	@Override
 	public void run() {
 		isRunning = true;
-		Log.instance().log(Log.TAG.VERY_VOCAL , "RobotScheduler!" );
+		Log.instance().log(Log.TAG.VERY_VERBOSE , "RobotScheduler!" );
 		while(isRunning){
 			
 			//TODO make run interface to avoid polling
@@ -100,7 +100,7 @@ public class RobotScheduler implements Runnable{
 				}
 			}
 			
-			Log.instance().log(Log.TAG.VERY_VOCAL ,"RobotScheduler: RUN!" );
+			Log.instance().log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN!" );
 			RobotScheduler.this.handler.runAlgorithms();
 			try {
 				Thread.sleep(freq);
