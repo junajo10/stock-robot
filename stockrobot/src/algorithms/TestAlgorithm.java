@@ -3,6 +3,7 @@ package algorithms;
 
 import java.util.List;
 
+import generic.Log;
 import generic.Pair;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioHistory;
@@ -36,7 +37,7 @@ public class TestAlgorithm implements IAlgorithm{
 	@Override
 	public boolean update() {
 		
-		System.out.println( "Algo1: UPDATE!" );
+		Log.instance().log( Log.TAG.VERY_VOCAL, "Algo1: UPDATE!" );
 		
 		if (portfolio.getPortfolioTable().getBalance() < 1000) {
 			return false;
@@ -45,6 +46,8 @@ public class TestAlgorithm implements IAlgorithm{
 		List<StockPrices> ownedStockes = jpaHelper.getCurrentStocks(portfolio.getPortfolioTable());
 		
 		for (StockPrices sp : ownedStockes ) {
+			
+			Log.instance().log( Log.TAG.VERY_VOCAL, "Algo1: Checking ownedStocks!" );
 			
 			List<StockPrices> cs = jpaHelper.getNLatest(sp, 5);
 			
@@ -65,19 +68,34 @@ public class TestAlgorithm implements IAlgorithm{
 			}
 		}
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
+			
+			Log.instance().log( Log.TAG.VERY_VOCAL, "Algo1: Checking what to buy!" + (stockInfo.getLeft().getName() ));
+			
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {
-				if (stockInfo.getRight().get(i).getBuy() > last)
+				
+				if (stockInfo.getRight().get(i).getBuy() >= last)
 					buy = false;
 				last = stockInfo.getRight().get(i).getBuy();
 			}
-			if (buy)
-				buyStock(stockInfo.getRight().get(0), portfolio.getPortfolioTable().getBalance()/10/stockInfo.getRight().get(0).getBuy());
+			
+			//Buy!
+			if (buy) {
+				
+				Log.instance().log( Log.TAG.VERY_VOCAL, "Algo1: LET'S BUY!" );
+				
+				//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
+				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
+				if( firstStockBuyPrice != 0 ) {
+					
+					Log.instance().log( Log.TAG.VERY_VOCAL, "Algo1: BOUGHT!" );
+					
+					Log.instance().log( Log.TAG.DEBUG, "TestAlgorithm: Buy: " + stockInfo.getRight().get(0) );
+					buyStock( stockInfo.getRight().get(0),portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice );
+				}
+			}
 		}
-		
-		
-		
 		
 		return true;
 	}
