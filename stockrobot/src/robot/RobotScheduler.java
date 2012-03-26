@@ -23,6 +23,7 @@ public class RobotScheduler implements Runnable{
 	private boolean isRunning = false;
 	private boolean pause = false;
 	private long freq = 0;
+	private long pauseLength = SECOND;
 
 	public RobotScheduler(IPortfolioHandler portfolioHandler){
 		handler = new RobotHandler(portfolioHandler);
@@ -85,6 +86,15 @@ public class RobotScheduler implements Runnable{
 		this.freq = freq; 
 	}
 	
+	/**
+	 * Set the sleep time of the thread when paused. 
+	 * 
+	 * @param length time in milli seconds
+	 */
+	public void setPauseLength(long length){
+		pauseLength	= length;
+	}
+	
 	@Override
 	public void run() {
 		isRunning = true;
@@ -94,7 +104,7 @@ public class RobotScheduler implements Runnable{
 			//TODO make run interface to avoid polling
 			while(pause){
 				try {
-					Thread.sleep(RobotScheduler.SECOND * 60);
+					Thread.sleep(pauseLength);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
