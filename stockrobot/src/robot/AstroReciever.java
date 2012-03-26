@@ -10,24 +10,30 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * 
+ * Class for receiving notifications that there's new stock data.
+ * <p>
+ * Receives messages from Connector class on port 45000.
+ * <p>
  * @author Erik
  *
  */
 public class AstroReciever implements Runnable {
 	private boolean newData;
+	
 	/** Code should be somewhere in Astro.java
 	 * <p>
 	 * AstroReciever should be run as a thread.
 	 * 
 	 */
 	public static void main(String args[]){
+		//Startup code.
 		AstroReciever reciever = new AstroReciever();
 		Thread recieveThread = new Thread(reciever);
 		recieveThread.start();
 		
+		
 		//Example of a blocking call to AstroReciever.
-		while(!reciever.newData){
+		while(!reciever.newStockData()){
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -37,17 +43,10 @@ public class AstroReciever implements Runnable {
 		}
 		
 		//Rest of the code...
+		
+		
 	}
 
-
-	/**
-	 * Class to see if it recieves data from Connector class.
-	 * Recieves message from Harvester saying that new data is available.
-	 * <p>
-	 * Part of this class should be somewhere in the algorithms package.
-	 * <p>
-	 * @author Erik
-	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
