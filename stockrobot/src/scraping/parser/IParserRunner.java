@@ -9,7 +9,6 @@ package scraping.parser;
 public interface IParserRunner extends Runnable {
 	
 	public void run();
-	public void hold();
 	public boolean stopParser();
 	public boolean stopRunner();
 	public boolean startParser();

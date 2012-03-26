@@ -78,12 +78,6 @@ public class ParserRunner implements IParserRunner {
 		}
 	}
 
-	/** Pause the parser until run() is called. */
-	@Override
-	public void hold() {
-		//TODO: Delete?
-		run = false;
-	}
 	
 	/**
 	 *  Stops the Runner
