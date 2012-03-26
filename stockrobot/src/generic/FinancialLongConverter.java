@@ -80,8 +80,6 @@ public class FinancialLongConverter {
 		String decimals = "";
 		int limit = 0;
 		
-		System.out.println( "decStr: " + dec );
-		
 		//TODO: FIX THE E^X CONVERSION IN A MORE ELEGANT WAY!!
 		//If we have a large number, java's tostring will insert E^X to make it shorter, then add as many zero's as needed
 		if( dec.contains("E") ) {
@@ -106,11 +104,6 @@ public class FinancialLongConverter {
 		
 		for( int i = 0; i < limit; i ++ )
 			decimals += "0";
-		
-		System.out.println( "nunbers: " + numbers );
-		System.out.println( "decimals: " + decimals );
-		
-		System.out.println( "replaced: " + (numbers + decimals).replaceAll("\\.", "") );
 		
 		return Long.parseLong( (numbers + decimals).replaceAll("\\.", "") );
 	}
