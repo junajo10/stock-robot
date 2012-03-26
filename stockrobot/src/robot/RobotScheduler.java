@@ -94,7 +94,7 @@ public class RobotScheduler implements Runnable{
 			//TODO make run interface to avoid polling
 			while(pause){
 				try {
-					Thread.sleep(RobotScheduler.SECOND * 5);
+					Thread.sleep(RobotScheduler.SECOND * 60);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

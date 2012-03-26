@@ -52,6 +52,8 @@ public class AstroRealData implements IRobot_Algorithms {
 		jpaHelper = JPAHelper.getInstance();
 		
 		scheduler = new RobotScheduler( portfolioHandler );
+		scheduler.setUpdateFrequency(60000); //Update each minute
+		
 		schedulerThread = new Thread(scheduler);
 		schedulerThread.start();
 	}
