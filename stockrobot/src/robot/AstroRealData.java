@@ -31,6 +31,7 @@ public class AstroRealData implements IRobot_Algorithms {
 	JPAHelper jpaHelper 						= null;
 	Random rand 								= new Random(System.currentTimeMillis());
 	RobotScheduler scheduler 					= null;
+	Thread schedulerThread						= null;
 	
 	/**
 	 * Starts the system up
@@ -51,7 +52,8 @@ public class AstroRealData implements IRobot_Algorithms {
 		jpaHelper = JPAHelper.getInstance();
 		
 		scheduler = new RobotScheduler( portfolioHandler );
-		scheduler.startScheduler();
+		schedulerThread = new Thread(scheduler);
+		schedulerThread.start();
 	}
 
 	@Override
