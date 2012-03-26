@@ -44,7 +44,7 @@ public class RobotScheduler {
 	 * does nothing if scheduler is already running
 	 */
 	public void startScheduler(){
-		isRunning = false;
+		isRunning = true;
 	}
 	
 	/**
@@ -104,10 +104,16 @@ public class RobotScheduler {
 		@Override
 		public void run() {
 			
+			System.out.println( "RobotScheduler: RUN!" );
+			
 			while(isRunning){
+				
+				System.out.println( "RobotScheduler!" );
 				
 				//TODO make run interface to avoid polling
 				while(pause){
+					
+					System.out.println( "RobotScheduler pause!" );
 					try {
 						Thread.sleep(RobotScheduler.SECOND * 5);
 					} catch (InterruptedException e) {

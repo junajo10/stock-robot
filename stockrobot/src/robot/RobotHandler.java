@@ -47,6 +47,8 @@ public class RobotHandler {
 	 */
 	public void runAlgorithms(){
 		
+		System.out.println( "Run Algorithms!!!" );
+		
 		//TODO make code to run algorithms
 		List<AlgorithmAdapter> stillRunning = new LinkedList<AlgorithmAdapter>();
 		for(AlgorithmAdapter a : algorithms){
