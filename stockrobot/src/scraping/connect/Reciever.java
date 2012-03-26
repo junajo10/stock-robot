@@ -1,4 +1,4 @@
-package scraping.parser;
+package scraping.connect;
 
 import java.io.BufferedReader;
 import java.io.IOException;

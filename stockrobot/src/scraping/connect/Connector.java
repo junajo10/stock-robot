@@ -1,9 +1,10 @@
-package scraping.parser;
+package scraping.connect;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
 
 /**
  * Class for sending messages to robot, through the internet.
