@@ -25,6 +25,7 @@ public class Connector implements IConnector {
 	public boolean sendRefresh() {
 		DataOutputStream outToServer;
 		try {
+			//TODO: change "localhost" into an correct address,
 			sendRefresh = new Socket("localhost", 45000);
 			outToServer = new DataOutputStream(sendRefresh.getOutputStream());
 			outToServer.writeBytes("");
@@ -41,7 +42,7 @@ public class Connector implements IConnector {
 	 * <p>
 	 * Not to be included in final version.
 	 */
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		Reciever rec = new Reciever();
 		Thread recThread = new Thread(rec);
 		recThread.start();
@@ -58,11 +59,8 @@ public class Connector implements IConnector {
 				e.printStackTrace();
 			}
 			conn.sendRefresh();
-		}
-
-		
-		
-	}
+		} 			
+	 }*/
 
 
 }

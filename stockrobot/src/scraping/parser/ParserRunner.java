@@ -63,7 +63,8 @@ public class ParserRunner implements IParserRunner {
 					    inserter.insertStockData(stockList);
 					}
 					Long timeElapsed = System.currentTimeMillis() - timeBefore;
-					/* Connector on robot not implemented yet, uncomment when. */
+					/* Send a message to the robot saying that new data is available.
+					 * Reciever on robot not implemented yet, uncomment when. */
 					//connector.sendRefresh();
 					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
 					try {
