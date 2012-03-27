@@ -9,9 +9,9 @@ import robot.IRobot_Algorithms;
  *
  */
 public class RobotSimulator implements IRobot_Algorithms {
-	private JPAHelperForSimulator jpaHelper;
+	private IJPAHelper jpaHelper;
 	
-	public RobotSimulator(JPAHelperForSimulator jpaHelper) {
+	public RobotSimulator(IJPAHelper jpaHelper) {
 		this.jpaHelper = jpaHelper;
 	}
 	

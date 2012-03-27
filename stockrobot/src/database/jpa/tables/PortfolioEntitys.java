@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 
 import org.apache.openjpa.persistence.Persistent;
 
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.JPAHelperForSimulator;
 
@@ -186,16 +187,16 @@ public class PortfolioEntitys {
 	 * Helper method that the trader will use to remove money from the portfolio
 	 * @param amount amount to remove from the portfolio
 	 */
-	public void bougthFor(long amount, JPAHelperForSimulator jpaHelper) {
+	public void bougthFor(long amount, IJPAHelper jpaHelper) {
 		balance -= amount;
 		jpaHelper.updateObject(this);
 	}
 	public void soldFor(long amount) {
-		balance -= amount;
+		balance += amount;
 		JPAHelper.getInstance().updateObject(this);
 	}
-	public void soldFor(long amount, JPAHelperForSimulator jpaHelper) {
-		balance -= amount;
+	public void soldFor(long amount, IJPAHelper jpaHelper) {
+		balance += amount;
 		jpaHelper.updateObject(this);
 	}
 }

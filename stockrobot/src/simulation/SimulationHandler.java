@@ -10,6 +10,7 @@ import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
 import trader.ITrader;
 import algorithms.IAlgorithm;
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.JPAHelperForSimulator;
 import database.jpa.tables.AlgorithmEntitys;
@@ -34,13 +35,13 @@ public class SimulationHandler {
 	AlgorithmEntitys algorithmToSimulate;
 	IAlgorithm algorithm;
 	
-	JPAHelperForSimulator jpaSimHelper = new JPAHelperForSimulator();
+	IJPAHelper jpaSimHelper = new JPAHelperForSimulator();
 	
-	JPAHelper jpaHelper = JPAHelper.getInstance("astro");
+	IJPAHelper jpaHelper = JPAHelper.getInstance("astro");
 	
 	PortfolioEntitys testPortfolio;
 	PortfolioSimulator portfolio = null;
-	IRobot_Algorithms robotSim = new RobotSimulator();
+	IRobot_Algorithms robotSim = new RobotSimulator(jpaHelper);
 	
 	@SuppressWarnings("rawtypes")
 	private void initSimulation(AlgorithmEntitys algorithmToSimulate) {
@@ -90,13 +91,14 @@ public class SimulationHandler {
 		long max = jpaHelper.getAllStockPricesReverseOrdered().size();
 		
 		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered()) {
+			System.out.println(p.getTime());
+		}
+		
+		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered()) {
 			curr ++;
-			if (curr > 10)
-				break;
 			if (p.getTime().equals(lastSeenTime)) {
 				StockPrices sp = new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
 						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), new Date(p.getTime().getTime()));
-				System.out.println(sp);
 				jpaSimHelper.storeObject(sp);
 			}
 			else {

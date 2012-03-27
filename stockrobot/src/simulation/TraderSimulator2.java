@@ -2,6 +2,7 @@ package simulation;
 
 import java.beans.PropertyChangeListener;
 
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.JPAHelperForSimulator;
 import database.jpa.tables.PortfolioEntitys;
@@ -16,9 +17,9 @@ import trader.ITrader;
 public class TraderSimulator2 implements ITrader{
 
 	private static ITrader instance = null;
-	private JPAHelperForSimulator jpaHelper;
+	private IJPAHelper jpaHelper;
 	
-	public TraderSimulator2(JPAHelperForSimulator jpaHelper) {
+	public TraderSimulator2(IJPAHelper jpaHelper) {
 		this.jpaHelper = jpaHelper;
 	}
 	@Override
@@ -35,10 +36,6 @@ public class TraderSimulator2 implements ITrader{
 
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
-		System.out.println(s);
-		System.out.println(amount);
-		System.out.println(portfolio);
-		System.out.println(portfolio.getPortfolioId());
 		if (s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio) > portfolio.getBalance())
 			return false;
 		

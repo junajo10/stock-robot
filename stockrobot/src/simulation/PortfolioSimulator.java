@@ -10,6 +10,7 @@ import portfolio.IPortfolio;
 import algorithms.IAlgorithm;
 import algorithms.loader.AlgorithmsLoader;
 
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.JPAHelperForSimulator;
 import database.jpa.tables.AlgorithmEntitys;
@@ -28,14 +29,14 @@ import database.jpa.tables.StockPrices;
 public class PortfolioSimulator implements IPortfolio {
 	private int portfolioId;
 	private PortfolioEntitys portfolioTable;
-	private JPAHelperForSimulator jpaHelper;
+	private IJPAHelper jpaHelper;
 	private IAlgorithm algorithm;
 	
 	/**
 	 * Start up an existing portfolio
 	 * @param portfolioTable The table with this portfolio
 	 */
-	public PortfolioSimulator(PortfolioEntitys portfolioTable, JPAHelperForSimulator jpaHelper) {
+	public PortfolioSimulator(PortfolioEntitys portfolioTable, IJPAHelper jpaHelper) {
 		this.portfolioTable = portfolioTable;
 		this.jpaHelper = jpaHelper;
 		

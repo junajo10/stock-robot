@@ -90,9 +90,9 @@ public class TestAlgorithm implements IAlgorithm{
 				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 				if( firstStockBuyPrice != 0 ) {
 					
-					long amount = Math.round( FinancialLongConverter.toDouble(portfolio.getPortfolioTable().getBalance())/10/FinancialLongConverter.toDouble(firstStockBuyPrice) ); 
+					long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/FinancialLongConverter.toDouble(firstStockBuyPrice)); 
 					
-					buyStock( stockInfo.getRight().get(0),amount );
+					buyStock( stockInfo.getRight().get(0), amount );
 				}
 			}
 		}
