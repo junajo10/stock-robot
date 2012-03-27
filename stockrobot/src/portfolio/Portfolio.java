@@ -8,6 +8,7 @@ import java.util.List;
 import algorithms.IAlgorithm;
 import algorithms.loader.AlgorithmsLoader;
 
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioEntitys;
@@ -24,7 +25,7 @@ import database.jpa.tables.StockPrices;
 public class Portfolio implements IPortfolio {
 	private int portfolioId;
 	private PortfolioEntitys portfolioTable;
-	private JPAHelper jpaHelper;
+	private IJPAHelper jpaHelper;
 	private IAlgorithm algorithm;
 	
 	/**

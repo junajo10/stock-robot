@@ -24,7 +24,7 @@ public class JPAHelper extends JPAHelperBase {
 	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance of it.
 	 * @return An instance of JPAHelper
 	 */
-	public static JPAHelper getInstance() {
+	public static IJPAHelper getInstance() {
 		if(instance == null) {
 			synchronized (JPAHelperBase.class) {
 				if (instance == null)
@@ -38,7 +38,7 @@ public class JPAHelper extends JPAHelperBase {
 	 * @param database
 	 * @return an instance of the testing JPAHelper
 	 */
-	public static JPAHelper getInstance(String database) {
+	public static IJPAHelper getInstance(String database) {
 		if(instance == null) {
 			synchronized (JPAHelperBase.class) {
 				if (instance == null)

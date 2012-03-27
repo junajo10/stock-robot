@@ -7,6 +7,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioEntitys;
 /**
@@ -20,13 +21,13 @@ public class PortfolioHandler implements IPortfolioHandler{
 
 	private static PortfolioHandler instance = null;
 	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
-	private JPAHelper jpaHelper;
+	private IJPAHelper jpaHelper;
 	private PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
 	
 	private PortfolioHandler() {
 		jpaHelper = JPAHelper.getInstance();
 		
-		List<PortfolioEntitys> portfolioTables = JPAHelper.getInstance().getAllPortfolios();
+		List<PortfolioEntitys> portfolioTables = jpaHelper.getAllPortfolios();
 		
 		System.out.println(portfolioTables);
 		for (PortfolioEntitys pt : portfolioTables) {

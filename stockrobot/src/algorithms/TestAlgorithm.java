@@ -6,6 +6,7 @@ import java.util.List;
 import generic.FinancialLongConverter;
 import generic.Log;
 import generic.Pair;
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockNames;
@@ -24,7 +25,7 @@ public class TestAlgorithm implements IAlgorithm{
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
 	ITrader trader = null;
-	JPAHelper jpaHelper = null;
+	IJPAHelper jpaHelper = null;
 	
 	
 	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {

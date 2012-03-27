@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -37,9 +38,9 @@ public class Astro implements IRobot_Algorithms{
 	PortfolioGui portfolioGui = null;
 	PortfolioController portfolioController = null;
 	ITrader trader = null;
-	JPAHelper jpaHelper = null;
+	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	Random rand = new Random(System.currentTimeMillis());
-	
+
 	private static boolean simulate = false;
 	private static int timeBetweenUpdates = 1000;
 	/**
@@ -50,32 +51,31 @@ public class Astro implements IRobot_Algorithms{
 		System.out.println("ASTRo is starting up.");
 
 		trader = TraderSimulator.getInstance();
-		 
+
 		algorithmsLoader = AlgorithmsLoader.getInstance(this);
-		
+
 		portfolioHandler = PortfolioHandler.getInstance();
-		
+
 		portfolioGui = new PortfolioGui(portfolioHandler);
-		
+
 		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
-		
-		jpaHelper = JPAHelper.getInstance();
-		
+
+
 		while(true) {
 			if (simulate)
 				simulateNewStocks();
-			
-			
+
+
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
 				if (simulate) {
-				if (rand.nextInt(10) == 1) {
-					long newInvestment = ((long)rand.nextInt(1000)*10000);
-				
-					p.investAmount(newInvestment);
-					System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
+					if (rand.nextInt(10) == 1) {
+						long newInvestment = ((long)rand.nextInt(1000)*10000);
+
+						p.investAmount(newInvestment);
+						System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
+					}
 				}
-				}
-				
+
 				p.getAlgorithm().update();
 			}
 			try {
@@ -85,7 +85,7 @@ public class Astro implements IRobot_Algorithms{
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Astro implements IRobot_Algorithms{
 	 */
 	private void simulateNewStocks() {
 		List<StockNames> stockNames = jpaHelper.getAllStockNames();
-		
+
 		for (StockNames sn : stockNames) {
 			if (rand.nextBoolean()) {
 				StockPrices sp = new StockPrices(sn, rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), new Date(System.currentTimeMillis()));
@@ -112,10 +112,10 @@ public class Astro implements IRobot_Algorithms{
 
 	public static void main(String args[]) {
 		Astro astro = new Astro();
-		
+
 		for (int i = 0; i < args.length; i++) {
 			String s = args[i];
-			
+
 			if (s.contentEquals("--simulate") || s.contentEquals("-s"))
 				simulate = true;
 			else if (s.contentEquals("-t") || s.contentEquals("--time")) {
@@ -140,12 +140,12 @@ public class Astro implements IRobot_Algorithms{
 				System.exit(1);
 			}
 		}
-		
+
 		astro.start();
 	}
 
 	@Override
-	public JPAHelper getJPAHelper() {
+	public IJPAHelper getJPAHelper() {
 		return jpaHelper;
 	}
 }
