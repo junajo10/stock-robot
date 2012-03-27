@@ -2,6 +2,10 @@ package simulation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import portfolio.IPortfolio;
 import portfolio.Portfolio;
@@ -15,6 +19,8 @@ import database.jpa.JPAHelperForSimulator;
 import database.jpa.JPAHelperForUnderstanding;
 import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.StockNames;
+import database.jpa.tables.StockPrices;
 
 /**
  * @author Daniel
@@ -36,7 +42,7 @@ public class SimulationHandler {
 	IPortfolio portfolio = null;
 	IRobot_Algorithms robotSim = new RobotSimulator();
 	
-	public SimulationHandler(AlgorithmEntitys algorithmToSimulate) {
+	private void initSimulation(AlgorithmEntitys algorithmToSimulate) {
 		this.algorithmToSimulate = algorithmToSimulate;
 		
 		PortfolioEntitys portfolioEntity = new PortfolioEntitys("Simulated Portfolio");
@@ -58,7 +64,32 @@ public class SimulationHandler {
 		} catch (InvocationTargetException e) {
 		}
 	}
-	public void simulateAlgorithm() {
+	public void simulateAlgorithm(AlgorithmEntitys algorithmToSimulate) {
+		initSimulation(algorithmToSimulate);
+
+		Map<String, StockNames> nameStockNameMap = new HashMap<String, StockNames>();
 		
+		for (StockNames ns : jpaHelper.getAllStockNames()) {
+			nameStockNameMap.put(ns.getName(), new StockNames(ns.getName(), ns.getMarket()));
+			jpaSimHelper.storeObject(new StockNames(ns.getName(), ns.getMarket()));
+		}
+		
+		Date lastSeenTime = null;
+		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered()) {
+			if (p.getTime().equals(lastSeenTime)) {
+				jpaSimHelper.storeObject(new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
+						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), p.getTime()));
+			}
+			else {
+				updateAlgorithm();
+				lastSeenTime = p.getTime();
+				jpaSimHelper.storeObject(new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
+						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), p.getTime()));
+			}
+		}
+		
+	}
+	private void updateAlgorithm() {
+		algorithm.update();
 	}
 }

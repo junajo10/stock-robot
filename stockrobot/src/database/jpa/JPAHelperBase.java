@@ -88,6 +88,22 @@ class JPAHelperBase {
 		return query.getResultList();
 	}
 	/**
+	 * Will give back all stockPrices
+	 * @return A list of stockPrices
+	 */
+	public List<StockPrices> getAllStockPricesReverseOrdered() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
+
+		Root<StockPrices> c = q2.from(StockPrices.class);
+
+		q2.select(c);
+		q2.orderBy(cb.desc(c.get("time")));
+		
+		TypedQuery<StockPrices> query = em.createQuery(q2);
+		return query.getResultList();
+	}
+	/**
 	 * Will give back all PortfolioInvestment
 	 * @return A list of PortfolioInvestment
 	 */
