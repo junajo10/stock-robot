@@ -1,30 +1,8 @@
 package database.jpa;
 
-import generic.Pair;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-
-import database.jpa.tables.AlgorithmEntitys;
-import database.jpa.tables.PortfolioHistory;
-import database.jpa.tables.PortfolioInvestment;
-import database.jpa.tables.PortfolioEntitys;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
-import database.jpa.tables.StocksToWatch;
 
 /**
  * @author Daniel
