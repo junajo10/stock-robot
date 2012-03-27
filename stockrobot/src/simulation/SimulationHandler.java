@@ -1,5 +1,9 @@
 package simulation;
 
+import algorithms.IAlgorithm;
+import algorithms.loader.AlgorithmsLoader;
+import database.jpa.tables.AlgorithmEntitys;
+
 /**
  * @author Daniel
  *
@@ -7,4 +11,10 @@ package simulation;
  */
 public class SimulationHandler {
 
+	AlgorithmEntitys algorithmToSimulate;
+	IAlgorithm algorithm;
+	
+	public SimulationHandler(AlgorithmEntitys algorithmToSimulate) {
+		this.algorithm = AlgorithmsLoader.getInstance(TraderSimulator.getInstance());
+	}
 }
