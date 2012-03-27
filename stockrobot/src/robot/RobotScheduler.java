@@ -64,6 +64,7 @@ public class RobotScheduler implements Runnable{
 		
 	/**
 	* Unpauses the runner. Does nothing if parser isn't paused.
+	* To make the unpause instant. Run interrupt on the thread running the scheduler.
 	* 
 	* @return return true if runner unpauses else false
 	*/
@@ -76,6 +77,14 @@ public class RobotScheduler implements Runnable{
 			result = true;
 		}
 		return result;
+	}
+	
+	/**
+	 * @return true if paused
+	 */
+	public boolean isPaused(){
+				
+		return pause;
 	}
 		
 	/**
