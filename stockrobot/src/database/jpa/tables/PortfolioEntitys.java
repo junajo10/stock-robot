@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 import org.apache.openjpa.persistence.Persistent;
 
 import database.jpa.JPAHelper;
+import database.jpa.JPAHelperForSimulator;
 
 /**
  * @author Daniel
@@ -27,7 +28,6 @@ import database.jpa.JPAHelper;
 @Table(name="PortfolioEntitys")
 public class PortfolioEntitys {
 	@Id 
-	@GeneratedValue
 	@Column(name = "PORTFOLIO_ID", nullable = false)
 	private int portfolioId;
 	
@@ -181,8 +181,20 @@ public class PortfolioEntitys {
 		balance -= amount;
 		JPAHelper.getInstance().updateObject(this);
 	}
+	/**
+	 * Helper method that the trader will use to remove money from the portfolio
+	 * @param amount amount to remove from the portfolio
+	 */
+	public void bougthFor(long amount, JPAHelperForSimulator jpaHelper) {
+		balance -= amount;
+		jpaHelper.updateObject(this);
+	}
 	public void soldFor(long amount) {
 		balance -= amount;
 		JPAHelper.getInstance().updateObject(this);
+	}
+	public void soldFor(long amount, JPAHelperForSimulator jpaHelper) {
+		balance -= amount;
+		jpaHelper.updateObject(this);
 	}
 }

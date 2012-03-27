@@ -9,7 +9,6 @@ import java.util.Map;
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
 import trader.ITrader;
-import trader.TraderSimulator;
 import algorithms.IAlgorithm;
 import database.jpa.JPAHelper;
 import database.jpa.JPAHelperForSimulator;
@@ -37,7 +36,7 @@ public class SimulationHandler {
 	JPAHelper jpaHelper = JPAHelper.getInstance("astro");
 	JPAHelperForSimulator jpaSimHelper = new JPAHelperForSimulator();
 	PortfolioEntitys testPortfolio;
-	IPortfolio portfolio = null;
+	PortfolioSimulator portfolio = null;
 	IRobot_Algorithms robotSim = new RobotSimulator();
 	
 	@SuppressWarnings("rawtypes")
@@ -47,13 +46,11 @@ public class SimulationHandler {
 		PortfolioEntitys portfolioEntity = new PortfolioEntitys("Simulated Portfolio");
 		portfolioEntity.setAlgorithm(algorithmToSimulate);
 		jpaSimHelper.storeObject(portfolioEntity);
-		
 		portfolio = new PortfolioSimulator(portfolioEntity, jpaSimHelper);
-		
 		try {
 			Class<?> c = Class.forName(algorithmToSimulate.getPath());
 			Constructor con = c.getConstructor(new Class[] {IRobot_Algorithms.class, IPortfolio.class, ITrader.class });
-			algorithm = (IAlgorithm) con.newInstance(new Object[] {robotSim, portfolio, TraderSimulator.getInstance()});
+			algorithm = (IAlgorithm) con.newInstance(new Object[] {robotSim, portfolio, TraderSimulator2.getInstance(jpaSimHelper)});
 		} catch (SecurityException e) {
 		} catch (IllegalArgumentException e) {
 		} catch (ClassNotFoundException e) {
@@ -62,29 +59,39 @@ public class SimulationHandler {
 		} catch (IllegalAccessException e) {
 		} catch (InvocationTargetException e) {
 		}
+		portfolio.setAlgorithm(algorithm);
+		jpaSimHelper.updateObject(portfolioEntity);
 	}
 	public void simulateAlgorithm(AlgorithmEntitys algorithmToSimulate) {
 		initSimulation(algorithmToSimulate);
-
-		//portfolio.investAmount(new Long("100000000000"));
 		
-		portfolio.getPortfolioTable().invest(new Long("100000000000"), true);
+		PortfolioEntitys port =  portfolio.getPortfolioTable();
+		port.invest(new Long("100000000000"), true);
+		
+		jpaSimHelper.updateObject(port);
 		
 		Map<String, StockNames> nameStockNameMap = new HashMap<String, StockNames>();
 		
 		for (StockNames ns : jpaHelper.getAllStockNames()) {
-			nameStockNameMap.put(ns.getName(), new StockNames(ns.getName(), ns.getMarket()));
-			jpaSimHelper.storeObject(new StockNames(ns.getName(), ns.getMarket()));
+			StockNames n = new StockNames(ns.getName(), ns.getMarket());
+			jpaSimHelper.storeObject(n);
+			nameStockNameMap.put(n.getName(), n);
 		}
 		
 		Date lastSeenTime = null;
+		long curr = 0;
+		long max = jpaHelper.getAllStockPricesReverseOrdered().size();
+		
 		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered()) {
+			curr ++;
 			if (p.getTime().equals(lastSeenTime)) {
 				jpaSimHelper.storeObject(new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
 						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), p.getTime()));
 			}
 			else {
+				System.out.println(curr/max + "% done");
 				updateAlgorithm();
+				System.out.println("bepa");
 				lastSeenTime = p.getTime();
 				jpaSimHelper.storeObject(new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
 						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), p.getTime()));
@@ -131,13 +138,16 @@ public class SimulationHandler {
 		portfolio.getAlgorithm().update();
 	}
 	/*
-	 * Exception in thread "main" <openjpa-2.2.0-r422266:1244990 nonfatal user error> 
-	 * org.apache.openjpa.persistence.InvalidStateException: 
-	 * Primary key field database.jpa.tables.PortfolioEntitys.portfolioId of 
-	 * database.jpa.tables.PortfolioEntitys@57945696 has non-default value. 
-	 * The instance life cycle is in PNewState state and hence an existing non-default 
-	 * value for the identity field is not permitted. You either need to remove the 
-	 * @GeneratedValue annotation or modify the code to remove the initializer processing.
+	 * Encountered unmanaged object "database.jpa.tables.StockPrices-351477" in life cycle state  
+	 * unmanaged while cascading persistence via field "database.jpa.tables.PortfolioHistory.stockPrice" 
+	 * during flush.  However, this field does not allow cascade persist. 
+	 * You cannot flush unmanaged objects or graphs that have persistent associations to 
+	 * unmanaged objects.
+ Suggested actions: a) Set the cascade attribute for this field to CascadeType.PERSIST or CascadeType.ALL (JPA annotations) or "persist" or "all" (JPA orm.xml), 
+ b) enable cascade-persist globally, 
+ c) manually persist the related field value prior to flushing. 
+ d) if the reference belongs to another context, allow reference to it by setting StoreContext.setAllowReferenceToSiblingContext().
+FailedObject: database.jpa.tables.StockPrices-351477
 	 */
 	
 	public static void main(String args[]) {

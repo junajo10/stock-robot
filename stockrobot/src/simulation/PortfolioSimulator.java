@@ -39,12 +39,10 @@ public class PortfolioSimulator implements IPortfolio {
 		this.portfolioTable = portfolioTable;
 		this.jpaHelper = jpaHelper;
 		
-		if (portfolioTable.getAlgorithm() != null)
-			algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
-		else
-			System.out.println("No algorithm set yet for " + getName());
-		
 		System.out.println(portfolioTable);
+	}
+	public void setAlgorithm(IAlgorithm algorithm) {
+		this.algorithm = algorithm;
 	}
 	@Override
 	public List<StockNames> getAvalibleStocks() {

@@ -310,6 +310,9 @@ class JPAHelperBase {
 
 		em.getTransaction().commit();
 
+		portfolio.invest(amount, true);
+
+		updateObject(portfolio);
 
 		return true;
 	}
