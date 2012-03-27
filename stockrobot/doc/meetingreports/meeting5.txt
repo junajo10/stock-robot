@@ -1,0 +1,59 @@
+Meeting Agenda
+Location: Room EE
+Date: 2012-03-27
+Time: 15:30
+Facilitator: Daniel Malmqvist
+Note taker: Kristian Sällberg
+Participants: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
+
+1.	Objectives (5 min)
+		Next thursday:
+			*Finish the prototype
+			*Finish the domainmodel (we accidentally made a design model for last Thursday)
+
+2.	Reports (15 min)
+
+	*Everyone has met their goals since the last meeting
+      	 
+3.	Discussion items (35 min)
+
+   	* We focused heavily on what new we will include for the alpha release
+		+ A list of all stocks in the GUI
+		+ Divide our database to two separate DBs
+		
+	* We have also discussed what we want to include in the project later on
+		+ Graphs for displaying stock price history
+	
+4.	Outcomes and assignments (5 min)
+
+        	* Long term issues
+            	=> We will use Google Code's issue tracker
+        	* Short term issues
+            	=> Working on the alpha release!
+			
+        	+++ Specific delegations:
+			*All
+				=> Come up with questions for our teacher assistant
+        	*Kristian
+            	=> Create a GUI part that shows all recorded stock and their current price
+				=> Remove calls to the FinancialLongConverter when receiving prices from DB (use FinancialLong format for everything)
+				=> Remove AstroRealData (it was created due to a miscommunication, support for that already existed in Astro.java)
+				=> Create test cases for FinancialLong
+        	*Mattias
+            	=> Simplify our design model to a working domain model
+				=> Look at JPA to understand how it works
+        	*Erik
+            	=> Help Mattias with the Domain Model
+				=> Start looking for graph libraries (not included in the alpha)
+			*Daniel
+            	=> Separate our currently merged price database and the portfolio database
+				=> Start looking at extending the simulation of ASTRo (not included in the alpha)
+  	 
+5.	Wrap up 
+	Thursday 29:th
+		* Ask our teacher assistant:
+			+ Another database for the stock prices?
+			+ Graph library?
+			+ Feedback so far?
+		* Demo alpha release to the client!
+		* Domain model demo!
