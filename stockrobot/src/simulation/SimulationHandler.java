@@ -4,23 +4,21 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import portfolio.IPortfolio;
-import portfolio.Portfolio;
 import robot.IRobot_Algorithms;
 import trader.ITrader;
 import trader.TraderSimulator;
 import algorithms.IAlgorithm;
-import algorithms.loader.AlgorithmsLoader;
 import database.jpa.JPAHelper;
 import database.jpa.JPAHelperForSimulator;
-import database.jpa.JPAHelperForUnderstanding;
 import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
+import database.jpa.tables.StocksToWatch;
 
 /**
  * @author Daniel
@@ -36,12 +34,13 @@ public class SimulationHandler {
 
 	AlgorithmEntitys algorithmToSimulate;
 	IAlgorithm algorithm;
-	JPAHelper jpaHelper = JPAHelper.getInstance();
+	JPAHelper jpaHelper = JPAHelper.getInstance("astro");
 	JPAHelperForSimulator jpaSimHelper = new JPAHelperForSimulator();
 	PortfolioEntitys testPortfolio;
 	IPortfolio portfolio = null;
 	IRobot_Algorithms robotSim = new RobotSimulator();
 	
+	@SuppressWarnings("rawtypes")
 	private void initSimulation(AlgorithmEntitys algorithmToSimulate) {
 		this.algorithmToSimulate = algorithmToSimulate;
 		
@@ -49,7 +48,7 @@ public class SimulationHandler {
 		portfolioEntity.setAlgorithm(algorithmToSimulate);
 		jpaSimHelper.storeObject(portfolioEntity);
 		
-		portfolio = new Portfolio(portfolioEntity);
+		portfolio = new PortfolioSimulator(portfolioEntity, jpaSimHelper);
 		
 		try {
 			Class<?> c = Class.forName(algorithmToSimulate.getPath());
@@ -67,6 +66,10 @@ public class SimulationHandler {
 	public void simulateAlgorithm(AlgorithmEntitys algorithmToSimulate) {
 		initSimulation(algorithmToSimulate);
 
+		//portfolio.investAmount(new Long("100000000000"));
+		
+		portfolio.getPortfolioTable().invest(new Long("100000000000"), true);
+		
 		Map<String, StockNames> nameStockNameMap = new HashMap<String, StockNames>();
 		
 		for (StockNames ns : jpaHelper.getAllStockNames()) {
@@ -88,8 +91,60 @@ public class SimulationHandler {
 			}
 		}
 		
+		System.out.println(portfolio.getPortfolioTable().getBalance());
+		
+		clearTestDatabase();
+		
+	}
+	public void clearTestDatabase() {
+		for (PortfolioInvestment investment : jpaSimHelper.getAllPortfolioInvestment()) {
+			jpaSimHelper.remove(investment);
+		}
+		
+		for (StocksToWatch stw : jpaSimHelper.getAllStocksToWatch()) {
+			jpaSimHelper.remove(stw);
+		}
+		
+		while (jpaSimHelper.getAllPortfolios().size() > 0) {
+			PortfolioEntitys p = jpaSimHelper.getAllPortfolios().get(0);
+			if (p.getHistory() != null) {
+				if (p.getHistory().iterator().hasNext()) {
+					jpaSimHelper.remove(p.getHistory().iterator().next());
+				}
+			}
+			
+			jpaSimHelper.remove(p);
+		}
+	    for (AlgorithmEntitys a : jpaSimHelper.getAllAlgorithms()) {
+	    	jpaSimHelper.remove(a);
+	    }
+		
+	    
+	    for (StockPrices sp : jpaSimHelper.getAllStockPrices()) {
+	    	jpaSimHelper.remove(sp);
+	    }
+		for (StockNames sn : jpaSimHelper.getAllStockNames()) {
+			jpaSimHelper.remove(sn);
+		}
 	}
 	private void updateAlgorithm() {
-		algorithm.update();
+		portfolio.getAlgorithm().update();
+	}
+	/*
+	 * Exception in thread "main" <openjpa-2.2.0-r422266:1244990 nonfatal user error> 
+	 * org.apache.openjpa.persistence.InvalidStateException: 
+	 * Primary key field database.jpa.tables.PortfolioEntitys.portfolioId of 
+	 * database.jpa.tables.PortfolioEntitys@57945696 has non-default value. 
+	 * The instance life cycle is in PNewState state and hence an existing non-default 
+	 * value for the identity field is not permitted. You either need to remove the 
+	 * @GeneratedValue annotation or modify the code to remove the initializer processing.
+	 */
+	
+	public static void main(String args[]) {
+		SimulationHandler sh = new SimulationHandler();
+		
+		sh.clearTestDatabase();
+		
+		sh.simulateAlgorithm(new AlgorithmEntitys("algorithm1", "algorithms.TestAlgorithm"));
 	}
 }
