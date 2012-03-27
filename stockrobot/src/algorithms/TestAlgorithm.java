@@ -31,7 +31,8 @@ public class TestAlgorithm implements IAlgorithm{
 		this.robot = robot;
 		this.portfolio = portfolio;
 		this.trader = trader;
-		this.jpaHelper = JPAHelper.getInstance();
+		this.jpaHelper = robot.getJPAHelper();
+		
 		System.out.println("Inside TestAlgorithm constructor");
 	}
 	

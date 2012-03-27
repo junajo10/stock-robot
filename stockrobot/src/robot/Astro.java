@@ -143,4 +143,9 @@ public class Astro implements IRobot_Algorithms{
 		
 		astro.start();
 	}
+
+	@Override
+	public JPAHelper getJPAHelper() {
+		return jpaHelper;
+	}
 }

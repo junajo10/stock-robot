@@ -27,7 +27,8 @@ import database.jpa.JPAHelperForSimulator;
 @Entity
 @Table(name="PortfolioEntitys")
 public class PortfolioEntitys {
-	@Id 
+	@Id
+	@GeneratedValue
 	@Column(name = "PORTFOLIO_ID", nullable = false)
 	private int portfolioId;
 	

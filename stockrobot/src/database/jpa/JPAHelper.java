@@ -11,7 +11,7 @@ import javax.persistence.Persistence;
  * 
  * It has methods for most of the things we want to accomplish.
  */
-public class JPAHelper extends JPAHelperBase{
+public class JPAHelper extends JPAHelperBase {
 	private static JPAHelper instance = null;
 	
 	private JPAHelper(String database) {

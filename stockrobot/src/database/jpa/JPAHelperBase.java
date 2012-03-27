@@ -31,13 +31,14 @@ import database.jpa.tables.StocksToWatch;
  * 
  * It has methods for most of the things we want to accomplish.
  */
-class JPAHelperBase {
+class JPAHelperBase implements IJPAHelper {
 	EntityManager em = null;
 	EntityManagerFactory factory;
 
 	/*
 	 * Stops the jpa system
 	 */
+	@Override
 	public void stopJPASystem() {
 		em.close();
 		factory.close();
@@ -46,6 +47,7 @@ class JPAHelperBase {
 	 * Returns a list of all the algorithms.
 	 * @return a list of all the algorithms.
 	 */
+	@Override
 	public List<AlgorithmEntitys> getAllAlgorithms() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<AlgorithmEntitys> q2 = cb.createQuery(AlgorithmEntitys.class);
@@ -61,6 +63,7 @@ class JPAHelperBase {
 	 * Will give back all portfolios in the JPA system.
 	 * @return A list with PortfolioTables
 	 */
+	@Override
 	public List<PortfolioEntitys> getAllPortfolios() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PortfolioEntitys> q2 = cb.createQuery(PortfolioEntitys.class);
@@ -76,6 +79,7 @@ class JPAHelperBase {
 	 * Will give back all stockPrices
 	 * @return A list of stockPrices
 	 */
+	@Override
 	public List<StockPrices> getAllStockPrices() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
@@ -91,14 +95,15 @@ class JPAHelperBase {
 	 * Will give back all stockPrices
 	 * @return A list of stockPrices
 	 */
+	@Override
 	public List<StockPrices> getAllStockPricesReverseOrdered() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
 
 		Root<StockPrices> c = q2.from(StockPrices.class);
-
-		q2.select(c);
 		q2.orderBy(cb.desc(c.get("time")));
+		q2.select(c);
+		
 		
 		TypedQuery<StockPrices> query = em.createQuery(q2);
 		return query.getResultList();
@@ -107,6 +112,7 @@ class JPAHelperBase {
 	 * Will give back all PortfolioInvestment
 	 * @return A list of PortfolioInvestment
 	 */
+	@Override
 	public List<PortfolioInvestment> getAllPortfolioInvestment() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
@@ -122,6 +128,7 @@ class JPAHelperBase {
 	 * Will give back all StocksToWatch
 	 * @return A list of StocksToWatch
 	 */
+	@Override
 	public List<StocksToWatch> getAllStocksToWatch() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<StocksToWatch> q2 = cb.createQuery(StocksToWatch.class);
@@ -137,6 +144,7 @@ class JPAHelperBase {
 	 * Will give back stockInformation in the form of: A list of pairs, where the left side is the StockName, and the right part is a list of nLatest maxSize with StockPrices
 	 * @return A list Pairs of StockNames, List of StockPrices
 	 */
+	@Override
 	public List<Pair<StockNames, List<StockPrices>>> getStockInfo(int nLatest) {
 		List<Pair<StockNames, List<StockPrices>>> output = new LinkedList<Pair<StockNames,List<StockPrices>>>();
 
@@ -181,6 +189,7 @@ class JPAHelperBase {
 	 * @param st Stock to get for
 	 * @return List of all prices
 	 */
+	@Override
 	public List<StockPrices> getPricesForStock( StockNames st ) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -206,6 +215,7 @@ class JPAHelperBase {
 	 * @param end Date where to stop looking for prices
 	 * @return
 	 */
+	@Override
 	public List<StockPrices> getPricesForStockPeriod( StockNames st, Date start, Date end ) {
 
 		//TODO: Fix this to be type safe! I couldn't find a way to compare dates without using JPQL.
@@ -222,6 +232,7 @@ class JPAHelperBase {
 	 * Will give a list of all the diffrent StockNames
 	 * @return A list of stockNames
 	 */
+	@Override
 	public List<StockNames> getAllStockNames() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<StockNames> q2 = cb.createQuery(StockNames.class);
@@ -238,6 +249,7 @@ class JPAHelperBase {
 	 * @param o The object to be updated.
 	 * @return True if it went ok.
 	 */
+	@Override
 	public synchronized boolean updateObject(Object o) {
 		em.getTransaction().begin();
 		em.merge(o);
@@ -249,18 +261,21 @@ class JPAHelperBase {
 	 * @param o Object to be stored
 	 * @return True if it went ok
 	 */
+	@Override
 	public synchronized boolean storeObject(Object o) {
 		em.getTransaction().begin();
 		em.persist(o);
 		em.getTransaction().commit();
 		return true;
 	}
+	@Override
 	public synchronized boolean storeObjectIfPossible(Object o) {
 		em.getTransaction().begin();
 		try {
 			em.persist(o);
-
 		} catch (Exception e) {
+			System.out.println("asdf");
+			em.getTransaction().commit();
 			return false;
 		}
 		em.getTransaction().commit();
@@ -271,6 +286,7 @@ class JPAHelperBase {
 	 * @param list List of objects
 	 * @return True if it went ok
 	 */
+	@Override
 	public synchronized boolean storeListOfObjects(List list) {
 		em.getTransaction().begin();
 		for (Object o : list) {
@@ -284,6 +300,7 @@ class JPAHelperBase {
 	 * @param list List of objects
 	 * @return the number of objects not stored.
 	 */
+	@Override
 	public synchronized int storeListOfObjectsDuplicates(List list) {
 		int dup = 0;
 		for (Object o : list) {
@@ -303,6 +320,7 @@ class JPAHelperBase {
 	 * @param portfolio The portfolio to invest to
 	 * @return Returns true if everything went ok
 	 */
+	@Override
 	public synchronized boolean investMoney(long amount, PortfolioEntitys portfolio) {
 		em.getTransaction().begin();
 
@@ -320,6 +338,7 @@ class JPAHelperBase {
 	 * Deletes an object in the database.
 	 * @param objectToBeRemoved The object to be removed.
 	 */
+	@Override
 	public void remove(Object objectToBeRemoved) {
 		em.getTransaction().begin();
 		em.remove(objectToBeRemoved);
@@ -330,6 +349,7 @@ class JPAHelperBase {
 	 * @param portfolioTable The portfolio
 	 * @return A list of stockNames
 	 */
+	@Override
 	public List<StockNames> getStockNames(PortfolioEntitys portfolioTable) {
 
 		if (portfolioTable.watchAllStocks()) {
@@ -344,6 +364,7 @@ class JPAHelperBase {
 	 * @param portfolioTable The portfolio.
 	 * @return A List of currently owned stocks.
 	 */
+	@Override
 	public List<StockPrices> getCurrentStocks(PortfolioEntitys portfolioTable) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
@@ -374,6 +395,7 @@ class JPAHelperBase {
 	 * @param portfolioTable
 	 * @return
 	 */
+	@Override
 	public List<Pair<StockPrices, StockPrices>> getOldStocks(
 			PortfolioEntitys portfolioTable) {
 
@@ -394,6 +416,7 @@ class JPAHelperBase {
 	 * @param from The old stockPrice
 	 * @return The latest stockPrice with same name as given stockPrice
 	 */
+	@Override
 	public StockPrices getLatestStockPrice(StockPrices from) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
@@ -418,6 +441,7 @@ class JPAHelperBase {
 	 * @param portfolioTable The portfolio to be audited.
 	 * @return The total amount invested
 	 */
+	@Override
 	public long getTotalInvestedAmount(PortfolioEntitys portfolioTable) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
@@ -446,6 +470,7 @@ class JPAHelperBase {
 	 * @param portfolioTable The portfolioTable to get the AlgorithmTable from
 	 * @return An algorithmTable
 	 */
+	@Override
 	public AlgorithmEntitys getAlgorithmTable(PortfolioEntitys portfolioTable) {
 		return portfolioTable.getAlgorithm();
 	}
@@ -460,6 +485,7 @@ class JPAHelperBase {
 	 * @param portfolio The portfolio
 	 * @return A PortfolioHistory.
 	 */
+	@Override
 	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio) {
 
 
@@ -487,6 +513,7 @@ class JPAHelperBase {
 	 * @param n How many max results
 	 * @return A list of stockPrices
 	 */
+	@Override
 	public List<StockPrices> getNLatest(StockPrices from, int n) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
@@ -508,7 +535,7 @@ class JPAHelperBase {
 		return query.getResultList();
 	}
 
-
+	@Override
 	public EntityManager getEntityManager() {
 		return em;
 	}

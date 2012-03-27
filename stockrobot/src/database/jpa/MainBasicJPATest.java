@@ -34,10 +34,10 @@ public class MainBasicJPATest {
 			jpaHelper.updateObject(portfolio);
 
 			
-			portfolio = new PortfolioEntitys("portfolio 2");
-			jpaHelper.storeObject(portfolio);
+			PortfolioEntitys portfolio2 = new PortfolioEntitys("portfolio 2");
+			jpaHelper.storeObject(portfolio2);
 			portfolio.setAlgorithm(new AlgorithmEntitys("algorithm2", "algorithms.TestAlgorithm2"));
-			jpaHelper.updateObject(portfolio);
+			jpaHelper.updateObject(portfolio2);
 			
 			portfolios = jpaHelper.getAllPortfolios();
 		}

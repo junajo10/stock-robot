@@ -10,10 +10,9 @@ import javax.persistence.Persistence;
  * JPAHelper for the simulator
  */
 public class JPAHelperForSimulator extends JPAHelperBase{
-	
 	public JPAHelperForSimulator() {
 		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
 		factory = Persistence.createEntityManagerFactory("testdb", map);
-		em = factory.createEntityManager();
+		this.em = factory.createEntityManager();
 	}
 }

@@ -1,5 +1,7 @@
 package simulation;
 
+import database.jpa.IJPAHelper;
+import database.jpa.JPAHelperForSimulator;
 import robot.IRobot_Algorithms;
 
 /**
@@ -7,22 +9,21 @@ import robot.IRobot_Algorithms;
  *
  */
 public class RobotSimulator implements IRobot_Algorithms {
-	private static IRobot_Algorithms instance = null;
+	private JPAHelperForSimulator jpaHelper;
 	
-	public static IRobot_Algorithms getInstance() {
-		if (instance == null) {
-			synchronized (RobotSimulator.class) {
-				if (instance == null)
-					instance = new RobotSimulator();
-			}
-		}
-		return instance;
+	public RobotSimulator(JPAHelperForSimulator jpaHelper) {
+		this.jpaHelper = jpaHelper;
 	}
 	
 	@Override
 	public boolean reportToUser(String message) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public IJPAHelper getJPAHelper() {
+		return jpaHelper;
 	}
 
 	

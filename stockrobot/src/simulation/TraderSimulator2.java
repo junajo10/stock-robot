@@ -21,16 +21,6 @@ public class TraderSimulator2 implements ITrader{
 	public TraderSimulator2(JPAHelperForSimulator jpaHelper) {
 		this.jpaHelper = jpaHelper;
 	}
-	public static ITrader getInstance(JPAHelperForSimulator jpaHelper) {
-		if (instance == null) {
-			synchronized (TraderSimulator2.class) {
-				if (instance == null) {
-					instance = new TraderSimulator2(jpaHelper);
-				}
-			}
-		}
-		return instance;
-	}
 	@Override
 	public void addAddObserver(PropertyChangeListener listener) {
 		// TODO Auto-generated method stub
@@ -52,9 +42,8 @@ public class TraderSimulator2 implements ITrader{
 		if (s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio) > portfolio.getBalance())
 			return false;
 		
-		
-		
 		portfolio.bougthFor(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio), jpaHelper);
+		//jpaHelper.storeObjectIfPossible(s);
 		jpaHelper.storeObject(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
 		return true;
 	}

@@ -33,8 +33,11 @@ public class SimulationHandler {
 
 	AlgorithmEntitys algorithmToSimulate;
 	IAlgorithm algorithm;
-	JPAHelper jpaHelper = JPAHelper.getInstance("astro");
+	
 	JPAHelperForSimulator jpaSimHelper = new JPAHelperForSimulator();
+	
+	JPAHelper jpaHelper = JPAHelper.getInstance("astro");
+	
 	PortfolioEntitys testPortfolio;
 	PortfolioSimulator portfolio = null;
 	IRobot_Algorithms robotSim = new RobotSimulator();
@@ -42,15 +45,19 @@ public class SimulationHandler {
 	@SuppressWarnings("rawtypes")
 	private void initSimulation(AlgorithmEntitys algorithmToSimulate) {
 		this.algorithmToSimulate = algorithmToSimulate;
+		jpaSimHelper.storeObject(algorithmToSimulate);
 		
+		ITrader trader = new TraderSimulator2(jpaSimHelper);
 		PortfolioEntitys portfolioEntity = new PortfolioEntitys("Simulated Portfolio");
 		portfolioEntity.setAlgorithm(algorithmToSimulate);
 		jpaSimHelper.storeObject(portfolioEntity);
+		
 		portfolio = new PortfolioSimulator(portfolioEntity, jpaSimHelper);
+		
 		try {
 			Class<?> c = Class.forName(algorithmToSimulate.getPath());
 			Constructor con = c.getConstructor(new Class[] {IRobot_Algorithms.class, IPortfolio.class, ITrader.class });
-			algorithm = (IAlgorithm) con.newInstance(new Object[] {robotSim, portfolio, TraderSimulator2.getInstance(jpaSimHelper)});
+			algorithm = (IAlgorithm) con.newInstance(new Object[] {robotSim, portfolio, trader});
 		} catch (SecurityException e) {
 		} catch (IllegalArgumentException e) {
 		} catch (ClassNotFoundException e) {
@@ -84,20 +91,26 @@ public class SimulationHandler {
 		
 		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered()) {
 			curr ++;
+			if (curr > 10)
+				break;
 			if (p.getTime().equals(lastSeenTime)) {
-				jpaSimHelper.storeObject(new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
-						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), p.getTime()));
+				StockPrices sp = new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
+						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), new Date(p.getTime().getTime()));
+				System.out.println(sp);
+				jpaSimHelper.storeObject(sp);
 			}
 			else {
-				System.out.println(curr/max + "% done");
-				updateAlgorithm();
-				System.out.println("bepa");
+				if (curr%100 == 0)
+					System.out.println(curr/max + "% done");
+				if (lastSeenTime != null)
+					updateAlgorithm();
 				lastSeenTime = p.getTime();
 				jpaSimHelper.storeObject(new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
 						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), p.getTime()));
 			}
 		}
 		
+		updateAlgorithm();
 		System.out.println(portfolio.getPortfolioTable().getBalance());
 		
 		clearTestDatabase();
@@ -137,18 +150,6 @@ public class SimulationHandler {
 	private void updateAlgorithm() {
 		portfolio.getAlgorithm().update();
 	}
-	/*
-	 * Encountered unmanaged object "database.jpa.tables.StockPrices-351477" in life cycle state  
-	 * unmanaged while cascading persistence via field "database.jpa.tables.PortfolioHistory.stockPrice" 
-	 * during flush.  However, this field does not allow cascade persist. 
-	 * You cannot flush unmanaged objects or graphs that have persistent associations to 
-	 * unmanaged objects.
- Suggested actions: a) Set the cascade attribute for this field to CascadeType.PERSIST or CascadeType.ALL (JPA annotations) or "persist" or "all" (JPA orm.xml), 
- b) enable cascade-persist globally, 
- c) manually persist the related field value prior to flushing. 
- d) if the reference belongs to another context, allow reference to it by setting StoreContext.setAllowReferenceToSiblingContext().
-FailedObject: database.jpa.tables.StockPrices-351477
-	 */
 	
 	public static void main(String args[]) {
 		SimulationHandler sh = new SimulationHandler();
@@ -156,5 +157,11 @@ FailedObject: database.jpa.tables.StockPrices-351477
 		sh.clearTestDatabase();
 		
 		sh.simulateAlgorithm(new AlgorithmEntitys("algorithm1", "algorithms.TestAlgorithm"));
+		
+		sh.end();
+	}
+	private void end() {
+		jpaHelper.getEntityManager().close();
+		jpaSimHelper.getEntityManager().close();
 	}
 }
