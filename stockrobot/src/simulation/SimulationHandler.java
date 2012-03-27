@@ -3,6 +3,8 @@ package simulation;
 import portfolio.IPortfolio;
 import algorithms.IAlgorithm;
 import algorithms.loader.AlgorithmsLoader;
+import database.jpa.JPAHelper;
+import database.jpa.JPAHelperForUnderstanding;
 import database.jpa.tables.AlgorithmEntitys;
 
 /**
@@ -21,7 +23,10 @@ public class SimulationHandler {
 	IAlgorithm algorithm;
 	IPortfolio testPortfolio = null;
 	
+	
 	public SimulationHandler(AlgorithmEntitys algorithmToSimulate) {
+		this.algorithmToSimulate = algorithmToSimulate;
+		
 		this.algorithm = AlgorithmsLoader.getInstance(RobotSimulator.getInstance()).loadAlgorithm(testPortfolio);
 	}
 }

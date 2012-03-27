@@ -1,7 +1,5 @@
 package simulation;
 
-import generic.FinancialLongConverter;
-
 import java.beans.PropertyChangeListener;
 
 import database.jpa.JPAHelper;
