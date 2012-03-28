@@ -23,6 +23,7 @@ public class RobotScheduler implements Runnable{
 	private boolean isRunning = false;
 	private boolean pause = false;
 	private long freq = 0;
+	private long pauseLength = SECOND;
 
 	public RobotScheduler(IPortfolioHandler portfolioHandler){
 		handler = new RobotHandler(portfolioHandler);
@@ -33,12 +34,14 @@ public class RobotScheduler implements Runnable{
 	 * 
 	 * @return true if stopped else false if already stopped
 	 */
-	public boolean stop(){
+	public synchronized boolean stop(){
 			
 		boolean result = false;
-		if(!pause)
+		if(isRunning){
 			Log.instance().log(Log.TAG.NORMAL , "RobotScheduler Stoped!" );
-			result = pause = true;	
+			isRunning = pause = false;	
+			result = true;
+		}
 		return result;
 	}
 		
@@ -48,10 +51,10 @@ public class RobotScheduler implements Runnable{
 	 * 
 	 * @return true if runner paused else false
 	 */
-	public boolean pause(){
+	public synchronized boolean pause(){
 		
 		boolean result = false;
-		if(!pause){
+		if(!pause && isRunning){
 			Log.instance().log(Log.TAG.VERBOSE , "RobotScheduler pause!" );
 			result = pause = true;
 		}
@@ -61,18 +64,27 @@ public class RobotScheduler implements Runnable{
 		
 	/**
 	* Unpauses the runner. Does nothing if parser isn't paused.
+	* To make the unpause instant. Run interrupt on the thread running the scheduler.
 	* 
 	* @return return true if runner unpauses else false
 	*/
-	public boolean unpause(){
+	public synchronized boolean unpause(){
 			
 		boolean result = false;
-		if(pause){
+		if(pause && isRunning){
 			Log.instance().log(Log.TAG.VERBOSE , "RobotScheduler unpause!" );
 			pause = false;
 			result = true;
 		}
 		return result;
+	}
+	
+	/**
+	 * @return true if paused
+	 */
+	public boolean isPaused(){
+				
+		return pause;
 	}
 		
 	/**
@@ -85,6 +97,15 @@ public class RobotScheduler implements Runnable{
 		this.freq = freq; 
 	}
 	
+	/**
+	 * Set the sleep time of the thread when paused. 
+	 * 
+	 * @param length time in milli seconds
+	 */
+	public void setPauseLength(long length){
+		pauseLength	= length;
+	}
+	
 	@Override
 	public void run() {
 		isRunning = true;
@@ -94,7 +115,7 @@ public class RobotScheduler implements Runnable{
 			//TODO make run interface to avoid polling
 			while(pause){
 				try {
-					Thread.sleep(RobotScheduler.SECOND * 60);
+					Thread.sleep(pauseLength);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
