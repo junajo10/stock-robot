@@ -1,8 +1,11 @@
 package database.jpa;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Persistence;
+import javax.persistence.metamodel.ManagedType;
+import javax.persistence.metamodel.Metamodel;
 
 /**
  * @author Daniel
@@ -17,8 +20,10 @@ public class JPAHelper extends JPAHelperBase {
 	private JPAHelper(String database) {
 		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
 		factory = Persistence.createEntityManagerFactory(database, map);
-
+		
 		em = factory.createEntityManager();
+		Metamodel metamodel = em.getMetamodel();
+		Set<ManagedType<?>> allManagedTypes = metamodel.getManagedTypes();
 	}
 	/**
 	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance of it.

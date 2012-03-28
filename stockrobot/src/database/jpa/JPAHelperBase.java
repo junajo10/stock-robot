@@ -98,14 +98,12 @@ class JPAHelperBase implements IJPAHelper {
 	@Override
 	public List<StockPrices> getAllStockPricesReverseOrdered() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<StockPrices> q2 = cb.createQuery(StockPrices.class);
-
-		Root<StockPrices> c = q2.from(StockPrices.class);
-		q2.orderBy(cb.desc(c.get("time")));
-		q2.select(c);
+		CriteriaQuery<StockPrices> q = cb.createQuery(StockPrices.class);
+		Root<StockPrices> c = q.from(StockPrices.class);
+		q.select(c);
+		q.orderBy(cb.asc(c.get("time")));
+		TypedQuery<StockPrices> query = em.createQuery(q);
 		
-		
-		TypedQuery<StockPrices> query = em.createQuery(q2);
 		return query.getResultList();
 	}
 	/**

@@ -112,7 +112,6 @@ public class SimulationHandler {
 			}
 		}
 		
-		updateAlgorithm();
 		System.out.println(portfolio.getPortfolioTable().getBalance());
 		
 		clearTestDatabase();

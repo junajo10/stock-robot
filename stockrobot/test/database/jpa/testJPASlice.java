@@ -18,7 +18,7 @@ import database.jpa.tables.StocksToWatch;
 /**
  * @author Daniel
  *
- *
+ * <property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>
  */
 public class testJPASlice {
 	static IJPAHelper jpaHelper;
@@ -27,6 +27,7 @@ public class testJPASlice {
 	public static void beforeClass(){ //First of all
 		jpaHelper = JPAHelper.getInstance("testslice");
 	}
+	
 	
 	@Test
 	public void testApa() {

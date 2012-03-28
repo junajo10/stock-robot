@@ -8,11 +8,7 @@ import java.util.List;
 import portfolio.IPortfolio;
 
 import algorithms.IAlgorithm;
-import algorithms.loader.AlgorithmsLoader;
-
 import database.jpa.IJPAHelper;
-import database.jpa.JPAHelper;
-import database.jpa.JPAHelperForSimulator;
 import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.StockNames;
