@@ -80,7 +80,8 @@ public class GUIFactory implements IGUIFactory {
 	@Override
 	public JPanel getMainContainer() {
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		Color backroundColor = new Color(230,230,230);
+		panel.setBackground(backroundColor);
 		
 		return panel;
 	}
