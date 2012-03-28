@@ -13,6 +13,8 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -55,23 +57,12 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	
 	private IGUIFactory guiFactory = new GUIFactory();
 	
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PortfolioGui frame = new PortfolioGui(null);
-					new PortfolioController(frame);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
+	public static void main(String[] args){
+		
+		PortfolioGui gui = new PortfolioGui(null);
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -84,7 +75,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		
 		setTitle("Portfolio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 300, 399);
+		setBounds(100, 100, 210, 399);
 		contentPane = guiFactory.getMainContainer();
 		
 		setContentPane(contentPane);
@@ -147,6 +138,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		pnl_BalanceContainer.add(pnl_BalanceHistory);
 		
 		btn_BalanceHistory = guiFactory.getDefaultButton("History");
+		btn_BalanceHistory.setEnabled(false);
 		pnl_BalanceHistory.add(btn_BalanceHistory);
 		// =============================
 		
@@ -175,6 +167,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		pnl_AlgorithmContainer.add(pnl_AlgorithmChange);
 		
 		btn_AlgorithmChange = guiFactory.getDefaultButton("Change");
+		btn_AlgorithmChange.setEnabled(false);
 		pnl_AlgorithmChange.add(btn_AlgorithmChange);
 		// ===============================
 		
@@ -197,16 +190,20 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		pnl_StockContainer.add(pnl_ShowStock);
 		
 		JButton btn_Show = guiFactory.getDefaultButton("Stock");
+		btn_Show.setEnabled(false);
 		pnl_ShowStock.add(btn_Show);
 		// ===========================
 		
-		updatePortfolios();
-
+		if(portfolioHandler != null){
+			updatePortfolios();
+		}
+			
 		if (cmb_portfolio.getItemCount() > 0) {
 			cmb_portfolio.setSelectedIndex(0);
 			currentPortfolio = portfolioHandler.getPortfolios().get(0);
 			updateCash();
 		}
+		
 		
 		this.setVisible(true);
 	}
@@ -236,19 +233,22 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	}
 	
 	public void updatePortfolios(){
-		
-		Object selected = cmb_hld_portfolio.getSelectedItem();
-		
-		List<IPortfolio> portfolios = portfolioHandler.getPortfolios();
-		cmb_hld_portfolio.removeAllElements();
-		for(int i = 0; i < portfolios.size(); i++){
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run(){
+			Object selected = cmb_hld_portfolio.getSelectedItem();
 			
-			cmb_hld_portfolio.addElement(new Item_cmb_Portfolio(portfolios.get(i)));
-		}
-		if(portfolios.contains(selected))
-			cmb_hld_portfolio.setSelectedItem(selected);
-		else
-			cmb_hld_portfolio.setSelectedItem(null);
+			List<IPortfolio> portfolios = portfolioHandler.getPortfolios();
+			cmb_hld_portfolio.removeAllElements();
+			for(int i = 0; i < portfolios.size(); i++){
+				
+				cmb_hld_portfolio.addElement(new Item_cmb_Portfolio(portfolios.get(i)));
+			}
+			if(portfolios.contains(selected))
+				cmb_hld_portfolio.setSelectedItem(selected);
+			else
+				cmb_hld_portfolio.setSelectedItem(null);
+			}
+		});
 	}
 	
 	public void setPortfolio(IPortfolio portfolio){
@@ -274,12 +274,15 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	}
 	
 	public void updateCash(){
-		
-		if(currentPortfolio != null)
-			lbl_CashValue.setText(FinancialLongConverter.toStringTwoDecimalPoints(currentPortfolio.getUnusedAmount()));
-		else{
-			lbl_CashValue.setText("NaN");
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run(){
+				if(currentPortfolio != null)
+					lbl_CashValue.setText(FinancialLongConverter.toStringTwoDecimalPoints(currentPortfolio.getUnusedAmount()));
+				else{
+					lbl_CashValue.setText("NaN");
+				}
+			}
+		});
 	}
 	
 	/**
