@@ -33,7 +33,6 @@ public class StockInfoGUI extends JFrame {
 		view = (StockTableView) guiFactory.getStockTableView();
 		controller = new StockTableController( view );
 		receiveNotifier.addAddObserver(controller);
-		//receiveNotifier.startRunner();
 		
 		setBounds( 100, 200, 800, 600 );
 		add( view );

@@ -13,8 +13,6 @@ public class AlphaReceiver implements IObservable {
 	
 	public AlphaReceiver() {
 		
-		System.out.println( "ALpha receiver!" );
-		
 		callEvery60Sec = new Thread(new Runnable() {
 			
 			@Override
@@ -24,8 +22,7 @@ public class AlphaReceiver implements IObservable {
 				while(true) {
 					
 					try {
-						
-						System.out.println( "ALpha receiver RUN!" );
+					
 						propertyChangeSuport.firePropertyChange( Constants.EVENT_TYPE.PRICES_UPDATED, null, null );
 						Thread.sleep(20000);
 					
@@ -38,8 +35,6 @@ public class AlphaReceiver implements IObservable {
 		});
 		
 		callEvery60Sec.start();
-		
-		System.out.println( "</ALPHA!!!!!!" );
 	}
 	
 	@Override

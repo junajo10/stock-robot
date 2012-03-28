@@ -59,8 +59,6 @@ public class StockTableView extends JPanel {
 		Pair<Object[][], Object[]> dataAndNames = populate();
 		init( dataAndNames.getLeft(), dataAndNames.getRight() );
 		
-		System.out.println( "UPDATE THE INFO!!!" );
-		
 		remove(scroller);
 		
 		init( dataAndNames.getLeft(), dataAndNames.getRight() );
