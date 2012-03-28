@@ -3,16 +3,11 @@ package gui.view;
 import generic.FinancialLongConverter;
 import generic.Pair;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,12 +17,21 @@ import database.jpa.JPAHelper;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
+/**
+ * Wrapping a JTable, fetching data from the price DB and inserting it.
+ * Includes a scroll bar.
+ * 
+ * @author kristian
+ *
+ */
 public class StockTableView extends JPanel implements PropertyChangeListener {
 	
 	private static final long serialVersionUID = -4930147798113095136L;
 	
 	private JTable table;
 	
+	/*
+	//Keeping to make it easy to test this class
 	public static void main( String[] args ) {
 		
 		StockTableView view = new StockTableView();
@@ -37,6 +41,7 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 		frame.add( view );
 		frame.show();
 	}
+	*/
 	
 	/**
 	 * For now, just get all data and push it to the table
@@ -56,29 +61,17 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 	 */
 	private void init( Object[][] data, Object[] names ) {
 		
+		//Create table
 		table = new JTable( data, names );
 		table.revalidate();
 		table.setRowHeight( 30 );
 		table.getColumnModel().getColumn(0).setPreferredWidth(150);
 		table.getColumnModel().getColumn(6).setPreferredWidth(200);
 		
+		//Create scroll bar
 		JScrollPane scroller = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scroller.setPreferredSize(new Dimension( 800, 600 ));
 		add( scroller );
-		
-		JButton btn = new JButton();
-		btn.setText("Btn!");
-		btn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-				// TODO Auto-generated method stub
-				table.removeAll();
-			}
-		});
-		
-		//add(btn);
 	}
 	
 	/**
@@ -125,6 +118,6 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		
-		
+		//TODO: Connect so this view updates when new parsed data is available
 	}
 }
