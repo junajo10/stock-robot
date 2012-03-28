@@ -55,13 +55,23 @@ public class TestAlgorithm implements IAlgorithm{
 			
 			long last = 0;
 			boolean sell = true;
-			for (int i = cs.size()-1; i > 0; i--) {
-				if (last > cs.get(i).getBuy()) {
-					sell = false;
-					break;
+			
+			//If 
+			if( cs.size() < 3 ) {
+				
+				sell = false;
+				
+			} else {
+				
+				for (int i = cs.size()-1; i > 0; i--) {
+					if (last > cs.get(i).getBuy()) {
+						sell = false;
+						break;
+					}
+					last = cs.get(i).getBuy();
 				}
-				last = cs.get(i).getBuy();
 			}
+			
 			
 			if (sell) {
 				//Sell all
@@ -72,6 +82,11 @@ public class TestAlgorithm implements IAlgorithm{
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
 			
 			boolean buy = true;
+			
+			//Do NOT buy a stock if it has less than 3 records in the database
+			if( stockInfo.getRight().size() < 3 )
+				buy = false;
+			
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {
 				
