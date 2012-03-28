@@ -6,6 +6,7 @@ import java.util.List;
 import generic.FinancialLongConverter;
 import generic.Log;
 import generic.Pair;
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockNames;
@@ -24,14 +25,15 @@ public class TestAlgorithm implements IAlgorithm{
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
 	ITrader trader = null;
-	JPAHelper jpaHelper = null;
+	IJPAHelper jpaHelper = null;
 	
 	
 	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
 		this.trader = trader;
-		this.jpaHelper = JPAHelper.getInstance();
+		this.jpaHelper = robot.getJPAHelper();
+		
 		System.out.println("Inside TestAlgorithm constructor");
 	}
 	
@@ -88,9 +90,9 @@ public class TestAlgorithm implements IAlgorithm{
 				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 				if( firstStockBuyPrice != 0 ) {
 					
-					long amount = Math.round( FinancialLongConverter.toDouble(portfolio.getPortfolioTable().getBalance())/10/FinancialLongConverter.toDouble(firstStockBuyPrice) ); 
+					long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/FinancialLongConverter.toDouble(firstStockBuyPrice)); 
 					
-					buyStock( stockInfo.getRight().get(0),amount );
+					buyStock( stockInfo.getRight().get(0), amount );
 				}
 			}
 		}

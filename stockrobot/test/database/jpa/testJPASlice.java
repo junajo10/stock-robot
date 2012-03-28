@@ -1,6 +1,5 @@
 package database.jpa;
 
-import static org.junit.Assert.*;
 
 import java.util.Random;
 
@@ -8,42 +7,42 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
 import database.jpa.tables.AlgorithmEntitys;
-import database.jpa.tables.AlgorithmSetting;
-import database.jpa.tables.AlgorithmSettings;
 import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
-public class testJPAPortfolioSettings {
+/**
+ * @author Daniel
+ *
+ * <property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>
+ */
+public class testJPASlice {
 	static IJPAHelper jpaHelper;
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = JPAHelper.getInstance("testdb");
+		jpaHelper = JPAHelper.getInstance("testslice");
 	}
+	
 	
 	@Test
-	public void testSettings() {
-		PortfolioEntitys p = new PortfolioEntitys("apa");
-		jpaHelper.storeObject(p);
-		
-		AlgorithmEntitys a = new AlgorithmEntitys("test", "algorithms.TestAlgorithm");
+	public void testApa() {
+		// Stored in portfolio database
+		AlgorithmEntitys a = new AlgorithmEntitys("", "");
 		jpaHelper.storeObject(a);
 		
-		p.setAlgorithm(a);
-		jpaHelper.updateObject(p);
-		
-		AlgorithmSettings as = new AlgorithmSettings(p, a);
-		jpaHelper.storeObject(as);
-	
+		// Stored in stock database
+		StockNames sn = new StockNames("apa", "bepa");
+		jpaHelper.storeObject(sn);
 	}
-
+	
 	/**
 	 * Removes all entitys from the database
-	 */
+	*/
 	@AfterClass
 	public static void afterClass() {
 		for (PortfolioInvestment investment : jpaHelper.getAllPortfolioInvestment()) {
@@ -80,5 +79,5 @@ public class testJPAPortfolioSettings {
 	    	jpaHelper.remove(sn);
 		}
 	}
-
+	
 }

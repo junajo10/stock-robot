@@ -1,9 +1,17 @@
 package scraping.connect;
 
+import generic.Log;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import robot.AstroReciever;
 
 
 /**
@@ -12,25 +20,52 @@ import java.net.UnknownHostException;
  *
  */
 public class Connector implements IConnector {
-	private Socket sendRefresh;
+
+	private final int key = 159286251;
+	private long latestStocks;
 	
-	/**
-	 * Sends a message to the robot saying that new data is available.
-	 * @return true if it was sent successfully.
-	 */
-	public boolean sendRefresh() {
-		DataOutputStream outToServer;
+	public static void main(String args[]){
+		//Startup code. Must have.
+		IConnector connector = new Connector();
+		Thread recieveThread = new Thread(connector);
+		recieveThread.start();
+		
+
+		
+		//Rest of the code...
+		
+		
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		DataOutputStream toConnector;
 		try {
-			//TODO: change "localhost" into an correct address,
-			sendRefresh = new Socket("localhost", 45000);
-			outToServer = new DataOutputStream(sendRefresh.getOutputStream());
-			outToServer.writeBytes("");
-			outToServer.close();
-			sendRefresh.close();
+			ServerSocket recieve = new ServerSocket(45000);
+			while(true){
+				Socket newDataSocket = recieve.accept();
+				BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
+				int getKey = fromHarvester.read();
+				if(getKey == key){
+					toConnector = new DataOutputStream(newDataSocket.getOutputStream());
+					toConnector.writeLong(latestStocks);
+				}
+				//Send ping upwards saying that new data is available.
+				newDataSocket.close();
+			}
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return true;
+	}
+
+
+	@Override
+	public void setLatestStockTime(long time) {
+		this.latestStocks = time;
 	}
 	
 	/**

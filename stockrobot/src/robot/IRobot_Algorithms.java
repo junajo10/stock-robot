@@ -1,5 +1,7 @@
 package robot;
 
+import database.jpa.IJPAHelper;
+
 // Interface to the framework from algorithms
 public interface IRobot_Algorithms {
 	/**
@@ -8,4 +10,6 @@ public interface IRobot_Algorithms {
 	 * @return True when user has read the message
 	 */
 	boolean reportToUser(String message);
+
+	IJPAHelper getJPAHelper();
 }

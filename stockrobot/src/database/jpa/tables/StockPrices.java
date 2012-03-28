@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="StockPrices", uniqueConstraints=@UniqueConstraint(columnNames={"time", "stockName"}))
-public final class StockPrices {
+public class StockPrices {
 	@Id
 	@GeneratedValue
 	private long id;

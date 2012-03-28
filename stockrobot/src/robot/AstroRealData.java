@@ -5,6 +5,7 @@ import gui.PortfolioGui;
 
 import java.util.Random;
 
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 
 import algorithms.loader.AlgorithmsLoader;
@@ -28,7 +29,7 @@ public class AstroRealData implements IRobot_Algorithms {
 	PortfolioGui portfolioGui 					= null;
 	PortfolioController portfolioController 	= null;
 	ITrader trader 								= null;
-	JPAHelper jpaHelper 						= null;
+	IJPAHelper jpaHelper 						= null;
 	Random rand 								= new Random(System.currentTimeMillis());
 	RobotScheduler scheduler 					= null;
 	Thread schedulerThread						= null;
@@ -68,5 +69,10 @@ public class AstroRealData implements IRobot_Algorithms {
 		AstroRealData astrord = new AstroRealData();
 		
 		astrord.start();
+	}
+
+	@Override
+	public IJPAHelper getJPAHelper() {
+		return jpaHelper;
 	}
 }
