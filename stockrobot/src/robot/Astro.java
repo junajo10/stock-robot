@@ -2,6 +2,7 @@ package robot;
 
 import gui.PortfolioController;
 import gui.PortfolioGui;
+import gui.StockInfoGUI;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,7 @@ public class Astro implements IRobot_Algorithms{
 	IPortfolioHandler portfolioHandler = null;
 	AlgorithmsLoader algorithmsLoader = null;
 	PortfolioGui portfolioGui = null;
+	StockInfoGUI stockInfoGUI = null;
 	PortfolioController portfolioController = null;
 	ITrader trader = null;
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
@@ -48,16 +50,14 @@ public class Astro implements IRobot_Algorithms{
 	 */
 	//TODO: In a new thread?
 	private void start() {
+		
 		System.out.println("ASTRo is starting up.");
 
-		trader = TraderSimulator.getInstance();
-
-		algorithmsLoader = AlgorithmsLoader.getInstance(this);
-
-		portfolioHandler = PortfolioHandler.getInstance();
-
-		portfolioGui = new PortfolioGui(portfolioHandler);
-
+		trader				= TraderSimulator.getInstance();
+		algorithmsLoader 	= AlgorithmsLoader.getInstance(this);
+		portfolioHandler 	= PortfolioHandler.getInstance();
+		portfolioGui 		= new PortfolioGui(portfolioHandler);
+		stockInfoGUI 		= new StockInfoGUI();
 		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
 
