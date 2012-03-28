@@ -24,11 +24,12 @@ import database.jpa.tables.StockPrices;
  * @author kristian
  *
  */
-public class StockTableView extends JPanel implements PropertyChangeListener {
+public class StockTableView extends JPanel {
 	
 	private static final long serialVersionUID = -4930147798113095136L;
 	
 	private JTable table;
+	private JScrollPane scroller;
 	
 	/*
 	//Keeping to make it easy to test this class
@@ -53,6 +54,18 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 		init( dataAndNames.getLeft(), dataAndNames.getRight() );
 	}
 	
+	public void updateInfo() {
+		
+		Pair<Object[][], Object[]> dataAndNames = populate();
+		init( dataAndNames.getLeft(), dataAndNames.getRight() );
+		
+		System.out.println( "UPDATE THE INFO!!!" );
+		
+		remove(scroller);
+		
+		init( dataAndNames.getLeft(), dataAndNames.getRight() );
+	}
+	
 	/**
 	 * Construct the JTable instance and feed it data received from populate
 	 * 
@@ -69,7 +82,7 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 		table.getColumnModel().getColumn(6).setPreferredWidth(200);
 		
 		//Create scroll bar
-		JScrollPane scroller = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroller = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scroller.setPreferredSize(new Dimension( 800, 600 ));
 		add( scroller );
 	}
@@ -109,15 +122,5 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 		
 		//Return row data and column names
 		return new Pair<Object[][], Object[]>(rows, tableColumnNames);
-	}
-	
-	/**
-	 * For the future, fix the propertyChange, whenever prices are updated in DB, 
-	 * they should be updated in the JTable as well
-	 */
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-		//TODO: Connect so this view updates when new parsed data is available
 	}
 }

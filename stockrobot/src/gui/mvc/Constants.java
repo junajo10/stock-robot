@@ -13,7 +13,11 @@ public class Constants {
 	//The type of messages that can be sent by a IEvent
 	public class EVENT_TYPE{
 		
-		public static final String BUY_STOCK = "BUY_STOCK";
-		public static final String SELL_STOCK = "SELL_STOCK";
+		//Stocks
+		public static final String BUY_STOCK 			= "buyStock";
+		public static final String SELL_STOCK 			= "sellStock";
+		
+		//Socket connections
+		public static final String PRICES_UPDATED 		= "pricesUpdated";
 	}
 }
