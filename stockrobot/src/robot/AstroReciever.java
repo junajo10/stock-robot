@@ -22,6 +22,8 @@ import java.net.UnknownHostException;
 public class AstroReciever {
 	private Socket sendRefresh;
 	private boolean newData;
+	private final int secretKey = 19286;
+	private String stockTime;
 	
 	/** Code should be somewhere in Astro.java
 	 * <p>
@@ -33,24 +35,52 @@ public class AstroReciever {
 	 * Sends a message to the robot saying that new data is available.
 	 * @return true if it was sent successfully.
 	 */
-	public boolean sendRefresh() {
+	public boolean newData() {
 		DataOutputStream outToServer;
 		DataInputStream inFromServer;
 		try {
 			//TODO: change "localhost" into an correct address,
 			sendRefresh = new Socket("localhost", 45000);
 			outToServer = new DataOutputStream(sendRefresh.getOutputStream());
-			outToServer.write(key);
-			inFromServer = new DataInputStream(sendRefresh.getInputStream());
-			long latestStocks = inFromServer.readLong();
+			outToServer.write(secretKey);
+			BufferedReader fromServer = new BufferedReader(new InputStreamReader(sendRefresh.getInputStream()));
+			String latestStocks = fromServer.readLine();
+			if(stockTime != latestStocks){
+				newData = true;
+			}
+			else {
+				newData = false;
+			}
 			outToServer.close();
 			sendRefresh.close();
+			return newData;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
 
+	/**
+	 * Method only for testing!
+	 * <p>
+	 * Not to be included in final version.
+	 */
+	public static void main(String[] args){
+		AstroReciever rec = new AstroReciever();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		while(true){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.print("New data? " + rec.newData());
+		} 			
+	 }
 	
 	/**
 	 * Checks if new stock data is available.
