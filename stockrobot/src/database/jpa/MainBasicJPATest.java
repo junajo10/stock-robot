@@ -22,7 +22,7 @@ import database.jpa.tables.StockPrices;
 public class MainBasicJPATest {
 	public static void main(String[] args) {
 
-		JPAHelper jpaHelper = JPAHelper.getInstance();
+		IJPAHelper jpaHelper = JPAHelper.getInstance();
 		
 		
 		List<PortfolioEntitys> portfolios = jpaHelper.getAllPortfolios();
@@ -34,10 +34,11 @@ public class MainBasicJPATest {
 			jpaHelper.updateObject(portfolio);
 
 			
-			portfolio = new PortfolioEntitys("portfolio 2");
-			jpaHelper.storeObject(portfolio);
-			portfolio.setAlgorithm(new AlgorithmEntitys("algorithm2", "algorithms.TestAlgorithm2"));
-			jpaHelper.updateObject(portfolio);
+			PortfolioEntitys portfolio2 = new PortfolioEntitys("portfolio 2");
+			jpaHelper.storeObject(portfolio2);
+			
+			portfolio2.setAlgorithm(new AlgorithmEntitys("algorithm2", "algorithms.TestAlgorithm2"));
+			jpaHelper.updateObject(portfolio2);
 			
 			portfolios = jpaHelper.getAllPortfolios();
 		}

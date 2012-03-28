@@ -1,18 +1,18 @@
-package portfolio;
+package simulation;
 
 import generic.FinancialLongConverter;
 import generic.Pair;
 
 import java.util.List;
 
-import algorithms.IAlgorithm;
-import algorithms.loader.AlgorithmsLoader;
+import portfolio.IPortfolio;
 
+import algorithms.IAlgorithm;
 import database.jpa.IJPAHelper;
-import database.jpa.JPAHelper;
 import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.StockNames;
+
 import database.jpa.tables.StockPrices;
 
 
@@ -22,7 +22,7 @@ import database.jpa.tables.StockPrices;
  * An object of this class will hold one portfolio.
  * When a object of this class is loaded, it will load the algorithm coupled with it.
  */
-public class Portfolio implements IPortfolio {
+public class PortfolioSimulator implements IPortfolio {
 	private int portfolioId;
 	private PortfolioEntitys portfolioTable;
 	private IJPAHelper jpaHelper;
@@ -32,15 +32,14 @@ public class Portfolio implements IPortfolio {
 	 * Start up an existing portfolio
 	 * @param portfolioTable The table with this portfolio
 	 */
-	public Portfolio(PortfolioEntitys portfolioTable) {
+	public PortfolioSimulator(PortfolioEntitys portfolioTable, IJPAHelper jpaHelper) {
 		this.portfolioTable = portfolioTable;
-		jpaHelper = JPAHelper.getInstance();
-		if (portfolioTable.getAlgorithm() != null)
-			algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
-		else
-			System.out.println("No algorithm set yet for " + getName());
+		this.jpaHelper = jpaHelper;
 		
 		System.out.println(portfolioTable);
+	}
+	public void setAlgorithm(IAlgorithm algorithm) {
+		this.algorithm = algorithm;
 	}
 	@Override
 	public List<StockNames> getAvalibleStocks() {

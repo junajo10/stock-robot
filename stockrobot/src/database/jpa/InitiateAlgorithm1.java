@@ -16,7 +16,7 @@ public class InitiateAlgorithm1 {
 	
 	public static void main(String[] args) {
 		
-		JPAHelper help = JPAHelper.getInstance();
+		IJPAHelper help = JPAHelper.getInstance();
 		
 		List<PortfolioEntitys> portfolios = help.getAllPortfolios();
 		

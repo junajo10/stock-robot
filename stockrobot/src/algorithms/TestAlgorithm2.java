@@ -4,6 +4,7 @@ package algorithms;
 import java.util.List;
 
 import generic.Pair;
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockNames;
@@ -23,14 +24,14 @@ public class TestAlgorithm2 implements IAlgorithm{
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
 	ITrader trader = null;
-	JPAHelper jpaHelper = null;
+	IJPAHelper jpaHelper = null;
 	
 	
 	public TestAlgorithm2(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
 		this.trader = trader;
-		this.jpaHelper = JPAHelper.getInstance();
+		this.jpaHelper = robot.getJPAHelper();
 		System.out.println("Inside TestAlgorithm2 constructor");
 	}
 	

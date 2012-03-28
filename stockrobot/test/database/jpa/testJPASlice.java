@@ -18,15 +18,16 @@ import database.jpa.tables.StocksToWatch;
 /**
  * @author Daniel
  *
- *
+ * <property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>
  */
 public class testJPASlice {
-	static JPAHelper jpaHelper;
+	static IJPAHelper jpaHelper;
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
 		jpaHelper = JPAHelper.getInstance("testslice");
 	}
+	
 	
 	@Test
 	public void testApa() {

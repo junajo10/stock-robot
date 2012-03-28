@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.print.attribute.IntegerSyntax;
 
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -23,7 +24,7 @@ public class JPAInserter implements IInserter {
 	
 	EntityManagerFactory factory;
 	EntityManager em;
-	JPAHelper helper;
+	IJPAHelper helper;
 	
 	/*
 	public static void main( String[] args ) {

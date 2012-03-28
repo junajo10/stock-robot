@@ -20,7 +20,7 @@ import database.jpa.tables.StocksToWatch;
 
 
 public class JPATest {
-	static JPAHelper jpaHelper;
+	static IJPAHelper jpaHelper;
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
