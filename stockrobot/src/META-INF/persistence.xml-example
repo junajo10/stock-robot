@@ -1,0 +1,132 @@
+astroportfolio is the main database.
+testdb is only for testing and simulating stocks.
+
+astroportfolio can be split into 2 databases where one holds all stock info, 
+and the other holds all portfolioingo.
+To use this feuture you need to use the slicing example.
+
+
+
+------------------
+To use slicing:
+------------------
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+
+<persistence-unit name="astroportfolio">
+	<provider>
+		org.apache.openjpa.persistence.PersistenceProviderImpl
+	</provider>
+   	<class>database.jpa.tables.AlgorithmEntitys</class>
+	<class>database.jpa.tables.PortfolioHistory</class>
+	<class>database.jpa.tables.PortfolioInvestment</class>
+	<class>database.jpa.tables.PortfolioEntitys</class>
+	<class>database.jpa.tables.StocksToWatch</class>
+	<class>database.jpa.tables.StockNames</class>
+	<class>database.jpa.tables.StockPrices</class>
+	<properties>
+      	
+		<property name="openjpa.BrokerFactory"        value="slice"/>
+		<property name="openjpa.slice.Names"          value="Portfolio,Stocks"/>
+		<property name="openjpa.slice.Master"         value="Portfolio"/>
+		<property name="openjpa.slice.Lenient"        value="false"/>
+         
+		<property name="openjpa.slice.DistributionPolicy"  value="database.jpa.JPADistributionPolicy"/>
+		<property name="openjpa.slice.ThreadingPolicy"     value="fixed"/>
+
+		<property name="openjpa.ConnectionDriverName"      value="com.mysql.jdbc.Driver"/>
+		<property name="openjpa.ConnectionUserName"        value="username"/>
+		<property name="openjpa.ConnectionPassword"        value="password"/>
+		<property name="openjpa.slice.Portfolio.ConnectionURL"   value="jdbc:mysql://host/db"/>
+		<property name="openjpa.slice.Stocks.ConnectionURL"   value="jdbc:mysql://host/db"/>
+         
+		<property name="openjpa.DynamicEnhancementAgent"   value="false"/>
+         
+		<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+		<property name="openjpa.Log" value="" />
+		<property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
+		<property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict, JoinForeignKeyDeleteAction=restrict" />
+         
+	</properties>
+</persistence-unit>
+<persistence-unit name="testdb" transaction-type="RESOURCE_LOCAL">
+	<class>database.jpa.tables.AlgorithmEntitys</class>
+	<class>database.jpa.tables.PortfolioHistory</class>
+	<class>database.jpa.tables.PortfolioInvestment</class>
+	<class>database.jpa.tables.PortfolioEntitys</class>
+	<class>database.jpa.tables.StocksToWatch</class>
+	<class>database.jpa.tables.StockNames</class>
+	<class>database.jpa.tables.StockPrices</class>
+	<class>database.jpa.tables.AlgorithmSetting</class>
+	<class>database.jpa.tables.AlgorithmSettings</class>
+	<properties>
+		<property name="openjpa.ConnectionUserName" value="username" />
+		<property name="openjpa.ConnectionPassword" value="password" />
+		<property name="openjpa.ConnectionURL" value="jdbc:mysql://host/db"/>
+		<property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver" />
+		<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+		<property name="openjpa.Log" value="" />
+		<property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
+		<property name="openjpa.jdbc.MappingDefaults"
+		value="ForeignKeyDeleteAction=restrict,
+		JoinForeignKeyDeleteAction=restrict" />
+	</properties>
+</persistence-unit>
+</persistence>
+
+------------------------
+To only use one db:
+------------------------
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+<persistence-unit name="astroportfolio" transaction-type="RESOURCE_LOCAL">
+	<class>database.jpa.tables.AlgorithmEntitys</class>
+	<class>database.jpa.tables.PortfolioHistory</class>
+	<class>database.jpa.tables.PortfolioInvestment</class>
+	<class>database.jpa.tables.PortfolioEntitys</class>
+	<class>database.jpa.tables.StocksToWatch</class>
+	<class>database.jpa.tables.StockNames</class>
+	<class>database.jpa.tables.StockPrices</class>
+	<class>database.jpa.tables.AlgorithmSetting</class>
+	<class>database.jpa.tables.AlgorithmSettings</class>
+	<properties>
+		<property name="openjpa.ConnectionUserName" value="username" />
+		<property name="openjpa.ConnectionPassword" value="password" />
+		<property name="openjpa.ConnectionURL" value="jdbc:mysql://host/db"/>
+		<property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver" />
+		<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+		<property name="openjpa.Log" value="" />
+		<property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
+		<property name="openjpa.jdbc.MappingDefaults"
+		value="ForeignKeyDeleteAction=restrict,
+		JoinForeignKeyDeleteAction=restrict" />
+	</properties>
+</persistence-unit>
+
+<persistence-unit name="testdb" transaction-type="RESOURCE_LOCAL">
+	<class>database.jpa.tables.AlgorithmEntitys</class>
+	<class>database.jpa.tables.PortfolioHistory</class>
+	<class>database.jpa.tables.PortfolioInvestment</class>
+	<class>database.jpa.tables.PortfolioEntitys</class>
+	<class>database.jpa.tables.StocksToWatch</class>
+	<class>database.jpa.tables.StockNames</class>
+	<class>database.jpa.tables.StockPrices</class>
+	<class>database.jpa.tables.AlgorithmSetting</class>
+	<class>database.jpa.tables.AlgorithmSettings</class>
+	<properties>
+		<property name="openjpa.ConnectionUserName" value="username" />
+		<property name="openjpa.ConnectionPassword" value="password" />
+		<property name="openjpa.ConnectionURL" value="jdbc:mysql://host/db"/>
+		<property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver" />
+		<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+		<property name="openjpa.Log" value="" />
+		<property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
+		<property name="openjpa.jdbc.MappingDefaults"
+		value="ForeignKeyDeleteAction=restrict,
+		JoinForeignKeyDeleteAction=restrict" />
+	</properties>
+</persistence-unit>
+
+</persistence>
