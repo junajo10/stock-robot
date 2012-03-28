@@ -3,6 +3,8 @@ package robot;
 import generic.Log;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
@@ -17,7 +19,8 @@ import java.net.UnknownHostException;
  * @author Erik
  *
  */
-public class AstroReciever implements Runnable {
+public class AstroReciever {
+	private Socket sendRefresh;
 	private boolean newData;
 	
 	/** Code should be somewhere in Astro.java
@@ -25,50 +28,29 @@ public class AstroReciever implements Runnable {
 	 * AstroReciever should be run as a thread.
 	 * 
 	 */
-	public static void main(String args[]){
-		//Startup code.
-		AstroReciever reciever = new AstroReciever();
-		Thread recieveThread = new Thread(reciever);
-		recieveThread.start();
-		
-		
-		//Example of a blocking call to AstroReciever.
-		while(!reciever.newStockData()){
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		//Rest of the code...
-		
-		
-	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	/**
+	 * Sends a message to the robot saying that new data is available.
+	 * @return true if it was sent successfully.
+	 */
+	public boolean sendRefresh() {
+		DataOutputStream outToServer;
+		DataInputStream inFromServer;
 		try {
-			ServerSocket recieve = new ServerSocket(45000);
-			while(true){
-				Socket newDataSocket = recieve.accept();
-				//BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
-				//Send ping upwards saying that new data is available.
-				newData = true;
-				Log.instance().log(Log.TAG.DEBUG, "Have recieved new stock data!");
-
-				newDataSocket.close();
-			}
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//TODO: change "localhost" into an correct address,
+			sendRefresh = new Socket("localhost", 45000);
+			outToServer = new DataOutputStream(sendRefresh.getOutputStream());
+			outToServer.write(key);
+			inFromServer = new DataInputStream(sendRefresh.getInputStream());
+			long latestStocks = inFromServer.readLong();
+			outToServer.close();
+			sendRefresh.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return true;
 	}
+
 	
 	/**
 	 * Checks if new stock data is available.
