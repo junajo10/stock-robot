@@ -39,7 +39,7 @@ public class ParserRunner implements IParserRunner {
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
 		connector = new Connector();
-		Thread connectThread = new Thread();
+		Thread connectThread = new Thread(connector);
 		connectThread.start();
 		
 	}
