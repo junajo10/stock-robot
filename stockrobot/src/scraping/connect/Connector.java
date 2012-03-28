@@ -2,9 +2,11 @@ package scraping.connect;
 
 import generic.Log;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -20,6 +22,7 @@ import robot.AstroReciever;
 public class Connector implements IConnector {
 
 	private final int key = 159286251;
+	private long latestStocks;
 	
 	public static void main(String args[]){
 		//Startup code. Must have.
@@ -36,15 +39,18 @@ public class Connector implements IConnector {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		DataOutputStream toConnector;
 		try {
 			ServerSocket recieve = new ServerSocket(45000);
 			while(true){
 				Socket newDataSocket = recieve.accept();
-				//BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
+				BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
+				int getKey = fromHarvester.read();
+				if(getKey == key){
+					toConnector = new DataOutputStream(newDataSocket.getOutputStream());
+					toConnector.writeLong(latestStocks);
+				}
 				//Send ping upwards saying that new data is available.
-				newData = true;
-				Log.instance().log(Log.TAG.DEBUG, "Have recieved new stock data!");
-
 				newDataSocket.close();
 			}
 		} catch (UnknownHostException e) {
@@ -58,9 +64,8 @@ public class Connector implements IConnector {
 
 
 	@Override
-	public boolean sendRefresh() {
-		// TODO Auto-generated method stub
-		return false;
+	public void setLatestStockTime(long time) {
+		this.latestStocks = time;
 	}
 	
 	/**
