@@ -66,6 +66,7 @@ public class TestAlgorithm implements IAlgorithm{
 			if (sell) {
 				//Sell all
 				PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(sp, portfolio.getPortfolioTable());
+				ph.setSoldDate(sp.getTime());
 				trader.sellStock(sp, ph.getAmount(), portfolio.getPortfolioTable());
 			}
 		}
