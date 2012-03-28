@@ -3,7 +3,6 @@ package algorithms;
 
 import java.util.List;
 
-import generic.FinancialLongConverter;
 import generic.Log;
 import generic.Pair;
 import database.jpa.IJPAHelper;
@@ -42,7 +41,7 @@ public class TestAlgorithm implements IAlgorithm{
 		
 		Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: UPDATE!" );
 		
-		if (portfolio.getPortfolioTable().getBalance() < 1000) {
+		if (portfolio.getPortfolioTable().getBalance() < 1000000000) {
 			return false;
 		}
 		
@@ -90,7 +89,7 @@ public class TestAlgorithm implements IAlgorithm{
 				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 				if( firstStockBuyPrice != 0 ) {
 					
-					long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/FinancialLongConverter.toDouble(firstStockBuyPrice)); 
+					long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
 					
 					buyStock( stockInfo.getRight().get(0), amount );
 				}
