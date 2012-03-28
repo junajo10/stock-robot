@@ -320,11 +320,7 @@ class JPAHelperBase implements IJPAHelper {
 	 */
 	@Override
 	public synchronized boolean investMoney(long amount, PortfolioEntitys portfolio) {
-		em.getTransaction().begin();
-
-		em.persist(new PortfolioInvestment(portfolio, amount, true));
-
-		em.getTransaction().commit();
+		storeObject(new PortfolioInvestment(portfolio, amount, true));
 
 		portfolio.invest(amount, true);
 
