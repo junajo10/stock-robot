@@ -48,22 +48,18 @@ public class TraderSimulator implements ITrader{
 	public boolean sellStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
 		StockPrices latest = JPAHelper.getInstance().getLatestStockPrice(s);
 		portfolio.soldFor( latest.getBuy()*amount );
-		PortfolioHistory ph = JPAHelper.getInstance().getSpecificPortfolioHistory(s, portfolio);
+		PortfolioHistory ph = JPAHelper.getInstance().getSpecificPortfolioHistory(s, portfolio, amount);
 		
-		if (ph.getSoldDate() != null) {
-			System.out.println("BUG!!! shouldent come here!");
-		}
-		else if (ph.getBuyDate().compareTo(latest.getTime()) < 0) {
-			System.out.println("Another bug!");
-		}
-		else {
+		if (ph.getSoldDate() == null) {
 			ph.setSoldDate(latest.getTime());
 			JPAHelper.getInstance().updateObject(ph);
 			
 			System.out.println("Selling: " + amount + " of " + s + " for: " + s.getBuy()*amount);
 			
 			propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.SELL_STOCK, null, portfolio);
-		}
+		} 
+		else
+			return false;
 		return true;
 	}
 

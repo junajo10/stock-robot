@@ -485,7 +485,7 @@ class JPAHelperBase implements IJPAHelper {
 	 * @return A PortfolioHistory.
 	 */
 	@Override
-	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio) {
+	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio, long amount) {
 
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -497,6 +497,7 @@ class JPAHelperBase implements IJPAHelper {
 
 		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolio);
 		Predicate p2 = em.getCriteriaBuilder().equal(c.get("stockPrice"), stockPrice);
+		Predicate p3 = em.getCriteriaBuilder().equal(c.get("amount"), amount);
 
 		q2.where(p, p2);
 
@@ -505,6 +506,25 @@ class JPAHelperBase implements IJPAHelper {
 		query.setMaxResults(1);
 
 		return query.getSingleResult();
+	}
+	@Override
+	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp, PortfolioEntitys portfolioTable) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
+
+		Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
+
+		q2.select(c);
+
+		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolioTable);
+		Predicate p2 = em.getCriteriaBuilder().equal(c.get("stockPrice"), sp);
+		Predicate p3 = em.getCriteriaBuilder().equal(c.get("soldDate"), null);
+
+		q2.where(p, p2, p3);
+
+		TypedQuery<PortfolioHistory> query = em.createQuery(q2);
+
+		return query.getResultList();
 	}
 	/**
 	 * Returns a list of Stockprices with same name as a given StockPrice, with max size of a given value.
@@ -538,5 +558,6 @@ class JPAHelperBase implements IJPAHelper {
 	public EntityManager getEntityManager() {
 		return em;
 	}
+
 
 }

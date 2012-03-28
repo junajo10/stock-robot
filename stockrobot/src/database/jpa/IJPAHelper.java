@@ -160,9 +160,10 @@ public interface IJPAHelper {
 	 * 
 	 * @param stockPrice The buying stockPrice
 	 * @param portfolio The portfolio
+	 * @param amount 
 	 * @return A PortfolioHistory.
 	 */
-	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio);
+	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio, long amount);
 	/**
 	 * Returns a list of Stockprices with same name as a given StockPrice, with max size of a given value.
 	 * @param from The StockPrice that has the same name 
@@ -175,4 +176,6 @@ public interface IJPAHelper {
 	public EntityManager getEntityManager();
 	
 	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntitys portfolio);
+	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp,
+			PortfolioEntitys portfolioTable);
 }

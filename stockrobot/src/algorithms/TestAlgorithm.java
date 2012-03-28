@@ -41,37 +41,41 @@ public class TestAlgorithm implements IAlgorithm{
 		
 		Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: UPDATE!" );
 		
-		if (portfolio.getPortfolioTable().getBalance() < 1000000000) {
+		if (portfolio.getPortfolioTable().getBalance() < 1000000) {
 			return false;
 		}
 		
 		List<StockPrices> ownedStockes = jpaHelper.getCurrentStocks(portfolio.getPortfolioTable());
-		
 		for (StockPrices sp : ownedStockes ) {
 			
 			Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: Checking ownedStocks!" );
 			
-			List<StockPrices> cs = jpaHelper.getNLatest(sp, 5);
-			if (cs.size() == 5) {
-				long last = 0;
+			List<StockPrices> cs = jpaHelper.getNLatest(sp, 3);
+			if (cs.size() == 3) {
+				long last = Long.MAX_VALUE;
 				boolean sell = true;
-				for (int i = cs.size()-1; i > 0; i--) {
-					if (last > cs.get(i).getBuy()) {
-						sell = false;
-						break;
+				for (int i = 2; i >= 0; i--) {
+					if (cs.get(i).getBuy() < last) {
+						last = cs.get(i).getBuy();
 					}
-					last = cs.get(i).getBuy();
+					else
+						sell = false;
 				}
 				
 				if (sell) {
 					//Sell all
-					PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(sp, portfolio.getPortfolioTable());
-					trader.sellStock(sp, ph.getAmount(), portfolio.getPortfolioTable());
+					List<PortfolioHistory> ph = jpaHelper.getPortfolioHistory(sp, portfolio.getPortfolioTable());
+					for (PortfolioHistory pHistory : ph) {
+						if (pHistory.getSoldDate() == null) {
+							trader.sellStock(sp, pHistory.getAmount(), portfolio.getPortfolioTable());
+							jpaHelper.updateObject(pHistory);
+						}
+					}
+					
 				}
 			}
 		}
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
-			
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {
@@ -83,9 +87,7 @@ public class TestAlgorithm implements IAlgorithm{
 			
 			//Buy!
 			if (buy) {
-				
 				Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: BUY!" );
-				
 				//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
 				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 				if( firstStockBuyPrice != 0 ) {

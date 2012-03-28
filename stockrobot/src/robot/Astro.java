@@ -69,7 +69,7 @@ public class Astro implements IRobot_Algorithms{
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
 				if (simulate) {
 					if (rand.nextInt(10) == 1) {
-						long newInvestment = ((long)rand.nextInt(1000)*10000);
+						long newInvestment = ((long)rand.nextInt(1000)*1000000);
 
 						p.investAmount(newInvestment);
 						System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
@@ -95,11 +95,9 @@ public class Astro implements IRobot_Algorithms{
 		List<StockNames> stockNames = jpaHelper.getAllStockNames();
 
 		for (StockNames sn : stockNames) {
-			if (rand.nextBoolean()) {
-				StockPrices sp = new StockPrices(sn, rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000), new Date(System.currentTimeMillis()));
-				//System.out.println("New stockPrice created: " + sp);
-				jpaHelper.storeObjectIfPossible(sp);
-			}
+			StockPrices sp = new StockPrices(sn, rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), new Date(System.currentTimeMillis()));
+			//System.out.println("New stockPrice created: " + sp);
+			jpaHelper.storeObjectIfPossible(sp);
 		}
 	}
 

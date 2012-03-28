@@ -3,6 +3,7 @@ package algorithms;
 
 import java.util.List;
 
+import generic.Log;
 import generic.Pair;
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
@@ -20,13 +21,13 @@ import trader.ITrader;
  * This is to really test that we can have several algorithms in the system.
  */
 public class TestAlgorithm2 implements IAlgorithm{
-	
+
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
 	ITrader trader = null;
 	IJPAHelper jpaHelper = null;
-	
-	
+
+
 	public TestAlgorithm2(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
@@ -34,55 +35,71 @@ public class TestAlgorithm2 implements IAlgorithm{
 		this.jpaHelper = robot.getJPAHelper();
 		System.out.println("Inside TestAlgorithm2 constructor");
 	}
-	
+
 	@Override
 	public boolean update() {
-		if (portfolio.getPortfolioTable().getBalance() < 1000) {
+		if (portfolio.getPortfolioTable().getBalance() < 1000000) {
 			return false;
 		}
-		
+
 		List<StockPrices> ownedStockes = jpaHelper.getCurrentStocks(portfolio.getPortfolioTable());
-		
+
 		for (StockPrices sp : ownedStockes ) {
-			
+
 			List<StockPrices> cs = jpaHelper.getNLatest(sp, 5);
-			
-			long last = 0;
-			boolean sell = true;
-			for (int i = cs.size()-1; i > 0; i--) {
-				if (last > cs.get(i).getBuy()) {
-					sell = false;
-					break;
+			if (cs.size() == 5) {
+				long last = Long.MAX_VALUE;
+				boolean sell = true;
+				for (int i = 4; i >= 0; i--) {
+					if (cs.get(i).getBuy() < last) {
+						last = cs.get(i).getBuy();
+					}
+					else
+						sell = false;
 				}
-				last = cs.get(i).getBuy();
-			}
-			
-			if (sell) {
-				//Sell all
-				PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(sp, portfolio.getPortfolioTable());
-				trader.sellStock(sp, ph.getAmount(), portfolio.getPortfolioTable());
+
+				if (sell) {
+					//Sell all
+					List<PortfolioHistory> ph = jpaHelper.getPortfolioHistory(sp, portfolio.getPortfolioTable());
+					for (PortfolioHistory pHistory : ph) {
+						if (pHistory.getSoldDate() == null) {
+							trader.sellStock(sp, pHistory.getAmount(), portfolio.getPortfolioTable());
+							jpaHelper.updateObject(pHistory);
+						}
+					}
+				}
 			}
 		}
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(5)) {
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {
-				if (stockInfo.getRight().get(i).getBuy() > last)
+				if (stockInfo.getRight().get(i).getBuy() >= last)
 					buy = false;
 				last = stockInfo.getRight().get(i).getBuy();
 			}
-			if (buy)
-				buyStock(stockInfo.getRight().get(0), portfolio.getPortfolioTable().getBalance()/10/stockInfo.getRight().get(0).getBuy());
+			//Buy!
+			if (buy) {
+				Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo2: BUY!" );
+				//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
+				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
+				if( firstStockBuyPrice != 0 ) {
+					
+					long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
+					
+					buyStock( stockInfo.getRight().get(0), amount );
+				}
+			}
 		}
-		
-		
-		
-		
+
+
+
+
 		return true;
 	}
 	private void buyStock(StockPrices stockPrices, long amount) {
 		trader.buyStock(stockPrices, amount, portfolio.getPortfolioTable());
-		
+
 	}
 
 	@Override
@@ -93,8 +110,8 @@ public class TestAlgorithm2 implements IAlgorithm{
 	public String getDescription() {
 		return "Test algorithm1\n\nBuys when a stock has gone up 3 times in a row\nSells when a stock has gone down 3 times in a row";
 	}
-	
-	
+
+
 	@Override
 	public boolean giveSetting(int id, int value) {
 		return false;
@@ -122,7 +139,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 		default:
 			System.out.println("garrr");
 		}
-			
+
 		return null;
 	}
 	@Override
@@ -164,7 +181,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 
 
 }

@@ -46,7 +46,7 @@ public class TraderSimulator2 implements ITrader{
 	public boolean sellStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
 		StockPrices latest = jpaHelper.getLatestStockPrice(s);
 		portfolio.soldFor(s.getBuy()*amount);
-		PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(s, portfolio);
+		PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(s, portfolio, amount);
 		
 		ph.setSoldDate(latest.getTime());
 		

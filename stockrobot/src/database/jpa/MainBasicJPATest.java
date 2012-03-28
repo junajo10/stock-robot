@@ -68,6 +68,18 @@ public class MainBasicJPATest {
 			stockName = new StockNames("Stock6", "MarketB");
 			jpaHelper.storeObject(stockName);
 			
+			stockName = new StockNames("Stock7", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock8", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock9", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock10", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
 			stockNames = jpaHelper.getAllStockNames(); 
 		}
 		Random r = new Random(System.currentTimeMillis());
@@ -146,9 +158,13 @@ public class MainBasicJPATest {
 		
 		jpaHelper.storeObject(new PortfolioHistory(stock, new Date(123), new Date(25231434), 77, jpaHelper.getAllPortfolios().get(0)));
 		
-		PortfolioHistory pHistory = jpaHelper.getSpecificPortfolioHistory(stock, jpaHelper.getAllPortfolios().get(0));
-		
+		PortfolioHistory pHistory = jpaHelper.getSpecificPortfolioHistory(stock, jpaHelper.getAllPortfolios().get(0), 77);
 		System.out.println(pHistory);
+		List<StockPrices> ble = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
+		for (StockPrices sp : ble) {
+			System.out.println(sp.getTime());
+		}
+		
 		
 		jpaHelper.remove(pHistory);
 		jpaHelper.remove(stock);
