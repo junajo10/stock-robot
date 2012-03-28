@@ -1,0 +1,9 @@
+In order to use this system, you must configure persistance.xml 
+in the src/META-INF/persistance.xml
+There is an example file in the META-INF folder to start from.
+
+
+If you want to use slicing in the JPA system you need to add:
+-javaagent:/path-to-rep/stockrobot/jar/openjpa-all-2.2.0.jar
+to the JVM arguments.
+

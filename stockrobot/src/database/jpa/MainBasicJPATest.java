@@ -106,10 +106,11 @@ public class MainBasicJPATest {
 		
 		
 		List bla = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
-		System.out.println(bla.size());
+		System.out.println("Current nr of stocks: " + bla.size());
 		
+		jpaHelper.getAllPortfolios().get(0);
 		
-		System.out.println(jpaHelper.getOldStocks((jpaHelper.getAllPortfolios().get(0))).size());
+		System.out.println(jpaHelper.getOldStocks(jpaHelper.getAllPortfolios().get(0)).size());
 		
 		
 		
@@ -131,6 +132,26 @@ public class MainBasicJPATest {
 		System.out.println("Latest stockPrice: " + newestPrice);
 		//------
 		
+		
+		
+		System.out.println();
+		for (PortfolioHistory phistory :  jpaHelper.getPortfolioHistory(jpaHelper.getAllPortfolios().get(0))) {
+			System.out.println(phistory);
+			
+		}
+		System.out.println();
+		
+		StockPrices stock = new StockPrices(jpaHelper.getAllStockNames().get(0), 123, 123, 123, 123, new Date(123));
+		jpaHelper.storeObject(stock);
+		
+		jpaHelper.storeObject(new PortfolioHistory(stock, new Date(123), new Date(25231434), 77, jpaHelper.getAllPortfolios().get(0)));
+		
+		PortfolioHistory pHistory = jpaHelper.getSpecificPortfolioHistory(stock, jpaHelper.getAllPortfolios().get(0));
+		
+		System.out.println(pHistory);
+		
+		jpaHelper.remove(pHistory);
+		jpaHelper.remove(stock);
 		
 		
 		jpaHelper.stopJPASystem();

@@ -173,4 +173,6 @@ public interface IJPAHelper {
 
 
 	public EntityManager getEntityManager();
+	
+	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntitys portfolio);
 }

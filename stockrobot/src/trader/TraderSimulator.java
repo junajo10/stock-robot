@@ -49,13 +49,18 @@ public class TraderSimulator implements ITrader{
 		StockPrices latest = JPAHelper.getInstance().getLatestStockPrice(s);
 		portfolio.soldFor( s.getBuy()*amount );
 		PortfolioHistory ph = JPAHelper.getInstance().getSpecificPortfolioHistory(s, portfolio);
-		ph.setSoldDate(latest.getTime());
-		JPAHelper.getInstance().updateObject(ph);
 		
-		System.out.println("Selling: " + amount + " of " + s + " for: " + s.getBuy()*amount);
-		
-		propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.SELL_STOCK, null, portfolio);
-		
+		if (ph.getSoldDate() != null) {
+			System.out.println("BUG!!! shouldent come here!");
+		}
+		else {
+			ph.setSoldDate(latest.getTime());
+			JPAHelper.getInstance().updateObject(ph);
+			
+			System.out.println("Selling: " + amount + " of " + s + " for: " + s.getBuy()*amount);
+			
+			propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.SELL_STOCK, null, portfolio);
+		}
 		return true;
 	}
 

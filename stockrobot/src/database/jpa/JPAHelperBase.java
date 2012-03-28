@@ -360,6 +360,18 @@ class JPAHelperBase implements IJPAHelper {
 	 */
 	@Override
 	public List<StockPrices> getCurrentStocks(PortfolioEntitys portfolioTable) {
+		List<PortfolioHistory> portfolioHistory = getPortfolioHistory(portfolioTable);
+		List<StockPrices> sp = new ArrayList<StockPrices>();
+		
+		for (PortfolioHistory ph : portfolioHistory) {
+			if (ph.getSoldDate() == null)
+				sp.add(ph.getStockPrice());
+		}
+
+		return sp;
+	}
+	@Override
+	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntitys portfolio) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
 
@@ -367,21 +379,13 @@ class JPAHelperBase implements IJPAHelper {
 
 		q2.select(c);
 
+		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolio);
+		
+		q2.where(p);
+		
 		TypedQuery<PortfolioHistory> query = em.createQuery(q2);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolioTable);
-		Predicate p2 = em.getCriteriaBuilder().equal(c.get("soldDate"), null);
-
-		q2.where(p, p2);
-
-		List<PortfolioHistory> result = query.getResultList();
-
-		List<StockPrices> sp = new ArrayList<StockPrices>();
-
-		for (PortfolioHistory ph : result)
-			sp.add(ph.getStockPrice());
-
-				return sp;
+		
+		return query.getResultList();
 	}
 	/**
 	 * Returns a list of pairs with old stocks, left is the stockpoint when it was bought

@@ -77,7 +77,9 @@ public class PortfolioHistory {
 		
 		List<StockPrices> l = em.createQuery("SELECT sp FROM StockPrices sp WHERE sp.time = :tid AND sp.stockName = :namn").setParameter("tid", soldDate).setParameter("namn", stockPrice.getStockName()).getResultList();
 		
-		return l.get(0);
+		if (l.size()>0)
+			return l.get(0);
+		return null;
 	}
 	/**
 	 * @return The id of this portfolioHistory
@@ -105,6 +107,9 @@ public class PortfolioHistory {
 	}
 	public void setSoldDate(Date soldDate) {
 		this.soldDate = soldDate;
+	}
+	public String toString() {
+		return "BuyDate: " + buyDate + "SoldDate: " + soldDate + " Stock: " + stockPrice;
 	}
 	
 }
