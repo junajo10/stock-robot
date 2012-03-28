@@ -1,7 +1,6 @@
 package simulation;
 
 import database.jpa.IJPAHelper;
-import database.jpa.JPAHelperForSimulator;
 import robot.IRobot_Algorithms;
 
 /**

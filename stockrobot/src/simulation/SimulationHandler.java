@@ -151,16 +151,6 @@ public class SimulationHandler {
 	private void updateAlgorithm() {
 		portfolio.getAlgorithm().update();
 	}
-	
-	public static void main(String args[]) {
-		SimulationHandler sh = new SimulationHandler();
-		
-		sh.clearTestDatabase();
-		
-		sh.simulateAlgorithm(new AlgorithmEntitys("algorithm1", "algorithms.TestAlgorithm"));
-		
-		sh.end();
-	}
 	private void end() {
 		jpaHelper.getEntityManager().close();
 		jpaSimHelper.getEntityManager().close();

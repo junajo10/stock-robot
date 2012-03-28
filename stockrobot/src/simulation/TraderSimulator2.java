@@ -3,8 +3,6 @@ package simulation;
 import java.beans.PropertyChangeListener;
 
 import database.jpa.IJPAHelper;
-import database.jpa.JPAHelper;
-import database.jpa.JPAHelperForSimulator;
 import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockPrices;
@@ -16,7 +14,6 @@ import trader.ITrader;
  */
 public class TraderSimulator2 implements ITrader{
 
-	private static ITrader instance = null;
 	private IJPAHelper jpaHelper;
 	
 	public TraderSimulator2(IJPAHelper jpaHelper) {
@@ -40,7 +37,7 @@ public class TraderSimulator2 implements ITrader{
 			return false;
 		
 		portfolio.bougthFor(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio), jpaHelper);
-		//jpaHelper.storeObjectIfPossible(s);
+
 		jpaHelper.storeObject(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
 		return true;
 	}
