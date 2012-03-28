@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -20,38 +21,22 @@ import robot.AstroReciever;
  *
  */
 public class Connector implements IConnector {
-
-	private final int key = 159286251;
+	private final int PORT_NR = 45000;
 	private long latestStocks;
-	
-	public static void main(String args[]){
-		//Startup code. Must have.
-		IConnector connector = new Connector();
-		Thread recieveThread = new Thread(connector);
-		recieveThread.start();
-		
 
-		
-		//Rest of the code...
-		
-		
-	}
+
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		DataOutputStream toConnector;
 		try {
-			ServerSocket recieve = new ServerSocket(45000);
+			ServerSocket recieve = new ServerSocket(PORT_NR);
 			while(true){
-				Socket newDataSocket = recieve.accept();
-				BufferedReader fromHarvester = new BufferedReader(new InputStreamReader(newDataSocket.getInputStream()));
-				int getKey = fromHarvester.read();
-				if(getKey == key){
-					toConnector = new DataOutputStream(newDataSocket.getOutputStream());
-					toConnector.writeLong(latestStocks);
-				}
-				//Send ping upwards saying that new data is available.
-				newDataSocket.close();
+				System.out.println("Connector is accepting calls...");
+				Socket clientSocket = recieve.accept();
+				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+				String send = "" + latestStocks;
+				out.print(send);
+				out.close();
+				clientSocket.close();
 			}
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -62,36 +47,13 @@ public class Connector implements IConnector {
 		}
 	}
 
-
 	@Override
 	public void setLatestStockTime(long time) {
 		this.latestStocks = time;
+		System.out.println("New Data");
 	}
 	
-	/**
-	 * Method only for testing!
-	 * <p>
-	 * Not to be included in final version.
-	 */
-	/*public static void main(String[] args){
-		Reciever rec = new Reciever();
-		Thread recThread = new Thread(rec);
-		recThread.start();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-		Connector conn = new Connector();
-		while(true){
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			conn.sendRefresh();
-		} 			
-	 }*/
+
 
 
 }
