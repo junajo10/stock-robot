@@ -39,6 +39,8 @@ public class ParserRunner implements IParserRunner {
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
 		connector = new Connector();
+		Thread connectThread = new Thread();
+		connectThread.start();
 		
 	}
 	@Override
@@ -65,7 +67,7 @@ public class ParserRunner implements IParserRunner {
 					Long timeElapsed = System.currentTimeMillis() - timeBefore;
 					/* Send a message to the robot saying that new data is available.
 					 * Reciever on robot not implemented yet, uncomment when. */
-					//connector.sendRefresh();
+					connector.setLatestStockTime(System.currentTimeMillis());
 					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
 					try {
 						Thread.sleep(60000-timeElapsed);
