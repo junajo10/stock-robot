@@ -66,6 +66,13 @@ public interface IGUIFactory {
 	public JPanel getInvisibleContainer();
 	
 	/**
+	 * Generates a new StockTableView instance
+	 * 
+	 * @return a new StockTableView instance
+	 */
+	public JPanel getStockTableView();
+	
+	/**
 	 * Modifies a window returning the window with default style.
 	 * This method should be called by each new JFrame.
 	 * 
