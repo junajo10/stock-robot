@@ -22,7 +22,7 @@ public class testJPAPortfolioSettings {
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = JPAHelper.getInstance("testdb");
+		jpaHelper = new JPAHelperForSimulator();
 	}
 	
 	@Test

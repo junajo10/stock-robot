@@ -25,7 +25,7 @@ public class testJPASlice {
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = JPAHelper.getInstance("testslice");
+		jpaHelper = new JPAHelperForSimulator();
 	}
 	
 	
@@ -46,12 +46,10 @@ public class testJPASlice {
 	@AfterClass
 	public static void afterClass() {
 		for (PortfolioInvestment investment : jpaHelper.getAllPortfolioInvestment()) {
-			System.out.println(investment);
 			jpaHelper.remove(investment);
 		}
 		
 		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
-			System.out.println(stw);
 			jpaHelper.remove(stw);
 		}
 		
@@ -71,11 +69,9 @@ public class testJPASlice {
 		
 	    
 	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
-	    	System.out.println(sp);
 	    	jpaHelper.remove(sp);
 	    }
 		for (StockNames sn : jpaHelper.getAllStockNames()) {
-			System.out.println(sn);
 	    	jpaHelper.remove(sn);
 		}
 	}

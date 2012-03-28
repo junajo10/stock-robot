@@ -369,7 +369,7 @@ class JPAHelperBase implements IJPAHelper {
 
 		TypedQuery<PortfolioHistory> query = em.createQuery(q2);
 
-		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio").get("portfolioId"), portfolioTable.getPortfolioId());
+		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolioTable);
 		Predicate p2 = em.getCriteriaBuilder().equal(c.get("soldDate"), null);
 
 		q2.where(p, p2);

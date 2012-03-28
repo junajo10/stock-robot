@@ -37,11 +37,11 @@ public class SimulationHandler {
 	
 	IJPAHelper jpaSimHelper = new JPAHelperForSimulator();
 	
-	IJPAHelper jpaHelper = JPAHelper.getInstance("astro");
+	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	
 	PortfolioEntitys testPortfolio;
 	PortfolioSimulator portfolio = null;
-	IRobot_Algorithms robotSim = new RobotSimulator(jpaHelper);
+	IRobot_Algorithms robotSim = new RobotSimulator(jpaSimHelper);
 	
 	@SuppressWarnings("rawtypes")
 	private void initSimulation(AlgorithmEntitys algorithmToSimulate) {
@@ -154,5 +154,11 @@ public class SimulationHandler {
 	private void end() {
 		jpaHelper.getEntityManager().close();
 		jpaSimHelper.getEntityManager().close();
+	}
+	public static void main(String args[]) {
+		SimulationHandler sim = new SimulationHandler();
+		sim.clearTestDatabase();
+		sim.simulateAlgorithm(new AlgorithmEntitys("Algorithm1", "algorithms.TestAlgorithm"));
+		sim.clearTestDatabase();
 	}
 }
