@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import algorithms.IAlgorithm;
 import algorithms.loader.AlgorithmsLoader;
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.AlgorithmEntitys;
 import database.jpa.tables.PortfolioEntitys;
@@ -339,5 +340,12 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 		@Override
 		public void removeObserver(PropertyChangeListener listener) {
 		}
+	}
+
+
+	@Override
+	public IJPAHelper getJPAHelper() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
