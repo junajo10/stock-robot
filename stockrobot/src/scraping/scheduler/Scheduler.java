@@ -30,7 +30,7 @@ public class Scheduler implements IScheduler {
 		
 			Date d = new Date();
 			
-			//Only run all queries, scraping etc between 08:58 AM and 17:47
+			//Only run all queries, scraping etc between 08:58 AM and 17:44 (44 to avoid getting 0's in prices after 17:30 avanza time)
 			
 			//Cases when it's now allowed to run:
 			//If it's before 8AM
@@ -47,7 +47,7 @@ public class Scheduler implements IScheduler {
 				return false;
 					
 			//If it's 17 PM and after 17:47
-			if( d.getHours() == 17 && d.getMinutes() > 47 )
+			if( d.getHours() == 17 && d.getMinutes() > 44 )
 				return false;
 			
 			//If saturday or sunday!
