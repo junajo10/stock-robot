@@ -53,6 +53,9 @@ public class TraderSimulator implements ITrader{
 		if (ph.getSoldDate() != null) {
 			System.out.println("BUG!!! shouldent come here!");
 		}
+		else if (ph.getBuyDate().compareTo(latest.getTime()) < 0) {
+			System.out.println("Another bug!");
+		}
 		else {
 			ph.setSoldDate(latest.getTime());
 			JPAHelper.getInstance().updateObject(ph);

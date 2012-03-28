@@ -52,21 +52,22 @@ public class TestAlgorithm implements IAlgorithm{
 			Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: Checking ownedStocks!" );
 			
 			List<StockPrices> cs = jpaHelper.getNLatest(sp, 5);
-			
-			long last = 0;
-			boolean sell = true;
-			for (int i = cs.size()-1; i > 0; i--) {
-				if (last > cs.get(i).getBuy()) {
-					sell = false;
-					break;
+			if (cs.size() == 5) {
+				long last = 0;
+				boolean sell = true;
+				for (int i = cs.size()-1; i > 0; i--) {
+					if (last > cs.get(i).getBuy()) {
+						sell = false;
+						break;
+					}
+					last = cs.get(i).getBuy();
 				}
-				last = cs.get(i).getBuy();
-			}
-			
-			if (sell) {
-				//Sell all
-				PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(sp, portfolio.getPortfolioTable());
-				trader.sellStock(sp, ph.getAmount(), portfolio.getPortfolioTable());
+				
+				if (sell) {
+					//Sell all
+					PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(sp, portfolio.getPortfolioTable());
+					trader.sellStock(sp, ph.getAmount(), portfolio.getPortfolioTable());
+				}
 			}
 		}
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
