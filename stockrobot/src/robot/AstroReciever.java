@@ -23,7 +23,7 @@ public class AstroReciever {
 	private Socket sendRefresh;
 	private boolean newData;
 	private final int secretKey = 19286;
-	private String stockTime;
+	private String stockTime = "";
 	
 	/** Code should be somewhere in Astro.java
 	 * <p>
@@ -41,19 +41,17 @@ public class AstroReciever {
 		try {
 			//TODO: change "localhost" into an correct address,
 			sendRefresh = new Socket("localhost", 45000);
-			outToServer = new DataOutputStream(sendRefresh.getOutputStream());
-			outToServer.write(secretKey);
 			BufferedReader fromServer = new BufferedReader(new InputStreamReader(sendRefresh.getInputStream()));
+			while(!fromServer.ready()){}
 			String latestStocks = fromServer.readLine();
-			if(stockTime != latestStocks){
-				newData = true;
-			}
-			else {
-				newData = false;
-			}
-			outToServer.close();
+			fromServer.close();
 			sendRefresh.close();
-			return newData;
+			if(!stockTime.equals(latestStocks)){
+				stockTime = latestStocks;
+				return true;
+			}
+			return false;
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -74,11 +72,11 @@ public class AstroReciever {
 		}
 		while(true){
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.print("New data? " + rec.newData());
+			System.out.println("New data? " + rec.newData());
 		} 			
 	 }
 	
