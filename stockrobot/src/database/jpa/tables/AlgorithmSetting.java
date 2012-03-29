@@ -2,7 +2,9 @@ package database.jpa.tables;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * @author daniel
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 @Entity
 public class AlgorithmSetting<T> {
 	@Id
+	@GeneratedValue
 	private int id;
 	
 	@Column
@@ -31,6 +34,9 @@ public class AlgorithmSetting<T> {
 	@Column
 	private T maxValue;
 	
+	@OneToOne
+	private AlgorithmSettings settings;
+	
 	public AlgorithmSetting() {
 		
 	}
@@ -39,7 +45,7 @@ public class AlgorithmSetting<T> {
 	 * @param defaultValue The default value, this will also be given as the starting value.
 	 * @param settingText The text for this setting that will be displayed next to the field for it.
 	 */
-	public AlgorithmSetting(T defaultValue, String settingText) {
+	public AlgorithmSetting(AlgorithmSettings settings, T defaultValue, String settingText) {
 		this.defaultValue = this.value = defaultValue;
 		this.settingText = settingText;
 	}
@@ -77,5 +83,8 @@ public class AlgorithmSetting<T> {
 	}
 	public T getMaxValue() {
 		return maxValue;
+	}
+	public String toString() {
+		return "SettingText: " + settingText + " Value: " + value; 
 	}
 }

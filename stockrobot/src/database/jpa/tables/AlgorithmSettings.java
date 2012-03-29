@@ -1,6 +1,7 @@
 package database.jpa.tables;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,23 +13,23 @@ import org.apache.openjpa.persistence.ElementType;
 /**
  * @author Daniel
  *
+ * This will hold the settings of a given portfolio's algorithm.
  */
 @Entity
 public class AlgorithmSettings {
 	@Id
 	private int id;
 	
-	@OneToMany
-	@ElementType(Integer.class)
-	private List<AlgorithmSetting<Integer>> intSettings;
+	@OneToMany(targetEntity=Integer.class)
+	private Set<AlgorithmSetting<Integer>> intSettings;
 	
-	@OneToMany
+	@OneToMany(targetEntity=Double.class)
 	@ElementType(Double.class)
-	private List<AlgorithmSetting<Double>> doubleSettings;
+	private Set<AlgorithmSetting<Double>> doubleSettings;
 	
-	@OneToMany
+	@OneToMany(targetEntity=String.class)
 	@ElementType(String.class)
-	private List<AlgorithmSetting<String>> stringSettings;
+	private Set<AlgorithmSetting<String>> stringSettings;
 	
 	@OneToMany
 	private List<AlgorithmSetting<Long>> longSettings;
@@ -61,5 +62,11 @@ public class AlgorithmSettings {
 		if (stringSettings != null)
 			number += stringSettings.size();
 		return number;
+	}
+	public void addIntSetting(AlgorithmSetting<Integer> intSetting) {
+		this.intSettings.add(intSetting);
+	}
+	public Set<AlgorithmSetting<Integer>> getIntSettings() {
+		return intSettings;
 	}
 }
