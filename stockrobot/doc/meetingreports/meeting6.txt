@@ -1,0 +1,43 @@
+Meeting Agenda
+Location: Room 3209
+Date: 2012-03-29
+Time: 12:00
+Facilitator: Kristian Sällberg
+Note taker: Daniel Malmqvist
+Participants: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
+
+1.	Objectives (5 min)
+		Next thursday:
+			* Everyone will come up with own stuff that the person wants to work with, and then check with the others to see it doesn't overlap other persons task's
+
+2.	Reports (15 min)
+
+	* We have presented the iteration 1 program to the customer. The customer was so excited about out progress he gave us candy.
+	* We now have a running parser fetching stock info from Avanza.se, and a client side stock robot that interacts with that data to buy and sell stocks and record the trade history
+	* The client has expressed a wish that we start practicing test driven development, writing tests first and then writing code to make the tests pass.
+	
+	* Daniel has so far created a stock simulation handler
+	* Mattias has fully mastered JPA and has also fixed and simplified the domain model
+	* Erik has written classes to connect the parser and robot programs, to notify robots that data has been added to the price database
+	* Kristian has implemented a JTable showing stock data from the price DB, removed calls to FinancialLongConverter from the trader and created a few junit-tests.
+
+3.	Discussion items (35 min)
+
+   	* How will the socket class between our parser and robot applications work?
+	* STAN, how will we use this?
+	* Use JFreeChart to plot charts?
+	
+4.	Outcomes and assignments (5 min)
+
+        	* Long term issues
+            	=> Creating more funcionality
+        	* Short term issues
+            	=> Fixing the JPA flush error, a bug that presented itself
+			
+        	+++ Specific delegations:
+			*All
+				=> Time for a two week break, in which we will have two Skype meetings.
+  	 
+5.	Wrap up 
+	Thursday 5:th April
+		* We will keep communication up in the group, including a Skype meeting
