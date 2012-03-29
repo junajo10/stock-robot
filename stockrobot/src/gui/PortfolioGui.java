@@ -27,7 +27,7 @@ import java.util.List;
 
 import javax.swing.Box;
 
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.PortfolioEntity;
 
 import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
@@ -260,9 +260,9 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent evt) {
 		
 		if(evt.getPropertyName() == Constants.EVENT_TYPE.BUY_STOCK || evt.getPropertyName() == Constants.EVENT_TYPE.SELL_STOCK){
-			if(evt.getNewValue() instanceof PortfolioEntitys){
+			if(evt.getNewValue() instanceof PortfolioEntity){
 				
-				PortfolioEntitys portfolio = (PortfolioEntitys) evt.getNewValue();
+				PortfolioEntity portfolio = (PortfolioEntity) evt.getNewValue();
 				
 				//TODO make the comparison check with id instead of name. Did'nt work at the time im writing this
 				if(currentPortfolio != null && portfolio.getName() == currentPortfolio.getName()){

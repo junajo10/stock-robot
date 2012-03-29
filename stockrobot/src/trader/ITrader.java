@@ -1,7 +1,7 @@
 package trader;
 
 import gui.IObservable;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockPrices;
 
 /**
@@ -19,9 +19,9 @@ public interface ITrader extends IObservable{
 	//TODO Add buy and sell methods.  
 	
 	
-	boolean buyStock(StockPrices s, long amount, PortfolioEntitys portfolio);
+	boolean buyStock(StockPrices s, long amount, PortfolioEntity portfolio);
 	
-	boolean sellStock(StockPrices s, long amount, PortfolioEntitys portfolio);
+	boolean sellStock(StockPrices s, long amount, PortfolioEntity portfolio);
 	
-	long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntitys portfolio);
+	long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntity portfolio);
 }

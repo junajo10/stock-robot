@@ -12,9 +12,9 @@ import trader.ITrader;
 import algorithms.IAlgorithm;
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.JPAHelperForSimulator;
-import database.jpa.tables.AlgorithmEntitys;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.JPAHelperSimulator;
+import database.jpa.tables.AlgorithmEntity;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -32,24 +32,24 @@ import database.jpa.tables.StocksToWatch;
  */
 public class SimulationHandler {
 
-	AlgorithmEntitys algorithmToSimulate;
+	AlgorithmEntity algorithmToSimulate;
 	IAlgorithm algorithm;
 	
-	IJPAHelper jpaSimHelper = new JPAHelperForSimulator();
+	IJPAHelper jpaSimHelper = new JPAHelperSimulator();
 	
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	
-	PortfolioEntitys testPortfolio;
+	PortfolioEntity testPortfolio;
 	PortfolioSimulator portfolio = null;
 	IRobot_Algorithms robotSim = new RobotSimulator(jpaSimHelper);
 	
 	@SuppressWarnings("rawtypes")
-	private void initSimulation(AlgorithmEntitys algorithmToSimulate) {
+	private void initSimulation(AlgorithmEntity algorithmToSimulate) {
 		this.algorithmToSimulate = algorithmToSimulate;
 		jpaSimHelper.storeObject(algorithmToSimulate);
 		
 		ITrader trader = new TraderSimulator2(jpaSimHelper);
-		PortfolioEntitys portfolioEntity = new PortfolioEntitys("Simulated Portfolio");
+		PortfolioEntity portfolioEntity = new PortfolioEntity("Simulated Portfolio");
 		portfolioEntity.setAlgorithm(algorithmToSimulate);
 		jpaSimHelper.storeObject(portfolioEntity);
 		
@@ -70,10 +70,10 @@ public class SimulationHandler {
 		portfolio.setAlgorithm(algorithm);
 		jpaSimHelper.updateObject(portfolioEntity);
 	}
-	public void simulateAlgorithm(AlgorithmEntitys algorithmToSimulate) {
+	public void simulateAlgorithm(AlgorithmEntity algorithmToSimulate) {
 		initSimulation(algorithmToSimulate);
 		
-		PortfolioEntitys port =  portfolio.getPortfolioTable();
+		PortfolioEntity port =  portfolio.getPortfolioTable();
 		port.invest(new Long("100000000000"), true);
 		
 		jpaSimHelper.updateObject(port);
@@ -127,7 +127,7 @@ public class SimulationHandler {
 		}
 		
 		while (jpaSimHelper.getAllPortfolios().size() > 0) {
-			PortfolioEntitys p = jpaSimHelper.getAllPortfolios().get(0);
+			PortfolioEntity p = jpaSimHelper.getAllPortfolios().get(0);
 			if (p.getHistory() != null) {
 				if (p.getHistory().iterator().hasNext()) {
 					jpaSimHelper.remove(p.getHistory().iterator().next());
@@ -136,7 +136,7 @@ public class SimulationHandler {
 			
 			jpaSimHelper.remove(p);
 		}
-	    for (AlgorithmEntitys a : jpaSimHelper.getAllAlgorithms()) {
+	    for (AlgorithmEntity a : jpaSimHelper.getAllAlgorithms()) {
 	    	jpaSimHelper.remove(a);
 	    }
 		
@@ -158,7 +158,7 @@ public class SimulationHandler {
 	public static void main(String args[]) {
 		SimulationHandler sim = new SimulationHandler();
 		sim.clearTestDatabase();
-		sim.simulateAlgorithm(new AlgorithmEntitys("Algorithm1", "algorithms.TestAlgorithm"));
+		sim.simulateAlgorithm(new AlgorithmEntity("Algorithm1", "algorithms.TestAlgorithm"));
 		sim.clearTestDatabase();
 	}
 }

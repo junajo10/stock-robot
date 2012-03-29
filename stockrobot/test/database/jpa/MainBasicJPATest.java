@@ -11,9 +11,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import database.jpa.tables.AlgorithmEntitys;
+import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioHistory;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -25,11 +25,11 @@ import database.jpa.tables.StocksToWatch;
  * This is mainly a test class for learning JPA.
 */
 public class MainBasicJPATest {
-	private static JPAHelperForSimulator jpaHelper;
+	private static JPAHelperSimulator jpaHelper;
 
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = new JPAHelperForSimulator();
+		jpaHelper = new JPAHelperSimulator();
 	}
 	
 	@Test
@@ -38,25 +38,25 @@ public class MainBasicJPATest {
 		IJPAHelper jpaHelper = JPAHelper.getInstance();
 		
 		
-		List<PortfolioEntitys> portfolios = jpaHelper.getAllPortfolios();
+		List<PortfolioEntity> portfolios = jpaHelper.getAllPortfolios();
 		
 		if (portfolios.size() == 0) {
-			PortfolioEntitys portfolio = new PortfolioEntitys("portfolio 1");
+			PortfolioEntity portfolio = new PortfolioEntity("portfolio 1");
 			jpaHelper.storeObject(portfolio);
-			portfolio.setAlgorithm(new AlgorithmEntitys("algorithm1", "algorithms.TestAlgorithm"));
+			portfolio.setAlgorithm(new AlgorithmEntity("algorithm1", "algorithms.TestAlgorithm"));
 			jpaHelper.updateObject(portfolio);
 
 			
-			PortfolioEntitys portfolio2 = new PortfolioEntitys("portfolio 2");
+			PortfolioEntity portfolio2 = new PortfolioEntity("portfolio 2");
 			jpaHelper.storeObject(portfolio2);
 			
-			portfolio2.setAlgorithm(new AlgorithmEntitys("algorithm2", "algorithms.TestAlgorithm2"));
+			portfolio2.setAlgorithm(new AlgorithmEntity("algorithm2", "algorithms.TestAlgorithm2"));
 			jpaHelper.updateObject(portfolio2);
 			
 			portfolios = jpaHelper.getAllPortfolios();
 		}
 		
-		for (PortfolioEntitys p : portfolios) {
+		for (PortfolioEntity p : portfolios) {
 			jpaHelper.investMoney(10000000, p);
 			System.out.println(p);
 		}
@@ -202,7 +202,7 @@ public class MainBasicJPATest {
 		}
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
-			PortfolioEntitys p = jpaHelper.getAllPortfolios().get(0);
+			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			if (p.getHistory() != null) {
 				if (p.getHistory().iterator().hasNext()) {
 					jpaHelper.remove(p.getHistory().iterator().next());
@@ -211,7 +211,7 @@ public class MainBasicJPATest {
 			
 			jpaHelper.remove(p);
 		}
-	    for (AlgorithmEntitys a : jpaHelper.getAllAlgorithms()) {
+	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
 			jpaHelper.remove(a);
 	    }
 		

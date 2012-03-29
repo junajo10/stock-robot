@@ -20,8 +20,8 @@ import algorithms.IAlgorithm;
 import algorithms.loader.AlgorithmsLoader;
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.tables.AlgorithmEntitys;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.AlgorithmEntity;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
@@ -229,7 +229,7 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 		}
 
 		@Override
-		public boolean setAlgorithm(AlgorithmEntitys algorithm) {
+		public boolean setAlgorithm(AlgorithmEntity algorithm) {
 			
 			return false;
 		}
@@ -293,11 +293,11 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 			return "TestPortfolio " + name + "\n";
 		}
 		@Override
-		public PortfolioEntitys getPortfolioTable() {
+		public PortfolioEntity getPortfolioTable() {
 			return null;
 		}
 		@Override
-		public AlgorithmEntitys getAlgorithmTable() {
+		public AlgorithmEntity getAlgorithmTable() {
 			return null;
 		}
 	}
@@ -314,7 +314,7 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 		}
 		@Override
 		public IPortfolio createNewPortfolio(String name) {
-			PortfolioEntitys pt = new PortfolioEntitys(name);
+			PortfolioEntity pt = new PortfolioEntity(name);
 			return new Portfolio(pt);
 		}
 

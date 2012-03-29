@@ -9,7 +9,7 @@ import java.util.List;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.PortfolioEntity;
 /**
  * @author Daniel
  *
@@ -27,17 +27,17 @@ public class PortfolioHandler implements IPortfolioHandler{
 	private PortfolioHandler() {
 		jpaHelper = JPAHelper.getInstance();
 		
-		List<PortfolioEntitys> portfolioTables = jpaHelper.getAllPortfolios();
+		List<PortfolioEntity> portfolioTables = jpaHelper.getAllPortfolios();
 		
 		System.out.println(portfolioTables);
-		for (PortfolioEntitys pt : portfolioTables) {
+		for (PortfolioEntity pt : portfolioTables) {
 			listOfPortfolios.add(new Portfolio(pt));
 		}
 		
 	}
 	@Override
 	public IPortfolio createNewPortfolio(String name) {
-		PortfolioEntitys pt = new PortfolioEntitys(name);
+		PortfolioEntity pt = new PortfolioEntity(name);
 		jpaHelper.storeObject(pt);
 		return new Portfolio(pt);
 	}

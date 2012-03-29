@@ -22,7 +22,7 @@ public class PortfolioInvestment {
 	private int id;
 	
 	@OneToOne
-	private PortfolioEntitys portfolio;
+	private PortfolioEntity portfolio;
 	
 	@Column
 	private Date date;
@@ -42,7 +42,7 @@ public class PortfolioInvestment {
 	 * @param amount The amount put in / taken out of the portfolio
 	 * @param invest If true it will invest money, If false will remove money
 	 */
-	public PortfolioInvestment(PortfolioEntitys portfolio, long amount, boolean invest) {
+	public PortfolioInvestment(PortfolioEntity portfolio, long amount, boolean invest) {
 		this.amount = amount;
 		this.portfolio = portfolio;
 		
@@ -94,7 +94,7 @@ public class PortfolioInvestment {
 	 * Will give back the portfolio that this transaction belongs to
 	 * @return A portfolio that this belongs to
 	 */
-	public PortfolioEntitys getPortfolio() {
+	public PortfolioEntity getPortfolio() {
 		return portfolio;
 	}
 }

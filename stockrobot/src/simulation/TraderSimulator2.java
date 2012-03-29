@@ -3,7 +3,7 @@ package simulation;
 import java.beans.PropertyChangeListener;
 
 import database.jpa.IJPAHelper;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockPrices;
 import trader.ITrader;
@@ -32,7 +32,7 @@ public class TraderSimulator2 implements ITrader{
 	}
 
 	@Override
-	public boolean buyStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
+	public boolean buyStock(StockPrices s, long amount, PortfolioEntity portfolio) {
 		if (s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio) > portfolio.getBalance())
 			return false;
 		
@@ -43,7 +43,7 @@ public class TraderSimulator2 implements ITrader{
 	}
 
 	@Override
-	public boolean sellStock(StockPrices s, long amount, PortfolioEntitys portfolio) {
+	public boolean sellStock(StockPrices s, long amount, PortfolioEntity portfolio) {
 		StockPrices latest = jpaHelper.getLatestStockPrice(s);
 		portfolio.soldFor(s.getBuy()*amount);
 		PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(s, portfolio, amount);
@@ -56,7 +56,7 @@ public class TraderSimulator2 implements ITrader{
 	}
 
 	@Override
-	public long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntitys portfolio) {
+	public long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntity portfolio) {
 		return (long) (s.getSell()*amount*0.09);
 	}
 }

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 /**
  * @author Daniel
  *
- * A class representing PortfolioHistory entitys
+ * A class representing PortfolioHistory entity
  */
 @Entity
 @Table(name="PortfolioHistory")
@@ -40,20 +40,20 @@ public class PortfolioHistory {
 	
 	@ManyToOne
     @JoinColumn(name="portfolioId",referencedColumnName="PORTFOLIO_ID")
-    private PortfolioEntitys portfolio;
+    private PortfolioEntity portfolio;
 	
 	public PortfolioHistory() {
 		
 	}
 	/**
-	 * The constuctor for a PortfolioHistory entity.
+	 * The constructor for a PortfolioHistory entity.
 	 * @param stockPrice
 	 * @param buyDate
 	 * @param soldDate
 	 * @param amount
 	 * @param portfolioTable
 	 */
-	public PortfolioHistory(StockPrices stockPrice, Date buyDate, Date soldDate, long amount, PortfolioEntitys portfolioTable) {
+	public PortfolioHistory(StockPrices stockPrice, Date buyDate, Date soldDate, long amount, PortfolioEntity portfolioTable) {
 		this.stockPrice = stockPrice;
 		this.buyDate = buyDate;
 		this.soldDate = soldDate;
@@ -102,7 +102,7 @@ public class PortfolioHistory {
 	public boolean stillInPortFolio() {
 		return soldDate == null;
 	}
-	public PortfolioEntitys getPortfolio() {
+	public PortfolioEntity getPortfolio() {
 		return portfolio;
 	}
 	public void setSoldDate(Date soldDate) {

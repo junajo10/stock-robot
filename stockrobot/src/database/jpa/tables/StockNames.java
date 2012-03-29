@@ -66,7 +66,7 @@ public class StockNames {
 		return market;
 	}
 	/**
-	 * Will give all the stock entitys that belongs to this entity
+	 * Will give all the stock entities that belongs to this entity
 	 * @return
 	 */
 	public List<StockPrices> getStockPrices() {

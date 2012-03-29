@@ -8,11 +8,11 @@ import javax.persistence.Table;
 /**
  * @author Daniel
  * A entity class representing an algorithm.
- * It has the very important field path, wich is where the class file of an algorithm is.
+ * It has the very important field path, which is where the class file of an algorithm is.
  */
 @Entity
-@Table(name="AlgorithmEntitys")
-public class AlgorithmEntitys {
+@Table(name="AlgorithmEntity")
+public class AlgorithmEntity {
 	@Id 
 	@GeneratedValue
 	private int id;
@@ -23,15 +23,15 @@ public class AlgorithmEntitys {
 	@Column(name="path", nullable=true, length=255, insertable=true)
 	private String path;
 	
-	public AlgorithmEntitys() {
+	public AlgorithmEntity() {
 		
 	}
 	/**
-	 * The main constuctor for an AlgorithmEntity
+	 * The main constructor for an AlgorithmEntity
 	 * @param name Name of this algorithm
 	 * @param path The Path to the algorithm
 	 */
-	public AlgorithmEntitys(String name, String path) {
+	public AlgorithmEntity(String name, String path) {
 		this.name = name;
 		this.path = path;
 	}

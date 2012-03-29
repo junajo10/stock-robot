@@ -11,8 +11,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-import database.jpa.tables.AlgorithmEntitys;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.AlgorithmEntity;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -24,7 +24,7 @@ public class JPATest {
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = new JPAHelperForSimulator();
+		jpaHelper = new JPAHelperSimulator();
 	}
 	@Test(expected=Exception.class)
 	public void testDuplicateEntry() {
@@ -43,20 +43,20 @@ public class JPATest {
 	}
 	@Test
 	public void testNewPortfolio() {
-		AlgorithmEntitys algorithm = new AlgorithmEntitys("AlgorithmName", "path");
-		PortfolioEntitys portfolio = new PortfolioEntitys("Portfolio");
+		AlgorithmEntity algorithm = new AlgorithmEntity("AlgorithmName", "path");
+		PortfolioEntity portfolio = new PortfolioEntity("Portfolio");
 		portfolio.setAlgorithm(algorithm);
 		jpaHelper.storeObject(algorithm);
 		jpaHelper.storeObject(portfolio);		
 	}
 	@Test
 	public void testNewPortfolioAndDelete() {
-		PortfolioEntitys testPortfolio = new PortfolioEntitys("testPortfolio");
+		PortfolioEntity testPortfolio = new PortfolioEntity("testPortfolio");
 		jpaHelper.storeObject(testPortfolio);
 		
 		jpaHelper.remove(testPortfolio);
 		
-		for (PortfolioEntitys p : jpaHelper.getAllPortfolios()) {
+		for (PortfolioEntity p : jpaHelper.getAllPortfolios()) {
 			System.out.println(jpaHelper.getAllPortfolios().size());
 			if (p.getName().contentEquals("testPortfolio"))
 				throw new IllegalArgumentException("Still in the system");
@@ -64,7 +64,7 @@ public class JPATest {
 	}
 	@Test
 	public void testStocksToWatch() {
-		PortfolioEntitys p = new PortfolioEntitys("StockToWatchTest");
+		PortfolioEntity p = new PortfolioEntity("StockToWatchTest");
 		jpaHelper.storeObject(p);
 		StocksToWatch stw = new StocksToWatch(p, new StockNames("stockbeeingwatched", "testMarket"));
 		jpaHelper.storeObject(stw);
@@ -73,7 +73,7 @@ public class JPATest {
 	@Test
 	public void testPortfolioInvestment() {
 		long amountToInvest = 10000;
-		PortfolioEntitys p = new PortfolioEntitys("portfolioInvestment");
+		PortfolioEntity p = new PortfolioEntity("portfolioInvestment");
 		jpaHelper.storeObject(p);
 		PortfolioInvestment investment = new PortfolioInvestment(p, amountToInvest, true);
 		jpaHelper.storeObject(investment);
@@ -97,7 +97,7 @@ public class JPATest {
 		}
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
-			PortfolioEntitys p = jpaHelper.getAllPortfolios().get(0);
+			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			if (p.getHistory() != null) {
 				if (p.getHistory().iterator().hasNext()) {
 					jpaHelper.remove(p.getHistory().iterator().next());
@@ -106,7 +106,7 @@ public class JPATest {
 			
 			jpaHelper.remove(p);
 		}
-	    for (AlgorithmEntitys a : jpaHelper.getAllAlgorithms()) {
+	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
 			jpaHelper.remove(a);
 	    }
 		

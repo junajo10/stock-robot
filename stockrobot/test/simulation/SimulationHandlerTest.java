@@ -7,21 +7,21 @@ import org.junit.Test;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.JPAHelperForSimulator;
-import database.jpa.tables.AlgorithmEntitys;
+import database.jpa.JPAHelperSimulator;
+import database.jpa.tables.AlgorithmEntity;
 
 public class SimulationHandlerTest {
 	private static SimulationHandler simulationHandler = null;
 	private static IJPAHelper jpaHelper = null;
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = new JPAHelperForSimulator();
+		jpaHelper = new JPAHelperSimulator();
 		simulationHandler = new SimulationHandler();
 	}
 	@Test
 	public void test() {
 		simulationHandler.clearTestDatabase();
-		simulationHandler.simulateAlgorithm(new AlgorithmEntitys("Algorithm1", "algorithms.TestAlgorithm"));
+		simulationHandler.simulateAlgorithm(new AlgorithmEntity("Algorithm1", "algorithms.TestAlgorithm"));
 		simulationHandler.clearTestDatabase();
 	}
 /*
@@ -46,7 +46,7 @@ FailedObject: database.jpa.tables.StockPrices-761
 	at org.apache.openjpa.kernel.DelegatingBroker.commit(DelegatingBroker.java:933)
 	at org.apache.openjpa.persistence.EntityManagerImpl.commit(EntityManagerImpl.java:570)
 	at database.jpa.JPAHelperBase.storeObject(JPAHelperBase.java:266)
-	at database.jpa.JPAHelperForSimulator.storeObject(JPAHelperForSimulator.java:1)
+	at database.jpa.JPAHelperSimulator.storeObject(JPAHelperSimulator.java:1)
 	at simulation.TraderSimulator2.buyStock(TraderSimulator2.java:41)
 	at algorithms.TestAlgorithm.buyStock(TestAlgorithm.java:102)
 	at algorithms.TestAlgorithm.update(TestAlgorithm.java:94)

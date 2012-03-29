@@ -10,7 +10,7 @@ import javax.persistence.metamodel.Metamodel;
 /**
  * @author Daniel
  *
- * Basicly the main JPA system we will use.
+ * Basically the main JPA system we will use.
  * 
  * It has methods for most of the things we want to accomplish.
  */
@@ -26,7 +26,7 @@ public class JPAHelper extends JPAHelperBase {
 		Set<ManagedType<?>> allManagedTypes = metamodel.getManagedTypes();
 	}*/
 	/**
-	 * Creates an instance of JPAHelper if it dosent already exist, and returns the instance of it.
+	 * Creates an instance of JPAHelper if it doesn't  already exist, and returns the instance of it.
 	 * @return An instance of JPAHelper
 	 */
 	public static IJPAHelper getInstance() {

@@ -18,16 +18,16 @@ import org.apache.openjpa.persistence.Persistent;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.JPAHelperForSimulator;
+import database.jpa.JPAHelperSimulator;
 
 /**
  * @author Daniel
  *
- * A class representing a PortfolioEntity
+ * A class representing a Portfolio Entity
  */
 @Entity
-@Table(name="PortfolioEntitys")
-public class PortfolioEntitys {
+@Table(name="PortfolioEntity")
+public class PortfolioEntity {
 	@Id
 	@GeneratedValue
 	@Column(name = "PORTFOLIO_ID", nullable = false)
@@ -38,7 +38,7 @@ public class PortfolioEntitys {
 	
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@Column(name = "algorithm")
-	private AlgorithmEntitys algorithm;
+	private AlgorithmEntity algorithm;
 	
 	@Column
 	private Long balance;
@@ -61,14 +61,14 @@ public class PortfolioEntitys {
 	List<StockNames> stocksToWatch;
 	
 	
-	public PortfolioEntitys() {
+	public PortfolioEntity() {
 		
 	}
 	/**
 	 * Constructor for a portfolio entity
 	 * @param name The name of the new portfolio
 	 */
-	public PortfolioEntitys(String name) {
+	public PortfolioEntity(String name) {
 		this.name = name;
 		algorithm = null;
 		balance = (long)0;
@@ -111,7 +111,7 @@ public class PortfolioEntitys {
 	 * Sets a new algorithm to a given portfolio
 	 * @param algorithm
 	 */
-	public void setAlgorithm(AlgorithmEntitys algorithm) {
+	public void setAlgorithm(AlgorithmEntity algorithm) {
 		this.algorithm = algorithm;
 	}
 	/**
@@ -122,7 +122,7 @@ public class PortfolioEntitys {
 		return history;
 	}
 	/**
-	 * Investes/removes money
+	 * Invests/removes money
 	 * @param amount Amount to add/remove
 	 * @param invest If true it will invest, If false will remove
 	 */
@@ -133,7 +133,7 @@ public class PortfolioEntitys {
 	 * will return a AlgorithmEntity for this portfolio
 	 * @return A algorithmEntity
 	 */
-	public AlgorithmEntitys getAlgorithm() {
+	public AlgorithmEntity getAlgorithm() {
 		return algorithm;
 	}
 	/**

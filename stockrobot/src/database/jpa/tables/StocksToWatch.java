@@ -9,13 +9,13 @@ import javax.persistence.Table;
  * @author Daniel
  *
  * A representation of the StocksToWatch entity.
- * This entity will hold what stocks are beeing watched by a given portfolio
+ * This entity will hold what stocks are being watched by a given portfolio
  */
 @Entity
 @Table(name="StocksToWatch")
 public class StocksToWatch {
 	@Column @OneToOne
-	private PortfolioEntitys portfolio;
+	private PortfolioEntity portfolio;
 	
 	@Column
 	private StockNames stockName;
@@ -24,13 +24,26 @@ public class StocksToWatch {
 	public StocksToWatch() {
 		
 	}
-	public StocksToWatch(PortfolioEntitys portfolio, StockNames stockName) {
+	/**
+	 * The default constructor, it takes a PortfolioEntity and a stock name that will be watched.
+	 * @param portfolio The portfolio with a new stock to watch
+	 * @param stockName The stock to watch
+	 */
+	public StocksToWatch(PortfolioEntity portfolio, StockNames stockName) {
 		this.portfolio = portfolio;
 		this.stockName = stockName;
 	}
-	public PortfolioEntitys getPortfolio() {
+	/**
+	 * Just returns its portfolio
+	 * @return a PortfolioEntity
+	 */
+	public PortfolioEntity getPortfolio() {
 		return portfolio;
 	}
+	/**
+	 * Just returns is stock to watch
+	 * @return returns a StockName
+	 */
 	public StockNames getStockName() {
 		return stockName;
 	}

@@ -8,8 +8,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-import database.jpa.tables.AlgorithmEntitys;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.AlgorithmEntity;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -25,14 +25,14 @@ public class testJPASlice {
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = new JPAHelperForSimulator();
+		jpaHelper = new JPAHelperSimulator();
 	}
 	
 	
 	@Test
 	public void testApa() {
 		// Stored in portfolio database
-		AlgorithmEntitys a = new AlgorithmEntitys("", "");
+		AlgorithmEntity a = new AlgorithmEntity("", "");
 		jpaHelper.storeObject(a);
 		
 		// Stored in stock database
@@ -54,7 +54,7 @@ public class testJPASlice {
 		}
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
-			PortfolioEntitys p = jpaHelper.getAllPortfolios().get(0);
+			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			if (p.getHistory() != null) {
 				if (p.getHistory().iterator().hasNext()) {
 					jpaHelper.remove(p.getHistory().iterator().next());
@@ -63,7 +63,7 @@ public class testJPASlice {
 			
 			jpaHelper.remove(p);
 		}
-	    for (AlgorithmEntitys a : jpaHelper.getAllAlgorithms()) {
+	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
 			jpaHelper.remove(a);
 	    }
 		

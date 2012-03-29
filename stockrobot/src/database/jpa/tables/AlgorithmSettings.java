@@ -9,6 +9,10 @@ import javax.persistence.OneToMany;
 
 import org.apache.openjpa.persistence.ElementType;
 
+/**
+ * @author Daniel
+ *
+ */
 @Entity
 public class AlgorithmSettings {
 	@Id
@@ -30,22 +34,22 @@ public class AlgorithmSettings {
 	private List<AlgorithmSetting<Long>> longSettings;
 	
 	@Column
-	private PortfolioEntitys portfolio;
+	private PortfolioEntity portfolio;
 	
 	@Column
-	private AlgorithmEntitys algorithm;
+	private AlgorithmEntity algorithm;
 	
 	public AlgorithmSettings() {
 		
 	}
-	public AlgorithmSettings(PortfolioEntitys portfolio, AlgorithmEntitys algorithm) {
+	public AlgorithmSettings(PortfolioEntity portfolio, AlgorithmEntity algorithm) {
 		this.portfolio = portfolio;
 		this.algorithm = algorithm;
 	}
-	public PortfolioEntitys getPortfolio() {
+	public PortfolioEntity getPortfolio() {
 		return portfolio;
 	}
-	public AlgorithmEntitys getAlgorithm() {
+	public AlgorithmEntity getAlgorithm() {
 		return algorithm;
 	}
 	public int getNumberOfSettings() {

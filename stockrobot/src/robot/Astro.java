@@ -10,8 +10,8 @@ import java.util.Random;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.tables.AlgorithmEntitys;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.AlgorithmEntity;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
@@ -99,9 +99,9 @@ public class Astro implements IRobot_Algorithms{
 	private void initSimulationState() {
 		if (jpaHelper.getAllPortfolios().size() == 0) {
 			for (int i = 1; i <= 2; i++) {
-				PortfolioEntitys portfolio = new PortfolioEntitys("portfolio 1");
+				PortfolioEntity portfolio = new PortfolioEntity("portfolio 1");
 				jpaHelper.storeObject(portfolio);
-				portfolio.setAlgorithm(new AlgorithmEntitys("algorithm" + i, "algorithms.TestAlgorithm"));
+				portfolio.setAlgorithm(new AlgorithmEntity("algorithm" + i, "algorithms.TestAlgorithm"));
 				jpaHelper.investMoney(10000000, portfolio);
 			}
 		}

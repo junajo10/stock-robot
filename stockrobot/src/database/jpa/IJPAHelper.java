@@ -2,31 +2,38 @@ package database.jpa;
 
 import generic.Pair;
 
+
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import database.jpa.tables.AlgorithmEntitys;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.AlgorithmEntity;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
+/**
+ * @author Daniel
+ *
+ * This is the main interface to the JPAHelper system,
+ * it is implemented by JPAHelper and JPAHelperSimulator
+ */
 public interface IJPAHelper {
 	public void stopJPASystem();
 	/**
 	 * Returns a list of all the algorithms.
 	 * @return a list of all the algorithms.
 	 */
-	public List<AlgorithmEntitys> getAllAlgorithms();
+	public List<AlgorithmEntity> getAllAlgorithms();
 	/**
 	 * Will give back all portfolios in the JPA system.
 	 * @return A list with PortfolioTables
 	 */
-	public List<PortfolioEntitys> getAllPortfolios();
+	public List<PortfolioEntity> getAllPortfolios();
 	/**
 	 * Will give back all stockPrices
 	 * @return A list of stockPrices
@@ -62,7 +69,7 @@ public interface IJPAHelper {
 	public List<StockPrices> getPricesForStock( StockNames st );
 
 	/**
-	 * Method for querying a specific stock's value within a specified timespan. 
+	 * Method for querying a specific stock's value within a specified time span. 
 	 * 
 	 * @param st The stock to query for
 	 * @param start Date where to start looking for prices
@@ -72,7 +79,7 @@ public interface IJPAHelper {
 	public List<StockPrices> getPricesForStockPeriod( StockNames st, Date start, Date end );
 
 	/**
-	 * Will give a list of all the diffrent StockNames
+	 * Will give a list of all the different StockNames
 	 * @return A list of stockNames
 	 */
 	public List<StockNames> getAllStockNames();
@@ -107,7 +114,7 @@ public interface IJPAHelper {
 	 * @param portfolio The portfolio to invest to
 	 * @return Returns true if everything went ok
 	 */
-	public boolean investMoney(long amount, PortfolioEntitys portfolio);
+	public boolean investMoney(long amount, PortfolioEntity portfolio);
 	/**
 	 * Deletes an object in the database.
 	 * @param objectToBeRemoved The object to be removed.
@@ -118,23 +125,23 @@ public interface IJPAHelper {
 	 * @param portfolioTable The portfolio
 	 * @return A list of stockNames
 	 */
-	public List<StockNames> getStockNames(PortfolioEntitys portfolioTable);
+	public List<StockNames> getStockNames(PortfolioEntity portfolioTable);
 	/**
 	 * Returns a list of currently owned stocks.
 	 * @param portfolioTable The portfolio.
 	 * @return A List of currently owned stocks.
 	 */
-	public List<StockPrices> getCurrentStocks(PortfolioEntitys portfolioTable);
+	public List<StockPrices> getCurrentStocks(PortfolioEntity portfolioTable);
 	/**
-	 * Returns a list of pairs with old stocks, left is the stockpoint when it was bought
-	 * the right one is the stockpoint of when it was sold
+	 * Returns a list of pairs with old stocks, left is the stock point when it was bought
+	 * the right one is the stock point of when it was sold
 	 * @param portfolioTable
 	 * @return
 	 */
 	public List<Pair<StockPrices, StockPrices>> getOldStocks(
-			PortfolioEntitys portfolioTable);
+			PortfolioEntity portfolioTable);
 	/**
-	 * Given a StockPrice will return the latest stockprice with the same name.
+	 * Given a StockPrice will return the latest stock price with the same name.
 	 * @param from The old stockPrice
 	 * @return The latest stockPrice with same name as given stockPrice
 	 */
@@ -144,13 +151,13 @@ public interface IJPAHelper {
 	 * @param portfolioTable The portfolio to be audited.
 	 * @return The total amount invested
 	 */
-	public long getTotalInvestedAmount(PortfolioEntitys portfolioTable);
+	public long getTotalInvestedAmount(PortfolioEntity portfolioTable);
 	/**
 	 * Gives the AlgorithmTable for a given portfolio
 	 * @param portfolioTable The portfolioTable to get the AlgorithmTable from
 	 * @return An algorithmTable
 	 */
-	public AlgorithmEntitys getAlgorithmTable(PortfolioEntitys portfolioTable);
+	public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable);
 
 	/**
 	 * Given a stockPrice and a portfolio, will find the PortfolioHistory that has the StockPrice as buying price, 
@@ -163,9 +170,9 @@ public interface IJPAHelper {
 	 * @param amount 
 	 * @return A PortfolioHistory.
 	 */
-	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntitys portfolio, long amount);
+	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntity portfolio, long amount);
 	/**
-	 * Returns a list of Stockprices with same name as a given StockPrice, with max size of a given value.
+	 * Returns a list of Stock prices with same name as a given StockPrice, with max size of a given value.
 	 * @param from The StockPrice that has the same name 
 	 * @param n How many max results
 	 * @return A list of stockPrices
@@ -175,7 +182,7 @@ public interface IJPAHelper {
 
 	public EntityManager getEntityManager();
 	
-	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntitys portfolio);
+	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntity portfolio);
 	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp,
-			PortfolioEntitys portfolioTable);
+			PortfolioEntity portfolioTable);
 }

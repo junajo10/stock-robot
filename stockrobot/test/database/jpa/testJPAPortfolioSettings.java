@@ -8,10 +8,10 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import database.jpa.tables.AlgorithmEntitys;
+import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.AlgorithmSetting;
 import database.jpa.tables.AlgorithmSettings;
-import database.jpa.tables.PortfolioEntitys;
+import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -22,15 +22,15 @@ public class testJPAPortfolioSettings {
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
 	public static void beforeClass(){ //First of all
-		jpaHelper = new JPAHelperForSimulator();
+		jpaHelper = new JPAHelperSimulator();
 	}
 	
 	@Test
 	public void testSettings() {
-		PortfolioEntitys p = new PortfolioEntitys("apa");
+		PortfolioEntity p = new PortfolioEntity("apa");
 		jpaHelper.storeObject(p);
 		
-		AlgorithmEntitys a = new AlgorithmEntitys("test", "algorithms.TestAlgorithm");
+		AlgorithmEntity a = new AlgorithmEntity("test", "algorithms.TestAlgorithm");
 		jpaHelper.storeObject(a);
 		
 		p.setAlgorithm(a);
@@ -57,7 +57,7 @@ public class testJPAPortfolioSettings {
 		}
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
-			PortfolioEntitys p = jpaHelper.getAllPortfolios().get(0);
+			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			if (p.getHistory() != null) {
 				if (p.getHistory().iterator().hasNext()) {
 					jpaHelper.remove(p.getHistory().iterator().next());
@@ -66,7 +66,7 @@ public class testJPAPortfolioSettings {
 			
 			jpaHelper.remove(p);
 		}
-	    for (AlgorithmEntitys a : jpaHelper.getAllAlgorithms()) {
+	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
 			jpaHelper.remove(a);
 	    }
 		
