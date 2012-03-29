@@ -10,6 +10,8 @@ import java.util.Random;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
+import database.jpa.tables.AlgorithmEntitys;
+import database.jpa.tables.PortfolioEntitys;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
@@ -61,6 +63,9 @@ public class Astro implements IRobot_Algorithms{
 		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
 
+		if (simulate) {
+			initSimulationState();
+		}
 		while(true) {
 			if (simulate)
 				simulateNewStocks();
@@ -86,6 +91,64 @@ public class Astro implements IRobot_Algorithms{
 			}
 		}
 
+	}
+
+	private void initSimulationState() {
+		List<PortfolioEntitys> portfolios = jpaHelper.getAllPortfolios();
+		
+		if (portfolios.size() == 0) {
+			PortfolioEntitys portfolio = new PortfolioEntitys("portfolio 1");
+			jpaHelper.storeObject(portfolio);
+			portfolio.setAlgorithm(new AlgorithmEntitys("algorithm1", "algorithms.TestAlgorithm"));
+			jpaHelper.updateObject(portfolio);
+
+			
+			PortfolioEntitys portfolio2 = new PortfolioEntitys("portfolio 2");
+			jpaHelper.storeObject(portfolio2);
+			
+			portfolio2.setAlgorithm(new AlgorithmEntitys("algorithm2", "algorithms.TestAlgorithm2"));
+			jpaHelper.updateObject(portfolio2);
+			
+			portfolios = jpaHelper.getAllPortfolios();
+		}
+		
+		for (PortfolioEntitys p : portfolios) {
+			jpaHelper.investMoney(10000000, p);
+		}
+		List<StockNames> stockNames = jpaHelper.getAllStockNames();
+		if (stockNames.size() == 0) {
+			StockNames stockName = new StockNames("Stock1", "MarketA");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock2", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			
+			stockName = new StockNames("Stock3", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock4", "MarketA");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock5", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock6", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock7", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock8", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock9", "MarketB");
+			jpaHelper.storeObject(stockName);
+			
+			stockName = new StockNames("Stock10", "MarketB");
+			jpaHelper.storeObject(stockName);
+		}
+		
 	}
 
 	/**
