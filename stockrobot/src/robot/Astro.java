@@ -55,6 +55,10 @@ public class Astro implements IRobot_Algorithms{
 		
 		System.out.println("ASTRo is starting up.");
 
+		if (simulate) {
+			initSimulationState();
+		}
+		
 		trader				= TraderSimulator.getInstance();
 		algorithmsLoader 	= AlgorithmsLoader.getInstance(this);
 		portfolioHandler 	= PortfolioHandler.getInstance();
@@ -62,15 +66,7 @@ public class Astro implements IRobot_Algorithms{
 		stockInfoGUI 		= new StockInfoGUI();
 		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
-
-		if (simulate) {
-			initSimulationState();
-		}
 		while(true) {
-			if (simulate)
-				simulateNewStocks();
-
-
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
 				if (simulate) {
 					if (rand.nextInt(10) == 1) {
@@ -89,6 +85,9 @@ public class Astro implements IRobot_Algorithms{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			if (simulate)
+				simulateNewStocks();
 		}
 
 	}
@@ -112,6 +111,8 @@ public class Astro implements IRobot_Algorithms{
 				StockNames stockName = new StockNames("Stock" + i, "Market" + i%3);
 				jpaHelper.storeObject(stockName);
 			}
+			
+			simulateNewStocks();
 		}
 	}
 
