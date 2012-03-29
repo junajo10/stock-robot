@@ -61,6 +61,7 @@ public class SettingsAlgorithm {
 			
 			@Override
 			public void run() {
+				/*
 				AlgorithmSettingsGUI settingGUI = new AlgorithmSettingsGUI(settingStringFields, 
 																			settingIntegerFields, 
 																			settingDoubleFields, 
@@ -73,6 +74,7 @@ public class SettingsAlgorithm {
 						//TODO: Report error to user
 					}
 				}
+				*/
 			}
 		});
 	}
