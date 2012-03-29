@@ -57,9 +57,13 @@ public class StockTableView extends JPanel {
 	public void updateInfo() {
 		
 		Pair<Object[][], Object[]> dataAndNames = populate();
-		init( dataAndNames.getLeft(), dataAndNames.getRight() );
 		
+		System.out.println( "UPDATREEE!" );
+		
+		scroller.remove(table);
 		remove(scroller);
+		revalidate();
+		repaint();
 		
 		init( dataAndNames.getLeft(), dataAndNames.getRight() );
 	}
@@ -80,9 +84,11 @@ public class StockTableView extends JPanel {
 		table.getColumnModel().getColumn(6).setPreferredWidth(200);
 		
 		//Create scroll bar
-		scroller = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroller = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroller.setPreferredSize(new Dimension( 800, 600 ));
 		add( scroller );
+		
+		repaint();
 	}
 	
 	/**
