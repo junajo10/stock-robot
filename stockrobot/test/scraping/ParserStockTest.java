@@ -1,4 +1,4 @@
-package testing.scraping.database;
+package scraping;
 
 import java.sql.Date;
 
