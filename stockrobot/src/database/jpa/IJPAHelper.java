@@ -9,6 +9,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import database.jpa.tables.AlgorithmEntity;
+import database.jpa.tables.AlgorithmSetting;
+import database.jpa.tables.AlgorithmSettings;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioInvestment;
@@ -185,4 +187,6 @@ public interface IJPAHelper {
 	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntity portfolio);
 	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp,
 			PortfolioEntity portfolioTable);
+	
+	public List<AlgorithmSetting> getSettings(AlgorithmSettings settings);
 }
