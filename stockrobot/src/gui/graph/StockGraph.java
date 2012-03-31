@@ -39,9 +39,7 @@ import database.jpa.tables.StockPrices;
  *
  */
 public class StockGraph extends JFrame {
-	private final int SIZE_X;
-	private final int SIZE_Y;
-	
+
 	IJPAHelper jpa;
 	TimeSeriesCollection dataset;
 
@@ -52,10 +50,28 @@ public class StockGraph extends JFrame {
         super("Stock graph over time.");
         jpa = JPAHelper.getInstance();
         dataset = new TimeSeriesCollection();
-    	this.SIZE_X = size_x;
-    	this.SIZE_Y = size_y;
+    	
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(
+        		"Stock price over time.", // title
+        		"Date", // x-axis label
+        		"Price Per Unit", // y-axis label
+        		dataset, // data
+        		true, // create legend?
+        		true, // generate tooltips?
+        		false // generate URLs?
+        );
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(size_x, size_y));
+        setContentPane(chartPanel);
     }
 	
+	/**
+	 * Adds a stock to the graph.
+	 * <p>
+	 * Can be called multiple times to add several stocks to the same graph.
+	 * <p>
+	 * @param name stock to be added.
+	 */
 	public void addStock(StockNames name){
     	TimeSeries serie = new TimeSeries(name.getName(), Minute.class);
         List<StockPrices> priceList = jpa.getPricesForStock(name);
@@ -66,21 +82,6 @@ public class StockGraph extends JFrame {
 		dataset.addSeries(serie);
 	}
 	
-	public void activate(){
-		
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(
-        		"Stock price of "+ " Volvo b", // title
-        		"Date", // x-axis label
-        		"Price Per Unit", // y-axis label
-        		dataset, // data
-        		true, // create legend?
-        		true, // generate tooltips?
-        		false // generate URLs?
-        );
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(SIZE_X, SIZE_Y));
-        setContentPane(chartPanel);
-	}
 	
     
 	/**
@@ -105,11 +106,17 @@ public class StockGraph extends JFrame {
 	        StockGraph stockGr = new StockGraph(700, 400);
 	        
 	        stockGr.addStock(stockname);
-	        stockGr.addStock(stocknameNr2);
 
-	        stockGr.activate();
 	        stockGr.pack();
 	        stockGr.setVisible(true);
+	        
+	        try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        stockGr.addStock(stocknameNr2);
 	    }
 }
 
