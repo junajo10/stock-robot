@@ -39,60 +39,77 @@ import database.jpa.tables.StockPrices;
  *
  */
 public class StockGraph extends JFrame {
+	private final int SIZE_X;
+	private final int SIZE_Y;
+	
 	IJPAHelper jpa;
+	TimeSeriesCollection dataset;
 
 	private static final long serialVersionUID = 1L;
 
-	public StockGraph() {
-        super("Stock data.");
+
+	public StockGraph(int size_x, int size_y) {
+        super("Stock graph over time.");
         jpa = JPAHelper.getInstance();
-        List<StockPrices> stocksPrice = jpa.getAllStockPrices();
-        
-        StockPrices stock = stocksPrice.get(0);
-        StockNames stockname = stock.getStockName();
-
-
-        
-
+        dataset = new TimeSeriesCollection();
+    	this.SIZE_X = size_x;
+    	this.SIZE_Y = size_y;
+    }
+	
+	public void addStock(StockNames name){
+    	TimeSeries serie = new TimeSeries(name.getName(), Minute.class);
+        List<StockPrices> priceList = jpa.getPricesForStock(name);
+        for(StockPrices stock : priceList){
+        	Date date = stock.getTime();
+        	serie.addOrUpdate(new Minute(date), FinancialLongConverter.toDouble(stock.getBuy()));
+        }
+		dataset.addSeries(serie);
+	}
+	
+	public void activate(){
+		
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
-        		"Stock price of "+ stockname.getName(), // title
+        		"Stock price of "+ " Volvo b", // title
         		"Date", // x-axis label
         		"Price Per Unit", // y-axis label
-        		getStockHistory(stockname), // data
+        		dataset, // data
         		true, // create legend?
         		true, // generate tooltips?
         		false // generate URLs?
         );
-        
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(700, 400));
+        chartPanel.setPreferredSize(new java.awt.Dimension(SIZE_X, SIZE_Y));
         setContentPane(chartPanel);
-
-    }
-	
-	/**
-	 * 
-	 * @param name to add timeline.
-	 * @return
-	 */
-	private TimeSeriesCollection getStockHistory(StockNames name){
-    	TimeSeries serie = new TimeSeries("Boliden B", Minute.class);
-        List<StockPrices> priceList = jpa.getPricesForStock(name);
-        for(StockPrices stock : priceList){
-        	Date date = stock.getTime();
-        	serie.addOrUpdate(new Minute(stock.getTime().getMinutes(), stock.getTime().getHours(), date.getDay(), date.getMonth(), date.getYear()+1900), FinancialLongConverter.toDouble(stock.getBuy()));
-        }
-    	TimeSeriesCollection dataset = new TimeSeriesCollection();
-    	dataset.addSeries(serie);
-    	
-    	return dataset;
 	}
+	
     
-
+	/**
+	 * Testing main for StockGraph.
+	 * 
+	 * Good example for learning how to use it.
+	 * 
+	 * Creates a StockGraph containing 2 stocks.
+	 * 
+	 * @param args
+	 */
 	 public static void main(String[] args) {
-	        StockGraph stock = new StockGraph();
-	        stock.pack();
-	        stock.setVisible(true);
+	        
+	        List<StockPrices> stocksPrice = JPAHelper.getInstance().getAllStockPrices();
+	        
+	        StockPrices stock = stocksPrice.get(0);
+	        StockNames stockname = stock.getStockName();
+	        
+	        StockPrices stockNr2 = stocksPrice.get(0);
+	        StockNames stocknameNr2 = stockNr2.getStockName();
+	        
+	        StockGraph stockGr = new StockGraph(700, 400);
+	        
+	        stockGr.addStock(stockname);
+	        stockGr.addStock(stocknameNr2);
+
+	        stockGr.activate();
+	        stockGr.pack();
+	        stockGr.setVisible(true);
 	    }
 }
 
