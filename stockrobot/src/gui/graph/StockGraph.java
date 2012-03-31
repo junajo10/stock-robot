@@ -3,9 +3,11 @@ package gui.graph;
 import generic.FinancialLongConverter;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.JPanel;
+
 
 import javax.swing.JFrame;
 
@@ -27,14 +29,14 @@ import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
 /**
- * Example of an simple JFreeChart time-graph of an fictional stock.
- * 
+ * Example of an simple JFreeChart time-graph of a stock.
+ * <p>
  * Uses JPA-system for data.
- * 
- * For learning JFreeChart only.
- * 
+ * <p>
+ * For learning JFreeChart.
+ * <p>
  * TODO: Split class into MVC-model.
- * 
+ * <p>
  * @author Erik
  *
  */
@@ -42,6 +44,7 @@ public class StockGraph extends JFrame {
 
 	IJPAHelper jpa;
 	TimeSeriesCollection dataset;
+	Map<String, TimeSeries> timeSeries;
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,6 +53,7 @@ public class StockGraph extends JFrame {
         super("Stock graph over time.");
         jpa = JPAHelper.getInstance();
         dataset = new TimeSeriesCollection();
+        timeSeries = new HashMap<String, TimeSeries>();
     	
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
         		"Stock price over time.", // title
@@ -79,7 +83,18 @@ public class StockGraph extends JFrame {
         	Date date = stock.getTime();
         	serie.addOrUpdate(new Minute(date), FinancialLongConverter.toDouble(stock.getBuy()));
         }
+        timeSeries.put(name.getName(), serie);
 		dataset.addSeries(serie);
+	}
+	
+	/**
+	 * Removes a stock from the stock-graph.
+	 * <p>
+	 * @param name stock to be removed.
+	 */
+	public void removeStock(StockNames name){
+		dataset.removeSeries(timeSeries.get(name.getName()));
+		timeSeries.remove(name);
 	}
 	
 	
@@ -100,23 +115,20 @@ public class StockGraph extends JFrame {
 	        StockPrices stock = stocksPrice.get(0);
 	        StockNames stockname = stock.getStockName();
 	        
-	        StockPrices stockNr2 = stocksPrice.get(0);
+	        StockPrices stockNr2 = stocksPrice.get(1);
 	        StockNames stocknameNr2 = stockNr2.getStockName();
 	        
 	        StockGraph stockGr = new StockGraph(700, 400);
 	        
 	        stockGr.addStock(stockname);
+	        stockGr.addStock(stocknameNr2);
+	        stockGr.removeStock(stocknameNr2);
+	        stockGr.removeStock(stocknameNr2);
 
 	        stockGr.pack();
 	        stockGr.setVisible(true);
 	        
-	        try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        stockGr.addStock(stocknameNr2);
+
 	    }
 }
 
