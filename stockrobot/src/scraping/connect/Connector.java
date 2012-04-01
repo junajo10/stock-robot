@@ -11,49 +11,74 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import robot.AstroReciever;
 
 
 /**
  * Class for sending messages to robot, through the internet.
+ * 
+ * Uses TCP-sockets, on port 45000 by default.
+ * 
  * @author Erik
  *
  */
 public class Connector implements IConnector {
 	private final int PORT_NR = 45000;
-	private long latestStocks;
+	private List<Socket> clients;
+	
+	public Connector() {
+		clients = new ArrayList<Socket>();
+		AstroServer server = new AstroServer();
+		Thread serverThread = new Thread(server);
+		serverThread.start();
+	}
 
-
+	/**
+	 * Sends a message to all connected clients,
+	 * that new data is available.
+	 * 
+	 */
 	@Override
-	public void run() {
-		try {
-			ServerSocket recieve = new ServerSocket(PORT_NR);
-			while(true){
-				System.out.println("Connector is accepting calls...");
-				Socket clientSocket = recieve.accept();
-				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-				String send = "" + latestStocks;
+	public void sendDataAvailable() {
+		System.out.println("New Data");
+		for(Socket s : clients){
+			PrintWriter out;
+			try {
+				out = new PrintWriter(s.getOutputStream(), true);
+				String send = "" + System.currentTimeMillis();
 				out.print(send);
 				out.close();
-				clientSocket.close();
+			} catch (IOException e) {
+				clients.remove(s);
+				e.printStackTrace();
 			}
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 	}
-
-	@Override
-	public void setLatestStockTime(long time) {
-		this.latestStocks = time;
-		System.out.println("New Data");
-	}
 	
+	private class AstroServer implements Runnable {
 
+		@Override
+		public void run() {
+			ServerSocket recieve;
+			try {
+				recieve = new ServerSocket(PORT_NR);
+				while (true) {
+					System.out.println("Connector is accepting calls...");
+					Socket clientSocket = recieve.accept();
+					clients.add(clientSocket);
+					clientSocket.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 
 }

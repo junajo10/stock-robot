@@ -138,7 +138,7 @@ public class AvanzaParser implements IParser {
 					stock.setVolume(Integer.valueOf(input));
 					counter++;
 				}
-				else if(counter ==9){
+				else if(counter==9){
 					stock.setMarket(market);
 					stock.setDate(getDate(input));
 					stockList.add(stock);

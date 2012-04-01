@@ -1,6 +1,5 @@
 package scraping.connect;
 
-public interface IConnector extends Runnable{
-	public void run();
-	public void setLatestStockTime(long time);
+public interface IConnector {
+	public void sendDataAvailable();
 }
