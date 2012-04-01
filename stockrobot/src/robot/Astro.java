@@ -4,6 +4,7 @@ import gui.PortfolioController;
 import gui.PortfolioGui;
 import gui.StockInfoGUI;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -45,6 +46,9 @@ public class Astro implements IRobot_Algorithms{
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	Random rand = new Random(System.currentTimeMillis());
 
+
+	private List<StockNames> simulatedStocks = null;
+
 	private static boolean simulate = false;
 	private static int timeBetweenUpdates = 1000;
 	/**
@@ -52,13 +56,14 @@ public class Astro implements IRobot_Algorithms{
 	 */
 	//TODO: In a new thread?
 	private void start() {
-		
+
 		System.out.println("ASTRo is starting up.");
 
 		if (simulate) {
+			simulatedStocks = new ArrayList<StockNames>();
 			initSimulationState();
 		}
-		
+
 		trader				= TraderSimulator.getInstance();
 		algorithmsLoader 	= AlgorithmsLoader.getInstance(this);
 		portfolioHandler 	= PortfolioHandler.getInstance();
@@ -85,7 +90,7 @@ public class Astro implements IRobot_Algorithms{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			if (simulate)
 				simulateNewStocks();
 		}
@@ -97,21 +102,36 @@ public class Astro implements IRobot_Algorithms{
 	 * Creating two portfolios and 10 stocks
 	 */
 	private void initSimulationState() {
-		if (jpaHelper.getAllPortfolios().size() == 0) {
+		boolean alreadyExists = false;
+		for (PortfolioEntity p : jpaHelper.getAllPortfolios()) {
+			if (p.getName().contains("sim portfolio")) {
+				alreadyExists = true;
+				break;
+			}
+		}
+
+		if (!alreadyExists) {
 			for (int i = 1; i <= 2; i++) {
-				PortfolioEntity portfolio = new PortfolioEntity("portfolio 1");
+				PortfolioEntity portfolio = new PortfolioEntity("sim portfolio " + i);
 				jpaHelper.storeObject(portfolio);
 				portfolio.setAlgorithm(new AlgorithmEntity("algorithm" + i, "algorithms.TestAlgorithm"));
 				jpaHelper.investMoney(10000000, portfolio);
 			}
 		}
 		List<StockNames> stockNames = jpaHelper.getAllStockNames();
-		if (jpaHelper.getAllStockNames().size() == 0) {
-			for (int i = 1; i <= 10; i++) {
-				StockNames stockName = new StockNames("Stock" + i, "Market" + i%3);
-				jpaHelper.storeObject(stockName);
+		
+		alreadyExists = false;
+		for (StockNames s : jpaHelper.getAllStockNames()) {
+			if (s.getName().contains("sim stock")) {
+				alreadyExists = true;
+				simulatedStocks.add(s);
 			}
-			
+		}
+		if (!alreadyExists) {
+			for (int i = 1; i <= 10; i++) {
+				simulatedStocks.add(new StockNames("Stock" + i, "Market" + i%3));
+				jpaHelper.storeObject(simulatedStocks.get(i-1));
+			}
 			simulateNewStocks();
 		}
 	}
@@ -120,11 +140,8 @@ public class Astro implements IRobot_Algorithms{
 	 * Just add a new stock
 	 */
 	private void simulateNewStocks() {
-		List<StockNames> stockNames = jpaHelper.getAllStockNames();
-
-		for (StockNames sn : stockNames) {
+		for (StockNames sn : simulatedStocks) {
 			StockPrices sp = new StockPrices(sn, rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), new Date(System.currentTimeMillis()));
-			//System.out.println("New stockPrice created: " + sp);
 			jpaHelper.storeObjectIfPossible(sp);
 		}
 	}
