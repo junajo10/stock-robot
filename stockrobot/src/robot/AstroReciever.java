@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -48,22 +49,42 @@ public class AstroReciever {
 	private class AstroClient implements Runnable {
 		private Socket serverSocket;
 		DataOutputStream outToServer;
-		DataInputStream inFromServer;
+		InputStreamReader inFromServer;
+		BufferedReader fromServer;
+		boolean isConnected;
 		@Override
 		public void run() {
-			connect();
 			while(true){
+				connect();
 				try {
-					BufferedReader fromServer = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
-					while(!fromServer.ready()){}
-					String latestStocks = fromServer.readLine();
-					newData = true;
-					fromServer.close();
+		
+					
+					while (serverSocket.isConnected()) {
+						print("Waiting for new data...");
+						
+						while (!fromServer.ready()
+								&&  !serverSocket.isClosed() && isConnected) {
+							//System.out.println("Connected?:" + serverSocket.isClosed());
+						}
+						String latestStocks = fromServer.readLine();
+						print("GOt new data:" + latestStocks);
+						newData = true;
+						// fromServer.close();
+					}
+					//fromServer.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					e.printStackTrace();
 					System.err.println("Error: Connection problems, retrying...");
-					connect();
 				}
+				/*while(serverSocket.isConnected()){
+					try {
+						Thread.sleep(250);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}*/
 			}
 			
 			
@@ -76,6 +97,9 @@ public class AstroReciever {
 		public boolean connect(){
 			try {
 				serverSocket = new Socket(SERVER_ADRESS, PORT_NR);
+				serverSocket.setKeepAlive(true);
+				inFromServer = new InputStreamReader(serverSocket.getInputStream());
+				fromServer = new BufferedReader(inFromServer);
 				print("Connnected");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -111,7 +135,7 @@ public class AstroReciever {
 		}
 		while(true){
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

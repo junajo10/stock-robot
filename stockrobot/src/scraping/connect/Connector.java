@@ -7,12 +7,16 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import robot.AstroReciever;
 
@@ -27,10 +31,10 @@ import robot.AstroReciever;
  */
 public class Connector implements IConnector {
 	private final int PORT_NR = 45000;
-	private List<Socket> clients;
+	private Map<Socket,OutputStream > clients;
 	
 	public Connector() {
-		clients = new ArrayList<Socket>();
+		clients = new HashMap<Socket, OutputStream>();
 		AstroServer server = new AstroServer();
 		Thread serverThread = new Thread(server);
 		serverThread.start();
@@ -43,23 +47,16 @@ public class Connector implements IConnector {
 	 */
 	@Override
 	public void sendDataAvailable() {
-		System.out.println("New Data");
-		for(Socket s : clients){
-			PrintWriter out;
-			try {
-				out = new PrintWriter(s.getOutputStream(), true);
-				String send = "" + System.currentTimeMillis();
-				out.print(send);
-				out.close();
-			} catch (IOException e) {
-				try {
-					s.close();
-				} catch (IOException e1) {
-				
-				}
-				clients.remove(s);
-				e.printStackTrace();
-			}
+		System.out.println("Sending new data to clients.");
+		Set<Socket> clientSockets = clients.keySet();
+		for(Socket s : clientSockets){
+			//s.notify();
+			String send = "" + System.currentTimeMillis();
+			OutputStream stream = clients.get(s);
+			PrintWriter pw = new PrintWriter(stream, true);
+			pw.println(send);
+			pw.flush();
+			System.out.println("Sending to:"+s.getPort());
 
 		}
 	}
@@ -75,7 +72,8 @@ public class Connector implements IConnector {
 					System.out.println("Connector is accepting calls...");
 					Socket clientSocket = recieve.accept();
 					clientSocket.setKeepAlive(true);
-					clients.add(clientSocket);
+					OutputStream pw = clientSocket.getOutputStream();
+					clients.put(clientSocket, pw);
 					System.out.print("Client connected, total clients: " + clients.size());
 					
 				}
@@ -91,7 +89,7 @@ public class Connector implements IConnector {
 		Connector connect = new Connector();
 		while(true){
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
