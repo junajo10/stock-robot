@@ -129,7 +129,7 @@ public class Astro implements IRobot_Algorithms{
 		}
 		if (!alreadyExists) {
 			for (int i = 1; i <= 10; i++) {
-				simulatedStocks.add(new StockNames("Stock" + i, "Market" + i%3));
+				simulatedStocks.add(new StockNames("sim stock" + i, "Market" + i%3));
 				jpaHelper.storeObject(simulatedStocks.get(i-1));
 			}
 			simulateNewStocks();
