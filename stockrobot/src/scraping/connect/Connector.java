@@ -52,6 +52,11 @@ public class Connector implements IConnector {
 				out.print(send);
 				out.close();
 			} catch (IOException e) {
+				try {
+					s.close();
+				} catch (IOException e1) {
+				
+				}
 				clients.remove(s);
 				e.printStackTrace();
 			}
@@ -69,8 +74,10 @@ public class Connector implements IConnector {
 				while (true) {
 					System.out.println("Connector is accepting calls...");
 					Socket clientSocket = recieve.accept();
+					clientSocket.setKeepAlive(true);
 					clients.add(clientSocket);
-					clientSocket.close();
+					System.out.print("Client connected, total clients: " + clients.size());
+					
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -78,6 +85,20 @@ public class Connector implements IConnector {
 			}
 		}
 
+	}
+	
+	public static void main(String[] args){
+		Connector connect = new Connector();
+		while(true){
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			connect.sendDataAvailable();
+		}
 	}
 
 

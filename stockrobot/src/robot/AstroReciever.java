@@ -22,6 +22,12 @@ public class AstroReciever {
 	private final int PORT_NR = 45000;
 	private final String SERVER_ADRESS = "localhost";
 	private boolean newData = false;
+	
+	public AstroReciever() {
+		AstroClient client = new AstroClient();
+		Thread clientThread = new Thread(client);
+		clientThread.start();
+	}
 
 	/**
 	 * Asks Connector to get the time of the latest parsing in ms.
@@ -53,7 +59,6 @@ public class AstroReciever {
 					String latestStocks = fromServer.readLine();
 					newData = true;
 					fromServer.close();
-					serverSocket.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					System.err.println("Error: Connection problems, retrying...");
@@ -64,9 +69,14 @@ public class AstroReciever {
 			
 		}
 		
+		public void print(String str){
+			System.out.println(str);
+		}
+		
 		public boolean connect(){
 			try {
 				serverSocket = new Socket(SERVER_ADRESS, PORT_NR);
+				print("Connnected");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				try {
@@ -93,6 +103,7 @@ public class AstroReciever {
 	 */
 	public static void main(String[] args) {
 		AstroReciever rec = new AstroReciever();
+		
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e1) {
