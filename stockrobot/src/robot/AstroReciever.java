@@ -154,7 +154,7 @@ public class AstroReciever {
 						pw.flush();
 						System.out.println("Ping sent to server.");
 						try {
-							Thread.sleep(300);
+							Thread.sleep(450);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

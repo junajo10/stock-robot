@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import robot.AstroReciever;
 
@@ -42,7 +43,7 @@ public class Connector implements IConnector {
 	ServerSocket pingSocket;
 	
 	public Connector() {
-		clients = new HashMap<Socket, Socket>();
+		clients = new ConcurrentHashMap<Socket, Socket>();
 		AstroServer server = new AstroServer();
 		AstroSender sender = new AstroSender();
 		PingReciever pinger = new PingReciever();
@@ -73,13 +74,17 @@ public class Connector implements IConnector {
 		public void run() {
 			while (true) {
 				Collection<Socket> clientSockets = clients.values();
+				boolean newDataSent;
 				for (Socket s : clientSockets) {
+					if(sendNewData){
+						newDataSent = true;
+					}
+					newDataSent = true;
 					String send = "" + System.currentTimeMillis();
 					try {
 						PrintWriter pw = new PrintWriter(s.getOutputStream(), true);
 						if (sendNewData) {
 							pw.println(send);
-							sendNewData = false;
 						} else {
 							pw.println("");
 						}
@@ -92,8 +97,14 @@ public class Connector implements IConnector {
 					}
 					// System.out.println("Sending to:"+s.getPort());
 				}
+				if(sendNewData){
+					newDataSent = false;
+					sendNewData = false;
+				}
+
 				try {
-					Thread.sleep(200);
+					int delay = 200 - (clientSockets.size()*10);
+					Thread.sleep(delay);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -102,74 +113,38 @@ public class Connector implements IConnector {
 		}
 	}
 	
-	private class AstroPinger implements Runnable {
-
-		@Override
-		public void run() {
-			try {
-				pingSocket = new ServerSocket(PING_PORT_NR);
-				while (true) {
-					Socket clientPingSocket = pingSocket.accept();
-					clientPingSocket.setKeepAlive(true);
-					InputStream inputStream = clientPingSocket.getInputStream();
-					//clientPingSockets.put(clientPingSocket, inputStream);
-					//System.out.print("Client connected, total clients: " + clientPingSockets.size());
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-	}
 	
 	private class PingReciever implements Runnable {
 		public void run() {
 			while (true) {
+				int delay = 0;
 				Collection<Socket> pSockets = clients.keySet();
 				for (Socket s : pSockets) {
+					try {
+						delay = 550 / pSockets.size();
+						Thread.sleep(delay);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
 					BufferedReader reader = null;
 					try {
 						reader = new BufferedReader(
 								new InputStreamReader(s.getInputStream()));
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						removeClientSocket(s);
 					}
-					/*try {
-						if (!reader.ready()) {
-							try {
-								Thread.sleep(300);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						removeClientSocket(s);
-					}*/
 					try {
-						System.out.println(reader.ready());
 						if (!reader.ready()) {
 							removeClientSocket(s);
 						} else {
 							String str = reader.readLine();
-							System.out.println("Recieved ping from client.");
+							System.out.println("Recieved ping from client. Delay:"+delay);
 						}
 					} catch (IOException e) {
 						removeClientSocket(s);
 					}
-
 				}
-				
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 			}
 		}
 		
