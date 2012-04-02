@@ -5,8 +5,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
 /**
@@ -23,11 +26,18 @@ public class AstroReciever {
 	private final int PORT_NR = 45000;
 	private final String SERVER_ADRESS = "localhost";
 	private boolean newData = false;
+	private Socket serverSocket;
+	boolean isConnected = false;
 	
 	public AstroReciever() {
 		AstroClient client = new AstroClient();
+		AstroPinger ping = new AstroPinger();
+		
 		Thread clientThread = new Thread(client);
+		Thread pingerThread = new Thread(ping);
+		
 		clientThread.start();
+		//pingerThread.start();
 	}
 
 	/**
@@ -47,47 +57,54 @@ public class AstroReciever {
 	}
 	
 	private class AstroClient implements Runnable {
-		private Socket serverSocket;
-		DataOutputStream outToServer;
+		
 		InputStreamReader inFromServer;
 		BufferedReader fromServer;
-		boolean isConnected;
 		@Override
 		public void run() {
-			while(true){
+			while (true) {
 				connect();
-				try {
-		
-					
-					while (serverSocket.isConnected()) {
-						print("Waiting for new data...");
-						
-						while (!fromServer.ready()
-								&&  !serverSocket.isClosed() && isConnected) {
-							//System.out.println("Connected?:" + serverSocket.isClosed());
-						}
-						String latestStocks = fromServer.readLine();
-						print("GOt new data:" + latestStocks);
-						newData = true;
-						// fromServer.close();
-					}
-					//fromServer.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.err.println("Error: Connection problems, retrying...");
-				}
-				/*while(serverSocket.isConnected()){
+				while (isConnected) {
+					//print("Waiting for new data...");
 					try {
-						Thread.sleep(250);
-					} catch (InterruptedException e) {
+						//while (!fromServer.ready() && !serverSocket.isClosed() && isConnected) {
+						//}
+						if(!fromServer.ready()){
+							try {
+								Thread.sleep(300);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						if(!fromServer.ready()){
+							isConnected = false;
+						}
+							
+					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}*/
+					if (isConnected) {
+						String latestStocks = null;
+						try {
+							latestStocks = fromServer.readLine();
+						} catch (IOException e) {
+							isConnected = false;
+							e.printStackTrace();
+						}
+						if(!latestStocks.equals("")){
+							print("GOt new data:" + latestStocks);
+							newData = true;
+						} 
+						else {
+							//System.out.println("Recieved heartbeat");
+						}
+					}
+				}
+				
 			}
-			
-			
+
 		}
 		
 		public void print(String str){
@@ -98,9 +115,11 @@ public class AstroReciever {
 			try {
 				serverSocket = new Socket(SERVER_ADRESS, PORT_NR);
 				serverSocket.setKeepAlive(true);
+				serverSocket.setSoTimeout(65000);
 				inFromServer = new InputStreamReader(serverSocket.getInputStream());
 				fromServer = new BufferedReader(inFromServer);
 				print("Connnected");
+				isConnected = true;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				try {
@@ -110,10 +129,55 @@ public class AstroReciever {
 					e1.printStackTrace();
 				}
 				System.err.println("Error: Cant connect to host, reconnecting...");
+				isConnected = false;
 				connect();
 			}
 
 			return true;
+		}
+		
+	}
+	
+	private class AstroPinger implements Runnable {
+		OutputStream outToServer;
+		@Override
+		public void run() {
+			while(true){
+				while(isConnected && serverSocket.isConnected()){
+					try {
+						
+						outToServer = serverSocket.getOutputStream();
+						PrintWriter pw = new PrintWriter(outToServer, true);
+						pw.write("test");
+						pw.flush();
+						pw.checkError();
+						
+						outToServer.flush();
+						SocketAddress str  = serverSocket.getRemoteSocketAddress();
+						Socket tempSocket = new Socket();
+						System.out.println("Connection is OK.");
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.err.println("Disconnected from server.");
+						isConnected = false;
+					}
+				}
+				while(!isConnected){
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 		}
 		
 	}

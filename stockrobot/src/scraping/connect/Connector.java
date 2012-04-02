@@ -32,12 +32,17 @@ import robot.AstroReciever;
 public class Connector implements IConnector {
 	private final int PORT_NR = 45000;
 	private Map<Socket,OutputStream > clients;
+	boolean sendNewData = false;
 	
 	public Connector() {
 		clients = new HashMap<Socket, OutputStream>();
 		AstroServer server = new AstroServer();
+		AstroPonger pong = new AstroPonger();
+		
 		Thread serverThread = new Thread(server);
+		Thread astroPonger = new Thread(pong);
 		serverThread.start();
+		astroPonger.start();
 	}
 
 	/**
@@ -48,19 +53,44 @@ public class Connector implements IConnector {
 	@Override
 	public void sendDataAvailable() {
 		System.out.println("Sending new data to clients.");
-		Set<Socket> clientSockets = clients.keySet();
-		for(Socket s : clientSockets){
-			//s.notify();
-			String send = "" + System.currentTimeMillis();
-			OutputStream stream = clients.get(s);
-			PrintWriter pw = new PrintWriter(stream, true);
-			pw.println(send);
-			pw.flush();
-			System.out.println("Sending to:"+s.getPort());
-
-		}
+		sendNewData = true;
 	}
 	
+	private class AstroPonger implements Runnable {
+
+		@Override
+		public void run() {
+			while (true) {
+				Set<Socket> clientSockets = clients.keySet();
+				for (Socket s : clientSockets) {
+					// s.notify();
+					String send = "" + System.currentTimeMillis();
+					OutputStream stream = clients.get(s);
+					try {
+						PrintWriter pw = new PrintWriter(stream, true);
+						if (sendNewData) {
+							pw.println(send);
+							sendNewData = false;
+						} else {
+							pw.println("");
+						}
+						pw.flush();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						clients.remove(s);
+					}
+					// System.out.println("Sending to:"+s.getPort());
+				}
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	private class AstroServer implements Runnable {
 
 		@Override
