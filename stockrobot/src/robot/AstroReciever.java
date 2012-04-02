@@ -24,9 +24,11 @@ import java.net.UnknownHostException;
 public class AstroReciever {
 	
 	private final int PORT_NR = 45000;
+	private final int PING_PORT_NR = 45001;
 	private final String SERVER_ADRESS = "localhost";
 	private boolean newData = false;
 	private Socket serverSocket;
+	private Socket serverPingSocket;
 	boolean isConnected = false;
 	
 	public AstroReciever() {
@@ -37,7 +39,7 @@ public class AstroReciever {
 		Thread pingerThread = new Thread(ping);
 		
 		clientThread.start();
-		//pingerThread.start();
+		pingerThread.start();
 	}
 
 	/**
@@ -69,7 +71,7 @@ public class AstroReciever {
 					try {
 						//while (!fromServer.ready() && !serverSocket.isClosed() && isConnected) {
 						//}
-						if(!fromServer.ready()){
+						if (!fromServer.ready()) {
 							try {
 								Thread.sleep(300);
 							} catch (InterruptedException e) {
@@ -77,7 +79,7 @@ public class AstroReciever {
 								e.printStackTrace();
 							}
 						}
-						if(!fromServer.ready()){
+						if (!fromServer.ready()) {
 							isConnected = false;
 						}
 							
@@ -114,8 +116,9 @@ public class AstroReciever {
 		public boolean connect(){
 			try {
 				serverSocket = new Socket(SERVER_ADRESS, PORT_NR);
+				serverPingSocket = new Socket(SERVER_ADRESS, PING_PORT_NR);
+				serverPingSocket.setKeepAlive(true);
 				serverSocket.setKeepAlive(true);
-				serverSocket.setSoTimeout(65000);
 				inFromServer = new InputStreamReader(serverSocket.getInputStream());
 				fromServer = new BufferedReader(inFromServer);
 				print("Connnected");
@@ -145,19 +148,13 @@ public class AstroReciever {
 			while(true){
 				while(isConnected && serverSocket.isConnected()){
 					try {
-						
-						outToServer = serverSocket.getOutputStream();
+						outToServer = serverPingSocket.getOutputStream();
 						PrintWriter pw = new PrintWriter(outToServer, true);
-						pw.write("test");
+						pw.println("");
 						pw.flush();
-						pw.checkError();
-						
-						outToServer.flush();
-						SocketAddress str  = serverSocket.getRemoteSocketAddress();
-						Socket tempSocket = new Socket();
-						System.out.println("Connection is OK.");
+						System.out.println("Ping sent to server.");
 						try {
-							Thread.sleep(500);
+							Thread.sleep(300);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -203,7 +200,7 @@ public class AstroReciever {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println("New data? " + rec.newData());
+			//System.out.println("New data? " + rec.newData());
 		} 			
 	 }
 }
