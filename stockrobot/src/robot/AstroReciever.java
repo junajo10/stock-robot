@@ -26,6 +26,9 @@ public class AstroReciever {
 	private final int PORT_NR = 45000;
 	private final int PING_PORT_NR = 45001;
 	private final String SERVER_ADRESS = "localhost";
+	private final int RECIEVE_DELAY = 300;
+	private final int PING_DELAY = 450;
+	
 	private boolean newData = false;
 	private Socket serverSocket;
 	private Socket serverPingSocket;
@@ -33,7 +36,7 @@ public class AstroReciever {
 	
 	public AstroReciever() {
 		AstroClient client = new AstroClient();
-		AstroPinger ping = new AstroPinger();
+		Pinger ping = new Pinger();
 		
 		Thread clientThread = new Thread(client);
 		Thread pingerThread = new Thread(ping);
@@ -65,17 +68,15 @@ public class AstroReciever {
 		@Override
 		public void run() {
 			while (true) {
-				connect();
+				if(!isConnected){
+					connect();
+				}
 				while (isConnected) {
-					//print("Waiting for new data...");
 					try {
-						//while (!fromServer.ready() && !serverSocket.isClosed() && isConnected) {
-						//}
 						if (!fromServer.ready()) {
 							try {
-								Thread.sleep(300);
+								Thread.sleep(RECIEVE_DELAY);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -84,7 +85,6 @@ public class AstroReciever {
 						}
 							
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					if (isConnected) {
@@ -96,7 +96,7 @@ public class AstroReciever {
 							e.printStackTrace();
 						}
 						if(!latestStocks.equals("")){
-							print("GOt new data:" + latestStocks);
+							System.out.println("New data is available from database.");
 							newData = true;
 						} 
 						else {
@@ -109,10 +109,6 @@ public class AstroReciever {
 
 		}
 		
-		public void print(String str){
-			System.out.println(str);
-		}
-		
 		public boolean connect(){
 			try {
 				serverSocket = new Socket(SERVER_ADRESS, PORT_NR);
@@ -121,14 +117,12 @@ public class AstroReciever {
 				serverSocket.setKeepAlive(true);
 				inFromServer = new InputStreamReader(serverSocket.getInputStream());
 				fromServer = new BufferedReader(inFromServer);
-				print("Connnected");
+				System.out.println("Connnected");
 				isConnected = true;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				System.err.println("Error: Cant connect to host, reconnecting...");
@@ -141,7 +135,7 @@ public class AstroReciever {
 		
 	}
 	
-	private class AstroPinger implements Runnable {
+	private class Pinger implements Runnable {
 		OutputStream outToServer;
 		@Override
 		public void run() {
@@ -152,15 +146,12 @@ public class AstroReciever {
 						PrintWriter pw = new PrintWriter(outToServer, true);
 						pw.println("");
 						pw.flush();
-						System.out.println("Ping sent to server.");
 						try {
-							Thread.sleep(450);
+							Thread.sleep(PING_DELAY);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						System.err.println("Disconnected from server.");
 						isConnected = false;
@@ -170,7 +161,6 @@ public class AstroReciever {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

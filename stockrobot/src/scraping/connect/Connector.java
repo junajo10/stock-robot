@@ -74,12 +74,7 @@ public class Connector implements IConnector {
 		public void run() {
 			while (true) {
 				Collection<Socket> clientSockets = clients.values();
-				boolean newDataSent;
 				for (Socket s : clientSockets) {
-					if(sendNewData){
-						newDataSent = true;
-					}
-					newDataSent = true;
 					String send = "" + System.currentTimeMillis();
 					try {
 						PrintWriter pw = new PrintWriter(s.getOutputStream(), true);
@@ -98,7 +93,6 @@ public class Connector implements IConnector {
 					// System.out.println("Sending to:"+s.getPort());
 				}
 				if(sendNewData){
-					newDataSent = false;
 					sendNewData = false;
 				}
 
@@ -139,7 +133,7 @@ public class Connector implements IConnector {
 							removeClientSocket(s);
 						} else {
 							String str = reader.readLine();
-							System.out.println("Recieved ping from client. Delay:"+delay);
+;
 						}
 					} catch (IOException e) {
 						removeClientSocket(s);
@@ -162,13 +156,12 @@ public class Connector implements IConnector {
 				recieve = new ServerSocket(PORT_NR);
 				pingSocket = new ServerSocket(PING_PORT_NR);
 				while (true) {
-					System.out.println("Connector is accepting calls...");
 					Socket clientSocket = recieve.accept();
 					Socket clientPingSocket = pingSocket.accept();
 					clientPingSocket.setKeepAlive(true);
 					clientSocket.setKeepAlive(true);
 					clients.put(clientPingSocket, clientSocket);
-					System.out.print("Client connected, total clients: " + clients.size());
+					System.out.println("Client connected, total clients: " + clients.size());
 					
 				}
 			} catch (IOException e) {
