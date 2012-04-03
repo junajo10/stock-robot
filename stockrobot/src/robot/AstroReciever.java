@@ -71,9 +71,16 @@ public class AstroReciever {
 					try {
 						if (!fromServer.ready()) {
 							try {
-								Thread.sleep(RECIEVE_DELAY);
+								Thread.sleep(RECIEVE_DELAY / 2);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
+							}
+							if (!fromServer.ready()) {
+								try {
+									Thread.sleep(RECIEVE_DELAY / 2);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
 							}
 						}
 						if (!fromServer.ready()) {

@@ -2,6 +2,7 @@ package gui.graph;
 
 import generic.FinancialLongConverter;
 
+import java.awt.Color;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,12 +16,15 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.ui.RectangleInsets;
 import org.jfree.util.Rotation;
 
 import database.jpa.IJPAHelper;
@@ -49,7 +53,7 @@ public class StockGraph extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 
-	public StockGraph(int size_x, int size_y) {
+	public StockGraph(int size_x, int size_y, boolean plotted) {
         super("Stock graph over time.");
         jpa = JPAHelper.getInstance();
         dataset = new TimeSeriesCollection();
@@ -67,6 +71,17 @@ public class StockGraph extends JFrame {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(size_x, size_y));
         setContentPane(chartPanel);
+        if (plotted) {
+	        XYPlot plot = (XYPlot) chart.getPlot();
+	        plot.setBackgroundPaint(Color.lightGray);
+	        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
+	        plot.setDomainGridlinePaint(Color.white);
+	        plot.setRangeGridlinePaint(Color.white);
+	        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+	        renderer.setShapesVisible(true);
+	        renderer.setShapesFilled(true);
+        }
+
     }
 	
 	/**
@@ -118,7 +133,7 @@ public class StockGraph extends JFrame {
 	        StockPrices stockNr2 = stocksPrice.get(1);
 	        StockNames stocknameNr2 = stockNr2.getStockName();
 	        
-	        StockGraph stockGr = new StockGraph(700, 400);
+	        StockGraph stockGr = new StockGraph(700, 400, true);
 	        
 	        stockGr.addStock(stockname);
 	        stockGr.addStock(stocknameNr2);

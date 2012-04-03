@@ -35,6 +35,7 @@ import robot.AstroReciever;
 public class Connector implements IConnector {
 	private final int PORT_NR      = 45000;
 	private final int PING_PORT_NR = 45001;
+	private final int PING_DELAY = 550;
 	
 	private Map<Socket,Socket > clients;
 	
@@ -115,7 +116,7 @@ public class Connector implements IConnector {
 				Collection<Socket> pSockets = clients.keySet();
 				for (Socket s : pSockets) {
 					try {
-						delay = 550 / pSockets.size();
+						delay = PING_DELAY / pSockets.size();
 						Thread.sleep(delay);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
