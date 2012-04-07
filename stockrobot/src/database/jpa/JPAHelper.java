@@ -1,11 +1,8 @@
 package database.jpa;
 
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.Persistence;
-import javax.persistence.metamodel.ManagedType;
-import javax.persistence.metamodel.Metamodel;
 
 /**
  * @author Daniel

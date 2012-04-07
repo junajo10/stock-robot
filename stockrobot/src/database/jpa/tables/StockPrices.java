@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.openjpa.persistence.jdbc.Index;
+
 
 /**
  * @author Daniel
@@ -24,6 +26,7 @@ public class StockPrices {
 	@GeneratedValue
 	private long id;
 	
+	@Index
 	@OneToOne
 	@Column(name="stockName")
 	private StockNames stockName;
@@ -40,6 +43,7 @@ public class StockPrices {
 	@Column
 	private long sell;
 	
+	@Index
 	@Column(name="time")
 	private Date time;
 	

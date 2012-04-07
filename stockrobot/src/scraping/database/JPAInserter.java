@@ -1,19 +1,17 @@
 package scraping.database;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.print.attribute.IntegerSyntax;
 
 import database.jpa.IJPAHelper;
+import database.jpa.IJPAParser;
 import database.jpa.JPAHelper;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -47,100 +45,53 @@ public class JPAInserter implements IInserter {
 	}
 	
 	@Override
-	public boolean insertStockData(List<ParserStock> s) {
+	public boolean insertStockData(List<ParserStock> stocks) {
+		IJPAParser jpaParserHelper = JPAHelper.getInstance();
 		
-		//Create entityFactory
-		Map<Object,Object> factoryMap 	= new HashMap<Object, Object>(); 
 		
-		//Create manager
-		factory							= Persistence.createEntityManagerFactory( "astroportfolio", factoryMap );
-		em 								= factory.createEntityManager();
+		Map<String, StockPrices> latestMap = jpaParserHelper.getLatestMap(); 
+		int newStockPrices = 0;
+		List<StockPrices> newStocks = new LinkedList<StockPrices>();
+		Stack<StockNames> newStockNames = new Stack<StockNames>();
 		
-		//For all stock data sent here
-		for( ParserStock stock : s ) {
-			
-			//Get a list of all stocknames so we can see if the current
-			List<StockNames> allStockNames = helper.getAllStockNames();
-			
-			boolean foundMatch = false;
-			
-			//Is the currently processed stock already in the database?
-			for( StockNames stockFromDB : allStockNames ) {
-				
-				// A match has been found
-				if( stockFromDB.getName().equals( stock.getName() ) ) {
-					
-					//Create a new stock for the price
-					StockPrices priceTable = new StockPrices(	stockFromDB,
-																stock.getVolume(),
-																(long)stock.getLastClose(),
-																(long)stock.getBuy(),
-																(long)stock.getSell(),
-																stock.getDate()
-															);
-					
-					try {
-						
-						helper.updateObject(stockFromDB);
-                        
-					} catch( Exception e) {
-					
-						//e.printStackTrace();
-					}
-                    
-					try {
-						
-						//Create transaction for inserting a new stock price
-						helper.storeObject( priceTable );
-						
-					} catch( Exception e ) {
-						
-						//e.printStackTrace();
-						System.out.println( "JPAInserter: insert stockData: Trouble adding a new price" );
-					}
-					
-					foundMatch = true;
-					
-					break; //Jump out of this loop
+		for (ParserStock s : stocks) {
+			if (s.getBuy() != 0 && s.getSell() != 0) {
+				if (!latestMap.containsKey(s.getName())) {
+					//StockName doesn't exist.
+					newStockNames.push(new StockNames(s.getName(), s.getMarket()));
+					newStocks.add(new StockPrices(newStockNames.peek(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
+					newStockPrices++;
+
 				}
-			}
-			
-			//If not, we have to add it to the database
-			if( !foundMatch ) {
-			
-				//Create a new stock in the nametable and a new price
-				StockNames newNameTable = new StockNames( stock.getName(), stock.getMarket() );
-				StockPrices priceTable  = new StockPrices( 
-					
-					newNameTable,
-					stock.getVolume(),
-					(int)stock.getLastClose(),
-					(long)stock.getBuy(),
-					(long)stock.getSell(),
-					stock.getDate()
-				);
-				
-				//Add the new stock and a price to DB
-				try {
-					
-					em.getTransaction().begin();
-					em.persist(newNameTable);
-					em.persist(priceTable);
-					em.getTransaction().commit();
-				
-				} catch( Exception e ) {
-					
-					//e.printStackTrace();
-					System.out.println( "JPAInserter: insert stockData: Trouble adding a new stock" );
+				else {
+					StockPrices latest = latestMap.get(s.getName());
+
+					if (!latest.getTime().equals(s.getDate())) {
+						newStocks.add(new StockPrices(latest.getStockName(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
+						newStockPrices++;
+					}
 				}
 			}
 		}
 		
-		em.close();
+		if (!newStockNames.isEmpty()) {
+			try {
+				jpaParserHelper.storeListOfObjects(newStockNames);
+			} catch (Exception e) {
+				// For some reason there is an identical stock name, so store those that are possible
+				// using the slower store function.
+				jpaParserHelper.storeListOfObjectsDuplicates(newStockNames);
+			}
+		}
 		
-		factory.close();
+		try {
+			jpaParserHelper.storeListOfObjects(newStocks);
+		} catch (Exception e) {
+			// For some reason there is an identical stock price, so store those that are possible
+			// using the slower store function.
+			jpaParserHelper.storeListOfObjectsDuplicates(newStocks);
+		}
 		
-		//Everything seems to have worked
 		return true;
 	}
 	

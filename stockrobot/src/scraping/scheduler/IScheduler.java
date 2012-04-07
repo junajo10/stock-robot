@@ -41,4 +41,11 @@ public interface IScheduler {
 	 * @param ignore
 	 */
 	public void shouldRun(boolean run);
+	
+	
+	/**
+	 * Number of milliseconds until the next parse should occur.
+	 * @return Number of milliseconds until the next parse should occur.
+	 */
+	public long timeUntilNextParse();
 }

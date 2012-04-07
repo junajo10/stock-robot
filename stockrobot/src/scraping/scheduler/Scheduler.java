@@ -1,5 +1,6 @@
 package scraping.scheduler;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -74,5 +75,34 @@ public class Scheduler implements IScheduler {
 	public void shouldRun(boolean run) {
 		
 		_shouldRun = run;
+	}
+	
+
+	public long timeUntilNextParse() {
+		long time = 0;
+		
+		Date d = new Date(System.currentTimeMillis());
+		
+		if (d.getHours() > 17 || d.getDay() == 6 || d.getDay() == 0) {
+			// seconds until midnight
+			time = (3600*24) - (3600*d.getHours() + 60*d.getMinutes() + d.getSeconds());
+			
+			// seconds until 8:58
+			time += ((60*9)-2)*60;
+
+			if (d.getDay() == 5 && d.getHours() > 17) {
+				// Friday after 17
+				time += 3600*24*2;
+			}
+			else if (d.getDay() == 6) {
+				// if its saturday
+				time += 3600*24;
+			}
+		}
+		else if( d.getHours() <= 8 && d.getMinutes() < 58 ) {
+			time = (((60*9)-2)*60) - (60*(d.getHours() * 60)  + d.getMinutes() + d.getSeconds());
+		}
+		
+		return time*1000;
 	}
 }

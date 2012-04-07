@@ -4,8 +4,11 @@ import generic.Pair;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,6 +18,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import scraping.model.ParserStock;
 
 
 import database.jpa.tables.AlgorithmEntity;
@@ -447,6 +452,77 @@ class JPAHelperBase implements IJPAHelper {
 
 		return query.getResultList();
 	}
+	@Override
+	public int addStocks(List<ParserStock> stocks) {
+		Map<String, StockPrices> latestMap = getLatestMap(); 
+		int newStockPrices = 0;
+		List<StockPrices> newStocks = new LinkedList<StockPrices>();
+		Stack<StockNames> newStockNames = new Stack<StockNames>();
+		
+		for (ParserStock s : stocks) {
+			if (s.getBuy() != 0 && s.getSell() != 0) {
+				if (!latestMap.containsKey(s.getName())) {
+					//StockName doesn't exist.
+					newStockNames.push(new StockNames(s.getName(), s.getMarket()));
+					newStocks.add(new StockPrices(newStockNames.peek(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
+					newStockPrices++;
 
+				}
+				else {
+					StockPrices latest = latestMap.get(s.getName());
 
+					if (!latest.getTime().equals(s.getDate())) {
+						newStocks.add(new StockPrices(latest.getStockName(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
+						newStockPrices++;
+					}
+				}
+			}
+		}
+		
+		try {
+			storeListOfObjects(newStockNames);
+		} catch (Exception e) {
+			// For some reason there is an identical stock name, so store those that are possible
+			// using the slower store function.
+			storeListOfObjectsDuplicates(newStockNames);
+		}
+		
+		
+		try {
+			storeListOfObjects(newStocks);
+		} catch (Exception e) {
+			// For some reason there is an identical stock price, so store those that are possible
+			// using the slower store function.
+			storeListOfObjectsDuplicates(newStocks);
+		}
+		
+		return newStockPrices;
+	}
+	@Override
+	public Map<String, StockPrices> getLatestMap() {
+		Map<String, StockPrices> map = new HashMap<String, StockPrices>();
+		
+		for (StockPrices sp : getLatestStockPrices()) {
+			map.put(sp.getStockName().getName(), sp);
+		}
+		
+		return map;
+	}
+	@Override
+	public List<StockPrices> getLatestStockPrices() {
+		// TODO: fix in jpa instead.
+		
+		//SELECT * FROM StockPrices s1 JOIN ( SELECT stockName, MAX(time) AS mTime FROM StockPrices GROUP BY stockName) AS s2 ON s1.stockName = s2.stockName AND s1.time = s2.mTime;
+		 
+		Query query = em.createNativeQuery("SELECT * " +
+			"FROM StockPrices s1 " +
+			"JOIN ( " +
+			"SELECT stockName, MAX(time) AS mTime " +
+			"FROM StockPrices " +
+			"GROUP BY stockName) AS s2 " +
+			"ON s1.stockName = s2.stockName " + 
+			"AND s1.time = s2.mTime;", StockPrices.class);
+		
+		return query.getResultList();
+	}
 }

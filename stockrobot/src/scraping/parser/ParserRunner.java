@@ -55,12 +55,13 @@ public class ParserRunner implements IParserRunner {
 				
 				//Should run right now?
 				if( scheduler.shouldRun() ) {
-					ArrayList<ParserStock> stockList = null;
+					ArrayList<ParserStock> stockList = new ArrayList<ParserStock>();
 					Long timeBefore = System.currentTimeMillis();
 					for(URL url : avanzaStockMarkets.keySet()){
-						stockList = parser.parse(url, avanzaStockMarkets.get(url));			
-					    inserter.insertStockData(stockList);
+						stockList.addAll(parser.parse(url, avanzaStockMarkets.get(url)));
 					}
+					inserter.insertStockData(stockList);
+					
 					Long timeElapsed = System.currentTimeMillis() - timeBefore;
 					/* Send a message to the robot saying that new data is available.
 					 * Reciever on robot not implemented yet, uncomment when. */
@@ -74,10 +75,18 @@ public class ParserRunner implements IParserRunner {
 						}
 					}
 				}
+				else {
+					try {
+						System.out.println("Sleep for: " + scheduler.timeUntilNextParse()/1000/60/60 + "hours and " + ((scheduler.timeUntilNextParse()/1000/60)%60) + "minutes");
+						Thread.sleep(scheduler.timeUntilNextParse());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			while(!run){
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(30000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
