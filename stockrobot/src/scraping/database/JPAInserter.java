@@ -81,7 +81,7 @@ public class JPAInserter implements IInserter {
 				}
 			}
 		}
-		
+		boolean redoLatestMap = false;
 		if (!newStockNames.isEmpty()) {
 			try {
 				jpaParserHelper.storeListOfObjects(newStockNames);
@@ -89,6 +89,7 @@ public class JPAInserter implements IInserter {
 				// For some reason there is an identical stock name, so store those that are possible
 				// using the slower store function.
 				jpaParserHelper.storeListOfObjectsDuplicates(newStockNames);
+				redoLatestMap = true;
 			}
 		}
 		
@@ -98,6 +99,11 @@ public class JPAInserter implements IInserter {
 			// For some reason there is an identical stock price, so store those that are possible
 			// using the slower store function.
 			jpaParserHelper.storeListOfObjectsDuplicates(newStocks);
+			redoLatestMap = true;
+		}
+		
+		if (redoLatestMap) {
+			latestMap = jpaParserHelper.getLatestMap();
 		}
 		
 		return true;
