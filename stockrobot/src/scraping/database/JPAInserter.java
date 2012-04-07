@@ -24,6 +24,9 @@ public class JPAInserter implements IInserter {
 	EntityManager em;
 	IJPAHelper helper;
 	
+	
+	Map<String, StockPrices> latestMap = null;
+	
 	/*
 	public static void main( String[] args ) {
 		
@@ -48,8 +51,10 @@ public class JPAInserter implements IInserter {
 	public boolean insertStockData(List<ParserStock> stocks) {
 		IJPAParser jpaParserHelper = JPAHelper.getInstance();
 		
+		if (latestMap == null) {
+			latestMap = jpaParserHelper.getLatestMap();
+		}
 		
-		Map<String, StockPrices> latestMap = jpaParserHelper.getLatestMap(); 
 		int newStockPrices = 0;
 		List<StockPrices> newStocks = new LinkedList<StockPrices>();
 		Stack<StockNames> newStockNames = new Stack<StockNames>();
@@ -59,15 +64,18 @@ public class JPAInserter implements IInserter {
 				if (!latestMap.containsKey(s.getName())) {
 					//StockName doesn't exist.
 					newStockNames.push(new StockNames(s.getName(), s.getMarket()));
-					newStocks.add(new StockPrices(newStockNames.peek(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
+					StockPrices sp = new StockPrices(newStockNames.peek(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate());
+					newStocks.add(sp);
 					newStockPrices++;
-
+					latestMap.put(s.getName(), sp);
 				}
 				else {
 					StockPrices latest = latestMap.get(s.getName());
 
 					if (!latest.getTime().equals(s.getDate())) {
-						newStocks.add(new StockPrices(latest.getStockName(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
+						StockPrices sp = new StockPrices(latest.getStockName(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate());
+						newStocks.add(sp);
+						latestMap.put(s.getName(), sp);
 						newStockPrices++;
 					}
 				}
