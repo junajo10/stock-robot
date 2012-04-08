@@ -38,9 +38,10 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	public List<StockPrices> getAllStockPrices();
 	/**
 	 * Will give back all stockPrices
+	 * @param limit 
 	 * @return A list of stockPrices
 	 */
-	public List<StockPrices> getAllStockPricesReverseOrdered();
+	public List<StockPrices> getAllStockPricesReverseOrdered(int limit);
 	/**
 	 * Will give back all PortfolioInvestment
 	 * @return A list of PortfolioInvestment

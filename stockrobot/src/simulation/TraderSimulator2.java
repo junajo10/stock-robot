@@ -33,24 +33,30 @@ public class TraderSimulator2 implements ITrader{
 
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntity portfolio) {
+		//System.out.println("Buying stock: " + s + " amount:" + amount);
 		if (s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio) > portfolio.getBalance())
 			return false;
 		
 		portfolio.bougthFor(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio), jpaHelper);
 
+		jpaHelper.updateObject(portfolio);
+		
 		jpaHelper.storeObject(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
 		return true;
 	}
 
 	@Override
 	public boolean sellStock(StockPrices s, long amount, PortfolioEntity portfolio) {
+		//System.out.println("Selling stock: " + s + " amount:" + amount);
 		StockPrices latest = jpaHelper.getLatestStockPrice(s);
-		portfolio.soldFor(s.getBuy()*amount);
+		portfolio.soldFor(s.getBuy()*amount, jpaHelper);
 		PortfolioHistory ph = jpaHelper.getSpecificPortfolioHistory(s, portfolio, amount);
 		
 		ph.setSoldDate(latest.getTime());
 		
 		jpaHelper.updateObject(ph);
+		
+		jpaHelper.updateObject(portfolio);
 		
 		return true;
 	}

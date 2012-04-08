@@ -2,8 +2,10 @@ package simulation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import portfolio.IPortfolio;
@@ -15,6 +17,7 @@ import database.jpa.JPAHelper;
 import database.jpa.JPAHelperSimulator;
 import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
+import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -42,13 +45,14 @@ public class SimulationHandler {
 	PortfolioEntity testPortfolio;
 	PortfolioSimulator portfolio = null;
 	IRobot_Algorithms robotSim = new RobotSimulator(jpaSimHelper);
+	ITrader trader;
 	
 	@SuppressWarnings("rawtypes")
 	private void initSimulation(AlgorithmEntity algorithmToSimulate) {
 		this.algorithmToSimulate = algorithmToSimulate;
 		jpaSimHelper.storeObject(algorithmToSimulate);
 		
-		ITrader trader = new TraderSimulator2(jpaSimHelper);
+		trader = new TraderSimulator2(jpaSimHelper);
 		PortfolioEntity portfolioEntity = new PortfolioEntity("Simulated Portfolio");
 		portfolioEntity.setAlgorithm(algorithmToSimulate);
 		jpaSimHelper.storeObject(portfolioEntity);
@@ -88,31 +92,58 @@ public class SimulationHandler {
 		
 		Date lastSeenTime = null;
 		long curr = 0;
-		long max = jpaHelper.getAllStockPricesReverseOrdered().size();
+		long max = jpaHelper.getAllStockPricesReverseOrdered(100).size();
 		
-		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered()) {
-			System.out.println(p.getTime());
-		}
+		System.out.println(max);
 		
-		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered()) {
+		List<StockPrices> stockPrices = new ArrayList<StockPrices>();
+		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered(100)) {
+			//System.out.println(p);
 			curr ++;
-			if (p.getTime().equals(lastSeenTime)) {
+			
+			if (curr%100 == 0)
+				System.out.println(((double)curr/(double)max)*100 + "% done");
+			
+			if (p.getTime().equals(lastSeenTime) || lastSeenTime == null) {
 				StockPrices sp = new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
 						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), new Date(p.getTime().getTime()));
-				jpaSimHelper.storeObject(sp);
+				stockPrices.add(sp);
+				
+				lastSeenTime = p.getTime();
 			}
 			else {
-				if (curr%100 == 0)
-					System.out.println(curr/max + "% done");
-				if (lastSeenTime != null)
-					updateAlgorithm();
 				lastSeenTime = p.getTime();
-				jpaSimHelper.storeObject(new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
-						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), p.getTime()));
+				
+				StockPrices sp = new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
+						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), new Date(p.getTime().getTime()));
+				
+				stockPrices.add(sp);
+				
+				jpaSimHelper.storeListOfObjects(stockPrices);
+				
+				updateAlgorithm();
 			}
 		}
 		
-		System.out.println(portfolio.getPortfolioTable().getBalance());
+		System.out.println("Current balance: " + portfolio.getPortfolioTable().getBalance());
+		
+		System.out.println("Selling all current stocks");
+		
+		for (PortfolioHistory ph : jpaSimHelper.getPortfolioHistory(portfolio.getPortfolioTable())) {
+			if (ph.getSoldDate() == null) {
+				System.out.println("Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
+				trader.sellStock(ph.getStockPrice(), ph.getAmount(), portfolio.getPortfolioTable());
+				/*
+				 * Primary key field database.jpa.tables.PortfolioEntity.portfolioId of 
+				 * database.jpa.tables.PortfolioEntity@28c50ffe has non-default value. 
+				 * The instance life cycle is in PNewState state and hence an existing non-default 
+				 * value for the identity field is not permitted. You either need to remove the 
+				 * @GeneratedValue annotation or modify the code to remove the initializer processing.
+				 */
+			}
+		}
+		
+		System.out.println("Balance: " + portfolio.getPortfolioTable().getBalance());
 		
 		clearTestDatabase();
 		
@@ -128,12 +159,14 @@ public class SimulationHandler {
 		
 		while (jpaSimHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaSimHelper.getAllPortfolios().get(0);
+			
 			if (p.getHistory() != null) {
-				if (p.getHistory().iterator().hasNext()) {
-					jpaSimHelper.remove(p.getHistory().iterator().next());
+				for (PortfolioHistory ph : p.getHistory()) {
+					System.out.println(ph);
+					jpaSimHelper.remove(ph);
+					
 				}
 			}
-			
 			jpaSimHelper.remove(p);
 		}
 	    for (AlgorithmEntity a : jpaSimHelper.getAllAlgorithms()) {

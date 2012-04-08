@@ -93,7 +93,8 @@ public class TestAlgorithm implements IAlgorithm{
 					
 					long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
 					
-					buyStock( stockInfo.getRight().get(0), amount );
+					if (amount > 0)
+						buyStock( stockInfo.getRight().get(0), amount );
 				}
 			}
 		}
