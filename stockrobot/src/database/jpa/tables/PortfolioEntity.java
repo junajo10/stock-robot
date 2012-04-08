@@ -1,4 +1,5 @@
 package database.jpa.tables;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,9 +21,9 @@ import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 
 /**
- * @author Daniel
- *
- * A class representing a Portfolio Entity
+ *  A class representing a Portfolio Entity
+ *  
+ *  @author Daniel
  */
 @Entity
 @Table(name="PortfolioEntity")
@@ -61,8 +62,9 @@ public class PortfolioEntity {
     private Set<PortfolioInvestment> investments = new HashSet<PortfolioInvestment>();
     
 	
-	@OneToMany(targetEntity=StockNames.class, fetch=FetchType.EAGER)
-	List<StockNames> stocksToWatch;
+	@ElementCollection
+    @CollectionTable(name = "stocksToWatch")
+	private Set<StocksToWatch> stocksToWatch = new HashSet<StocksToWatch>();
 	
 	
 	public PortfolioEntity() {
@@ -182,7 +184,11 @@ public class PortfolioEntity {
 	 * @return a list of StockNames this portfolio is set to watch
 	 */
 	public List<StockNames> getStocksToWatch() {
-		return stocksToWatch;
+		List<StockNames> stocks = new ArrayList<StockNames>();
+		for (StocksToWatch stw : stocksToWatch) {
+			stocks.add(stw.getStockName());
+		}
+		return stocks;
 	}
 	/**
 	 * Helper method that the trader will use to remove money from the portfolio
@@ -225,5 +231,12 @@ public class PortfolioEntity {
 				result -= pi.getAmount();
 		}
 		return result;
+	}
+	public boolean addStockToWatch(StockNames stockName) {
+		stocksToWatch.add(new StocksToWatch(stockName));
+		return true;
+	}
+	public boolean removeStockToWatch(StockNames stockName) {
+		return stocksToWatch.remove(stockName);
 	}
 }

@@ -36,6 +36,7 @@ public class JPATest {
 	public void testDuplicateEntry() {
 		StockPrices sp = new StockPrices(new StockNames("Stock1", "marketA"), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
 		jpaHelper.storeObject(sp);
+		sp = new StockPrices(new StockNames("Stock1", "marketA"), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
 		jpaHelper.storeObject(sp);
 	}
 	@Test
@@ -72,8 +73,17 @@ public class JPATest {
 	public void testStocksToWatch() {
 		PortfolioEntity p = new PortfolioEntity("StockToWatchTest");
 		jpaHelper.storeObject(p);
-		StocksToWatch stw = new StocksToWatch(p, new StockNames("stockbeeingwatched", "testMarket"));
-		jpaHelper.storeObject(stw);
+		
+		StockNames stockName = new StockNames("stock", "market");
+		jpaHelper.storeObject(stockName);
+		
+		p.addStockToWatch(stockName);
+		jpaHelper.updateObject(p);
+		
+		for (StockNames s : p.getStocksToWatch()) {
+			System.out.println(s);
+		}
+		
 	}
 	
 	@Test
@@ -156,13 +166,8 @@ public class JPATest {
 	/**
 	 * Removes all entitys from the database
 	 */
-	@AfterClass
+	//@AfterClass
 	public static void afterClass() {
-		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
-			//System.out.println(stw);
-			jpaHelper.remove(stw);
-		}
-		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			jpaHelper.remove(p);
