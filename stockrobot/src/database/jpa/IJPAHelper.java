@@ -41,12 +41,12 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param limit 
 	 * @return A list of stockPrices
 	 */
-	public List<StockPrices> getAllStockPricesReverseOrdered(int limit);
+	public List<StockPrices> getStockPricesReverseOrdered(int limit);
 	/**
 	 * Will give back all PortfolioInvestment
 	 * @return A list of PortfolioInvestment
 	 */
-	public List<PortfolioInvestment> getAllPortfolioInvestment();
+	//public List<PortfolioInvestment> getAllPortfolioInvestment();
 	/**
 	 * Will give back all StocksToWatch
 	 * @return A list of StocksToWatch
@@ -110,7 +110,7 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param amount 
 	 * @return A PortfolioHistory.
 	 */
-	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntity portfolio, long amount);
+	//public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntity portfolio, long amount);
 
 
 

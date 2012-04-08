@@ -3,30 +3,20 @@ package database.jpa.tables;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  * @author Daniel
  *
  * A class representing PortfolioHistory entity
  */
-@Entity
-@Table(name="PortfolioHistory")
+@Embeddable
 public class PortfolioHistory {
-
-	@Id
-	@GeneratedValue
-	@Column(name = "PORTFOLIO_HISTORY_ID", nullable = false)
-	private int id;
-	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	private StockPrices stockPrice;
 	
 	@Column
@@ -38,8 +28,7 @@ public class PortfolioHistory {
 	@Column
 	private long amount; 
 	
-	@ManyToOne
-    @JoinColumn(name="portfolioId",referencedColumnName="PORTFOLIO_ID")
+	@ManyToOne(cascade=CascadeType.ALL)
     private PortfolioEntity portfolio;
 	
 	public PortfolioHistory() {
@@ -80,12 +69,6 @@ public class PortfolioHistory {
 		if (l.size()>0)
 			return l.get(0);
 		return null;
-	}
-	/**
-	 * @return The id of this portfolioHistory
-	 */
-	public int getId() {
-		return id;
 	}
 	public Date getBuyDate() {
 		return buyDate;

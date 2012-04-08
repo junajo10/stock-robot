@@ -1,9 +1,13 @@
 package database.jpa.tables;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -52,10 +56,15 @@ public class PortfolioEntity {
 	@Column
 	private boolean stopSelling;
 	
-	
-	@OneToMany(mappedBy="portfolio",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
-	private Collection<PortfolioHistory> history;
+	@ElementCollection
+    @CollectionTable(name = "history")
+    private Set<PortfolioHistory> history = new HashSet<PortfolioHistory>();
         
+
+	@ElementCollection
+    @CollectionTable(name = "investments")
+    private Set<PortfolioInvestment> investments = new HashSet<PortfolioInvestment>();
+    
 	
 	@OneToMany(targetEntity=StockNames.class, fetch=FetchType.EAGER)
 	List<StockNames> stocksToWatch;
@@ -118,8 +127,12 @@ public class PortfolioEntity {
 	 * Will return the history of this portfolio.
 	 * @return A collection of PortfolioHistory that are coupled with this portfolio
 	 */
-	public Collection<PortfolioHistory> getHistory() {
+	public Set<PortfolioHistory> getHistory() {
 		return history;
+	}
+	
+	public void addPortfolioHistory(PortfolioHistory ph) {
+		this.history.add(ph);
 	}
 	/**
 	 * Invests/removes money
@@ -127,6 +140,7 @@ public class PortfolioEntity {
 	 * @param invest If true it will invest, If false will remove
 	 */
 	public void invest(long amount, boolean invest) {
+		this.investments.add(new PortfolioInvestment(this,amount, invest));
 		this.balance += amount;
 	}
 	/**
@@ -198,5 +212,25 @@ public class PortfolioEntity {
 	public void soldFor(long amount, IJPAHelper jpaHelper) {
 		balance += amount;
 		jpaHelper.updateObject(this);
+	}
+	public PortfolioHistory getSpecificPortfolioHistory(StockPrices s,
+			PortfolioEntity portfolio, long amount) {
+		
+		for (PortfolioHistory ph : history) {
+			if (ph.getBuyDate().equals(s.getTime()) && ph.getAmount() == amount)
+				return ph;
+		}
+		return null;
+	}
+	public long getTotalInvestedAmount() {
+		long result = 0;
+		
+		for (PortfolioInvestment pi : investments) {
+			if (pi.didInvest())
+				result += pi.getAmount();
+			else
+				result -= pi.getAmount();
+		}
+		return result;
 	}
 }

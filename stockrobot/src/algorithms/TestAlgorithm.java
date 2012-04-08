@@ -2,6 +2,7 @@ package algorithms;
 
 
 import java.util.List;
+import java.util.Set;
 
 import generic.Log;
 import generic.Pair;
@@ -63,7 +64,7 @@ public class TestAlgorithm implements IAlgorithm{
 				
 				if (sell) {
 					//Sell all
-					List<PortfolioHistory> ph = jpaHelper.getPortfolioHistory(sp, portfolio.getPortfolioTable());
+					Set<PortfolioHistory> ph = portfolio.getPortfolioTable().getHistory();
 					for (PortfolioHistory pHistory : ph) {
 						if (pHistory.getSoldDate() == null) {
 							trader.sellStock(sp, pHistory.getAmount(), portfolio.getPortfolioTable());

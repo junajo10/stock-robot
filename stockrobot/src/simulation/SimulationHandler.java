@@ -92,12 +92,12 @@ public class SimulationHandler {
 		
 		Date lastSeenTime = null;
 		long curr = 0;
-		long max = jpaHelper.getAllStockPricesReverseOrdered(100).size();
+		long max = jpaHelper.getStockPricesReverseOrdered(100).size();
 		
 		System.out.println(max);
 		
 		List<StockPrices> stockPrices = new ArrayList<StockPrices>();
-		for (StockPrices p : jpaHelper.getAllStockPricesReverseOrdered(100)) {
+		for (StockPrices p : jpaHelper.getStockPricesReverseOrdered(100)) {
 			//System.out.println(p);
 			curr ++;
 			
@@ -129,30 +129,19 @@ public class SimulationHandler {
 		
 		System.out.println("Selling all current stocks");
 		
-		for (PortfolioHistory ph : jpaSimHelper.getPortfolioHistory(portfolio.getPortfolioTable())) {
+		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
 			if (ph.getSoldDate() == null) {
 				System.out.println("Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
 				trader.sellStock(ph.getStockPrice(), ph.getAmount(), portfolio.getPortfolioTable());
-				/*
-				 * Primary key field database.jpa.tables.PortfolioEntity.portfolioId of 
-				 * database.jpa.tables.PortfolioEntity@28c50ffe has non-default value. 
-				 * The instance life cycle is in PNewState state and hence an existing non-default 
-				 * value for the identity field is not permitted. You either need to remove the 
-				 * @GeneratedValue annotation or modify the code to remove the initializer processing.
-				 */
 			}
 		}
 		
 		System.out.println("Balance: " + portfolio.getPortfolioTable().getBalance());
 		
-		clearTestDatabase();
+		//clearTestDatabase();
 		
 	}
 	public void clearTestDatabase() {
-		for (PortfolioInvestment investment : jpaSimHelper.getAllPortfolioInvestment()) {
-			jpaSimHelper.remove(investment);
-		}
-		
 		for (StocksToWatch stw : jpaSimHelper.getAllStocksToWatch()) {
 			jpaSimHelper.remove(stw);
 		}
@@ -160,13 +149,6 @@ public class SimulationHandler {
 		while (jpaSimHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaSimHelper.getAllPortfolios().get(0);
 			
-			if (p.getHistory() != null) {
-				for (PortfolioHistory ph : p.getHistory()) {
-					System.out.println(ph);
-					jpaSimHelper.remove(ph);
-					
-				}
-			}
 			jpaSimHelper.remove(p);
 		}
 	    for (AlgorithmEntity a : jpaSimHelper.getAllAlgorithms()) {
@@ -192,6 +174,6 @@ public class SimulationHandler {
 		SimulationHandler sim = new SimulationHandler();
 		sim.clearTestDatabase();
 		sim.simulateAlgorithm(new AlgorithmEntity("Algorithm1", "algorithms.TestAlgorithm"));
-		sim.clearTestDatabase();
+		//sim.clearTestDatabase();
 	}
 }

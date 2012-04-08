@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import javax.persistence.EntityManager;
@@ -85,7 +86,7 @@ class JPAHelperBase implements IJPAHelper {
 		return query.getResultList();
 	}
 	@Override
-	public List<StockPrices> getAllStockPricesReverseOrdered(int limit) {
+	public List<StockPrices> getStockPricesReverseOrdered(int limit) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<StockPrices> q = cb.createQuery(StockPrices.class);
 		Root<StockPrices> c = q.from(StockPrices.class);
@@ -99,7 +100,7 @@ class JPAHelperBase implements IJPAHelper {
 		
 		return query.getResultList();
 	}
-	@Override
+	//@Override
 	public List<PortfolioInvestment> getAllPortfolioInvestment() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
@@ -254,8 +255,6 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public synchronized boolean investMoney(long amount, PortfolioEntity portfolio) {
-		storeObject(new PortfolioInvestment(portfolio, amount, true));
-
 		portfolio.invest(amount, true);
 
 		updateObject(portfolio);
@@ -280,7 +279,7 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public List<StockPrices> getCurrentStocks(PortfolioEntity portfolioTable) {
-		List<PortfolioHistory> portfolioHistory = getPortfolioHistory(portfolioTable);
+		Set<PortfolioHistory> portfolioHistory = portfolioTable.getHistory();
 		List<StockPrices> sp = new ArrayList<StockPrices>();
 		
 		for (PortfolioHistory ph : portfolioHistory) {
@@ -371,7 +370,7 @@ class JPAHelperBase implements IJPAHelper {
 	public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable) {
 		return portfolioTable.getAlgorithm();
 	}
-	@Override
+	//@Override
 	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntity portfolio, long amount) {
 
 

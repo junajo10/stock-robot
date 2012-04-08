@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import junit.framework.Assert;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,7 +16,6 @@ import org.junit.Test;
 import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioEntity;
-import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
@@ -32,31 +33,25 @@ public class MainBasicJPATest {
 		jpaHelper = new JPAHelperSimulator();
 	}
 	
+	@Test 
+	public void addNewPortfolios() {
+		PortfolioEntity portfolio = new PortfolioEntity("portfolio 1");
+		jpaHelper.storeObject(portfolio);
+		portfolio.setAlgorithm(new AlgorithmEntity("algorithm1", "algorithms.TestAlgorithm"));
+		jpaHelper.updateObject(portfolio);
+
+		
+		PortfolioEntity portfolio2 = new PortfolioEntity("portfolio 2");
+		jpaHelper.storeObject(portfolio2);
+		
+		portfolio2.setAlgorithm(new AlgorithmEntity("algorithm2", "algorithms.TestAlgorithm2"));
+		jpaHelper.updateObject(portfolio2);
+		
+		Assert.assertEquals(2, jpaHelper.getAllPortfolios().size());
+	}
 	@Test
 	public void mainTest() {
-
-		IJPAHelper jpaHelper = JPAHelper.getInstance();
-		
-		
-		List<PortfolioEntity> portfolios = jpaHelper.getAllPortfolios();
-		
-		if (portfolios.size() == 0) {
-			PortfolioEntity portfolio = new PortfolioEntity("portfolio 1");
-			jpaHelper.storeObject(portfolio);
-			portfolio.setAlgorithm(new AlgorithmEntity("algorithm1", "algorithms.TestAlgorithm"));
-			jpaHelper.updateObject(portfolio);
-
-			
-			PortfolioEntity portfolio2 = new PortfolioEntity("portfolio 2");
-			jpaHelper.storeObject(portfolio2);
-			
-			portfolio2.setAlgorithm(new AlgorithmEntity("algorithm2", "algorithms.TestAlgorithm2"));
-			jpaHelper.updateObject(portfolio2);
-			
-			portfolios = jpaHelper.getAllPortfolios();
-		}
-		
-		for (PortfolioEntity p : portfolios) {
+		for (PortfolioEntity p : jpaHelper.getAllPortfolios()) {
 			jpaHelper.investMoney(10000000, p);
 			System.out.println(p);
 		}
@@ -105,12 +100,13 @@ public class MainBasicJPATest {
 		
 		StockPrices aStock = jpaHelper.getAllStockPrices().get(0);
 		
+		PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 		PortfolioHistory ph;
 		if (r.nextBoolean())
-			ph = new PortfolioHistory(aStock, new Date(System.currentTimeMillis()), null, 10, portfolios.get(0));
+			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()), null, 10, p));
 		else
-			ph = new PortfolioHistory(aStock, new Date(System.currentTimeMillis()-10000), new Date(System.currentTimeMillis()), 10, portfolios.get(0));
-		jpaHelper.storeObject(ph);
+			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()-10000), new Date(System.currentTimeMillis()), 10, p));
+		jpaHelper.updateObject(p);
 		
 		//---- Duplicate test
 		List<StockPrices> duplicateTest = new LinkedList<StockPrices>();
@@ -139,7 +135,7 @@ public class MainBasicJPATest {
 		
 		
 		
-		System.out.println(jpaHelper.getTotalInvestedAmount(jpaHelper.getAllPortfolios().get(0)));
+		System.out.println(p.getTotalInvestedAmount());
 		
 		
 		System.out.println(jpaHelper.getStockInfo(10).size() + " " + jpaHelper.getStockInfo(10).get(0).getRight().size());
@@ -160,7 +156,7 @@ public class MainBasicJPATest {
 		
 		
 		System.out.println();
-		for (PortfolioHistory phistory :  jpaHelper.getPortfolioHistory(jpaHelper.getAllPortfolios().get(0))) {
+		for (PortfolioHistory phistory :  p.getHistory()) {
 			System.out.println(phistory);
 			
 		}
@@ -169,20 +165,16 @@ public class MainBasicJPATest {
 		StockPrices stock = new StockPrices(jpaHelper.getAllStockNames().get(0), 123, 123, 123, 123, new Date(123));
 		jpaHelper.storeObject(stock);
 		
-		jpaHelper.storeObject(new PortfolioHistory(stock, new Date(123), new Date(25231434), 77, jpaHelper.getAllPortfolios().get(0)));
+		p.addPortfolioHistory(new PortfolioHistory(stock, new Date(123), new Date(25231434), 77, p));
 		
-		PortfolioHistory pHistory = jpaHelper.getSpecificPortfolioHistory(stock, jpaHelper.getAllPortfolios().get(0), 77);
+		PortfolioHistory pHistory = p.getSpecificPortfolioHistory(stock, jpaHelper.getAllPortfolios().get(0), 77);
 		System.out.println(pHistory);
 		List<StockPrices> ble = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
 		for (StockPrices sp : ble) {
 			System.out.println(sp.getTime());
 		}
 		
-		
-		jpaHelper.remove(pHistory);
 		jpaHelper.remove(stock);
-		
-		
 		
 	}
 
@@ -191,10 +183,6 @@ public class MainBasicJPATest {
 	 */
 	@AfterClass
 	public static void afterClass() {
-		for (PortfolioInvestment investment : jpaHelper.getAllPortfolioInvestment()) {
-			System.out.println(investment);
-			jpaHelper.remove(investment);
-		}
 		
 		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
 			System.out.println(stw);
@@ -203,12 +191,6 @@ public class MainBasicJPATest {
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
-			if (p.getHistory() != null) {
-				if (p.getHistory().iterator().hasNext()) {
-					jpaHelper.remove(p.getHistory().iterator().next());
-				}
-			}
-			
 			jpaHelper.remove(p);
 		}
 	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {

@@ -46,11 +46,6 @@ public class testJPAPortfolioSettings {
 	 */
 	@AfterClass
 	public static void afterClass() {
-		for (PortfolioInvestment investment : jpaHelper.getAllPortfolioInvestment()) {
-			System.out.println(investment);
-			jpaHelper.remove(investment);
-		}
-		
 		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
 			System.out.println(stw);
 			jpaHelper.remove(stw);
@@ -58,12 +53,6 @@ public class testJPAPortfolioSettings {
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
-			if (p.getHistory() != null) {
-				if (p.getHistory().iterator().hasNext()) {
-					jpaHelper.remove(p.getHistory().iterator().next());
-				}
-			}
-			
 			jpaHelper.remove(p);
 		}
 	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {

@@ -45,9 +45,6 @@ public class testJPASlice {
 	*/
 	@AfterClass
 	public static void afterClass() {
-		for (PortfolioInvestment investment : jpaHelper.getAllPortfolioInvestment()) {
-			jpaHelper.remove(investment);
-		}
 		
 		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
 			jpaHelper.remove(stw);
@@ -55,11 +52,6 @@ public class testJPASlice {
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
-			if (p.getHistory() != null) {
-				if (p.getHistory().iterator().hasNext()) {
-					jpaHelper.remove(p.getHistory().iterator().next());
-				}
-			}
 			
 			jpaHelper.remove(p);
 		}
