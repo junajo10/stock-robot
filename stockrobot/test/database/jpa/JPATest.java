@@ -12,6 +12,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import scraping.database.IInserter;
+import scraping.database.JPAInserter;
 import scraping.model.ParserStock;
 
 
@@ -90,10 +92,13 @@ public class JPATest {
 			list.add(ps);
 		}
 		// Should add 100 new stocks
-		Assert.assertEquals(100, jpaHelper.addStocks(list));
+		IInserter jpaInserter = new JPAInserter(jpaHelper);
+		
+		
+		Assert.assertEquals(100, jpaInserter.insertStockData(list));
 		
 		// Should not be able to add any new stocks
-		Assert.assertEquals(0, jpaHelper.addStocks(list));
+		Assert.assertEquals(0, jpaInserter.insertStockData(list));
 		
 		list.clear();
 		for (int i = 0; i < 100; i++) {
@@ -108,10 +113,10 @@ public class JPATest {
 			list.add(ps);
 		}
 		// Should add 100 new stocks
-		Assert.assertEquals(100, jpaHelper.addStocks(list));
+		Assert.assertEquals(100, jpaInserter.insertStockData(list));
 		
 		// Should not be able to add any new stocks
-		Assert.assertEquals(0, jpaHelper.addStocks(list));
+		Assert.assertEquals(0, jpaInserter.insertStockData(list));
 		
 		
 		// Test if all the stocks in the list is in getLatestStockPrices
@@ -160,19 +165,11 @@ public class JPATest {
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
-			if (p.getHistory() != null) {
-				if (p.getHistory().iterator().hasNext()) {
-					jpaHelper.remove(p.getHistory().iterator().next());
-				}
-			}
-			
 			jpaHelper.remove(p);
 		}
 	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
 			jpaHelper.remove(a);
 	    }
-		
-	    
 	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
 	    	//System.out.println(sp);
 	    	jpaHelper.remove(sp);

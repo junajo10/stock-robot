@@ -43,11 +43,6 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 */
 	public List<StockPrices> getStockPricesReverseOrdered(int limit);
 	/**
-	 * Will give back all PortfolioInvestment
-	 * @return A list of PortfolioInvestment
-	 */
-	//public List<PortfolioInvestment> getAllPortfolioInvestment();
-	/**
 	 * Will give back all StocksToWatch
 	 * @return A list of StocksToWatch
 	 */
@@ -98,20 +93,6 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @return An algorithmTable
 	 */
 	public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable);
-
-	/**
-	 * Given a stockPrice and a portfolio, will find the PortfolioHistory that has the StockPrice as buying price, 
-	 * and coupled with the same portfolio.
-	 * 
-	 * This method will be used for example in the TraderSimulator to get the right PortfolioHistory.
-	 * 
-	 * @param stockPrice The buying stockPrice
-	 * @param portfolio The portfolio
-	 * @param amount 
-	 * @return A PortfolioHistory.
-	 */
-	//public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntity portfolio, long amount);
-
 
 
 	public EntityManager getEntityManager();

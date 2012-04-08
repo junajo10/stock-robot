@@ -1,5 +1,4 @@
 package database.jpa.tables;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,17 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.apache.openjpa.persistence.Persistent;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.JPAHelperSimulator;
 
 /**
  * @author Daniel
@@ -213,9 +208,7 @@ public class PortfolioEntity {
 		balance += amount;
 		jpaHelper.updateObject(this);
 	}
-	public PortfolioHistory getSpecificPortfolioHistory(StockPrices s,
-			PortfolioEntity portfolio, long amount) {
-		
+	public PortfolioHistory getSpecificPortfolioHistory(StockPrices s, long amount) {
 		for (PortfolioHistory ph : history) {
 			if (ph.getBuyDate().equals(s.getTime()) && ph.getAmount() == amount)
 				return ph;

@@ -49,7 +49,7 @@ public class TraderSimulator implements ITrader{
 	public boolean sellStock(StockPrices s, long amount, PortfolioEntity portfolio) {
 		StockPrices latest = JPAHelper.getInstance().getLatestStockPrice(s);
 		portfolio.soldFor( latest.getBuy()*amount );
-		PortfolioHistory ph = portfolio.getSpecificPortfolioHistory(s, portfolio, amount);
+		PortfolioHistory ph = portfolio.getSpecificPortfolioHistory(s, amount);
 		
 		if (ph != null && ph.getSoldDate() == null) {
 			ph.setSoldDate(latest.getTime());

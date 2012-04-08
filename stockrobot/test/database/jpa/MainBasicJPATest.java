@@ -167,7 +167,7 @@ public class MainBasicJPATest {
 		
 		p.addPortfolioHistory(new PortfolioHistory(stock, new Date(123), new Date(25231434), 77, p));
 		
-		PortfolioHistory pHistory = p.getSpecificPortfolioHistory(stock, jpaHelper.getAllPortfolios().get(0), 77);
+		PortfolioHistory pHistory = p.getSpecificPortfolioHistory(stock, 77);
 		System.out.println(pHistory);
 		List<StockPrices> ble = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
 		for (StockPrices sp : ble) {

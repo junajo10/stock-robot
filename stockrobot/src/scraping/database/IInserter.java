@@ -15,7 +15,7 @@ public interface IInserter {
 	 * @param s
 	 * @return
 	 */
-	public boolean insertStockData( List<ParserStock> s );
+	public int insertStockData( List<ParserStock> s );
 	
 	/**
 	 * Given an array with stock data formatted according to PriceDataRepresentation

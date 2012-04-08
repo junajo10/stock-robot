@@ -68,7 +68,7 @@ public class TestAlgorithm implements IAlgorithm{
 					for (PortfolioHistory pHistory : ph) {
 						if (pHistory.getSoldDate() == null) {
 							trader.sellStock(sp, pHistory.getAmount(), portfolio.getPortfolioTable());
-							jpaHelper.updateObject(pHistory);
+							//jpaHelper.updateObject(pHistory);
 						}
 					}
 					

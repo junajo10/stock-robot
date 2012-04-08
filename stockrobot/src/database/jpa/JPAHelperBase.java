@@ -100,18 +100,6 @@ class JPAHelperBase implements IJPAHelper {
 		
 		return query.getResultList();
 	}
-	//@Override
-	public List<PortfolioInvestment> getAllPortfolioInvestment() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
-
-		Root<PortfolioInvestment> c = q2.from(PortfolioInvestment.class);
-
-		q2.select(c);
-
-		TypedQuery<PortfolioInvestment> query = em.createQuery(q2);
-		return query.getResultList();
-	}
 	@Override
 	public List<StocksToWatch> getAllStocksToWatch() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -370,29 +358,6 @@ class JPAHelperBase implements IJPAHelper {
 	public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable) {
 		return portfolioTable.getAlgorithm();
 	}
-	//@Override
-	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntity portfolio, long amount) {
-
-
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
-
-		Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
-
-		q2.select(c);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolio);
-		Predicate p2 = em.getCriteriaBuilder().equal(c.get("stockPrice"), stockPrice);
-		Predicate p3 = em.getCriteriaBuilder().equal(c.get("amount"), amount);
-
-		q2.where(p, p2);
-
-		TypedQuery<PortfolioHistory> query = em.createQuery(q2);
-
-		query.setMaxResults(1);
-
-		return query.getSingleResult();
-	}
 	@Override
 	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp, PortfolioEntity portfolioTable) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -455,7 +420,7 @@ class JPAHelperBase implements IJPAHelper {
 
 		return query.getResultList();
 	}
-	@Override
+	//@Override
 	public int addStocks(List<ParserStock> stocks) {
 		Map<String, StockPrices> latestMap = getLatestMap(); 
 		int newStockPrices = 0;
