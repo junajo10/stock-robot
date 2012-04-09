@@ -64,12 +64,6 @@ public class PortfolioHandler implements IPortfolioHandler{
 		return instance;
 	}
 	@Override
-	public boolean setupPortfolio(IPortfolio portfolio) {
-		PortfolioSetupGUI setupGUI = new PortfolioSetupGUI(portfolio);
-		
-		return false;
-	}
-	@Override
 	public void addAddObserver(PropertyChangeListener listener) {
 		propertyChangeSuport.addPropertyChangeListener(listener);
 	}

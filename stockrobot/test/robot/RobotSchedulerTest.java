@@ -29,7 +29,6 @@ import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
 import portfolio.Portfolio;
 import portfolio.PortfolioHandler;
-import portfolio.PortfolioSetupGUI;
 import trader.ITrader;
 import trader.TraderSimulator;
 
@@ -329,11 +328,6 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 			return false;
 		}
 	
-		@Override
-		public boolean setupPortfolio(IPortfolio portfolio) {
-			
-			return false;
-		}
 		@Override
 		public void addAddObserver(PropertyChangeListener listener) {
 		}
