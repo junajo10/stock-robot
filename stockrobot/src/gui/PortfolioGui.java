@@ -51,6 +51,8 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	private DefaultComboBoxModel cmb_hld_portfolio = new DefaultComboBoxModel();
 	private JLabel lbl_CashValue;
 	
+	private JButton btn_ShowStock;
+	
 	//The model portfolio handler
 	private IPortfolioHandler portfolioHandler;
 	private IPortfolio currentPortfolio = null;
@@ -189,9 +191,9 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		JPanel pnl_ShowStock = guiFactory.getInvisibleContainer();
 		pnl_StockContainer.add(pnl_ShowStock);
 		
-		JButton btn_Show = guiFactory.getDefaultButton("Stock");
-		btn_Show.setEnabled(false);
-		pnl_ShowStock.add(btn_Show);
+		btn_ShowStock = guiFactory.getDefaultButton("Stock");
+		btn_ShowStock.setEnabled(true);
+		pnl_ShowStock.add(btn_ShowStock);
 		// ===========================
 		
 		if(portfolioHandler != null){
@@ -206,6 +208,15 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		
 		
 		this.setVisible(true);
+	}
+	
+	/**
+	 * Adds a listener that listens for presses on button button
+	 * 
+	 * @param listener
+	 */
+	public void addStockListener(ActionListener listener){
+		btn_ShowStock.addActionListener(listener);
 	}
 
 	/**
