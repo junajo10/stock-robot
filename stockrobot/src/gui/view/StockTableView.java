@@ -1,10 +1,10 @@
 package gui.view;
 
-import generic.FinancialLongConverter;
 import generic.Pair;
+import gui.controller.IController;
+import gui.controller.StockTableController;
 
 import java.awt.Dimension;
-import java.util.List;
 
 //import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,10 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import database.jpa.IJPAHelper;
-import database.jpa.JPAHelper;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
 
 /**
  * Wrapping a JTable, fetching data from the price DB and inserting it.
@@ -31,6 +27,7 @@ public class StockTableView extends JPanel {
 	private JTable table;
 	private JScrollPane scroller;
 	private TableModel model;
+	private IController controller;
 	
 	/*
 	//Keeping to make it easy to test this class
@@ -54,15 +51,26 @@ public class StockTableView extends JPanel {
 	}
 	*/
 	
+	public StockTableView() {}
+	
 	/**
 	 * For now, just get all data and push it to the table
-	 * 
 	 */
-	public StockTableView() {
+	public void init() {
 		
-		Pair<Object[][], Object[]> dataAndNames = populate();
+		Pair<Object[][], Object[]> dataAndNames = ((StockTableController) controller).populate();
 		
 		init( dataAndNames.getLeft(), dataAndNames.getRight() );
+	}
+	
+	/**
+	 * Set a controller
+	 * 
+	 * @param controller
+	 */
+	public void registerController( IController controller ) {
+		
+		this.controller = controller;
 	}
 	
 	/**
@@ -70,9 +78,7 @@ public class StockTableView extends JPanel {
 	 */
 	public void updateInfo() {
 		
-		Pair<Object[][], Object[]> dataAndNames = populate();
-		
-		System.out.println( "dataAndNames: buy: " + dataAndNames.getLeft()[0][1] );
+		Pair<Object[][], Object[]> dataAndNames = ((StockTableController) controller).populate();
 		
 		//Iterate through all table cells and update them according to the new data
 		for( int i = 0; i < dataAndNames.getLeft().length; i ++ )
@@ -102,46 +108,5 @@ public class StockTableView extends JPanel {
 		add( scroller );
 		
 		repaint();
-	}
-	
-	/**
-	 * Populate
-	 * 
-	 * Take all stockNames, and all data that needs to be shown in the JTable, and put them
-	 * arrays that can be sent to the JTable class. Then return them as a tuple
-	 * 
-	 * @return
-	 */
-	private Pair<Object[][], Object[]> populate() {
-		
-		//Database connection
-		IJPAHelper jpa = JPAHelper.getInstance();
-		List<Pair<StockNames,List<StockPrices>>> stockInfo = jpa.getStockInfo(1);
-		
-		System.out.println( "stockInfo: " + stockInfo );
-		
-		//Define column names
-		String[] tableColumnNames = {"Name","Market","Buy","Sell","Latest","Volume","Time"};
-		
-		//Create storage for row data
-		Object[][] rows = new Object[stockInfo.size()][tableColumnNames.length];
-		
-		System.out.println( "stockinfosize: " + stockInfo.size() );
-		
-		//Collect row data from DB
-		for( int i = 0; i < stockInfo.size(); i ++ ) {
-			
-			rows[ i ][ 0 ] = stockInfo.get( i ).getLeft().getName();
-			rows[ i ][ 1 ] = stockInfo.get( i ).getLeft().getMarket();
-			
-			rows[ i ][ 2 ] = FinancialLongConverter.toStringTwoDecimalPoints( stockInfo.get( i ).getRight().get(0).getBuy() );
-			rows[ i ][ 3 ] = FinancialLongConverter.toStringTwoDecimalPoints( stockInfo.get( i ).getRight().get(0).getSell() );
-			rows[ i ][ 4 ] = FinancialLongConverter.toStringTwoDecimalPoints( stockInfo.get( i ).getRight().get(0).getLatest() );
-			rows[ i ][ 5 ] = stockInfo.get( i ).getRight().get(0).getVolume();
-			rows[ i ][ 6 ] = stockInfo.get( i ).getRight().get(0).getTime();
-		}
-		
-		//Return row data and column names
-		return new Pair<Object[][], Object[]>(rows, tableColumnNames);
 	}
 }

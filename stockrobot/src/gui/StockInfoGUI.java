@@ -23,8 +23,6 @@ public class StockInfoGUI extends JFrame {
 	
 	public StockInfoGUI() {
 		
-		System.out.println( "StockInfoGUI!!!" );
-		
 		//TODO: Remove after alpha!
 		AlphaReceiver receiveNotifier = new AlphaReceiver();
 		
@@ -32,6 +30,8 @@ public class StockInfoGUI extends JFrame {
 		
 		view = (StockTableView) guiFactory.getStockTableView();
 		controller = new StockTableController( view );
+		view.registerController( controller );
+		view.init();
 		receiveNotifier.addAddObserver(controller);
 		
 		setBounds( 100, 200, 800, 600 );
