@@ -11,9 +11,8 @@ import trader.ITrader;
 import trader.TraderSimulator;
 
 /**
- * @author Daniel
- *
  * This class will be in charge of loading algorithms
+ * @author Daniel
  */
 
 public class AlgorithmsLoader {
@@ -60,6 +59,11 @@ public class AlgorithmsLoader {
 		return null;
 		
 	}
+	/**
+	 * Loads the algorithm in a given portfolio, it will also initiate its settings. 
+	 * @param portfolio 
+	 * @return
+	 */
 	public IAlgorithm loadAlgorithm(IPortfolio portfolio) {
 		if (portfolio == null) {
 			System.out.println("portfolio is null");
@@ -67,14 +71,19 @@ public class AlgorithmsLoader {
 		}
 		
 		AlgorithmEntity algorithmTable = portfolio.getAlgorithmTable();
-		
+		IAlgorithm algorithm = null;
 		if (algorithmTable != null && algorithmTable.getPath() != null)
-			return loadAlgorithm(algorithmTable.getPath(), portfolio);
+			algorithm = loadAlgorithm(algorithmTable.getPath(), portfolio);
 		
-		return null;
-	}
-	public SettingsAlgorithm getSettings(IAlgorithm algorithm) {
-		return new SettingsAlgorithm(algorithm);
+		if (algorithm != null) {
+			boolean firstTime = algorithmTable.initiate(algorithm);
+			
+			if (!firstTime) {
+				algorithm.giveDoubleSettings(algorithmTable.getDoubleSettings());
+				algorithm.giveLongSettings(algorithmTable.getLongSettings());
+			}
+		}
+		return algorithm;
 	}
 	public static AlgorithmsLoader getInstance(IRobot_Algorithms robot) {
 		if(instance == null) {

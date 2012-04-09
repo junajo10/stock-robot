@@ -4,20 +4,27 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import junit.framework.Assert;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import portfolio.Portfolio;
+
+import robot.IRobot_Algorithms;
+
+import algorithms.IAlgorithm;
+import algorithms.loader.AlgorithmsLoader;
+
 import database.jpa.tables.AlgorithmEntity;
-import database.jpa.tables.AlgorithmSetting;
 import database.jpa.tables.AlgorithmSettings;
 import database.jpa.tables.PortfolioEntity;
-import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
-public class testJPAPortfolioSettings {
+public class testJPAPortfolioSettings implements IRobot_Algorithms{
 	static IJPAHelper jpaHelper;
 	static Random rand = new Random(System.currentTimeMillis());
 	@BeforeClass
@@ -27,18 +34,28 @@ public class testJPAPortfolioSettings {
 	
 	@Test
 	public void testSettings() {
+		
 		PortfolioEntity p = new PortfolioEntity("apa");
 		jpaHelper.storeObject(p);
+		
+		
+		Portfolio portfolio = new Portfolio(p, jpaHelper);
 		
 		AlgorithmEntity a = new AlgorithmEntity("test", "algorithms.TestAlgorithm");
 		jpaHelper.storeObject(a);
 		
 		p.setAlgorithm(a);
+		portfolio.setAlgorithm(a);
+		
 		jpaHelper.updateObject(p);
 		
-		AlgorithmSettings as = new AlgorithmSettings(p, a);
-		jpaHelper.storeObject(as);
-	
+		AlgorithmsLoader al = AlgorithmsLoader.getInstance(this);
+		IAlgorithm algorithm = al.loadAlgorithm(portfolio);
+				
+		jpaHelper.updateObject(a);
+		System.out.println(a.getDoubleSettings().size() + a.getLongSettings().size());
+		
+		Assert.assertTrue(a.getDoubleSettings().size() + a.getLongSettings().size() > 0);
 	}
 
 	/**
@@ -46,11 +63,6 @@ public class testJPAPortfolioSettings {
 	 */
 	@AfterClass
 	public static void afterClass() {
-		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
-			System.out.println(stw);
-			jpaHelper.remove(stw);
-		}
-		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			jpaHelper.remove(p);
@@ -58,8 +70,6 @@ public class testJPAPortfolioSettings {
 	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
 			jpaHelper.remove(a);
 	    }
-		
-	    
 	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
 	    	System.out.println(sp);
 	    	jpaHelper.remove(sp);
@@ -68,6 +78,17 @@ public class testJPAPortfolioSettings {
 			System.out.println(sn);
 	    	jpaHelper.remove(sn);
 		}
+	}
+
+	@Override
+	public boolean reportToUser(String message) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IJPAHelper getJPAHelper() {
+		return jpaHelper;
 	}
 
 }

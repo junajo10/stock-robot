@@ -1,14 +1,22 @@
 package database.jpa.tables;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import algorithms.IAlgorithm;
+
 /**
- * @author Daniel
  * A entity class representing an algorithm.
  * It has the very important field path, which is where the class file of an algorithm is.
+ * 
+ * @author Daniel
  */
 @Entity
 @Table(name="AlgorithmEntity")
@@ -22,6 +30,19 @@ public class AlgorithmEntity {
 	
 	@Column(name="path", nullable=true, length=255, insertable=true)
 	private String path;
+	
+	@ElementCollection
+    @CollectionTable(name = "longSettings")
+    private Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
+	
+	
+	@ElementCollection
+    @CollectionTable(name = "doubleSettings")
+    private Set<AlgorithmSettingDouble> doubleSettings = new HashSet<AlgorithmSettingDouble>();
+	
+	@Column
+	private boolean initiaded = false;
+	
 	
 	public AlgorithmEntity() {
 		
@@ -68,5 +89,36 @@ public class AlgorithmEntity {
 	 */
 	public String toString() {
 		return name + " | " + path;
+	}
+	
+	public boolean initiate(IAlgorithm algorithm) {
+		if (initiaded) {
+			System.out.println("Already Initiated");
+			return false;
+		}
+		for (AlgorithmSettingDouble setting : algorithm.getDefaultDoubleSettings()) {
+			addDoubleSetting(new AlgorithmSettingDouble(setting.getName(), setting.getDefaultValue(), setting.getSettingText(), setting.getSettingIndex(), setting.getMinValue(), setting.getMaxValue()));
+		}
+		for (AlgorithmSettingLong setting : algorithm.getDefaultLongSettings()) {
+			addLongSetting(new AlgorithmSettingLong(setting.getName(), setting.getDefaultValue(), setting.getSettingText(), setting.getSettingIndex(), setting.getMinValue(), setting.getMaxValue()));
+		}
+		System.out.println("Initiated");
+		initiaded = true;
+		return true;
+	}
+	
+	
+	public void addLongSetting(AlgorithmSettingLong longSetting) {
+		longSettings.add(longSetting);
+	}
+	public Set<AlgorithmSettingLong> getLongSettings() {
+		return longSettings;
+	}
+	
+	public void addDoubleSetting(AlgorithmSettingDouble doubleSetting) {
+		doubleSettings.add(doubleSetting);
+	}
+	public Set<AlgorithmSettingDouble> getDoubleSettings() {
+		return doubleSettings;
 	}
 }

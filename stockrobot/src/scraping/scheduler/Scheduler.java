@@ -1,9 +1,9 @@
 package scraping.scheduler;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 
 /**
  * Class that can be asked whether something should happen or not
@@ -37,7 +37,6 @@ public class Scheduler implements IScheduler {
 			
 			//Cases when it's now allowed to run:
 			//If it's before 8AM
-			//TODO Change getHours. The method is depricated
 			if( d.getHourOfDay() < 8 )
 				return false;
 				
@@ -54,7 +53,7 @@ public class Scheduler implements IScheduler {
 				return false;
 			
 			//If saturday or sunday!
-			if( d.getDayOfWeek() == 6 || d.getDayOfWeek() == 7 )
+			if( d.getDayOfWeek() == DateTimeConstants.SATURDAY || d.getDayOfWeek() == DateTimeConstants.SUNDAY )
 				return false;
 			
 			//Otherwise, just go for it!
@@ -85,18 +84,18 @@ public class Scheduler implements IScheduler {
 		
 		DateTime d = new DateTime(System.currentTimeMillis());
 		
-		if (d.getHourOfDay() > 17 || d.getDayOfWeek() == 6 || d.getDayOfWeek() == 7) {
+		if (d.getHourOfDay() > 17 || d.getDayOfWeek() == DateTimeConstants.SATURDAY || d.getDayOfWeek() == DateTimeConstants.SUNDAY) {
 			// seconds until midnight
 			time = (3600*24) - (3600*d.getHourOfDay() + 60*d.getMinuteOfHour() + d.getSecondOfMinute());
 			
 			// seconds until 8:58
 			time += ((60*9)-2)*60;
 
-			if (d.getDayOfWeek() == 5 && d.getHourOfDay() > 17) {
+			if (d.getDayOfWeek() == DateTimeConstants.FRIDAY && d.getHourOfDay() > 17) {
 				// Friday after 17
 				time += 3600*24*2;
 			}
-			else if (d.getDayOfWeek() == 6) {
+			else if (d.getDayOfWeek() == DateTimeConstants.SATURDAY) {
 				// if its saturday
 				time += 3600*24;
 			}

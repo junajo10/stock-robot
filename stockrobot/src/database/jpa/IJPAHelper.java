@@ -5,19 +5,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import database.jpa.tables.AlgorithmEntity;
-import database.jpa.tables.AlgorithmSetting;
-import database.jpa.tables.AlgorithmSettings;
 import database.jpa.tables.PortfolioEntity;
-import database.jpa.tables.PortfolioHistory;
-import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
 /**
- * @author Daniel
- *
  * This is the main interface to the JPAHelper system,
  * it is implemented by JPAHelper and JPAHelperSimulator
+ * 
+ * @author Daniel
  */
 public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	public void stopJPASystem();
@@ -97,9 +93,6 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 
 	public EntityManager getEntityManager();
 	
-	
-	
-	public List<AlgorithmSetting> getSettings(AlgorithmSettings settings);
 	
 	public List<StockPrices> getLatestStockPrices();
 }

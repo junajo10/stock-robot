@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -66,6 +67,8 @@ public class PortfolioEntity {
     @CollectionTable(name = "stocksToWatch")
 	private Set<StocksToWatch> stocksToWatch = new HashSet<StocksToWatch>();
 	
+	@Embedded
+	private AlgorithmSettings algorithmSettings;
 	
 	public PortfolioEntity() {
 		
@@ -79,6 +82,8 @@ public class PortfolioEntity {
 		algorithm = null;
 		balance = (long)0;
 		watchAllStocks = false;
+		
+		algorithmSettings = null;
 	}
 	/**
 	 * Returns the name of the portfolio
@@ -115,10 +120,15 @@ public class PortfolioEntity {
 	}
 	/**
 	 * Sets a new algorithm to a given portfolio
+	 * Will clear all settings and give the default settings of the given algorithm
 	 * @param algorithm
 	 */
 	public void setAlgorithm(AlgorithmEntity algorithm) {
 		this.algorithm = algorithm;
+		
+		// Create a new AlgorithmSettings
+		this.algorithmSettings = new AlgorithmSettings();
+
 	}
 	/**
 	 * Will return the history of this portfolio.

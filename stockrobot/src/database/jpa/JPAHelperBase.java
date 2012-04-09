@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,12 +19,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import scraping.model.ParserStock;
 
 
 import database.jpa.tables.AlgorithmEntity;
-import database.jpa.tables.AlgorithmSetting;
-import database.jpa.tables.AlgorithmSettings;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.PortfolioEntity;
@@ -34,11 +30,11 @@ import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
 /**
- * @author Daniel
- *
  * Basically the main JPA system we will use.
  * 
  * It has methods for most of the things we want to accomplish.
+ * 
+ * @author Daniel
  */
 class JPAHelperBase implements IJPAHelper {
 	EntityManager em = null;
@@ -402,69 +398,6 @@ class JPAHelperBase implements IJPAHelper {
 	@Override
 	public EntityManager getEntityManager() {
 		return em;
-	}
-	@Override
-	public List<AlgorithmSetting> getSettings(AlgorithmSettings settings) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<AlgorithmSetting> q2 = cb.createQuery(AlgorithmSetting.class);
-
-		Root<AlgorithmSetting> c = q2.from(AlgorithmSetting.class);
-
-		q2.select(c);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("settings"), settings);
-
-		q2.where(p);
-
-		TypedQuery<AlgorithmSetting> query = em.createQuery(q2);
-
-		return query.getResultList();
-	}
-	//@Override
-	public int addStocks(List<ParserStock> stocks) {
-		Map<String, StockPrices> latestMap = getLatestMap(); 
-		int newStockPrices = 0;
-		List<StockPrices> newStocks = new LinkedList<StockPrices>();
-		Stack<StockNames> newStockNames = new Stack<StockNames>();
-		
-		for (ParserStock s : stocks) {
-			if (s.getBuy() != 0 && s.getSell() != 0) {
-				if (!latestMap.containsKey(s.getName())) {
-					//StockName doesn't exist.
-					newStockNames.push(new StockNames(s.getName(), s.getMarket()));
-					newStocks.add(new StockPrices(newStockNames.peek(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
-					newStockPrices++;
-
-				}
-				else {
-					StockPrices latest = latestMap.get(s.getName());
-
-					if (!latest.getTime().equals(s.getDate())) {
-						newStocks.add(new StockPrices(latest.getStockName(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
-						newStockPrices++;
-					}
-				}
-			}
-		}
-		
-		try {
-			storeListOfObjects(newStockNames);
-		} catch (Exception e) {
-			// For some reason there is an identical stock name, so store those that are possible
-			// using the slower store function.
-			storeListOfObjectsDuplicates(newStockNames);
-		}
-		
-		
-		try {
-			storeListOfObjects(newStocks);
-		} catch (Exception e) {
-			// For some reason there is an identical stock price, so store those that are possible
-			// using the slower store function.
-			storeListOfObjectsDuplicates(newStocks);
-		}
-		
-		return newStockPrices;
 	}
 	@Override
 	public Map<String, StockPrices> getLatestMap() {

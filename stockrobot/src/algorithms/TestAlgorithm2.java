@@ -1,11 +1,16 @@
 package algorithms;
 
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import generic.Log;
 import generic.Pair;
 import database.jpa.IJPAAlgortihm;
+import database.jpa.tables.AlgorithmSettingDouble;
+import database.jpa.tables.AlgorithmSettingLong;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -25,6 +30,8 @@ public class TestAlgorithm2 implements IAlgorithm{
 	IPortfolio portfolio;
 	ITrader trader = null;
 	IJPAAlgortihm jpaHelper = null;
+	private long buySetting = 5;
+	private long sellSetting = 5;
 
 
 	public TestAlgorithm2(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
@@ -109,78 +116,38 @@ public class TestAlgorithm2 implements IAlgorithm{
 	public String getDescription() {
 		return "Test algorithm1\n\nBuys when a stock has gone up 3 times in a row\nSells when a stock has gone down 3 times in a row";
 	}
-
+	
+	@Override
+	public Set<AlgorithmSettingDouble> getDefaultDoubleSettings() {
+		Set<AlgorithmSettingDouble> doubleSettings = new HashSet<AlgorithmSettingDouble>();
+		return doubleSettings;
+	}
+	
+	@Override
+	public Set<AlgorithmSettingLong> getDefaultLongSettings() {
+		Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
+		longSettings.add(new AlgorithmSettingLong("buy", 5, "Number of times a stock has to climb before buying", 1, 1, 100));
+		longSettings.add(new AlgorithmSettingLong("sell", 5, "Number of times a stock has to drop before selling", 2, 1, 100));
+		return longSettings;
+	}
 
 	@Override
-	public boolean giveSetting(int id, int value) {
+	public boolean giveDoubleSettings(Set<AlgorithmSettingDouble> doubleSettings) {
 		return false;
 	}
-	@Override
-	public boolean giveSetting(int id, String value) {
 
-		return false;
-	}
 	@Override
-	public boolean giveSetting(int id, double value) {
-
-		return false;
-	}
-	@Override
-	public int getNumberOfSettings() {
-
-		return 1;
-	}
-	@Override
-	public String getSettingText(int id) {
-		switch (id) {
-		case 0:
-			return "Buy stock after it has climbed X times:";
-		default:
-			System.out.println("garrr");
+	public boolean giveLongSettings(Set<AlgorithmSettingLong> longSettings) {
+		for (AlgorithmSettingLong asl : longSettings) {
+			if (asl.getName().contains("buy")) {
+				this.buySetting = asl.getValue();
+			}
+			else if (asl.getName().contains("sell")) {
+				this.sellSetting = asl.getValue();
+			}
+			else 
+				return false;
 		}
-
-		return null;
+		return true;
 	}
-	@Override
-	public String getSettingType(int id) {
-		switch (id) {
-		case 0:
-			return "int";
-		}
-		return null;
-	}
-	@Override
-	public String getSettingRange(int id) {
-		switch (id) {
-		case 0:
-			return "1-5000";
-		}
-		return null;
-	}
-	@Override
-	public String getSettingDefault(int id) {
-		switch (id) {
-		case 0:
-			return "3";
-		}
-		return null;
-	}
-	@Override
-	public int getCurrentIntSetting(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public String getCurrentStringSetting(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public double getCurrentDoubleSetting(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-
 }
