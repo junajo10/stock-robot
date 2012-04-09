@@ -24,37 +24,58 @@ import trader.ITrader;
  * @author daniel
  */
 public class TestAlgorithm implements IAlgorithm{
-	
+
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
 	ITrader trader = null;
 	IJPAAlgortihm jpaHelper = null;
 	private long buySetting = 3;
 	private long sellSetting = 3;
-	
+
 	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
 		this.trader = trader;
 		this.jpaHelper = robot.getJPAHelper();
-		
+
 		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm constructor");
 	}
-	
+
 	@Override
 	public boolean update() {
-		
+
 		Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: UPDATE!" );
-		
+
 		if (portfolio.getPortfolioTable().getBalance() < 1000000) {
 			return false;
 		}
-		
+
+
+
+		for (PortfolioHistory ph : jpaHelper.getCurrentStocksHistory(portfolio.getPortfolioTable())) {
+			List<StockPrices> cs = jpaHelper.getNLatest(ph.getStockPrice(), (int)sellSetting);
+			if (cs.size() == sellSetting) {
+				long last = Long.MAX_VALUE;
+				boolean sell = true;
+				for (int i = (int)sellSetting-1; i >= 0; i--) {
+					if (cs.get(i).getBuy() < last) {
+						last = cs.get(i).getBuy();
+					}
+					else
+						sell = false;
+				}
+
+				if (sell) {
+					trader.sellStock(ph, portfolio.getPortfolioTable());
+				}
+			}
+		}
+		/*
 		List<StockPrices> ownedStockes = jpaHelper.getCurrentStocks(portfolio.getPortfolioTable());
 		for (StockPrices sp : ownedStockes ) {
-			
+
 			Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: Checking ownedStocks!" );
-			
+
 			List<StockPrices> cs = jpaHelper.getNLatest(sp, (int)sellSetting);
 			if (cs.size() == sellSetting) {
 				long last = Long.MAX_VALUE;
@@ -66,7 +87,7 @@ public class TestAlgorithm implements IAlgorithm{
 					else
 						sell = false;
 				}
-				
+
 				if (sell) {
 					//Sell all
 					Set<PortfolioHistory> ph = portfolio.getPortfolioTable().getHistory();
@@ -76,40 +97,44 @@ public class TestAlgorithm implements IAlgorithm{
 							//jpaHelper.updateObject(pHistory);
 						}
 					}
-					
+
 				}
 			}
 		}
+		 */
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo((int)buySetting)) {
-			boolean buy = true;
-			long last = Long.MAX_VALUE;
-			for (int i = 0; i < stockInfo.getRight().size(); i++) {
-				
-				if (stockInfo.getRight().get(i).getBuy() >= last)
-					buy = false;
-				last = stockInfo.getRight().get(i).getBuy();
-			}
-			
-			//Buy!
-			if (buy) {
-				Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: BUY!" );
-				//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
-				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
-				if( firstStockBuyPrice != 0 ) {
-					
-					long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
-					
-					if (amount > 0)
-						buyStock( stockInfo.getRight().get(0), amount );
+			if (stockInfo.getRight().size() == (int) buySetting) {
+
+				boolean buy = true;
+				long last = Long.MAX_VALUE;
+				for (int i = 0; i < stockInfo.getRight().size(); i++) {
+
+					if (stockInfo.getRight().get(i).getBuy() >= last)
+						buy = false;
+					last = stockInfo.getRight().get(i).getBuy();
+				}
+
+				//Buy!
+				if (buy) {
+					Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: BUY!" );
+					//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
+					long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
+					if( firstStockBuyPrice != 0 ) {
+
+						long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
+
+						if (amount > 0)
+							buyStock( stockInfo.getRight().get(0), amount );
+					}
 				}
 			}
 		}
-		
+
 		return true;
 	}
 	private void buyStock(StockPrices stockPrices, long amount) {
 		trader.buyStock(stockPrices, amount, portfolio.getPortfolioTable());
-		
+
 	}
 
 	@Override
@@ -144,9 +169,11 @@ public class TestAlgorithm implements IAlgorithm{
 	public boolean giveLongSettings(Set<AlgorithmSettingLong> longSettings) {
 		for (AlgorithmSettingLong asl : longSettings) {
 			if (asl.getName().contains("buy")) {
+				Log.instance().log(TAG.VERY_VERBOSE, "Buy set to: " + asl.getValue());
 				this.buySetting = asl.getValue();
 			}
 			else if (asl.getName().contains("sell")) {
+				Log.instance().log(TAG.VERY_VERBOSE, "Sell set to: " + asl.getValue());
 				this.sellSetting = asl.getValue();
 			}
 			else 

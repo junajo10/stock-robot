@@ -5,7 +5,9 @@ import java.beans.PropertyChangeSupport;
 
 import generic.FinancialLongConverter;
 import generic.Log;
+import generic.Log.TAG;
 import gui.mvc.Constants;
+import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioHistory;
@@ -20,6 +22,7 @@ import database.jpa.tables.StockPrices;
 public class TraderSimulator implements ITrader{
 	private static TraderSimulator instance = null;
 	private PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
+	private IJPAHelper jpaHelper = JPAHelper.getInstance();
 	
 	private TraderSimulator() {
 		
@@ -38,7 +41,7 @@ public class TraderSimulator implements ITrader{
 			Log.instance().log(Log.TAG.VERBOSE, "Buying " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getSell()));
 			
 			portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
-			JPAHelper.getInstance().updateObject(portfolio);
+			jpaHelper.updateObject(portfolio);
 			
 			propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.BUY_STOCK, null, portfolio);
 		}
@@ -47,13 +50,13 @@ public class TraderSimulator implements ITrader{
 
 	@Override
 	public boolean sellStock(StockPrices s, long amount, PortfolioEntity portfolio) {
-		StockPrices latest = JPAHelper.getInstance().getLatestStockPrice(s);
+		StockPrices latest = jpaHelper.getLatestStockPrice(s);
 		portfolio.soldFor( latest.getBuy()*amount );
 		PortfolioHistory ph = portfolio.getSpecificPortfolioHistory(s, amount);
 		
 		if (ph != null && ph.getSoldDate() == null) {
 			ph.setSoldDate(latest.getTime());
-			JPAHelper.getInstance().updateObject(ph);
+			jpaHelper.updateObject(ph);
 			
 			Log.instance().log(Log.TAG.VERBOSE, "Selling " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getBuy()));
 			
@@ -63,7 +66,20 @@ public class TraderSimulator implements ITrader{
 			return false;
 		return true;
 	}
-
+	@Override
+	public boolean sellStock(PortfolioHistory ph, PortfolioEntity portfolio) {
+		if (ph.getSoldDate() != null) {
+			Log.instance().log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
+			return false;
+		}
+		Log.instance().log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + ph.getStockPrice().getBuy()*ph.getAmount());
+		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
+		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
+		ph.setSoldDate(latest.getTime());
+		jpaHelper.updateObject(portfolio);
+		
+		return true;
+	}
 	@Override
 	public long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntity portfolio) {
 		return (long) (s.getSell()*amount*0.1);

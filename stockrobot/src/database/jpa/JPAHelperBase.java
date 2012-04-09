@@ -270,15 +270,25 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public List<StockPrices> getCurrentStocks(PortfolioEntity portfolioTable) {
-		Set<PortfolioHistory> portfolioHistory = portfolioTable.getHistory();
 		List<StockPrices> sp = new ArrayList<StockPrices>();
 		
-		for (PortfolioHistory ph : portfolioHistory) {
+		for (PortfolioHistory ph : portfolioTable.getHistory()) {
 			if (ph.getSoldDate() == null)
 				sp.add(ph.getStockPrice());
 		}
 
 		return sp;
+	}
+	@Override
+	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable) {
+		List<PortfolioHistory> history = new ArrayList<PortfolioHistory>();
+		
+		for (PortfolioHistory ph : portfolioTable.getHistory()) {
+			if (ph.getSoldDate() == null)
+				history.add(ph);
+		}
+
+		return history;
 	}
 	@Override
 	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntity portfolio) {

@@ -1,5 +1,8 @@
 package simulation;
 
+import generic.Log;
+import generic.Log.TAG;
+
 import java.beans.PropertyChangeListener;
 
 import database.jpa.IJPAHelper;
@@ -63,12 +66,26 @@ public class TraderSimulator2 implements ITrader{
 				}
 			}
 		}
-		System.out.println("error");
+		Log.instance().log(TAG.ERROR, "SellStock in traderSimulator2: Couldent find stock: " + s);
 		return false;
 	}
 
 	@Override
 	public long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntity portfolio) {
 		return (long) (s.getSell()*amount*0.09);
+	}
+	@Override
+	public boolean sellStock(PortfolioHistory ph, PortfolioEntity portfolio) {
+		if (ph.getSoldDate() != null) {
+			Log.instance().log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
+			return false;
+		}
+		Log.instance().log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + ph.getStockPrice().getBuy()*ph.getAmount());
+		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
+		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
+		ph.setSoldDate(latest.getTime());
+		jpaHelper.updateObject(portfolio);
+		
+		return true;
 	}
 }

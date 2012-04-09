@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
+import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
@@ -95,4 +96,6 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	
 	
 	public List<StockPrices> getLatestStockPrices();
+	
+	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable);
 }

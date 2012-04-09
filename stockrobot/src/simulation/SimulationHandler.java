@@ -1,12 +1,17 @@
 package simulation;
 
+import generic.Log;
+import generic.Log.TAG;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
@@ -16,22 +21,22 @@ import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.JPAHelperSimulator;
 import database.jpa.tables.AlgorithmEntity;
+import database.jpa.tables.AlgorithmSettingDouble;
+import database.jpa.tables.AlgorithmSettingLong;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioHistory;
-import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
-import database.jpa.tables.StocksToWatch;
 
 /**
- * @author Daniel
- *
  * This will be the handler for a simulation of an algorithm.
  * 
  * It will work by creating a separate database for testing and simply 
  * inject all prices from the original stock price tables.
  * 
  * The result will then be given back to the user, but for now sysout will do.
+ * 
+ * @author Daniel
  */
 public class SimulationHandler {
 
@@ -73,12 +78,26 @@ public class SimulationHandler {
 		}
 		portfolio.setAlgorithm(algorithm);
 		jpaSimHelper.updateObject(portfolioEntity);
+		algorithmToSimulate.initiate(algorithm);
 	}
-	public void simulateAlgorithm(AlgorithmEntity algorithmToSimulate) {
+	/**
+	 * Tests a given algorithm with real data copied from the original database.
+	 * @param algorithmToSimulate Algorithm to simulate
+	 * @param howManyStocksBack How many stocks back in time should be copied.
+	 * @return Returns the % difference
+	 */
+	public double simulateAlgorithm(AlgorithmEntity algorithmToSimulate, int howManyStocksBack, Set<AlgorithmSettingDouble> doubleSettings, Set<AlgorithmSettingLong> longSettings) {
 		initSimulation(algorithmToSimulate);
 		
+		if (longSettings != null)
+			algorithm.giveLongSettings(longSettings);
+		if (doubleSettings != null)
+			algorithm.giveDoubleSettings(doubleSettings);
+		
+		long startingBalance = new Long("100000000000");
+		
 		PortfolioEntity port =  portfolio.getPortfolioTable();
-		port.invest(new Long("100000000000"), true);
+		port.invest(startingBalance, true);
 		
 		jpaSimHelper.updateObject(port);
 		
@@ -92,17 +111,17 @@ public class SimulationHandler {
 		
 		Date lastSeenTime = null;
 		long curr = 0;
-		long max = jpaHelper.getStockPricesReverseOrdered(100).size();
+		long max = jpaHelper.getStockPricesReverseOrdered(howManyStocksBack).size();
 		
-		System.out.println(max);
+		Log.instance().log(TAG.VERY_VERBOSE, max + " stocks will be tested.");
 		
 		List<StockPrices> stockPrices = new ArrayList<StockPrices>();
-		for (StockPrices p : jpaHelper.getStockPricesReverseOrdered(100)) {
+		for (StockPrices p : jpaHelper.getStockPricesReverseOrdered(howManyStocksBack)) {
 			//System.out.println(p);
 			curr ++;
 			
-			if (curr%100 == 0)
-				System.out.println(((double)curr/(double)max)*100 + "% done");
+			if (curr%50 == 0)
+				Log.instance().log(TAG.NORMAL, "Simulation " + ((double)curr/(double)max)*100 + "% done");
 			
 			if (p.getTime().equals(lastSeenTime) || lastSeenTime == null) {
 				StockPrices sp = new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
@@ -125,27 +144,20 @@ public class SimulationHandler {
 			}
 		}
 		
-		System.out.println("Current balance: " + portfolio.getPortfolioTable().getBalance());
-		
-		System.out.println("Selling all current stocks");
+		Log.instance().log(TAG.VERBOSE, "Simulation before selling of stocks: Current balance: " + portfolio.getPortfolioTable().getBalance());
 		
 		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
 			if (ph.getSoldDate() == null) {
-				System.out.println("Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
+				Log.instance().log(TAG.VERY_VERBOSE, "Simulation: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
 				trader.sellStock(ph.getStockPrice(), ph.getAmount(), portfolio.getPortfolioTable());
 			}
 		}
-		
-		System.out.println("Balance: " + portfolio.getPortfolioTable().getBalance());
-		
-		//clearTestDatabase();
-		
+
+		Log.instance().log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
+
+		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
 	}
 	public void clearTestDatabase() {
-		for (StocksToWatch stw : jpaSimHelper.getAllStocksToWatch()) {
-			jpaSimHelper.remove(stw);
-		}
-		
 		while (jpaSimHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaSimHelper.getAllPortfolios().get(0);
 			
@@ -171,9 +183,16 @@ public class SimulationHandler {
 		jpaSimHelper.getEntityManager().close();
 	}
 	public static void main(String args[]) {
+		Log.instance().setFilter(TAG.VERY_VERBOSE, true);
 		SimulationHandler sim = new SimulationHandler();
 		sim.clearTestDatabase();
-		sim.simulateAlgorithm(new AlgorithmEntity("Algorithm1", "algorithms.TestAlgorithm"));
-		//sim.clearTestDatabase();
+		
+		Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
+		longSettings.add(new AlgorithmSettingLong("buy", 4, "Number of times a stock has to climb before buying", 1, 1, 100));
+		longSettings.add(new AlgorithmSettingLong("sell", 4, "Number of times a stock has to drop before selling", 2, 1, 100));
+		
+		double diff = sim.simulateAlgorithm(new AlgorithmEntity("Algorithm1", "algorithms.TestAlgorithm"), 300, null, longSettings);
+		sim.clearTestDatabase();
+		Log.instance().log(TAG.NORMAL, "Simulation done, change in balance: " + diff + "%");
 	}
 }
