@@ -1,8 +1,11 @@
 package database.jpa.tables;
 import generic.Log;
 import generic.Log.TAG;
+import generic.Pair;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -123,5 +126,21 @@ public class AlgorithmEntity {
 	}
 	public Set<AlgorithmSettingDouble> getDoubleSettings() {
 		return doubleSettings;
+	}
+	public List<Pair<String, Double>> getCurrentDoubleSettings() {
+		List<Pair<String, Double>> currentDoubleSettings = new LinkedList<Pair<String,Double>>();
+		
+		for (AlgorithmSettingDouble asd : doubleSettings) {
+			currentDoubleSettings.add(new Pair<String, Double>(asd.getName(), asd.getValue()));
+		}
+		return currentDoubleSettings;
+	}
+	public List<Pair<String, Long>> getCurrentLongSettings() {
+		List<Pair<String, Long>> currentLongSettings = new LinkedList<Pair<String,Long>>();
+		
+		for (AlgorithmSettingLong asl : longSettings) {
+			currentLongSettings.add(new Pair<String, Long>(asl.getName(), asl.getValue()));
+		}
+		return currentLongSettings;
 	}
 }

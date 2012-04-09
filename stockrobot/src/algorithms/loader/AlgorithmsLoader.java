@@ -82,8 +82,8 @@ public class AlgorithmsLoader {
 			boolean firstTime = algorithmTable.initiate(algorithm);
 			
 			if (!firstTime) {
-				algorithm.giveDoubleSettings(algorithmTable.getDoubleSettings());
-				algorithm.giveLongSettings(algorithmTable.getLongSettings());
+				algorithm.giveDoubleSettings(algorithmTable.getCurrentDoubleSettings());
+				algorithm.giveLongSettings(algorithmTable.getCurrentLongSettings());
 			}
 		}
 		return algorithm;

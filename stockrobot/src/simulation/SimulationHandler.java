@@ -2,6 +2,7 @@ package simulation;
 
 import generic.Log;
 import generic.Log.TAG;
+import generic.Pair;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -86,7 +88,7 @@ public class SimulationHandler {
 	 * @param howManyStocksBack How many stocks back in time should be copied.
 	 * @return Returns the % difference
 	 */
-	public double simulateAlgorithm(AlgorithmEntity algorithmToSimulate, int howManyStocksBack, Set<AlgorithmSettingDouble> doubleSettings, Set<AlgorithmSettingLong> longSettings) {
+	public double simulateAlgorithm(AlgorithmEntity algorithmToSimulate, int howManyStocksBack, List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
 		initSimulation(algorithmToSimulate);
 		
 		if (longSettings != null)
@@ -187,11 +189,11 @@ public class SimulationHandler {
 		SimulationHandler sim = new SimulationHandler();
 		sim.clearTestDatabase();
 		
-		Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
-		longSettings.add(new AlgorithmSettingLong("buy", 4, "Number of times a stock has to climb before buying", 1, 1, 100));
-		longSettings.add(new AlgorithmSettingLong("sell", 4, "Number of times a stock has to drop before selling", 2, 1, 100));
+		List<Pair<String, Long>> longSettings = new LinkedList<Pair<String,Long>>();
+		longSettings.add(new Pair<String, Long>("buy", (long)4));
+		longSettings.add(new Pair<String, Long>("sell", (long)4));
 		
-		double diff = sim.simulateAlgorithm(new AlgorithmEntity("Algorithm1", "algorithms.TestAlgorithm"), 300, null, longSettings);
+		double diff = sim.simulateAlgorithm(new AlgorithmEntity("Algorithm1", "algorithms.TestAlgorithm"), 300, longSettings, null);
 		sim.clearTestDatabase();
 		Log.instance().log(TAG.NORMAL, "Simulation done, change in balance: " + diff + "%");
 	}

@@ -1,14 +1,17 @@
 package algorithms;
 
+import generic.Pair;
+
+import java.util.List;
 import java.util.Set;
 
 import database.jpa.tables.AlgorithmSettingDouble;
 import database.jpa.tables.AlgorithmSettingLong;
 
 /**
- * @author daniel
- * 
  * Interface to algorithms
+ * 
+ * @author daniel
  */
 public interface IAlgorithm {
 	
@@ -35,8 +38,8 @@ public interface IAlgorithm {
 	Set<AlgorithmSettingDouble> getDefaultDoubleSettings();
 	Set<AlgorithmSettingLong> getDefaultLongSettings();
 	
-	boolean giveDoubleSettings(Set<AlgorithmSettingDouble> doubleSettings);
-	boolean giveLongSettings(Set<AlgorithmSettingLong> longSettings);
+	boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings);
+	boolean giveLongSettings(List<Pair<String, Long>> longSettings);
 	// ---------------------------------------
 	
 }

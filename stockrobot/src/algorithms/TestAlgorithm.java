@@ -161,20 +161,21 @@ public class TestAlgorithm implements IAlgorithm{
 	}
 
 	@Override
-	public boolean giveDoubleSettings(Set<AlgorithmSettingDouble> doubleSettings) {
+	public boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean giveLongSettings(Set<AlgorithmSettingLong> longSettings) {
-		for (AlgorithmSettingLong asl : longSettings) {
-			if (asl.getName().contains("buy")) {
-				Log.instance().log(TAG.VERY_VERBOSE, "Buy set to: " + asl.getValue());
-				this.buySetting = asl.getValue();
+	public boolean giveLongSettings(List<Pair<String, Long>> longSettings) {
+		for (Pair<String, Long> setting : longSettings) {
+			if (setting.getLeft().contentEquals("buy")) {
+				Log.instance().log(TAG.VERY_VERBOSE, "Buy set to: " + setting.getRight());
+				this.buySetting = setting.getRight();
 			}
-			else if (asl.getName().contains("sell")) {
-				Log.instance().log(TAG.VERY_VERBOSE, "Sell set to: " + asl.getValue());
-				this.sellSetting = asl.getValue();
+			else if (setting.getLeft().contentEquals("sell")) {
+				Log.instance().log(TAG.VERY_VERBOSE, "Sell set to: " + setting.getRight());
+				this.sellSetting = setting.getRight();
 			}
 			else 
 				return false;

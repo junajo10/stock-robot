@@ -6,6 +6,7 @@ import java.util.Set;
 import database.jpa.tables.AlgorithmSettingDouble;
 import database.jpa.tables.AlgorithmSettingLong;
 import generic.Log;
+import generic.Pair;
 import algorithms.IAlgorithm;
 
 public class JUnitAlgorithm implements IAlgorithm{
@@ -62,14 +63,13 @@ public class JUnitAlgorithm implements IAlgorithm{
 	}
 
 	@Override
-	public boolean giveDoubleSettings(
-			Set<AlgorithmSettingDouble> doubleSettings) {
+	public boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean giveLongSettings(Set<AlgorithmSettingLong> longSettings) {
+	public boolean giveLongSettings(List<Pair<String, Long>> longSettings) {
 		// TODO Auto-generated method stub
 		return false;
 	}
