@@ -1,5 +1,8 @@
 package algorithms.loader;
 
+import generic.Log;
+import generic.Log.TAG;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -35,7 +38,7 @@ public class AlgorithmsLoader {
 			
 			IAlgorithm algorithm = (IAlgorithm) con.newInstance(new Object[] {robot, portfolio, TraderSimulator.getInstance()});
 			
-			System.out.println(algorithm.getName() + " is started.");
+			Log.instance().log(TAG.VERBOSE, algorithm.getName() + " is started.");
 			
 			return algorithm;
 			
@@ -66,7 +69,7 @@ public class AlgorithmsLoader {
 	 */
 	public IAlgorithm loadAlgorithm(IPortfolio portfolio) {
 		if (portfolio == null) {
-			System.out.println("portfolio is null");
+			Log.instance().log(TAG.ERROR, "portfolio is null");
 			return null;
 		}
 		

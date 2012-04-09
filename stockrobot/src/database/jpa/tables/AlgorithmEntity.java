@@ -1,4 +1,7 @@
 package database.jpa.tables;
+import generic.Log;
+import generic.Log.TAG;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -93,7 +96,7 @@ public class AlgorithmEntity {
 	
 	public boolean initiate(IAlgorithm algorithm) {
 		if (initiaded) {
-			System.out.println("Already Initiated");
+			Log.instance().log(TAG.VERBOSE, "Already Initiated");
 			return false;
 		}
 		for (AlgorithmSettingDouble setting : algorithm.getDefaultDoubleSettings()) {
@@ -102,8 +105,8 @@ public class AlgorithmEntity {
 		for (AlgorithmSettingLong setting : algorithm.getDefaultLongSettings()) {
 			addLongSetting(new AlgorithmSettingLong(setting.getName(), setting.getDefaultValue(), setting.getSettingText(), setting.getSettingIndex(), setting.getMinValue(), setting.getMaxValue()));
 		}
-		System.out.println("Initiated");
-		initiaded = true;
+		Log.instance().log(TAG.VERBOSE, "Initiated to default settings");
+		this.initiaded = true;
 		return true;
 	}
 	

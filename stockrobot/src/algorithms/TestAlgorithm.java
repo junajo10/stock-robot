@@ -1,12 +1,12 @@
 package algorithms;
 
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import generic.Log;
+import generic.Log.TAG;
 import generic.Pair;
 import database.jpa.IJPAAlgortihm;
 import database.jpa.tables.AlgorithmSettingDouble;
@@ -19,9 +19,9 @@ import robot.IRobot_Algorithms;
 import trader.ITrader;
 
 /**
- * @author daniel
- *
  * A simple test algorithm based on a algorithm Kristian has come up with
+ * 
+ * @author daniel
  */
 public class TestAlgorithm implements IAlgorithm{
 	
@@ -38,7 +38,7 @@ public class TestAlgorithm implements IAlgorithm{
 		this.trader = trader;
 		this.jpaHelper = robot.getJPAHelper();
 		
-		System.out.println("Inside TestAlgorithm constructor");
+		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm constructor");
 	}
 	
 	@Override
@@ -55,11 +55,11 @@ public class TestAlgorithm implements IAlgorithm{
 			
 			Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: Checking ownedStocks!" );
 			
-			List<StockPrices> cs = jpaHelper.getNLatest(sp, 3);
-			if (cs.size() == 3) {
+			List<StockPrices> cs = jpaHelper.getNLatest(sp, (int)sellSetting);
+			if (cs.size() == sellSetting) {
 				long last = Long.MAX_VALUE;
 				boolean sell = true;
-				for (int i = 2; i >= 0; i--) {
+				for (int i = (int)sellSetting-1; i >= 0; i--) {
 					if (cs.get(i).getBuy() < last) {
 						last = cs.get(i).getBuy();
 					}
@@ -80,7 +80,7 @@ public class TestAlgorithm implements IAlgorithm{
 				}
 			}
 		}
-		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(3)) {
+		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo((int)buySetting)) {
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {

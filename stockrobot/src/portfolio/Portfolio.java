@@ -1,6 +1,8 @@
 package portfolio;
 
 import generic.FinancialLongConverter;
+import generic.Log;
+import generic.Log.TAG;
 import generic.Pair;
 
 import java.util.List;
@@ -17,10 +19,10 @@ import database.jpa.tables.StockPrices;
 
 
 /**
- * @author Daniel
- *
  * An object of this class will hold one portfolio.
  * When a object of this class is loaded, it will load the algorithm coupled with it.
+ * 
+ * @author Daniel
  */
 public class Portfolio implements IPortfolio {
 	private int portfolioId;
@@ -38,9 +40,9 @@ public class Portfolio implements IPortfolio {
 		if (portfolioTable.getAlgorithm() != null)
 			algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
 		else
-			System.out.println("No algorithm set yet for " + getName());
+			Log.instance().log(TAG.ERROR, "No algorithm set yet for " + getName());
 		
-		System.out.println(portfolioTable);
+		Log.instance().log(TAG.VERY_VERBOSE, "Portfolio " + getName() + " is loaded");
 	}
 	public Portfolio(PortfolioEntity portfolioTable, IJPAHelper jpaHelper) {
 		this.portfolioTable = portfolioTable;
@@ -48,9 +50,9 @@ public class Portfolio implements IPortfolio {
 		if (portfolioTable.getAlgorithm() != null)
 			algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
 		else
-			System.out.println("No algorithm set yet for " + getName());
+			Log.instance().log(TAG.ERROR, "No algorithm set yet for " + getName());
 		
-		System.out.println(portfolioTable);
+		Log.instance().log(TAG.VERY_VERBOSE, "Portfolio " + getName() + " is loaded");
 	}
 	@Override
 	public List<StockNames> getAvalibleStocks() {

@@ -1,13 +1,12 @@
 package algorithms;
 
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import generic.Log;
 import generic.Pair;
+import generic.Log.TAG;
 import database.jpa.IJPAAlgortihm;
 import database.jpa.tables.AlgorithmSettingDouble;
 import database.jpa.tables.AlgorithmSettingLong;
@@ -19,10 +18,10 @@ import robot.IRobot_Algorithms;
 import trader.ITrader;
 
 /**
- * @author daniel
- *
  * A copy of TestAlgorithm
  * This is to really test that we can have several algorithms in the system.
+ * 
+ * @author daniel
  */
 public class TestAlgorithm2 implements IAlgorithm{
 
@@ -39,7 +38,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 		this.portfolio = portfolio;
 		this.trader = trader;
 		this.jpaHelper = robot.getJPAHelper();
-		System.out.println("Inside TestAlgorithm2 constructor");
+		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm2 constructor");
 	}
 
 	@Override
@@ -52,11 +51,11 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 		for (StockPrices sp : ownedStockes ) {
 
-			List<StockPrices> cs = jpaHelper.getNLatest(sp, 5);
-			if (cs.size() == 5) {
+			List<StockPrices> cs = jpaHelper.getNLatest(sp, (int)sellSetting);
+			if (cs.size() == sellSetting) {
 				long last = Long.MAX_VALUE;
 				boolean sell = true;
-				for (int i = 4; i >= 0; i--) {
+				for (int i = (int)sellSetting-1; i >= 0; i--) {
 					if (cs.get(i).getBuy() < last) {
 						last = cs.get(i).getBuy();
 					}
@@ -76,7 +75,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 				}
 			}
 		}
-		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(5)) {
+		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo((int)buySetting)) {
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {
