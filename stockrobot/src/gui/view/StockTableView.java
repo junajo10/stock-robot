@@ -4,13 +4,13 @@ import generic.FinancialLongConverter;
 import generic.Pair;
 
 import java.awt.Dimension;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
+//import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
@@ -30,6 +30,7 @@ public class StockTableView extends JPanel {
 	
 	private JTable table;
 	private JScrollPane scroller;
+	private TableModel model;
 	
 	/*
 	//Keeping to make it easy to test this class
@@ -41,6 +42,15 @@ public class StockTableView extends JPanel {
 		frame.setBounds( 100, 100, 700, 700 );
 		frame.add( view );
 		frame.show();
+		
+		try {
+			Thread.sleep(40000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		view.updateInfo();
 	}
 	*/
 	
@@ -51,21 +61,23 @@ public class StockTableView extends JPanel {
 	public StockTableView() {
 		
 		Pair<Object[][], Object[]> dataAndNames = populate();
+		
 		init( dataAndNames.getLeft(), dataAndNames.getRight() );
 	}
 	
+	/**
+	 * Supposed to be called by an event listener (property changer) 
+	 */
 	public void updateInfo() {
 		
 		Pair<Object[][], Object[]> dataAndNames = populate();
 		
-		System.out.println( "UPDATREEE!" );
+		System.out.println( "dataAndNames: buy: " + dataAndNames.getLeft()[0][1] );
 		
-		scroller.remove(table);
-		remove(scroller);
-		revalidate();
-		repaint();
-		
-		init( dataAndNames.getLeft(), dataAndNames.getRight() );
+		//Iterate through all table cells and update them according to the new data
+		for( int i = 0; i < dataAndNames.getLeft().length; i ++ )
+			for( int j = 0; j < dataAndNames.getRight().length; j ++ )
+				model.setValueAt(dataAndNames.getLeft()[i][j], i, j);
 	}
 	
 	/**
@@ -82,6 +94,7 @@ public class StockTableView extends JPanel {
 		table.setRowHeight( 30 );
 		table.getColumnModel().getColumn(0).setPreferredWidth(150);
 		table.getColumnModel().getColumn(6).setPreferredWidth(200);
+		model = table.getModel();
 		
 		//Create scroll bar
 		scroller = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -105,11 +118,15 @@ public class StockTableView extends JPanel {
 		IJPAHelper jpa = JPAHelper.getInstance();
 		List<Pair<StockNames,List<StockPrices>>> stockInfo = jpa.getStockInfo(1);
 		
+		System.out.println( "stockInfo: " + stockInfo );
+		
 		//Define column names
 		String[] tableColumnNames = {"Name","Market","Buy","Sell","Latest","Volume","Time"};
 		
 		//Create storage for row data
 		Object[][] rows = new Object[stockInfo.size()][tableColumnNames.length];
+		
+		System.out.println( "stockinfosize: " + stockInfo.size() );
 		
 		//Collect row data from DB
 		for( int i = 0; i < stockInfo.size(); i ++ ) {
