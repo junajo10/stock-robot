@@ -1,0 +1,8 @@
+package gui.view;
+
+import gui.controller.IController;
+
+public interface IView {
+	
+	public void registerController( IController controller );
+}
