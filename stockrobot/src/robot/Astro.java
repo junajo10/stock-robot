@@ -4,7 +4,6 @@ import generic.Log;
 import generic.Log.TAG;
 import gui.PortfolioController;
 import gui.PortfolioGui;
-import gui.StockInfoGUI;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,7 +41,6 @@ public class Astro implements IRobot_Algorithms{
 	IPortfolioHandler portfolioHandler = null;
 	AlgorithmsLoader algorithmsLoader = null;
 	PortfolioGui portfolioGui = null;
-	StockInfoGUI stockInfoGUI = null;
 	PortfolioController portfolioController = null;
 	ITrader trader = null;
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
@@ -70,8 +68,6 @@ public class Astro implements IRobot_Algorithms{
 		algorithmsLoader 	= AlgorithmsLoader.getInstance(this);
 		portfolioHandler 	= PortfolioHandler.getInstance();
 		portfolioGui 		= new PortfolioGui(portfolioHandler);
-		stockInfoGUI 		= new StockInfoGUI();
-		stockInfoGUI 		= new StockInfoGUI();
 		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
 		while(true) {
