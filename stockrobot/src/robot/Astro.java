@@ -69,6 +69,7 @@ public class Astro implements IRobot_Algorithms{
 		portfolioHandler 	= PortfolioHandler.getInstance();
 		portfolioGui 		= new PortfolioGui(portfolioHandler);
 		stockInfoGUI 		= new StockInfoGUI();
+		stockInfoGUI 		= new StockInfoGUI();
 		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
 		while(true) {
