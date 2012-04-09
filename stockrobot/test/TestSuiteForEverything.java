@@ -20,7 +20,7 @@ import database.jpa.testJPASlice;
 @Suite.SuiteClasses({
 	FinancialLongConverterTest.class,
 	PairTest.class,
-	JPAHelperForUnderstanding.class,
+	//JPAHelperForUnderstanding.class,
 	JPATest.class,
 	MainBasicJPATest.class,
 	testJPAPortfolioSettings.class,

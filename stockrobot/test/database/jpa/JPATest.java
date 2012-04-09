@@ -176,7 +176,7 @@ public class JPATest {
 	/**
 	 * Removes all entitys from the database
 	 */
-	//@AfterClass
+	@AfterClass
 	public static void afterClass() {
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
@@ -186,11 +186,9 @@ public class JPATest {
 			jpaHelper.remove(a);
 	    }
 	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
-	    	//System.out.println(sp);
 	    	jpaHelper.remove(sp);
 	    }
 		for (StockNames sn : jpaHelper.getAllStockNames()) {
-			//System.out.println(sn);
 	    	jpaHelper.remove(sn);
 		}
 	}

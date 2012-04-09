@@ -45,11 +45,7 @@ public class testJPASlice {
 	*/
 	@AfterClass
 	public static void afterClass() {
-		
-		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
-			jpaHelper.remove(stw);
-		}
-		
+				
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			

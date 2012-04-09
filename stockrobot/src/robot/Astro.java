@@ -1,5 +1,7 @@
 package robot;
 
+import generic.Log;
+import generic.Log.TAG;
 import gui.PortfolioController;
 import gui.PortfolioGui;
 import gui.StockInfoGUI;
@@ -56,7 +58,7 @@ public class Astro implements IRobot_Algorithms{
 	 */
 	//TODO: In a new thread?
 	private void start() {
-
+		
 		System.out.println("ASTRo is starting up.");
 
 		if (simulate) {
@@ -79,7 +81,7 @@ public class Astro implements IRobot_Algorithms{
 						long newInvestment = ((long)rand.nextInt(1000)*1000000);
 
 						p.investAmount(newInvestment);
-						System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
+						Log.instance().log(TAG.VERBOSE, "More money invested: " + newInvestment + " to portfolio: " + p);
 					}
 				}
 
@@ -162,8 +164,16 @@ public class Astro implements IRobot_Algorithms{
 
 			if (s.contentEquals("--simulate") || s.contentEquals("-s"))
 				simulate = true;
+			else if (s.contentEquals("-v")) {
+				Log.instance().setFilter(TAG.VERBOSE, true);
+				System.out.println("Verbose mode on.");
+			}
+			else if (s.contentEquals("-vv")) {
+				Log.instance().setFilter(TAG.VERY_VERBOSE, true);
+				System.out.println("VeryVerbose mode on.");
+			}
 			else if (s.contentEquals("-t") || s.contentEquals("--time")) {
-				if (args.length < i+3) {
+				if (args.length > i+1) {
 					try {
 						timeBetweenUpdates = Math.abs(Integer.parseInt(args[i+1]));
 						System.out.println("Algorithm update time set to: " + timeBetweenUpdates + "ms.");
@@ -177,10 +187,14 @@ public class Astro implements IRobot_Algorithms{
 			else if (s.contentEquals("--help")) {
 				System.out.println("ASTRo\nAlgorithm Stock Trading Robot\n\n\t-s or --simulate" + 
 						"\tTo simulate new stocks and more investments.\n" +
-						"\t--time x or -t x\tSet the time between algorithm updates to x ms.\n");
+						"\t--time x or -t x\tSet the time between algorithm updates to x ms.\n" + 
+						"\t -v for more output.\n" +
+						"\t -vv for even more output\n"
+						);
+				System.exit(0);
 			}
 			else {
-				System.out.println("Unknown parameter, aborting\n");
+				System.out.println("Unknown parameter " + s + " , aborting\n");
 				System.exit(1);
 			}
 		}

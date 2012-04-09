@@ -108,16 +108,6 @@ public class MainBasicJPATest {
 			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()-10000), new Date(System.currentTimeMillis()), 10, p));
 		jpaHelper.updateObject(p);
 		
-		//---- Duplicate test
-		List<StockPrices> duplicateTest = new LinkedList<StockPrices>();
-		Date d = new Date(System.currentTimeMillis()+1000);
-		
-		duplicateTest.add(new StockPrices(aStock.getStockName(), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
-		duplicateTest.add(new StockPrices(aStock.getStockName(), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
-		duplicateTest.add(new StockPrices(aStock.getStockName(), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), d));
-		
-		System.out.println("#duplicates: " + jpaHelper.storeListOfObjectsDuplicates(duplicateTest));
-		//-------------------
 		
 		List<StockPrices> prices = jpaHelper.getAllStockPrices();
 		for (StockPrices s : prices) {
@@ -162,7 +152,7 @@ public class MainBasicJPATest {
 		}
 		System.out.println();
 		
-		StockPrices stock = new StockPrices(jpaHelper.getAllStockNames().get(0), 123, 123, 123, 123, new Date(123));
+		StockPrices stock = new StockPrices(jpaHelper.getAllStockNames().get(0), 123, 123, 123, 123, new Date(1233));
 		jpaHelper.storeObject(stock);
 		
 		p.addPortfolioHistory(new PortfolioHistory(stock, new Date(123), new Date(25231434), 77, p));
@@ -184,10 +174,6 @@ public class MainBasicJPATest {
 	@AfterClass
 	public static void afterClass() {
 		
-		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
-			System.out.println(stw);
-			jpaHelper.remove(stw);
-		}
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);

@@ -196,6 +196,8 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public synchronized boolean storeObject(Object o) {
+		if (em.getTransaction().isActive())
+			em.getTransaction().commit();
 		em.getTransaction().begin();
 		em.persist(o);
 		em.getTransaction().commit();
@@ -210,8 +212,9 @@ class JPAHelperBase implements IJPAHelper {
 			System.out.println("asdf");
 			em.getTransaction().commit();
 			return false;
+		} finally {
+			em.getTransaction().commit();
 		}
-		em.getTransaction().commit();
 		return true;
 	}
 	@Override
@@ -227,6 +230,8 @@ class JPAHelperBase implements IJPAHelper {
 	public synchronized int storeListOfObjectsDuplicates(List list) {
 		int dup = 0;
 		for (Object o : list) {
+			if (em.getTransaction().isActive())
+				em.getTransaction().commit();
 			try {
 				em.getTransaction().begin();
 				em.merge(o);
@@ -235,6 +240,8 @@ class JPAHelperBase implements IJPAHelper {
 				dup++;
 			}
 		}
+		if (em.getTransaction().isActive())
+			em.getTransaction().commit();
 		return dup;
 	}
 	@Override
