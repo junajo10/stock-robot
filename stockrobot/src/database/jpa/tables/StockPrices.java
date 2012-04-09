@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -20,8 +23,12 @@ import org.apache.openjpa.persistence.jdbc.Index;
 @Entity
 @Table(name="StockPrices", uniqueConstraints=@UniqueConstraint(columnNames={"time", "stockName"}))
 public class StockPrices {
-	@Index
-	@OneToOne
+	@Id
+	@GeneratedValue
+	@Column(name="stockid")
+	private long stockid;
+	
+	@ManyToOne
 	@Column(name="stockName")
 	private StockNames stockName;
 	
@@ -51,6 +58,7 @@ public class StockPrices {
 		this.buy = buy;
 		this.sell = sell;
 		this.time = time;
+		stockName.addStockPrice(this);
 	}
 	public StockNames getStockName() {
 		return stockName;

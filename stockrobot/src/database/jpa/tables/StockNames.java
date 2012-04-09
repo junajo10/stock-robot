@@ -1,10 +1,12 @@
 package database.jpa.tables;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -29,7 +31,7 @@ public class StockNames {
 	@Column(name="market", nullable=false, length=10, insertable=true)
 	private String market;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(targetEntity=StockPrices.class, mappedBy="stockName", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<StockPrices> stockPrices;
 	
 	public StockNames() {
@@ -84,5 +86,11 @@ public class StockNames {
 	 */
 	public void setMarket( String _market ) {
 		market = _market;
+	}
+	public void addStockPrice(StockPrices stockPrice) {
+		if (stockPrices == null)
+			stockPrices = new ArrayList<StockPrices>();
+		stockPrices.add(stockPrice);
+		
 	}
 }

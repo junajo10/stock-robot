@@ -104,7 +104,6 @@ public class JPATest {
 		// Should add 100 new stocks
 		IInserter jpaInserter = new JPAInserter(jpaHelper);
 		
-		
 		Assert.assertEquals(100, jpaInserter.insertStockData(list));
 		
 		// Should not be able to add any new stocks
@@ -162,7 +161,18 @@ public class JPATest {
 		
 		Assert.assertEquals(amountToInvest, p.getBalance());
 	}
-	
+	@Test
+	public void testStockNamesGetPrices() {
+		boolean found = false;
+		for (StockNames sn : jpaHelper.getAllStockNames()) {
+			if (sn.getStockPrices() != null) {
+				found = true;
+			}
+		}
+		if (!found) {
+			Assert.fail();
+		}
+	}
 	/**
 	 * Removes all entitys from the database
 	 */
