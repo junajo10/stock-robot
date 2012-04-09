@@ -3,7 +3,11 @@ package gui;
 import generic.FinancialLongConverter;
 import gui.components.GUIFactory;
 import gui.components.IGUIFactory;
+import gui.controller.IController;
+import gui.controller.MainMenuController;
 import gui.mvc.Constants;
+import gui.view.IView;
+import gui.view.MainMenuView;
 
 import java.awt.Dimension;
 
@@ -73,11 +77,11 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		this.portfolioHandler = portfolioHandler;
 		
 		guiFactory.modifyDefaultWinow(this);
-		setResizable(false);
+		setResizable(true);
 		
 		setTitle("Portfolio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 210, 399);
+		setBounds(100, 100, 212, 499);
 		contentPane = guiFactory.getMainContainer();
 		
 		setContentPane(contentPane);
@@ -195,6 +199,13 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		btn_ShowStock.setEnabled(true);
 		pnl_ShowStock.add(btn_ShowStock);
 		// ===========================
+		
+		// ======Main menu ==============
+		IView pnl_MainMenu = new MainMenuView();
+		IController menuController = new MainMenuController();
+		pnl_MainMenu.registerController(menuController);
+		pnl_MainMenu.init();
+		pnl_BoxContainer.add( (MainMenuView)pnl_MainMenu );
 		
 		if(portfolioHandler != null){
 			updatePortfolios();

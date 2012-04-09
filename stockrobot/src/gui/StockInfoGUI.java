@@ -28,7 +28,7 @@ public class StockInfoGUI extends JFrame {
 		
 		GUIFactory guiFactory = new GUIFactory();
 		
-		view = (StockTableView) guiFactory.getStockTableView();
+		view = new StockTableView();
 		controller = new StockTableController( view );
 		view.registerController( controller );
 		view.init();
