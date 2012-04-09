@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * @author Mattias Markehed
@@ -34,6 +35,25 @@ public interface IGUIFactory {
 	public JLabel getTitleLabel(String text);
 	
 	/**
+	 * Generates a label that can be used with Swing.
+	 * This should be used as the title for different categories in the GUI.
+	 * The color of the text is a light color.
+	 * 
+	 * @param text the displayed in the label
+	 * @return A text label
+	 */
+	public JLabel getLightTitleLabel(String text);
+	
+	/**
+	 * Generates a label that can be used with Swing.
+	 * This should be used as the sub title for different categories in the GUI.
+	 * 
+	 * @param text the displayed in the label
+	 * @return A text label
+	 */
+	public JLabel getSubTitleLabel(String text);
+	
+	/**
 	 * Generates a button that can be used with Swing.
 	 * This should be used as the standard button in the GUI.
 	 * 
@@ -49,6 +69,14 @@ public interface IGUIFactory {
 	 * @return container
 	 */
 	public JPanel getDefaultContainer();
+	
+	/**
+	 * Generates a colored container that can hold different kind of objects.
+	 * This with be used to group pieces of data together in the GUI. 
+	 * 
+	 * @return a colored container
+	 */
+	public JPanel getFstColoredContainer();
 	
 	/**
 	 * Generates an container that holds al other content in
@@ -80,4 +108,11 @@ public interface IGUIFactory {
 	 * @return the window with modified style
 	 */
 	public JFrame modifyDefaultWinow(JFrame window);
+	
+	/**
+	 * Generates an default text field 
+	 *
+	 * @return a text field
+	 */
+	public JTextField getDefaultTextField();
 }
