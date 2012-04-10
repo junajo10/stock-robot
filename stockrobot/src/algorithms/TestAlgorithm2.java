@@ -23,6 +23,7 @@ import trader.ITrader;
  * 
  * @author daniel
  */
+@AlgorithmPlugin(name="TestAlgorithm2")
 public class TestAlgorithm2 implements IAlgorithm{
 
 	IRobot_Algorithms robot;
@@ -32,7 +33,9 @@ public class TestAlgorithm2 implements IAlgorithm{
 	private long buySetting = 5;
 	private long sellSetting = 5;
 
-
+	public TestAlgorithm2() {
+		
+	}
 	public TestAlgorithm2(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
@@ -109,11 +112,11 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 	@Override
 	public String getName() {
-		return "TestAlgoritm1";
+		return this.getClass().getAnnotation(AlgorithmPlugin.class).name();
 	}
 	@Override
 	public String getDescription() {
-		return "Test algorithm1\n\nBuys when a stock has gone up 3 times in a row\nSells when a stock has gone down 3 times in a row";
+		return "Test algorithm2\n\nBuys when a stock has gone up 3 times in a row\nSells when a stock has gone down 3 times in a row";
 	}
 	
 	@Override

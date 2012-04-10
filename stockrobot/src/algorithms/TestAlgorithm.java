@@ -23,6 +23,7 @@ import trader.ITrader;
  * 
  * @author daniel
  */
+@AlgorithmPlugin(name="TestAlgorithm1")
 public class TestAlgorithm implements IAlgorithm{
 
 	IRobot_Algorithms robot;
@@ -32,6 +33,9 @@ public class TestAlgorithm implements IAlgorithm{
 	private long buySetting = 3;
 	private long sellSetting = 3;
 
+	public TestAlgorithm() {
+		
+	}
 	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
@@ -70,38 +74,6 @@ public class TestAlgorithm implements IAlgorithm{
 				}
 			}
 		}
-		/*
-		List<StockPrices> ownedStockes = jpaHelper.getCurrentStocks(portfolio.getPortfolioTable());
-		for (StockPrices sp : ownedStockes ) {
-
-			Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: Checking ownedStocks!" );
-
-			List<StockPrices> cs = jpaHelper.getNLatest(sp, (int)sellSetting);
-			if (cs.size() == sellSetting) {
-				long last = Long.MAX_VALUE;
-				boolean sell = true;
-				for (int i = (int)sellSetting-1; i >= 0; i--) {
-					if (cs.get(i).getBuy() < last) {
-						last = cs.get(i).getBuy();
-					}
-					else
-						sell = false;
-				}
-
-				if (sell) {
-					//Sell all
-					Set<PortfolioHistory> ph = portfolio.getPortfolioTable().getHistory();
-					for (PortfolioHistory pHistory : ph) {
-						if (pHistory.getSoldDate() == null) {
-							trader.sellStock(sp, pHistory.getAmount(), portfolio.getPortfolioTable());
-							//jpaHelper.updateObject(pHistory);
-						}
-					}
-
-				}
-			}
-		}
-		 */
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo((int)buySetting)) {
 			if (stockInfo.getRight().size() == (int) buySetting) {
 
@@ -139,7 +111,7 @@ public class TestAlgorithm implements IAlgorithm{
 
 	@Override
 	public String getName() {
-		return "TestAlgoritm1";
+		return this.getClass().getAnnotation(AlgorithmPlugin.class).name();
 	}
 	@Override
 	public String getDescription() {
@@ -182,4 +154,11 @@ public class TestAlgorithm implements IAlgorithm{
 		}
 		return true;
 	}
+	/*
+	public IAlgorithm clone() {
+		IAlgorithm algorithm = new TestAlgorithm();
+		// TODO: Set values
+		return algorithm;
+	}
+	*/
 }

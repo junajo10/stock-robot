@@ -42,4 +42,5 @@ public interface IAlgorithm {
 	boolean giveLongSettings(List<Pair<String, Long>> longSettings);
 	// ---------------------------------------
 	
+	//IAlgorithm clone();
 }
