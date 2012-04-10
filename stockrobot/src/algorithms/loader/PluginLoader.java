@@ -1,4 +1,7 @@
 package algorithms.loader;
+import generic.FileHelper;
+import generic.SettingParser;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +18,7 @@ import algorithms.IAlgorithm;
  * @author Daniel
  */
 public class PluginLoader {
-	public static final String pluginPath = "/home/daniel/plugin/";
+	//public static final String pluginPath = "/home/daniel/plugin/";
 	
 
 	/**
@@ -28,7 +31,9 @@ public class PluginLoader {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static List<Class<?>> getPluginClasses(Class annotationType) {
-		List<File> files = FileScanner.getFiles(new File(pluginPath));
+		String pluginPath = SettingParser.getAlgorithmPath();
+		
+		List<File> files = FileHelper.getFiles(new File(pluginPath));
 		PluginClassLoader pluginLoader = new PluginClassLoader();
 		List<Class<?>>  classList = new ArrayList<Class<?>>();
 

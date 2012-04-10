@@ -1,11 +1,11 @@
-package algorithms.loader;
+package generic;
 
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileScanner {
+public class FileHelper {
 	public static List<File> getFiles(File path) {
 		List<File> files = new ArrayList<File>();
 		File[] entries = path.listFiles();

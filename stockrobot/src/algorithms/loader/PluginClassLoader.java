@@ -1,6 +1,8 @@
 package algorithms.loader;
 
 
+import generic.SettingParser;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +20,7 @@ public class PluginClassLoader extends ClassLoader {
 	}
 
 	private byte[] loadClassData (String name) {
-		File f = new File(PluginLoader.pluginPath + name + ".class");
+		File f = new File(SettingParser.getAlgorithmPath() + name + ".class");
 		ByteArrayOutputStream classBuffer = new ByteArrayOutputStream();
 
 		try {
