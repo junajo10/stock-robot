@@ -37,10 +37,6 @@ public class PortfolioEntity {
 	@Column(name="name", nullable=false, length=20, insertable=true)
 	private String name;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	@Column(name = "algorithm")
-	private AlgorithmEntity algorithm;
-	
 	@Column
 	private Long balance;
 	
@@ -79,10 +75,10 @@ public class PortfolioEntity {
 	 */
 	public PortfolioEntity(String name) {
 		this.name = name;
-		algorithm = null;
+		algorithmSettings = new AlgorithmSettings();
+		
 		balance = (long)0;
 		watchAllStocks = false;
-		
 		algorithmSettings = null;
 	}
 	/**
@@ -123,8 +119,8 @@ public class PortfolioEntity {
 	 * Will clear all settings and give the default settings of the given algorithm
 	 * @param algorithm
 	 */
-	public void setAlgorithm(AlgorithmEntity algorithm) {
-		this.algorithm = algorithm;
+	public void setAlgorithm(String algorithm) {
+		//this.algorithm = algorithm;
 		
 		// Create a new AlgorithmSettings
 		this.algorithmSettings = new AlgorithmSettings();
@@ -149,13 +145,6 @@ public class PortfolioEntity {
 	public void invest(long amount, boolean invest) {
 		this.investments.add(new PortfolioInvestment(this,amount, invest));
 		this.balance += amount;
-	}
-	/**
-	 * will return a AlgorithmEntity for this portfolio
-	 * @return A algorithmEntity
-	 */
-	public AlgorithmEntity getAlgorithm() {
-		return algorithm;
 	}
 	/**
 	 * @return True if stopBuying flag is set
@@ -187,7 +176,7 @@ public class PortfolioEntity {
 	 * A helper method to easy get the text representation.
 	 */
 	public String toString() {
-		return name + " | " + balance + " | Algorithm: " + algorithm;
+		return name + " | " + balance;
 	}
 	/**
 	 * Will return a list of StockNames this portfolio is set to watch
@@ -248,5 +237,8 @@ public class PortfolioEntity {
 	}
 	public boolean removeStockToWatch(StockNames stockName) {
 		return stocksToWatch.remove(stockName);
+	}
+	public AlgorithmSettings getAlgortihmSettings() {
+		return algorithmSettings;
 	}
 }

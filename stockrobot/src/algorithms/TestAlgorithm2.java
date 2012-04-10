@@ -155,4 +155,8 @@ public class TestAlgorithm2 implements IAlgorithm{
 		}
 		return true;
 	}
+	@Override
+	public IAlgorithm createInstance(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
+		return new TestAlgorithm2(robot, portfolio, trader);
+	}
 }

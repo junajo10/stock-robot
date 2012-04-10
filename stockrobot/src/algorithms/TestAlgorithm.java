@@ -154,11 +154,8 @@ public class TestAlgorithm implements IAlgorithm{
 		}
 		return true;
 	}
-	/*
-	public IAlgorithm clone() {
-		IAlgorithm algorithm = new TestAlgorithm();
-		// TODO: Set values
-		return algorithm;
+	@Override
+	public IAlgorithm createInstance(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
+		return new TestAlgorithm(robot, portfolio, trader);
 	}
-	*/
 }

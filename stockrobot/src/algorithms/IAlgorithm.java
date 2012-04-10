@@ -5,6 +5,10 @@ import generic.Pair;
 import java.util.List;
 import java.util.Set;
 
+import portfolio.IPortfolio;
+import robot.IRobot_Algorithms;
+import trader.ITrader;
+
 import database.jpa.tables.AlgorithmSettingDouble;
 import database.jpa.tables.AlgorithmSettingLong;
 
@@ -42,5 +46,5 @@ public interface IAlgorithm {
 	boolean giveLongSettings(List<Pair<String, Long>> longSettings);
 	// ---------------------------------------
 	
-	//IAlgorithm clone();
+	IAlgorithm createInstance(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader);
 }

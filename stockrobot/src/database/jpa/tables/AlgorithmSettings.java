@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 
+import algorithms.IAlgorithm;
+
 
 /**
  * This will hold the settings of a given portfolio's algorithm.
@@ -16,6 +18,12 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class AlgorithmSettings {
+	@Column
+	private String name;
+	
+	@Column
+	private boolean initiated = false;
+	
 	@ElementCollection
     @CollectionTable(name = "longSettings")
     private Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
@@ -27,6 +35,17 @@ public class AlgorithmSettings {
 		
 	public AlgorithmSettings() {
 		
+	}
+	public String getAlgorithmName() {
+		return name;
+	}
+	public void initiate(IAlgorithm algorithm) {
+		if (!initiated) {
+			// Add default settings
+		}
+		else {
+			// Set the current settings
+		}
 	}
 	public int getNumberOfSettings() {
 		return longSettings.size() + doubleSettings.size();

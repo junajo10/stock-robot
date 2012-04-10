@@ -12,4 +12,6 @@ public interface IRobot_Algorithms {
 	boolean reportToUser(String message);
 
 	IJPAHelper getJPAHelper();
+	
+	// getTrader?
 }
