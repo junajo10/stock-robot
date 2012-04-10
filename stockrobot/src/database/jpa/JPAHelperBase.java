@@ -21,7 +21,6 @@ import javax.persistence.criteria.Root;
 
 
 
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.PortfolioEntity;
@@ -44,18 +43,6 @@ class JPAHelperBase implements IJPAHelper {
 	public void stopJPASystem() {
 		em.close();
 		factory.close();
-	}
-	@Override
-	public List<AlgorithmEntity> getAllAlgorithms() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<AlgorithmEntity> q2 = cb.createQuery(AlgorithmEntity.class);
-
-		Root<AlgorithmEntity> c = q2.from(AlgorithmEntity.class);
-
-		q2.select(c);
-
-		TypedQuery<AlgorithmEntity> query = em.createQuery(q2);
-		return query.getResultList();
 	}
 	@Override
 	public List<PortfolioEntity> getAllPortfolios() {
@@ -366,10 +353,6 @@ class JPAHelperBase implements IJPAHelper {
 			sum += ph.getAmount();
 
 				return sum;
-	}
-	@Override
-	public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable) {
-		return portfolioTable.getAlgorithm();
 	}
 	@Override
 	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp, PortfolioEntity portfolioTable) {

@@ -1,5 +1,6 @@
 package robot;
 
+import trader.ITrader;
 import database.jpa.IJPAHelper;
 
 // Interface to the framework from algorithms
@@ -13,5 +14,5 @@ public interface IRobot_Algorithms {
 
 	IJPAHelper getJPAHelper();
 	
-	// getTrader?
+	ITrader getTrader();
 }

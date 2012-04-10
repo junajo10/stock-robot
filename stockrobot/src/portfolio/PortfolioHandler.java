@@ -7,6 +7,11 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import robot.IRobot_Algorithms;
+
+import algorithms.IAlgorithm;
+import algorithms.loader.PluginAlgortihmLoader;
+
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioEntity;
@@ -23,15 +28,41 @@ public class PortfolioHandler implements IPortfolioHandler{
 	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
 	private IJPAHelper jpaHelper;
 	private PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
+	private PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+	private IRobot_Algorithms robot;
 	
-	private PortfolioHandler() {
+	
+	private PortfolioHandler(IRobot_Algorithms robot) {
+		this.robot = robot;
 		jpaHelper = JPAHelper.getInstance();
-		
 		List<PortfolioEntity> portfolioTables = jpaHelper.getAllPortfolios();
 		
-		System.out.println(portfolioTables);
+		System.out.println("portfolioTables: " + portfolioTables);
+		
 		for (PortfolioEntity pt : portfolioTables) {
-			listOfPortfolios.add(new Portfolio(pt));
+			
+			Portfolio p = new Portfolio(pt);
+			
+			if (pt.getAlgortihmSettings().getAlgorithmName() != null) {
+				System.out.println(algorithmLoader);
+				IAlgorithm algorithm = algorithmLoader.getAlgorithm(robot, p);
+				
+				
+				
+				if (algorithm != null) {
+					p.setAlgorithm(algorithm);
+					listOfPortfolios.add(p);
+					System.out.println("Algorithm set to portfolio: " + p);
+				}
+				System.out.println("asdfsdafsdf");
+			}
+			else {
+				System.out.println("no algorithm set yet");
+				// TODO: no algorithm set for this portfolio yet.
+			}
+			
+			listOfPortfolios.add(p);
+			
 		}
 		
 	}
@@ -54,11 +85,11 @@ public class PortfolioHandler implements IPortfolioHandler{
 		}
 		return false;
 	}
-	public static IPortfolioHandler getInstance() {
+	public static IPortfolioHandler getInstance(IRobot_Algorithms robot) {
 		if(instance == null) {
 			synchronized (PortfolioHandler.class) {
 				if (instance == null)
-					instance = new PortfolioHandler();
+					instance = new PortfolioHandler(robot);
 			}
 		}
 		return instance;

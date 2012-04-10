@@ -6,7 +6,6 @@ import java.util.List;
 
 import algorithms.IAlgorithm;
 
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -47,7 +46,7 @@ public interface IPortfolio {
 	 * @param algorithmId Id of the new algorithm
 	 * @return returns True if the change was able to be completed
 	 */
-	boolean setAlgorithm(AlgorithmEntity algorithm);
+	boolean setAlgorithm(IAlgorithm algorithm);
 	
 	/**
 	 * Will look up how much money has been put in to a portfolio
@@ -103,9 +102,6 @@ public interface IPortfolio {
 	 */
 	boolean isStopSellingFlagSet();
 	
-	int getPortfolioId();
-
 	PortfolioEntity getPortfolioTable();
 
-	AlgorithmEntity getAlgorithmTable();
 }

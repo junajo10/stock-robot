@@ -1,7 +1,10 @@
 package algorithms.loader;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import database.jpa.tables.PortfolioEntity;
 
@@ -11,6 +14,11 @@ import trader.ITrader;
 
 import algorithms.IAlgorithm;
 
+/**
+ * This is the AlgortihmLoader.
+ * 
+ * @author Daniel
+ */
 public class PluginAlgortihmLoader {
 	
 	private static PluginAlgortihmLoader instance = null;
@@ -29,8 +37,32 @@ public class PluginAlgortihmLoader {
 			System.out.println(a.getName());
 		}
 	}
+	public IAlgorithm getAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio) {
+		System.out.println("sfga");
+		PortfolioEntity portfolioEntity = portfolio.getPortfolioTable();
+		
+		// Create a new algorithm from a template
+		System.out.println("pentity: " + portfolioEntity);
+		System.out.println("pentity al: " + portfolioEntity.getAlgortihmSettings().getAlgorithmName());
+		System.out.println(algorithms);
+		if (algorithms.containsKey(portfolioEntity.getAlgortihmSettings().getAlgorithmName())) {
+			IAlgorithm algorithm = algorithms.get(portfolioEntity.getAlgortihmSettings().getAlgorithmName()).createInstance(robot, portfolio, robot.getTrader());
+			
+			portfolioEntity.getAlgortihmSettings().initiate(algorithm);
+			// update algorithmsettings initiated can change
+			
+			
+			
+			return algorithm;
+		}
+		else {
+			System.out.println("blablabla");
+			return null;
+		}
+	}
 	
 	public IAlgorithm getAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
+		System.out.println("sfga");
 		PortfolioEntity portfolioEntity = portfolio.getPortfolioTable();
 		
 		// Create a new algorithm from a template
@@ -48,7 +80,11 @@ public class PluginAlgortihmLoader {
 			return null;
 		}
 	}
-	
+	public List<String> algortihmsAvailable() {
+		List<String> a = new ArrayList<String>();
+		a.addAll(algorithms.keySet());
+		return a;
+	}
 	public static PluginAlgortihmLoader getInstance() {
 		if(instance == null) {
 			synchronized (PluginAlgortihmLoader.class) {

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockPrices;
@@ -22,7 +21,7 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * Returns a list of all the algorithms.
 	 * @return a list of all the algorithms.
 	 */
-	public List<AlgorithmEntity> getAllAlgorithms();
+	//public List<AlgorithmEntity> getAllAlgorithms();
 	/**
 	 * Will give back all portfolios in the JPA system.
 	 * @return A list with PortfolioTables
@@ -89,7 +88,7 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param portfolioTable The portfolioTable to get the AlgorithmTable from
 	 * @return An algorithmTable
 	 */
-	public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable);
+	//public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable);
 
 
 	public EntityManager getEntityManager();

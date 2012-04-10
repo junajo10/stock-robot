@@ -7,7 +7,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import algorithms.IAlgorithm;
-import database.jpa.tables.AlgorithmEntity;
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
 import trader.ITrader;
@@ -18,15 +17,15 @@ import trader.TraderSimulator;
  * @author Daniel
  */
 
-public class AlgorithmsLoader {
+public class oldAlgorithmsLoader {
 
 	IRobot_Algorithms robot;
-	private static AlgorithmsLoader instance = null;
+//	private static AlgorithmsLoader instance = null;
 	/**
 	 * Loads up the algorithmLoaderSystem
 	 * @param robot Interface to the framework
 	 */
-	private AlgorithmsLoader(IRobot_Algorithms robot) {
+	private oldAlgorithmsLoader(IRobot_Algorithms robot) {
 		this.robot = robot;
 	}
 	@SuppressWarnings("rawtypes")
@@ -67,7 +66,7 @@ public class AlgorithmsLoader {
 	 * @param portfolio 
 	 * @return
 	 */
-	public IAlgorithm loadAlgorithm(IPortfolio portfolio) {
+	/*public IAlgorithm loadAlgorithm(IPortfolio portfolio) {
 		if (portfolio == null) {
 			Log.instance().log(TAG.ERROR, "portfolio is null");
 			return null;
@@ -97,4 +96,5 @@ public class AlgorithmsLoader {
 		}
 		return instance;
 	}
+	*/
 }

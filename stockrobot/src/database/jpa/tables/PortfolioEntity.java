@@ -34,7 +34,7 @@ public class PortfolioEntity {
 	@Column(name = "PORTFOLIO_ID", nullable = false)
 	private int portfolioId;
 	
-	@Column(name="name", nullable=false, length=20, insertable=true)
+	@Column
 	private String name;
 	
 	@Column
@@ -120,10 +120,7 @@ public class PortfolioEntity {
 	 * @param algorithm
 	 */
 	public void setAlgorithm(String algorithm) {
-		//this.algorithm = algorithm;
-		
-		// Create a new AlgorithmSettings
-		this.algorithmSettings = new AlgorithmSettings();
+		this.algorithmSettings = new AlgorithmSettings(algorithm);
 
 	}
 	/**

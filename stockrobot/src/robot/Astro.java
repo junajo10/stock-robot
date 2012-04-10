@@ -10,14 +10,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import algorithms.loader.PluginAlgortihmLoader;
+
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
-
-import algorithms.loader.AlgorithmsLoader;
 
 import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
@@ -39,13 +38,12 @@ import trader.TraderSimulator;
 public class Astro implements IRobot_Algorithms{
 
 	IPortfolioHandler portfolioHandler = null;
-	AlgorithmsLoader algorithmsLoader = null;
 	PortfolioGui portfolioGui = null;
 	PortfolioController portfolioController = null;
 	ITrader trader = null;
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	Random rand = new Random(System.currentTimeMillis());
-
+	PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
 
 	private List<StockNames> simulatedStocks = null;
 
@@ -65,10 +63,9 @@ public class Astro implements IRobot_Algorithms{
 		}
 
 		trader				= TraderSimulator.getInstance();
-		algorithmsLoader 	= AlgorithmsLoader.getInstance(this);
-		portfolioHandler 	= PortfolioHandler.getInstance();
-		portfolioGui 		= new PortfolioGui(portfolioHandler);
-		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
+		portfolioHandler 	= PortfolioHandler.getInstance(this);
+		//portfolioGui 		= new PortfolioGui(portfolioHandler);
+		//portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
 		while(true) {
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
@@ -110,14 +107,19 @@ public class Astro implements IRobot_Algorithms{
 		}
 
 		if (!alreadyExists) {
+			System.out.println("skapar portfolioentitys");
 			for (int i = 1; i <= 2; i++) {
 				PortfolioEntity portfolio = new PortfolioEntity("sim portfolio " + i);
+				
 				jpaHelper.storeObject(portfolio);
-				portfolio.setAlgorithm(new AlgorithmEntity("algorithm" + i, "algorithms.TestAlgorithm"));
+				
+				portfolio.setAlgorithm(algorithmLoader.algortihmsAvailable().get(i-1));
+				
+				jpaHelper.updateObject(portfolio);
+				
 				jpaHelper.investMoney(10000000, portfolio);
 			}
 		}
-		List<StockNames> stockNames = jpaHelper.getAllStockNames();
 		
 		alreadyExists = false;
 		for (StockNames s : jpaHelper.getAllStockNames()) {
@@ -201,5 +203,9 @@ public class Astro implements IRobot_Algorithms{
 	@Override
 	public IJPAHelper getJPAHelper() {
 		return jpaHelper;
+	}
+	@Override
+	public ITrader getTrader() {
+		return trader;
 	}
 }

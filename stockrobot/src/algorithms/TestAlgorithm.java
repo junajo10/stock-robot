@@ -34,7 +34,7 @@ public class TestAlgorithm implements IAlgorithm{
 	private long sellSetting = 3;
 
 	public TestAlgorithm() {
-		
+		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm constructor");
 	}
 	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;

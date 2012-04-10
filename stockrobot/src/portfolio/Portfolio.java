@@ -8,11 +8,9 @@ import generic.Pair;
 import java.util.List;
 
 import algorithms.IAlgorithm;
-import algorithms.loader.AlgorithmsLoader;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -25,7 +23,6 @@ import database.jpa.tables.StockPrices;
  * @author Daniel
  */
 public class Portfolio implements IPortfolio {
-	private int portfolioId;
 	private PortfolioEntity portfolioTable;
 	private IJPAHelper jpaHelper;
 	private IAlgorithm algorithm;
@@ -34,26 +31,22 @@ public class Portfolio implements IPortfolio {
 	 * Start up an existing portfolio
 	 * @param portfolioTable The table with this portfolio
 	 */
-	public Portfolio(PortfolioEntity portfolioTable) {
-		this.portfolioTable = portfolioTable;
+	public Portfolio(PortfolioEntity portfolioTable, IAlgorithm algorithm) {
 		jpaHelper = JPAHelper.getInstance();
-		if (portfolioTable.getAlgorithm() != null)
-			algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
-		else
-			Log.instance().log(TAG.ERROR, "No algorithm set yet for " + getName());
-		
+		this.portfolioTable = portfolioTable;
+		this.algorithm = algorithm;
+
 		Log.instance().log(TAG.VERY_VERBOSE, "Portfolio " + getName() + " is loaded");
 	}
 	public Portfolio(PortfolioEntity portfolioTable, IJPAHelper jpaHelper) {
-		this.portfolioTable = portfolioTable;
-		this.jpaHelper = jpaHelper;
-		if (portfolioTable.getAlgorithm() != null)
-			algorithm = AlgorithmsLoader.getInstance(null).loadAlgorithm(this);
-		else
-			Log.instance().log(TAG.ERROR, "No algorithm set yet for " + getName());
-		
-		Log.instance().log(TAG.VERY_VERBOSE, "Portfolio " + getName() + " is loaded");
+
 	}
+	public Portfolio(PortfolioEntity pt) {
+		// Portfolio without algorithm yet.
+		this.portfolioTable = pt;
+		jpaHelper = JPAHelper.getInstance();
+	}
+	
 	@Override
 	public List<StockNames> getAvalibleStocks() {
 		return jpaHelper.getStockNames(portfolioTable);
@@ -75,9 +68,11 @@ public class Portfolio implements IPortfolio {
 	}
 
 	@Override
-	public boolean setAlgorithm(AlgorithmEntity algorithm) {
-		portfolioTable.setAlgorithm(algorithm);
-		jpaHelper.updateObject(portfolioTable);
+	public boolean setAlgorithm(IAlgorithm algorithm) {
+		//portfolioTable.setAlgorithm(algorithm);
+		//jpaHelper.updateObject(portfolioTable);
+		
+		this.algorithm = algorithm;
 		
 		return true;
 	}
@@ -132,21 +127,14 @@ public class Portfolio implements IPortfolio {
 	public String getName() {
 		return portfolioTable.getName();
 	}
-
-	@Override
-	public int getPortfolioId() {
-		return portfolioId;
-	}
-	
 	public String toString() {
-		return "Name: " + getName() + "Algorithm: " + algorithm.getName() + " Balance: " + FinancialLongConverter.toStringTwoDecimalPoints(getUnusedAmount());
+		if (algorithm != null)
+			return "Name: " + getName() + "Algorithm: " + algorithm.getName() + " Balance: " + FinancialLongConverter.toStringTwoDecimalPoints(getUnusedAmount());
+		else
+			return "Name: " + getName() + " Balance: " + FinancialLongConverter.toStringTwoDecimalPoints(getUnusedAmount());
 	}
 	@Override
 	public PortfolioEntity getPortfolioTable() {
 		return portfolioTable;
-	}
-	@Override
-	public AlgorithmEntity getAlgorithmTable() {
-		return jpaHelper.getAlgorithmTable(portfolioTable);
 	}
 }
