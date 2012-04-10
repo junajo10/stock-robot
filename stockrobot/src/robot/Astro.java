@@ -107,7 +107,7 @@ public class Astro implements IRobot_Algorithms{
 		}
 
 		if (!alreadyExists) {
-			System.out.println("skapar portfolioentitys");
+			Log.instance().log(TAG.VERBOSE, "Creating simulation portfolios");
 			for (int i = 1; i <= 2; i++) {
 				PortfolioEntity portfolio = new PortfolioEntity("sim portfolio " + i);
 				

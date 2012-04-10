@@ -1,90 +1,88 @@
 package algorithms.loader;
 
+import generic.Log;
+import generic.Log.TAG;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import database.jpa.tables.PortfolioEntity;
 
 import portfolio.IPortfolio;
 import robot.IRobot_Algorithms;
-import trader.ITrader;
 
 import algorithms.IAlgorithm;
 
 /**
  * This is the AlgortihmLoader.
+ * It is based upon the calenderapp from workshop 3.
  * 
  * @author Daniel
  */
 public class PluginAlgortihmLoader {
 	
 	private static PluginAlgortihmLoader instance = null;
-	private Map<String, IAlgorithm> algorithms = new HashMap<String, IAlgorithm>();
+	private Map<String, IAlgorithm> algorithms;
 	
 	private PluginAlgortihmLoader() {
+		int number = reloadAlgorithms();
+		
+		Log.instance().log(TAG.VERY_VERBOSE, "Found " + number + " algorithms.");
+	}
+	/**
+	 * Reloads algorithms avalible to portfolios.
+	 * @return the number of algorithms found.
+	 */
+	public int reloadAlgorithms() {
+		int numberOfAlgorithms = 0;
+		algorithms = new HashMap<String, IAlgorithm>();
 		// Load all algorithms
 		for (IAlgorithm a : PluginLoader.loadAlgorithms()) {
-			if (algorithms.containsKey(a.getName()))
-				System.out.println("ERROR duplicate names");
-			else
+			if (algorithms.containsKey(a.getName())) 
+				Log.instance().log(TAG.ERROR, "Duplicate names" + a.getName());
+			else {
 				algorithms.put(a.getName(), a);
+				numberOfAlgorithms++;
+			}
 		}
 		
 		for (IAlgorithm a : algorithms.values()) {
-			System.out.println(a.getName());
+			Log.instance().log(TAG.VERY_VERBOSE, "Found and loaded algorithm: " + a.getName());
 		}
+		return numberOfAlgorithms;
 	}
 	public IAlgorithm getAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio) {
-		System.out.println("sfga");
 		PortfolioEntity portfolioEntity = portfolio.getPortfolioTable();
 		
-		// Create a new algorithm from a template
-		System.out.println("pentity: " + portfolioEntity);
-		System.out.println("pentity al: " + portfolioEntity.getAlgortihmSettings().getAlgorithmName());
-		System.out.println(algorithms);
 		if (algorithms.containsKey(portfolioEntity.getAlgortihmSettings().getAlgorithmName())) {
+			// Create a new algorithm from a template
 			IAlgorithm algorithm = algorithms.get(portfolioEntity.getAlgortihmSettings().getAlgorithmName()).createInstance(robot, portfolio, robot.getTrader());
 			
+			// Initiate the algorithm to the settings in this portfolio
 			portfolioEntity.getAlgortihmSettings().initiate(algorithm);
-			// update algorithmsettings initiated can change
-			
-			
 			
 			return algorithm;
 		}
 		else {
-			System.out.println("blablabla");
+			Log.instance().log(TAG.ERROR, "Couldent find algorithm to portfolio: " + portfolio);
 			return null;
 		}
 	}
-	
-	public IAlgorithm getAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
-		System.out.println("sfga");
-		PortfolioEntity portfolioEntity = portfolio.getPortfolioTable();
-		
-		// Create a new algorithm from a template
-		if (algorithms.containsKey(portfolioEntity.getAlgortihmSettings().getAlgorithmName())) {
-			IAlgorithm algorithm = algorithms.get(portfolioEntity.getAlgortihmSettings().getAlgorithmName()).createInstance(robot, portfolio, trader);
-			
-			portfolioEntity.getAlgortihmSettings().initiate(algorithm);
-			// update algorithmsettings initiated can change
-			
-			
-			return algorithm;
-		}
-		else {
-			System.out.println("blablabla");
-			return null;
-		}
-	}
+	/**
+	 * This method will return all the available algorithms names.
+	 * @return a list of algorithm names
+	 */
 	public List<String> algortihmsAvailable() {
 		List<String> a = new ArrayList<String>();
 		a.addAll(algorithms.keySet());
 		return a;
 	}
+	/**
+	 * Gets an instance of PluginAlgorithmLoader
+	 * @return an instance of PluginAlgorithmLoader
+	 */
 	public static PluginAlgortihmLoader getInstance() {
 		if(instance == null) {
 			synchronized (PluginAlgortihmLoader.class) {

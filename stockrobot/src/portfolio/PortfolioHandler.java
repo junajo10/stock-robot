@@ -1,5 +1,7 @@
 package portfolio;
 
+import generic.Log;
+import generic.Log.TAG;
 import gui.IObservable;
 
 import java.beans.PropertyChangeListener;
@@ -37,34 +39,33 @@ public class PortfolioHandler implements IPortfolioHandler{
 		jpaHelper = JPAHelper.getInstance();
 		List<PortfolioEntity> portfolioTables = jpaHelper.getAllPortfolios();
 		
-		System.out.println("portfolioTables: " + portfolioTables);
-		
+		Log.instance().log(TAG.VERY_VERBOSE, "Starting to create portfolios");
 		for (PortfolioEntity pt : portfolioTables) {
+			IPortfolio p = createExistingPortfolio(pt);
+			listOfPortfolios.add(p);
+			Log.instance().log(TAG.VERY_VERBOSE, "Portfolio created: " + p.getName());
+		}
+		Log.instance().log(TAG.VERY_VERBOSE, "Done creating portfolios");
+	}
+	private IPortfolio createExistingPortfolio(PortfolioEntity pt) {
+		Portfolio p = new Portfolio(pt);
+		
+		if (pt.getAlgortihmSettings().getAlgorithmName() != null) {
+			IAlgorithm algorithm = algorithmLoader.getAlgorithm(robot, p);
 			
-			Portfolio p = new Portfolio(pt);
-			
-			if (pt.getAlgortihmSettings().getAlgorithmName() != null) {
-				System.out.println(algorithmLoader);
-				IAlgorithm algorithm = algorithmLoader.getAlgorithm(robot, p);
-				
-				
-				
-				if (algorithm != null) {
-					p.setAlgorithm(algorithm);
-					listOfPortfolios.add(p);
-					System.out.println("Algorithm set to portfolio: " + p);
-				}
-				System.out.println("asdfsdafsdf");
+			if (algorithm != null) {
+				p.setAlgorithm(algorithm);
+				listOfPortfolios.add(p);
+				Log.instance().log(TAG.VERY_VERBOSE, p.getName() + " algorithm set to: " + algorithm.getName());
 			}
 			else {
-				System.out.println("no algorithm set yet");
-				// TODO: no algorithm set for this portfolio yet.
+				Log.instance().log(TAG.ERROR, p.getName() + " couldent set algorithm to: " + pt.getAlgortihmSettings().getAlgorithmName() + " == null");
 			}
-			
-			listOfPortfolios.add(p);
-			
 		}
-		
+		else {
+			Log.instance().log(TAG.VERY_VERBOSE, p.getName() + " dosent have a algorithm set yet.");
+		}
+		return p;
 	}
 	@Override
 	public IPortfolio createNewPortfolio(String name) {

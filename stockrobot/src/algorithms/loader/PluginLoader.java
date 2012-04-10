@@ -7,14 +7,23 @@ import algorithms.AlgorithmPlugin;
 import algorithms.IAlgorithm;
 
 
+/**
+ * This is the pluginLoader that will load algorithms,
+ * It is based upon the calenderapp from workshop 3.
+ * 
+ * @author adamw
+ * @author Daniel
+ */
 public class PluginLoader {
 	public static final String pluginPath = "/home/daniel/plugin/";
 	
-	/*
+
+	/**
 	 * This method loads classes found in a given plugin directory using a plugin loader.
 	 * The method then filters out those classes and only returns classes with
 	 * annotationType.
-	 *
+	 * 
+	 * @param annotationType
 	 * @return The returned list of classes sorted according to the given comparator.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -28,7 +37,6 @@ public class PluginLoader {
 			if (f.getName().contains(".class")) {
 				String ny = f.getName().replaceAll(".class", "");
 
-				//System.out.println(f.getAbsolutePath());
 				try {
 					Class<?> c = pluginLoader.loadClass(ny);
 					
@@ -44,14 +52,13 @@ public class PluginLoader {
 		return classList;
 	}
 
-	/*
+	/**
 	 * This method filters a list of classes and only adds them to the pluginList if
 	 * they are a valid instance of the Pluggable<?> interface.
 	 *
 	 * @return List of classes being a valid instance of Pluggable<?>.
 	 */
 	private static List<IAlgorithm> getPluginsFromPluginClasses(List<Class<?>> classList) {
-		
 		List<IAlgorithm> pluginList = new ArrayList<IAlgorithm>();
 
 		for(Class<?> cl : classList){
@@ -60,7 +67,6 @@ public class PluginLoader {
 				plugin = cl.newInstance();
 				if(plugin instanceof IAlgorithm){
 					pluginList.add((IAlgorithm)plugin);
-					//System.out.println("hej");
 				}
 			} catch (InstantiationException e) {
 				// TODO Auto-generated catch block
@@ -70,7 +76,6 @@ public class PluginLoader {
 				e.printStackTrace();
 			}
 		}
-		//System.out.println(pluginList.size());
 		return pluginList;
 	}
 	public static List<IAlgorithm> loadAlgorithms() {
