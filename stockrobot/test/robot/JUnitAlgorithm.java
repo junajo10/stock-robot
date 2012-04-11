@@ -3,6 +3,9 @@ package robot;
 import java.util.List;
 import java.util.Set;
 
+import portfolio.IPortfolio;
+import trader.ITrader;
+
 import database.jpa.tables.AlgorithmSettingDouble;
 import database.jpa.tables.AlgorithmSettingLong;
 import generic.Log;
@@ -72,6 +75,13 @@ public class JUnitAlgorithm implements IAlgorithm{
 	public boolean giveLongSettings(List<Pair<String, Long>> longSettings) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public IAlgorithm createInstance(IRobot_Algorithms robot,
+			IPortfolio portfolio, ITrader trader) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

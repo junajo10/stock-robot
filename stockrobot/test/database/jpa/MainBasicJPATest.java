@@ -13,7 +13,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
@@ -36,16 +35,13 @@ public class MainBasicJPATest {
 	@Test 
 	public void addNewPortfolios() {
 		PortfolioEntity portfolio = new PortfolioEntity("portfolio 1");
+		portfolio.setAlgorithm("TestAlgorithm1");
 		jpaHelper.storeObject(portfolio);
-		portfolio.setAlgorithm(new AlgorithmEntity("algorithm1", "algorithms.TestAlgorithm"));
-		jpaHelper.updateObject(portfolio);
-
 		
+				
 		PortfolioEntity portfolio2 = new PortfolioEntity("portfolio 2");
+		portfolio.setAlgorithm("TestAlgorithm2");
 		jpaHelper.storeObject(portfolio2);
-		
-		portfolio2.setAlgorithm(new AlgorithmEntity("algorithm2", "algorithms.TestAlgorithm2"));
-		jpaHelper.updateObject(portfolio2);
 		
 		Assert.assertEquals(2, jpaHelper.getAllPortfolios().size());
 	}

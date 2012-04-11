@@ -17,10 +17,8 @@ import java.util.Random;
 import org.junit.Test;
 
 import algorithms.IAlgorithm;
-import algorithms.loader.AlgorithmsLoader;
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -226,12 +224,6 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 		public IAlgorithm getAlgorithm() {
 			return algorithm;
 		}
-
-		@Override
-		public boolean setAlgorithm(AlgorithmEntity algorithm) {
-			
-			return false;
-		}
 		
 		public boolean setAlgorithm(IAlgorithm algorithm) {
 			this.algorithm = algorithm;
@@ -282,21 +274,12 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 		public String getName() {
 			return name;
 		}
-
-		@Override
-		public int getPortfolioId() {
-			return portfolioId;
-		}
 		
 		public String toString() {
 			return "TestPortfolio " + name + "\n";
 		}
 		@Override
 		public PortfolioEntity getPortfolioTable() {
-			return null;
-		}
-		@Override
-		public AlgorithmEntity getAlgorithmTable() {
 			return null;
 		}
 	}
@@ -339,6 +322,12 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 
 	@Override
 	public IJPAHelper getJPAHelper() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ITrader getTrader() {
 		// TODO Auto-generated method stub
 		return null;
 	}
