@@ -4,27 +4,20 @@ import generic.Log;
 import generic.Log.TAG;
 import generic.Pair;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import portfolio.IPortfolio;
+import portfolio.Portfolio;
 import robot.IRobot_Algorithms;
 import trader.ITrader;
 import algorithms.IAlgorithm;
+import algorithms.loader.PluginAlgortihmLoader;
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.JPAHelperSimulator;
-import database.jpa.tables.AlgorithmEntity;
-import database.jpa.tables.AlgorithmSettingDouble;
-import database.jpa.tables.AlgorithmSettingLong;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockNames;
@@ -41,46 +34,36 @@ import database.jpa.tables.StockPrices;
  * @author Daniel
  */
 public class SimulationHandler {
+	private IJPAHelper jpaSimHelper;
+	private IJPAHelper jpaHelper = JPAHelper.getInstance();
+	
+	private PortfolioSimulator portfolio = null;
 
-	AlgorithmEntity algorithmToSimulate;
-	IAlgorithm algorithm;
+	private IRobot_Algorithms robotSim = new RobotSimulator();
 	
-	IJPAHelper jpaSimHelper = new JPAHelperSimulator();
-	
-	IJPAHelper jpaHelper = JPAHelper.getInstance();
-	
-	PortfolioEntity testPortfolio;
-	PortfolioSimulator portfolio = null;
-	IRobot_Algorithms robotSim = new RobotSimulator(jpaSimHelper);
-	ITrader trader;
-	
-	@SuppressWarnings("rawtypes")
-	private void initSimulation(AlgorithmEntity algorithmToSimulate) {
-		this.algorithmToSimulate = algorithmToSimulate;
-		jpaSimHelper.storeObject(algorithmToSimulate);
-		
-		trader = new TraderSimulator2(jpaSimHelper);
+	public SimulationHandler() {
+		jpaSimHelper = robotSim.getJPAHelper();
+	}
+	private void initSimulation(String algorithmToSimulate, List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
 		PortfolioEntity portfolioEntity = new PortfolioEntity("Simulated Portfolio");
 		portfolioEntity.setAlgorithm(algorithmToSimulate);
+		
 		jpaSimHelper.storeObject(portfolioEntity);
 		
 		portfolio = new PortfolioSimulator(portfolioEntity, jpaSimHelper);
 		
-		try {
-			Class<?> c = Class.forName(algorithmToSimulate.getPath());
-			Constructor con = c.getConstructor(new Class[] {IRobot_Algorithms.class, IPortfolio.class, ITrader.class });
-			algorithm = (IAlgorithm) con.newInstance(new Object[] {robotSim, portfolio, trader});
-		} catch (SecurityException e) {
-		} catch (IllegalArgumentException e) {
-		} catch (ClassNotFoundException e) {
-		} catch (NoSuchMethodException e) {
-		} catch (InstantiationException e) {
-		} catch (IllegalAccessException e) {
-		} catch (InvocationTargetException e) {
-		}
+		PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+		
+		IAlgorithm algorithm = algorithmLoader.getAlgorithm(robotSim, portfolio);
+		
+		if (algorithm == null)
+			System.out.println("apa");
 		portfolio.setAlgorithm(algorithm);
-		jpaSimHelper.updateObject(portfolioEntity);
-		algorithmToSimulate.initiate(algorithm);
+		
+		if (longSettings != null)
+			algorithm.giveLongSettings(longSettings);
+		if (doubleSettings != null)
+			algorithm.giveDoubleSettings(doubleSettings);
 	}
 	/**
 	 * Tests a given algorithm with real data copied from the original database.
@@ -88,13 +71,11 @@ public class SimulationHandler {
 	 * @param howManyStocksBack How many stocks back in time should be copied.
 	 * @return Returns the % difference
 	 */
-	public double simulateAlgorithm(AlgorithmEntity algorithmToSimulate, int howManyStocksBack, List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
-		initSimulation(algorithmToSimulate);
+	public double simulateAlgorithm(String algorithmToSimulate, int howManyStocksBack,
+			List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
 		
-		if (longSettings != null)
-			algorithm.giveLongSettings(longSettings);
-		if (doubleSettings != null)
-			algorithm.giveDoubleSettings(doubleSettings);
+		
+		initSimulation(algorithmToSimulate, longSettings, doubleSettings);
 		
 		long startingBalance = new Long("100000000000");
 		
@@ -151,7 +132,7 @@ public class SimulationHandler {
 		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
 			if (ph.getSoldDate() == null) {
 				Log.instance().log(TAG.VERY_VERBOSE, "Simulation: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
-				trader.sellStock(ph.getStockPrice(), ph.getAmount(), portfolio.getPortfolioTable());
+				robotSim.getTrader().sellStock(ph.getStockPrice(), ph.getAmount(), portfolio.getPortfolioTable());
 			}
 		}
 
@@ -165,10 +146,6 @@ public class SimulationHandler {
 			
 			jpaSimHelper.remove(p);
 		}
-	    for (AlgorithmEntity a : jpaSimHelper.getAllAlgorithms()) {
-	    	jpaSimHelper.remove(a);
-	    }
-		
 	    
 	    for (StockPrices sp : jpaSimHelper.getAllStockPrices()) {
 	    	jpaSimHelper.remove(sp);
@@ -193,8 +170,13 @@ public class SimulationHandler {
 		longSettings.add(new Pair<String, Long>("buy", (long)4));
 		longSettings.add(new Pair<String, Long>("sell", (long)4));
 		
-		double diff = sim.simulateAlgorithm(new AlgorithmEntity("Algorithm1", "algorithms.TestAlgorithm"), 300, longSettings, null);
+		
+		double diff = sim.simulateAlgorithm("TestAlgorithm1", 300, longSettings, null);
 		sim.clearTestDatabase();
-		Log.instance().log(TAG.NORMAL, "Simulation done, change in balance: " + diff + "%");
+		diff -= 100;
+		if (diff > 0)
+			Log.instance().log(TAG.NORMAL, "Simulation done, increase balance: " + diff + "%");
+		else
+			Log.instance().log(TAG.NORMAL, "Simulation done, decrease balance: " + diff + "%");
 	}
 }

@@ -9,7 +9,6 @@ import portfolio.IPortfolio;
 
 import algorithms.IAlgorithm;
 import database.jpa.IJPAHelper;
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 
@@ -38,8 +37,9 @@ public class PortfolioSimulator implements IPortfolio {
 		
 		System.out.println(portfolioTable);
 	}
-	public void setAlgorithm(IAlgorithm algorithm) {
+	public boolean setAlgorithm(IAlgorithm algorithm) {
 		this.algorithm = algorithm;
+		return false;
 	}
 	@Override
 	public List<StockNames> getAvalibleStocks() {
@@ -61,13 +61,6 @@ public class PortfolioSimulator implements IPortfolio {
 		return algorithm;
 	}
 
-	@Override
-	public boolean setAlgorithm(AlgorithmEntity algorithm) {
-		portfolioTable.setAlgorithm(algorithm);
-		jpaHelper.updateObject(portfolioTable);
-		
-		return true;
-	}
 
 	@Override
 	public long getInvestedAmount() {
@@ -119,11 +112,6 @@ public class PortfolioSimulator implements IPortfolio {
 	public String getName() {
 		return portfolioTable.getName();
 	}
-
-	@Override
-	public int getPortfolioId() {
-		return portfolioId;
-	}
 	
 	public String toString() {
 		return "Name: " + getName() + "Algorithm: " + algorithm.getName() + " Balance: " + FinancialLongConverter.toStringTwoDecimalPoints(getUnusedAmount()) + "\n";
@@ -131,9 +119,5 @@ public class PortfolioSimulator implements IPortfolio {
 	@Override
 	public PortfolioEntity getPortfolioTable() {
 		return portfolioTable;
-	}
-	@Override
-	public AlgorithmEntity getAlgorithmTable() {
-		return jpaHelper.getAlgorithmTable(portfolioTable);
 	}
 }
