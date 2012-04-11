@@ -12,7 +12,6 @@ To use 1 database use the this example.
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
 <persistence-unit name="astroportfolio" transaction-type="RESOURCE_LOCAL">
-	<class>database.jpa.tables.AlgorithmEntity</class>
 	<class>database.jpa.tables.PortfolioHistory</class>
 	<class>database.jpa.tables.PortfolioInvestment</class>
 	<class>database.jpa.tables.PortfolioEntity</class>
@@ -37,7 +36,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
 </persistence-unit>
 
 <persistence-unit name="testdb" transaction-type="RESOURCE_LOCAL">
-	<class>database.jpa.tables.AlgorithmEntity</class>
 	<class>database.jpa.tables.PortfolioHistory</class>
 	<class>database.jpa.tables.PortfolioInvestment</class>
 	<class>database.jpa.tables.PortfolioEntity</class>

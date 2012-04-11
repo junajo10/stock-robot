@@ -15,7 +15,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
 	<provider>
 		org.apache.openjpa.persistence.PersistenceProviderImpl
 	</provider>
-	<class>database.jpa.tables.AlgorithmEntity</class>
 	<class>database.jpa.tables.PortfolioHistory</class>
 	<class>database.jpa.tables.PortfolioInvestment</class>
 	<class>database.jpa.tables.PortfolioEntity</class>
@@ -51,7 +50,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
 	</properties>
 </persistence-unit>
 <persistence-unit name="testdb" transaction-type="RESOURCE_LOCAL">
-	<class>database.jpa.tables.AlgorithmEntity</class>
 	<class>database.jpa.tables.PortfolioHistory</class>
 	<class>database.jpa.tables.PortfolioInvestment</class>
 	<class>database.jpa.tables.PortfolioEntity</class>

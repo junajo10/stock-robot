@@ -15,9 +15,6 @@ import portfolio.Portfolio;
 import robot.IRobot_Algorithms;
 
 import algorithms.IAlgorithm;
-import algorithms.loader.AlgorithmsLoader;
-
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.AlgorithmSettings;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
@@ -67,9 +64,6 @@ public class testJPAPortfolioSettings implements IRobot_Algorithms{
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			jpaHelper.remove(p);
 		}
-	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
-			jpaHelper.remove(a);
-	    }
 	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
 	    	System.out.println(sp);
 	    	jpaHelper.remove(sp);

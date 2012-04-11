@@ -17,7 +17,6 @@ import scraping.database.JPAInserter;
 import scraping.model.ParserStock;
 
 
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
@@ -50,10 +49,8 @@ public class JPATest {
 	}
 	@Test
 	public void testNewPortfolio() {
-		AlgorithmEntity algorithm = new AlgorithmEntity("AlgorithmName", "path");
 		PortfolioEntity portfolio = new PortfolioEntity("Portfolio");
-		portfolio.setAlgorithm(algorithm);
-		jpaHelper.storeObject(algorithm);
+		portfolio.setAlgorithm("testtest");
 		jpaHelper.storeObject(portfolio);		
 	}
 	@Test
@@ -182,9 +179,6 @@ public class JPATest {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			jpaHelper.remove(p);
 		}
-	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
-			jpaHelper.remove(a);
-	    }
 	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
 	    	jpaHelper.remove(sp);
 	    }

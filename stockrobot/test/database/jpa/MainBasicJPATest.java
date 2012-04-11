@@ -179,11 +179,6 @@ public class MainBasicJPATest {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 			jpaHelper.remove(p);
 		}
-	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
-			jpaHelper.remove(a);
-	    }
-		
-	    
 	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
 	    	System.out.println(sp);
 	    	jpaHelper.remove(sp);

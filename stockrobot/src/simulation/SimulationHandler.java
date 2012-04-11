@@ -11,9 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import portfolio.Portfolio;
 import robot.IRobot_Algorithms;
-import trader.ITrader;
 import algorithms.IAlgorithm;
 import algorithms.loader.PluginAlgortihmLoader;
 import database.jpa.IJPAHelper;
