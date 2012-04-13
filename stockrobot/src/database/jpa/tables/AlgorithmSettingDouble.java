@@ -28,10 +28,12 @@ public class AlgorithmSettingDouble {
 	@Column
 	private String settingText;
 	
-	@Column
+	//Change, 2012-04-13: minValue and maxValue seem to be reserved names in MySQL 5.5.9,
+	//chaning the name in MySQL to avoid conflicts
+	@Column(name="astro_minValue")
 	private double minValue;
 	
-	@Column
+	@Column(name="astro_maxValue")
 	private double maxValue;
 	
 	@Column
