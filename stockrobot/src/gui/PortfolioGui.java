@@ -81,7 +81,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		
 		setTitle("Portfolio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 212, 499);
+		setBounds(100, 100, 260, 499);
 		contentPane = guiFactory.getMainContainer();
 		
 		setContentPane(contentPane);
