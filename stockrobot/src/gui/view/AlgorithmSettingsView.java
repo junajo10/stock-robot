@@ -1,62 +1,55 @@
 package gui.view;
 
 import gui.controller.IController;
+import gui.view.algorithmsettings.SettingsPanel;
 
-import java.awt.TextField;
-
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-public class AlgorithmSettingsView extends JFrame implements ChangeListener, IView {
+public class AlgorithmSettingsView extends JFrame implements IView {
 
 	private static final long serialVersionUID = 1L;
 
-	private TextField 	ta;
+	
 	private String		algorithmName;
+	private JPanel 		container;
 	
 	public AlgorithmSettingsView( String algorithmName ) {
 		
 		this.algorithmName = algorithmName;
+		
+		init();
 	}
 	
 	@Override
 	public void init() {
 		
 		//Main container for the algorithm settings window
-		JPanel container = new JPanel();
+		container = new JPanel();
 		add( container );
 		
-		//Instantiate a header text saying
-		JTextPane header = new JTextPane();
-		header.setText( "Algorithm settings for: " + algorithmName );
-		container.add( header );
+		//Add some settings, a loop just for now
+		for( int i = 0; i < 6; i ++ ) {
+			
+			addSetting( "Setting" + i, 20 + (i * 2), 0, 99);
+		}
 		
-		ta = new TextField();
-		ta.setBounds(0, 0, 100, 30);
-		ta.setText("?");
-		ta.setSize(100, 30);
-		container.add(ta);
+		//Add save button
+		JButton saveBtn = new JButton();
+		saveBtn.setText( "Save settings" );
+		container.add( saveBtn );
 		
-		JSlider fromDate = new JSlider( JSlider.HORIZONTAL, 0, 99, 0 );
-		fromDate.addChangeListener(this);
-		container.add( fromDate );
-		
-		setSize( 300,300 );
+		//Settings for the window
+		setTitle( "Algorithm settings for " + algorithmName );
+		setSize( 320,500 );
 		setVisible( true );
 	}
 	
-	/**
-	 * TODO: Maybe not have this in the view
-	 */
-	public void stateChanged( ChangeEvent e ) {
+	public void addSetting( String desc, double init, double min, double max ) {
 		
-		JSlider source = (JSlider) e.getSource();
-		ta.setText("" + source.getValue());
-		
+		SettingsPanel panel = new SettingsPanel( desc, init, min, max );
+		container.add( panel );
 	}
 	
 	public static void main( String[] args ) {
