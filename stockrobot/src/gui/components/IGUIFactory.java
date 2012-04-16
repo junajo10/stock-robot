@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 /**
  * @author Mattias Markehed
@@ -27,6 +28,16 @@ public interface IGUIFactory {
 	
 	/**
 	 * Generates a label that can be used with Swing.
+	 * This should be used as the standard text in the GUI.
+	 * This label will have a light color
+	 * 
+	 * @param text the displayed in the label
+	 * @return A text label
+	 */
+	public JLabel getLightLabel(String text);
+	
+	/**
+	 * Generates a label that can be used with Swing.
 	 * This should be used as the title for different categories in the GUI.
 	 * 
 	 * @param text the displayed in the label
@@ -45,13 +56,32 @@ public interface IGUIFactory {
 	public JLabel getLightTitleLabel(String text);
 	
 	/**
+	 * Generates a border that should be used with most JComponents using
+	 * borders in the application. The color of the border can changed to
+	 * fit better with the other components.
+	 * 
+	 * @return a border
+	 */
+	public Border getDefaultBorder();
+	
+	/**
 	 * Generates a label that can be used with Swing.
 	 * This should be used as the sub title for different categories in the GUI.
 	 * 
 	 * @param text the displayed in the label
 	 * @return A text label
 	 */
-	public JLabel getSubTitleLabel(String text);
+	public JLabel getSubtitleLabel(String text);
+	
+	/**
+	 * Generates a label that can be used with Swing.
+	 * This should be used as the sub title for different categories in the GUI.
+	 * This label should have a light color.
+	 * 
+	 * @param text the displayed in the label
+	 * @return A text label
+	 */
+	public JLabel getLightSubtitleLabel(String text);
 	
 	/**
 	 * Generates a button that can be used with Swing.

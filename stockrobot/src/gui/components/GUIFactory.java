@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.TextField;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,6 +40,8 @@ public class GUIFactory implements IGUIFactory {
 	private final Color COLOR_BUTTON			= Color.WHITE;
 	private final Color COLOR_BUTTON_BORDER		= Color.DARK_GRAY;
 	
+	private final Color COLOR_DEFAULT_BORDER		= Color.DARK_GRAY;
+	
 	@Override
 	public JLabel getDefaultLabel(String text){
 		JLabel label = new JLabel(text);
@@ -49,8 +52,25 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JLabel getSubTitleLabel(String text){
+	public JLabel getLightLabel(String text){
+		JLabel label = new JLabel(text);
+		label.setForeground(COLOR_LIGHT_TEXT);
+		label.setFont(new Font("SansSerif", Font.PLAIN,14));
+		
+		return label;
+	}
+	
+	@Override
+	public JLabel getSubtitleLabel(String text){
 		JLabel label = getDefaultLabel(text);
+		label.setFont(new Font("SansSerif", Font.BOLD,14));
+		
+		return label;
+	}
+	
+	@Override
+	public JLabel getLightSubtitleLabel(String text){
+		JLabel label = getLightLabel(text);
 		label.setFont(new Font("SansSerif", Font.BOLD,14));
 		
 		return label;
@@ -135,6 +155,13 @@ public class GUIFactory implements IGUIFactory {
 		panel.setBackground(COLOR_CONTAINER_MAIN_BODY);
 		
 		return panel;
+	}
+	
+	@Override
+	public Border getDefaultBorder(){
+		
+		Border border = BorderFactory.createLineBorder(COLOR_DEFAULT_BORDER);
+		return border;
 	}
 	
 	@Override
