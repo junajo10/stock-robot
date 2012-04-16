@@ -14,7 +14,7 @@ import algorithms.IAlgorithm;
 
 public class JUnitAlgorithm implements IAlgorithm{
 
-	private Integer updateVar = 0;
+	private volatile int updateVar = 0;
 	private long freq;
 	
 	public JUnitAlgorithm(long freq){
