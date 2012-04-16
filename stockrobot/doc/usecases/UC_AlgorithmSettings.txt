@@ -1,0 +1,27 @@
+::::User::::							::::ASTRo::::
+__________________________________________________________________________________________
+
+Starts ASTRo
+
+										Launches Portfolio Window
+										
+Presses "Open Algorithm Settings"
+
+										Launches Algorithm settings window
+										
+{Possibly an eternal loop}
+Changes any slider altering any setting value
+										
+										ASTRO is updated, but the new values are NOT saved
+{/Possibly an eternal loop}										
+
+{Closing the window before saving will discard any changes made above}
+
+User presses "Save settings"
+
+										The new settings are stored to the DB
+										
+User closes window
+										The end!
+										
+{/Closing the window before saving will discard any changes made above}
