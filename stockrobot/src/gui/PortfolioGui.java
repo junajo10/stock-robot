@@ -96,7 +96,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		FlowLayout flowLayout_3 = (FlowLayout) pnl_menu.getLayout();
 		flowLayout_3.setAlignment(FlowLayout.RIGHT);
 		
-		JLabel lbl_Portfolio = guiFactory.getTitleLabel("Portfolio");
+		JLabel lbl_Portfolio = guiFactory.getSubtitleLabel("Portfolio");
 		pnl_menu.add(lbl_Portfolio);
 		
 		cmb_portfolio = new JComboBox();
@@ -119,7 +119,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		JPanel pnl_BalancePanel = guiFactory.getInvisibleContainer();
 		pnl_BalanceContainer.add(pnl_BalancePanel);
 		
-		JLabel lbl_Balance = guiFactory.getTitleLabel("Balance");
+		JLabel lbl_Balance = guiFactory.getSubtitleLabel("Balance");
 		pnl_BalancePanel.add(lbl_Balance);
 		
 		JPanel pnl_CashPanel = guiFactory.getInvisibleContainer();
@@ -159,7 +159,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		JPanel pnl_AlgorithmPanel = guiFactory.getInvisibleContainer();
 		pnl_AlgorithmContainer.add(pnl_AlgorithmPanel);
 		
-		JLabel lbl_Algorithm = guiFactory.getTitleLabel("Algorithms");
+		JLabel lbl_Algorithm = guiFactory.getSubtitleLabel("Algorithms");
 		lbl_Algorithm.setHorizontalAlignment(SwingConstants.LEFT);
 		pnl_AlgorithmPanel.add(lbl_Algorithm);
 		
@@ -189,7 +189,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		JPanel pnl_StockName = guiFactory.getInvisibleContainer();
 		pnl_StockContainer.add(pnl_StockName);
 		
-		JLabel lbl_stocks = guiFactory.getTitleLabel("Stock");
+		JLabel lbl_stocks = guiFactory.getSubtitleLabel("Stock");
 		pnl_StockName.add(lbl_stocks);
 		
 		JPanel pnl_ShowStock = guiFactory.getInvisibleContainer();

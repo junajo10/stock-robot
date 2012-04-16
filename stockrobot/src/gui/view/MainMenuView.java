@@ -35,7 +35,7 @@ public class MainMenuView extends JPanel implements IView {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		JLabel header = guiFactory.getTitleLabel("Main Menu:");
+		JLabel header = guiFactory.getSubtitleLabel("Main Menu:");
 		header.setHorizontalAlignment(SwingConstants.LEFT);
 		pnl_Container.add(header);
 		
