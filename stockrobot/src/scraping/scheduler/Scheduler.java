@@ -1,7 +1,9 @@
 package scraping.scheduler;
 
-import java.util.Calendar;
 import java.util.Date;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 
 /**
  * Class that can be asked whether something should happen or not
@@ -29,30 +31,29 @@ public class Scheduler implements IScheduler {
 			if( !_shouldRun )
 				return false;
 		
-			Date d = new Date();
 			
+			DateTime d = new DateTime(System.currentTimeMillis());
 			//Only run all queries, scraping etc between 08:58 AM and 17:44 (44 to avoid getting 0's in prices after 17:30 avanza time)
 			
 			//Cases when it's now allowed to run:
 			//If it's before 8AM
-			//TODO Change getHours. The method is depricated
-			if( d.getHours() < 8 )
+			if( d.getHourOfDay() < 8 )
 				return false;
 				
 			//If it's 8 AM and before 8:58
-			if( d.getHours() == 8 && d.getMinutes() < 58 )
+			if( d.getHourOfDay() == 8 && d.getMinuteOfHour() < 58 )
 				return false;
 					
 			//If it's after 17 PM
-			if( d.getHours() > 17 )
+			if( d.getHourOfDay() > 17 )
 				return false;
 					
 			//If it's 17 PM and after 17:47
-			if( d.getHours() == 17 && d.getMinutes() > 44 )
+			if( d.getHourOfDay() == 17 && d.getMinuteOfHour() > 44 )
 				return false;
 			
 			//If saturday or sunday!
-			if( d.getDay() == 6 || d.getDay() == 0 )
+			if( d.getDayOfWeek() == DateTimeConstants.SATURDAY || d.getDayOfWeek() == DateTimeConstants.SUNDAY )
 				return false;
 			
 			//Otherwise, just go for it!
@@ -81,26 +82,26 @@ public class Scheduler implements IScheduler {
 	public long timeUntilNextParse() {
 		long time = 0;
 		
-		Date d = new Date(System.currentTimeMillis());
+		DateTime d = new DateTime(System.currentTimeMillis());
 		
-		if (d.getHours() > 17 || d.getDay() == 6 || d.getDay() == 0) {
+		if (d.getHourOfDay() > 17 || d.getDayOfWeek() == DateTimeConstants.SATURDAY || d.getDayOfWeek() == DateTimeConstants.SUNDAY) {
 			// seconds until midnight
-			time = (3600*24) - (3600*d.getHours() + 60*d.getMinutes() + d.getSeconds());
+			time = (3600*24) - (3600*d.getHourOfDay() + 60*d.getMinuteOfHour() + d.getSecondOfMinute());
 			
 			// seconds until 8:58
 			time += ((60*9)-2)*60;
 
-			if (d.getDay() == 5 && d.getHours() > 17) {
+			if (d.getDayOfWeek() == DateTimeConstants.FRIDAY && d.getHourOfDay() > 17) {
 				// Friday after 17
 				time += 3600*24*2;
 			}
-			else if (d.getDay() == 6) {
+			else if (d.getDayOfWeek() == DateTimeConstants.SATURDAY) {
 				// if its saturday
 				time += 3600*24;
 			}
 		}
-		else if( d.getHours() <= 8 && d.getMinutes() < 58 ) {
-			time = (((60*9)-2)*60) - (60*(d.getHours() * 60)  + d.getMinutes() + d.getSeconds());
+		else if( d.getHourOfDay() <= 8 && d.getMinuteOfHour() < 58 ) {
+			time = (((60*9)-2)*60) - (3600*d.getHourOfDay() + 60*d.getMinuteOfHour() + d.getSecondOfMinute());
 		}
 		
 		return time*1000;

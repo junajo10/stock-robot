@@ -142,12 +142,6 @@ public class GUIFactory implements IGUIFactory {
 		
 		return window;
 	}
-
-	@Override
-	public JPanel getStockTableView() {
-		
-		return new StockTableView();
-	}
 	
 	@Override
 	public JPanel getMainContainer() {

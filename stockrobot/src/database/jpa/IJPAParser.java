@@ -3,6 +3,7 @@ package database.jpa;
 import java.util.List;
 import java.util.Map;
 
+import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
 import scraping.model.ParserStock;
@@ -14,11 +15,10 @@ import scraping.model.ParserStock;
  */
 public interface IJPAParser {
 	/**
-	 * Inserts stocks in to the database.
-	 * @param stocks The stocks to be added to the database.
-	 * @return returns the number of stocks that was added to the database
+	 * Will give a list of all the different StockNames
+	 * @return A list of stockNames
 	 */
-	int addStocks(List<ParserStock> stocks);
+	public List<StockNames> getAllStockNames();
 	
 	/**
 	 * Gets the latest map with the stockname as the key and the lastest price as value.
@@ -38,4 +38,10 @@ public interface IJPAParser {
 	 * @return the number of objects not stored.
 	 */
 	public int storeListOfObjectsDuplicates(List list);
+	/**
+	 * Updates an object to the database
+	 * @param o The object to be updated.
+	 * @return True if it went ok.
+	 */
+	public boolean updateObject(Object o);
 }

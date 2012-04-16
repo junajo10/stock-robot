@@ -12,10 +12,11 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import scraping.database.IInserter;
+import scraping.database.JPAInserter;
 import scraping.model.ParserStock;
 
 
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
@@ -34,6 +35,7 @@ public class JPATest {
 	public void testDuplicateEntry() {
 		StockPrices sp = new StockPrices(new StockNames("Stock1", "marketA"), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
 		jpaHelper.storeObject(sp);
+		sp = new StockPrices(new StockNames("Stock1", "marketA"), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
 		jpaHelper.storeObject(sp);
 	}
 	@Test
@@ -47,10 +49,8 @@ public class JPATest {
 	}
 	@Test
 	public void testNewPortfolio() {
-		AlgorithmEntity algorithm = new AlgorithmEntity("AlgorithmName", "path");
 		PortfolioEntity portfolio = new PortfolioEntity("Portfolio");
-		portfolio.setAlgorithm(algorithm);
-		jpaHelper.storeObject(algorithm);
+		portfolio.setAlgorithm("testtest");
 		jpaHelper.storeObject(portfolio);		
 	}
 	@Test
@@ -70,8 +70,17 @@ public class JPATest {
 	public void testStocksToWatch() {
 		PortfolioEntity p = new PortfolioEntity("StockToWatchTest");
 		jpaHelper.storeObject(p);
-		StocksToWatch stw = new StocksToWatch(p, new StockNames("stockbeeingwatched", "testMarket"));
-		jpaHelper.storeObject(stw);
+		
+		StockNames stockName = new StockNames("stock", "market");
+		jpaHelper.storeObject(stockName);
+		
+		p.addStockToWatch(stockName);
+		jpaHelper.updateObject(p);
+		
+		for (StockNames s : p.getStocksToWatch()) {
+			System.out.println(s);
+		}
+		
 	}
 	
 	@Test
@@ -90,10 +99,12 @@ public class JPATest {
 			list.add(ps);
 		}
 		// Should add 100 new stocks
-		Assert.assertEquals(100, jpaHelper.addStocks(list));
+		IInserter jpaInserter = new JPAInserter(jpaHelper);
+		
+		Assert.assertEquals(100, jpaInserter.insertStockData(list));
 		
 		// Should not be able to add any new stocks
-		Assert.assertEquals(0, jpaHelper.addStocks(list));
+		Assert.assertEquals(0, jpaInserter.insertStockData(list));
 		
 		list.clear();
 		for (int i = 0; i < 100; i++) {
@@ -108,10 +119,10 @@ public class JPATest {
 			list.add(ps);
 		}
 		// Should add 100 new stocks
-		Assert.assertEquals(100, jpaHelper.addStocks(list));
+		Assert.assertEquals(100, jpaInserter.insertStockData(list));
 		
 		// Should not be able to add any new stocks
-		Assert.assertEquals(0, jpaHelper.addStocks(list));
+		Assert.assertEquals(0, jpaInserter.insertStockData(list));
 		
 		
 		// Test if all the stocks in the list is in getLatestStockPrices
@@ -141,85 +152,37 @@ public class JPATest {
 		long amountToInvest = 10000;
 		PortfolioEntity p = new PortfolioEntity("portfolioInvestment");
 		jpaHelper.storeObject(p);
-		PortfolioInvestment investment = new PortfolioInvestment(p, amountToInvest, true);
-		jpaHelper.storeObject(investment);
+		
+		p.invest(amountToInvest, true);
+		jpaHelper.updateObject(p);
+		
+		Assert.assertEquals(amountToInvest, p.getBalance());
 	}
-	
-/**
-junit.framework.AssertionFailedError: expected:<0> but was:<10000>
-	at junit.framework.Assert.fail(Assert.java:47)
-	at junit.framework.Assert.failNotEquals(Assert.java:283)
-	at junit.framework.Assert.assertEquals(Assert.java:64)
-	at junit.framework.Assert.assertEquals(Assert.java:130)
-	at junit.framework.Assert.assertEquals(Assert.java:136)
-	at database.jpa.JPATest.testPortfolioInvestment(JPATest.java:103)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:616)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
-	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
-	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
-	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
-	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
-	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
-	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
-	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
-	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
-
-
-
-
- */
-	
+	@Test
+	public void testStockNamesGetPrices() {
+		boolean found = false;
+		for (StockNames sn : jpaHelper.getAllStockNames()) {
+			if (sn.getStockPrices() != null) {
+				found = true;
+			}
+		}
+		if (!found) {
+			Assert.fail();
+		}
+	}
 	/**
 	 * Removes all entitys from the database
 	 */
 	@AfterClass
 	public static void afterClass() {
-		for (PortfolioInvestment investment : jpaHelper.getAllPortfolioInvestment()) {
-			//System.out.println(investment);
-			jpaHelper.remove(investment);
-		}
-		
-		for (StocksToWatch stw : jpaHelper.getAllStocksToWatch()) {
-			//System.out.println(stw);
-			jpaHelper.remove(stw);
-		}
-		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
-			if (p.getHistory() != null) {
-				if (p.getHistory().iterator().hasNext()) {
-					jpaHelper.remove(p.getHistory().iterator().next());
-				}
-			}
-			
 			jpaHelper.remove(p);
 		}
-	    for (AlgorithmEntity a : jpaHelper.getAllAlgorithms()) {
-			jpaHelper.remove(a);
-	    }
-		
-	    
 	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
-	    	//System.out.println(sp);
 	    	jpaHelper.remove(sp);
 	    }
 		for (StockNames sn : jpaHelper.getAllStockNames()) {
-			//System.out.println(sn);
 	    	jpaHelper.remove(sn);
 		}
 	}

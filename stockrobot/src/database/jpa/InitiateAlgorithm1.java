@@ -2,7 +2,7 @@ package database.jpa;
 
 import java.util.List;
 
-import database.jpa.tables.AlgorithmEntity;
+//import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 
 /**
@@ -15,7 +15,7 @@ import database.jpa.tables.PortfolioEntity;
 public class InitiateAlgorithm1 {
 	
 	public static void main(String[] args) {
-		
+		/*
 		IJPAHelper help = JPAHelper.getInstance();
 		
 		List<PortfolioEntity> portfolios = help.getAllPortfolios();
@@ -33,6 +33,7 @@ public class InitiateAlgorithm1 {
 			
 			//Add some money to the account!
 			help.investMoney(100000, port);
-		}	
+		}
+		*/	
 	}
 }

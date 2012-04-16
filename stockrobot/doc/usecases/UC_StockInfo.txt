@@ -1,0 +1,16 @@
+::::User::::							::::ASTRo::::
+__________________________________________________________________________________________
+
+Starts ASTRo
+
+										Launches Portfolio Window
+										
+Presses "Open Stock Info"
+
+										Launches Stock Info Window
+										
+User watches stock info and might copy any of the stocks to his/her clip board
+
+										{System updates the table with correct information as soon as it's updated/}
+										
+User closes window

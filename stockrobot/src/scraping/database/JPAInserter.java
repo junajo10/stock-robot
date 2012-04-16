@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import database.jpa.IJPAHelper;
 import database.jpa.IJPAParser;
 import database.jpa.JPAHelper;
 import database.jpa.tables.StockNames;
@@ -22,7 +21,7 @@ public class JPAInserter implements IInserter {
 	
 	EntityManagerFactory factory;
 	EntityManager em;
-	IJPAHelper helper;
+	IJPAParser helper;
 	
 	
 	Map<String, StockPrices> latestMap = null;
@@ -46,13 +45,15 @@ public class JPAInserter implements IInserter {
 		//Instantiate helper
 		helper = JPAHelper.getInstance();
 	}
-	
-	@Override
-	public boolean insertStockData(List<ParserStock> stocks) {
-		IJPAParser jpaParserHelper = JPAHelper.getInstance();
+	public JPAInserter(IJPAParser jpaHelper) {
 		
+		//Instantiate helper
+		helper = jpaHelper;
+	}
+	@Override
+	public int insertStockData(List<ParserStock> stocks) {
 		if (latestMap == null) {
-			latestMap = jpaParserHelper.getLatestMap();
+			latestMap = helper.getLatestMap();
 		}
 		
 		int newStockPrices = 0;
@@ -84,29 +85,29 @@ public class JPAInserter implements IInserter {
 		boolean redoLatestMap = false;
 		if (!newStockNames.isEmpty()) {
 			try {
-				jpaParserHelper.storeListOfObjects(newStockNames);
+				helper.storeListOfObjects(newStockNames);
 			} catch (Exception e) {
 				// For some reason there is an identical stock name, so store those that are possible
 				// using the slower store function.
-				jpaParserHelper.storeListOfObjectsDuplicates(newStockNames);
+				helper.storeListOfObjectsDuplicates(newStockNames);
 				redoLatestMap = true;
 			}
 		}
 		
 		try {
-			jpaParserHelper.storeListOfObjects(newStocks);
+			helper.storeListOfObjects(newStocks);
 		} catch (Exception e) {
 			// For some reason there is an identical stock price, so store those that are possible
 			// using the slower store function.
-			jpaParserHelper.storeListOfObjectsDuplicates(newStocks);
+			helper.storeListOfObjectsDuplicates(newStocks);
 			redoLatestMap = true;
 		}
 		
 		if (redoLatestMap) {
-			latestMap = jpaParserHelper.getLatestMap();
+			latestMap = helper.getLatestMap();
 		}
 		
-		return true;
+		return newStockPrices;
 	}
 	
 	@Override

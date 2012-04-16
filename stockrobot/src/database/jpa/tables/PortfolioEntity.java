@@ -1,29 +1,30 @@
 package database.jpa.tables;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.apache.openjpa.persistence.Persistent;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.JPAHelperSimulator;
 
 /**
- * @author Daniel
- *
- * A class representing a Portfolio Entity
+ *  A class representing a Portfolio Entity
+ *  
+ *  @author Daniel
  */
 @Entity
 @Table(name="PortfolioEntity")
@@ -33,12 +34,8 @@ public class PortfolioEntity {
 	@Column(name = "PORTFOLIO_ID", nullable = false)
 	private int portfolioId;
 	
-	@Column(name="name", nullable=false, length=20, insertable=true)
+	@Column
 	private String name;
-	
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	@Column(name = "algorithm")
-	private AlgorithmEntity algorithm;
 	
 	@Column
 	private Long balance;
@@ -52,14 +49,22 @@ public class PortfolioEntity {
 	@Column
 	private boolean stopSelling;
 	
-	
-	@OneToMany(mappedBy="portfolio",targetEntity=PortfolioHistory.class, fetch=FetchType.EAGER)
-	private Collection<PortfolioHistory> history;
+	@ElementCollection
+    @CollectionTable(name = "history")
+    private Set<PortfolioHistory> history = new HashSet<PortfolioHistory>();
         
+
+	@ElementCollection
+    @CollectionTable(name = "investments")
+    private Set<PortfolioInvestment> investments = new HashSet<PortfolioInvestment>();
+    
 	
-	@OneToMany(targetEntity=StockNames.class, fetch=FetchType.EAGER)
-	List<StockNames> stocksToWatch;
+	@ElementCollection
+    @CollectionTable(name = "stocksToWatch")
+	private Set<StocksToWatch> stocksToWatch = new HashSet<StocksToWatch>();
 	
+	@Embedded
+	private AlgorithmSettings algorithmSettings;
 	
 	public PortfolioEntity() {
 		
@@ -70,9 +75,11 @@ public class PortfolioEntity {
 	 */
 	public PortfolioEntity(String name) {
 		this.name = name;
-		algorithm = null;
+		algorithmSettings = new AlgorithmSettings();
+		
 		balance = (long)0;
 		watchAllStocks = false;
+		algorithmSettings = null;
 	}
 	/**
 	 * Returns the name of the portfolio
@@ -109,17 +116,23 @@ public class PortfolioEntity {
 	}
 	/**
 	 * Sets a new algorithm to a given portfolio
+	 * Will clear all settings and give the default settings of the given algorithm
 	 * @param algorithm
 	 */
-	public void setAlgorithm(AlgorithmEntity algorithm) {
-		this.algorithm = algorithm;
+	public void setAlgorithm(String algorithm) {
+		this.algorithmSettings = new AlgorithmSettings(algorithm);
+
 	}
 	/**
 	 * Will return the history of this portfolio.
 	 * @return A collection of PortfolioHistory that are coupled with this portfolio
 	 */
-	public Collection<PortfolioHistory> getHistory() {
+	public Set<PortfolioHistory> getHistory() {
 		return history;
+	}
+	
+	public void addPortfolioHistory(PortfolioHistory ph) {
+		this.history.add(ph);
 	}
 	/**
 	 * Invests/removes money
@@ -127,14 +140,8 @@ public class PortfolioEntity {
 	 * @param invest If true it will invest, If false will remove
 	 */
 	public void invest(long amount, boolean invest) {
+		this.investments.add(new PortfolioInvestment(this,amount, invest));
 		this.balance += amount;
-	}
-	/**
-	 * will return a AlgorithmEntity for this portfolio
-	 * @return A algorithmEntity
-	 */
-	public AlgorithmEntity getAlgorithm() {
-		return algorithm;
 	}
 	/**
 	 * @return True if stopBuying flag is set
@@ -166,14 +173,18 @@ public class PortfolioEntity {
 	 * A helper method to easy get the text representation.
 	 */
 	public String toString() {
-		return name + " | " + balance + " | Algorithm: " + algorithm;
+		return name + " | " + balance;
 	}
 	/**
 	 * Will return a list of StockNames this portfolio is set to watch
 	 * @return a list of StockNames this portfolio is set to watch
 	 */
 	public List<StockNames> getStocksToWatch() {
-		return stocksToWatch;
+		List<StockNames> stocks = new ArrayList<StockNames>();
+		for (StocksToWatch stw : stocksToWatch) {
+			stocks.add(stw.getStockName());
+		}
+		return stocks;
 	}
 	/**
 	 * Helper method that the trader will use to remove money from the portfolio
@@ -198,5 +209,33 @@ public class PortfolioEntity {
 	public void soldFor(long amount, IJPAHelper jpaHelper) {
 		balance += amount;
 		jpaHelper.updateObject(this);
+	}
+	public PortfolioHistory getSpecificPortfolioHistory(StockPrices s, long amount) {
+		for (PortfolioHistory ph : history) {
+			if (ph.getBuyDate().equals(s.getTime()) && ph.getAmount() == amount)
+				return ph;
+		}
+		return null;
+	}
+	public long getTotalInvestedAmount() {
+		long result = 0;
+		
+		for (PortfolioInvestment pi : investments) {
+			if (pi.didInvest())
+				result += pi.getAmount();
+			else
+				result -= pi.getAmount();
+		}
+		return result;
+	}
+	public boolean addStockToWatch(StockNames stockName) {
+		stocksToWatch.add(new StocksToWatch(stockName));
+		return true;
+	}
+	public boolean removeStockToWatch(StockNames stockName) {
+		return stocksToWatch.remove(stockName);
+	}
+	public AlgorithmSettings getAlgortihmSettings() {
+		return algorithmSettings;
 	}
 }

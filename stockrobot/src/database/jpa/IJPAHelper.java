@@ -4,20 +4,16 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import database.jpa.tables.AlgorithmEntity;
-import database.jpa.tables.AlgorithmSetting;
-import database.jpa.tables.AlgorithmSettings;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.PortfolioHistory;
-import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
 /**
- * @author Daniel
- *
  * This is the main interface to the JPAHelper system,
  * it is implemented by JPAHelper and JPAHelperSimulator
+ * 
+ * @author Daniel
  */
 public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	public void stopJPASystem();
@@ -25,7 +21,7 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * Returns a list of all the algorithms.
 	 * @return a list of all the algorithms.
 	 */
-	public List<AlgorithmEntity> getAllAlgorithms();
+	//public List<AlgorithmEntity> getAllAlgorithms();
 	/**
 	 * Will give back all portfolios in the JPA system.
 	 * @return A list with PortfolioTables
@@ -38,14 +34,10 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	public List<StockPrices> getAllStockPrices();
 	/**
 	 * Will give back all stockPrices
+	 * @param limit 
 	 * @return A list of stockPrices
 	 */
-	public List<StockPrices> getAllStockPricesReverseOrdered();
-	/**
-	 * Will give back all PortfolioInvestment
-	 * @return A list of PortfolioInvestment
-	 */
-	public List<PortfolioInvestment> getAllPortfolioInvestment();
+	public List<StockPrices> getStockPricesReverseOrdered(int limit);
 	/**
 	 * Will give back all StocksToWatch
 	 * @return A list of StocksToWatch
@@ -96,28 +88,13 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param portfolioTable The portfolioTable to get the AlgorithmTable from
 	 * @return An algorithmTable
 	 */
-	public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable);
-
-	/**
-	 * Given a stockPrice and a portfolio, will find the PortfolioHistory that has the StockPrice as buying price, 
-	 * and coupled with the same portfolio.
-	 * 
-	 * This method will be used for example in the TraderSimulator to get the right PortfolioHistory.
-	 * 
-	 * @param stockPrice The buying stockPrice
-	 * @param portfolio The portfolio
-	 * @param amount 
-	 * @return A PortfolioHistory.
-	 */
-	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntity portfolio, long amount);
-
+	//public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable);
 
 
 	public EntityManager getEntityManager();
 	
 	
-	
-	public List<AlgorithmSetting> getSettings(AlgorithmSettings settings);
-	
 	public List<StockPrices> getLatestStockPrices();
+	
+	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable);
 }

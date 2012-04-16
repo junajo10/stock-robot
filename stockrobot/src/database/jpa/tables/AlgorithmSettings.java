@@ -1,72 +1,87 @@
 package database.jpa.tables;
 
+import generic.Pair;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 
-import org.apache.openjpa.persistence.ElementType;
+import algorithms.IAlgorithm;
+
 
 /**
- * @author Daniel
- *
  * This will hold the settings of a given portfolio's algorithm.
+ * 
+ * @author Daniel
  */
-@Entity
+@Embeddable
 public class AlgorithmSettings {
-	@Id
-	private int id;
-	
-	@OneToMany(targetEntity=Integer.class)
-	private Set<AlgorithmSetting<Integer>> intSettings;
-	
-	@OneToMany(targetEntity=Double.class)
-	@ElementType(Double.class)
-	private Set<AlgorithmSetting<Double>> doubleSettings;
-	
-	@OneToMany(targetEntity=String.class)
-	@ElementType(String.class)
-	private Set<AlgorithmSetting<String>> stringSettings;
-	
-	@OneToMany
-	private List<AlgorithmSetting<Long>> longSettings;
+	@Column
+	private String algorithmName;
 	
 	@Column
-	private PortfolioEntity portfolio;
+	private boolean initiated = false;
 	
-	@Column
-	private AlgorithmEntity algorithm;
+	@ElementCollection
+    @CollectionTable(name = "longSettings")
+    private Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
 	
+	@ElementCollection
+    @CollectionTable(name = "doubleSettings")
+    private Set<AlgorithmSettingDouble> doubleSettings = new HashSet<AlgorithmSettingDouble>();
+		
 	public AlgorithmSettings() {
 		
 	}
-	public AlgorithmSettings(PortfolioEntity portfolio, AlgorithmEntity algorithm) {
-		this.portfolio = portfolio;
-		this.algorithm = algorithm;
+	public AlgorithmSettings(String algorithm) {
+		this.algorithmName = algorithm;
+		this.initiated = false;
 	}
-	public PortfolioEntity getPortfolio() {
-		return portfolio;
+	public String getAlgorithmName() {
+		return algorithmName;
 	}
-	public AlgorithmEntity getAlgorithm() {
-		return algorithm;
+	public void initiate(IAlgorithm algorithm) {
+		if (!initiated) {
+			this.doubleSettings = algorithm.getDefaultDoubleSettings();
+			this.longSettings = algorithm.getDefaultLongSettings();
+		}
+		algorithm.giveDoubleSettings(getCurrentDoubleSettings());
+		algorithm.giveLongSettings(getCurrentLongSettings());
+	}
+	private List<Pair<String, Long>> getCurrentLongSettings() {
+		List<Pair<String, Long>> currentLongSettings = new ArrayList<Pair<String,Long>>();
+		for (AlgorithmSettingLong setting : longSettings) {
+			currentLongSettings.add(new Pair<String, Long>(setting.getName(), setting.getValue()));
+		}
+		return currentLongSettings;
+	}
+	private List<Pair<String, Double>> getCurrentDoubleSettings() {
+		List<Pair<String, Double>> currentDoubleSettings = new ArrayList<Pair<String,Double>>();
+		for (AlgorithmSettingDouble setting : doubleSettings) {
+			currentDoubleSettings.add(new Pair<String, Double>(setting.getName(), setting.getValue()));
+		}
+		return currentDoubleSettings;
 	}
 	public int getNumberOfSettings() {
-		int number = 0;
-		if (intSettings != null)
-			number += intSettings.size();
-		if (doubleSettings != null)
-			number += doubleSettings.size();
-		if (stringSettings != null)
-			number += stringSettings.size();
-		return number;
+		return longSettings.size() + doubleSettings.size();
 	}
-	public void addIntSetting(AlgorithmSetting<Integer> intSetting) {
-		this.intSettings.add(intSetting);
+	public void addLongSetting(AlgorithmSettingLong longSetting) {
+		longSettings.add(longSetting);
 	}
-	public Set<AlgorithmSetting<Integer>> getIntSettings() {
-		return intSettings;
+	public Set<AlgorithmSettingLong> getLongSettings() {
+		return longSettings;
+	}
+	
+	public void addDoubleSetting(AlgorithmSettingDouble doubleSetting) {
+		doubleSettings.add(doubleSetting);
+	}
+	public Set<AlgorithmSettingDouble> getDoubleSettings() {
+		return doubleSettings;
 	}
 }

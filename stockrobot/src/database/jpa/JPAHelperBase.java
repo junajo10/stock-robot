@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,12 +19,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import scraping.model.ParserStock;
 
 
-import database.jpa.tables.AlgorithmEntity;
-import database.jpa.tables.AlgorithmSetting;
-import database.jpa.tables.AlgorithmSettings;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.PortfolioEntity;
@@ -33,11 +29,11 @@ import database.jpa.tables.StockPrices;
 import database.jpa.tables.StocksToWatch;
 
 /**
- * @author Daniel
- *
  * Basically the main JPA system we will use.
  * 
  * It has methods for most of the things we want to accomplish.
+ * 
+ * @author Daniel
  */
 class JPAHelperBase implements IJPAHelper {
 	EntityManager em = null;
@@ -47,18 +43,6 @@ class JPAHelperBase implements IJPAHelper {
 	public void stopJPASystem() {
 		em.close();
 		factory.close();
-	}
-	@Override
-	public List<AlgorithmEntity> getAllAlgorithms() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<AlgorithmEntity> q2 = cb.createQuery(AlgorithmEntity.class);
-
-		Root<AlgorithmEntity> c = q2.from(AlgorithmEntity.class);
-
-		q2.select(c);
-
-		TypedQuery<AlgorithmEntity> query = em.createQuery(q2);
-		return query.getResultList();
 	}
 	@Override
 	public List<PortfolioEntity> getAllPortfolios() {
@@ -85,26 +69,18 @@ class JPAHelperBase implements IJPAHelper {
 		return query.getResultList();
 	}
 	@Override
-	public List<StockPrices> getAllStockPricesReverseOrdered() {
+	public List<StockPrices> getStockPricesReverseOrdered(int limit) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<StockPrices> q = cb.createQuery(StockPrices.class);
 		Root<StockPrices> c = q.from(StockPrices.class);
 		q.select(c);
 		q.orderBy(cb.asc(c.get("time")));
+		
+		
 		TypedQuery<StockPrices> query = em.createQuery(q);
 		
-		return query.getResultList();
-	}
-	@Override
-	public List<PortfolioInvestment> getAllPortfolioInvestment() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
-
-		Root<PortfolioInvestment> c = q2.from(PortfolioInvestment.class);
-
-		q2.select(c);
-
-		TypedQuery<PortfolioInvestment> query = em.createQuery(q2);
+		query.setMaxResults(limit);
+		
 		return query.getResultList();
 	}
 	@Override
@@ -207,6 +183,8 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public synchronized boolean storeObject(Object o) {
+		if (em.getTransaction().isActive())
+			em.getTransaction().commit();
 		em.getTransaction().begin();
 		em.persist(o);
 		em.getTransaction().commit();
@@ -221,8 +199,9 @@ class JPAHelperBase implements IJPAHelper {
 			System.out.println("asdf");
 			em.getTransaction().commit();
 			return false;
+		} finally {
+			em.getTransaction().commit();
 		}
-		em.getTransaction().commit();
 		return true;
 	}
 	@Override
@@ -238,6 +217,8 @@ class JPAHelperBase implements IJPAHelper {
 	public synchronized int storeListOfObjectsDuplicates(List list) {
 		int dup = 0;
 		for (Object o : list) {
+			if (em.getTransaction().isActive())
+				em.getTransaction().commit();
 			try {
 				em.getTransaction().begin();
 				em.merge(o);
@@ -246,12 +227,12 @@ class JPAHelperBase implements IJPAHelper {
 				dup++;
 			}
 		}
+		if (em.getTransaction().isActive())
+			em.getTransaction().commit();
 		return dup;
 	}
 	@Override
 	public synchronized boolean investMoney(long amount, PortfolioEntity portfolio) {
-		storeObject(new PortfolioInvestment(portfolio, amount, true));
-
 		portfolio.invest(amount, true);
 
 		updateObject(portfolio);
@@ -276,15 +257,25 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public List<StockPrices> getCurrentStocks(PortfolioEntity portfolioTable) {
-		List<PortfolioHistory> portfolioHistory = getPortfolioHistory(portfolioTable);
 		List<StockPrices> sp = new ArrayList<StockPrices>();
 		
-		for (PortfolioHistory ph : portfolioHistory) {
+		for (PortfolioHistory ph : portfolioTable.getHistory()) {
 			if (ph.getSoldDate() == null)
 				sp.add(ph.getStockPrice());
 		}
 
 		return sp;
+	}
+	@Override
+	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable) {
+		List<PortfolioHistory> history = new ArrayList<PortfolioHistory>();
+		
+		for (PortfolioHistory ph : portfolioTable.getHistory()) {
+			if (ph.getSoldDate() == null)
+				history.add(ph);
+		}
+
+		return history;
 	}
 	@Override
 	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntity portfolio) {
@@ -364,33 +355,6 @@ class JPAHelperBase implements IJPAHelper {
 				return sum;
 	}
 	@Override
-	public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable) {
-		return portfolioTable.getAlgorithm();
-	}
-	@Override
-	public PortfolioHistory getSpecificPortfolioHistory(StockPrices stockPrice, PortfolioEntity portfolio, long amount) {
-
-
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
-
-		Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
-
-		q2.select(c);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolio);
-		Predicate p2 = em.getCriteriaBuilder().equal(c.get("stockPrice"), stockPrice);
-		Predicate p3 = em.getCriteriaBuilder().equal(c.get("amount"), amount);
-
-		q2.where(p, p2);
-
-		TypedQuery<PortfolioHistory> query = em.createQuery(q2);
-
-		query.setMaxResults(1);
-
-		return query.getSingleResult();
-	}
-	@Override
 	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp, PortfolioEntity portfolioTable) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
@@ -434,69 +398,6 @@ class JPAHelperBase implements IJPAHelper {
 	@Override
 	public EntityManager getEntityManager() {
 		return em;
-	}
-	@Override
-	public List<AlgorithmSetting> getSettings(AlgorithmSettings settings) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<AlgorithmSetting> q2 = cb.createQuery(AlgorithmSetting.class);
-
-		Root<AlgorithmSetting> c = q2.from(AlgorithmSetting.class);
-
-		q2.select(c);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("settings"), settings);
-
-		q2.where(p);
-
-		TypedQuery<AlgorithmSetting> query = em.createQuery(q2);
-
-		return query.getResultList();
-	}
-	@Override
-	public int addStocks(List<ParserStock> stocks) {
-		Map<String, StockPrices> latestMap = getLatestMap(); 
-		int newStockPrices = 0;
-		List<StockPrices> newStocks = new LinkedList<StockPrices>();
-		Stack<StockNames> newStockNames = new Stack<StockNames>();
-		
-		for (ParserStock s : stocks) {
-			if (s.getBuy() != 0 && s.getSell() != 0) {
-				if (!latestMap.containsKey(s.getName())) {
-					//StockName doesn't exist.
-					newStockNames.push(new StockNames(s.getName(), s.getMarket()));
-					newStocks.add(new StockPrices(newStockNames.peek(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
-					newStockPrices++;
-
-				}
-				else {
-					StockPrices latest = latestMap.get(s.getName());
-
-					if (!latest.getTime().equals(s.getDate())) {
-						newStocks.add(new StockPrices(latest.getStockName(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate()));
-						newStockPrices++;
-					}
-				}
-			}
-		}
-		
-		try {
-			storeListOfObjects(newStockNames);
-		} catch (Exception e) {
-			// For some reason there is an identical stock name, so store those that are possible
-			// using the slower store function.
-			storeListOfObjectsDuplicates(newStockNames);
-		}
-		
-		
-		try {
-			storeListOfObjects(newStocks);
-		} catch (Exception e) {
-			// For some reason there is an identical stock price, so store those that are possible
-			// using the slower store function.
-			storeListOfObjectsDuplicates(newStocks);
-		}
-		
-		return newStockPrices;
 	}
 	@Override
 	public Map<String, StockPrices> getLatestMap() {

@@ -28,7 +28,7 @@ import scraping.model.ParserStock;
  * @author kristian
  *
  */
-public class Inserter implements IInserter {
+public class Inserter { // implements IInserter {
 	
 	private static final String XML_SETTINGS_URL	= "config/priceinfo_db.xml"; 
 	private static final String DB_USER_TAGNAME		= "dbuser";
@@ -150,7 +150,7 @@ public class Inserter implements IInserter {
 	 * 
 	 * Do not care if the stock's market is changed here
 	 */
-	@Override
+	//@Override
 	public boolean insertStockData( List<ParserStock> stocks ) {
 		
 		System.out.println( "size: " + stocks.size() );

@@ -2,26 +2,19 @@ package database.jpa.tables;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 
 /**
  * @author Daniel
  * 
  * A entity with information about money put in, or taken out of a portfolio.
  */
-@Entity
-@Table(name="PortfolioInvested")
+@Embeddable
 public class PortfolioInvestment {
-	@Id
-	@GeneratedValue
-	private int id;
-	
-	@OneToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private PortfolioEntity portfolio;
 	
 	@Column
@@ -61,13 +54,6 @@ public class PortfolioInvestment {
 	 */
 	public Date getDate() {
 		return date;
-	}
-	/**
-	 * Gives the id to this entity
-	 * @return an int representing this entity
-	 */
-	public int getId() {
-		return id;
 	}
 	/**
 	 * Will give how much was invested/removed

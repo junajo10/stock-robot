@@ -1,11 +1,18 @@
 package portfolio;
 
+import generic.Log;
+import generic.Log.TAG;
 import gui.IObservable;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+
+import robot.IRobot_Algorithms;
+
+import algorithms.IAlgorithm;
+import algorithms.loader.PluginAlgortihmLoader;
 
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
@@ -23,17 +30,42 @@ public class PortfolioHandler implements IPortfolioHandler{
 	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
 	private IJPAHelper jpaHelper;
 	private PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
+	private PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+	private IRobot_Algorithms robot;
 	
-	private PortfolioHandler() {
+	
+	private PortfolioHandler(IRobot_Algorithms robot) {
+		this.robot = robot;
 		jpaHelper = JPAHelper.getInstance();
-		
 		List<PortfolioEntity> portfolioTables = jpaHelper.getAllPortfolios();
 		
-		System.out.println(portfolioTables);
+		Log.instance().log(TAG.VERY_VERBOSE, "Starting to create portfolios");
 		for (PortfolioEntity pt : portfolioTables) {
-			listOfPortfolios.add(new Portfolio(pt));
+			IPortfolio p = createExistingPortfolio(pt);
+			listOfPortfolios.add(p);
+			Log.instance().log(TAG.VERY_VERBOSE, "Portfolio created: " + p.getName());
 		}
+		Log.instance().log(TAG.VERY_VERBOSE, "Done creating portfolios");
+	}
+	private IPortfolio createExistingPortfolio(PortfolioEntity pt) {
+		Portfolio p = new Portfolio(pt);
 		
+		if (pt.getAlgortihmSettings().getAlgorithmName() != null) {
+			IAlgorithm algorithm = algorithmLoader.getAlgorithm(robot, p);
+			
+			if (algorithm != null) {
+				p.setAlgorithm(algorithm);
+				listOfPortfolios.add(p);
+				Log.instance().log(TAG.VERY_VERBOSE, p.getName() + " algorithm set to: " + algorithm.getName());
+			}
+			else {
+				Log.instance().log(TAG.ERROR, p.getName() + " couldent set algorithm to: " + pt.getAlgortihmSettings().getAlgorithmName() + " == null");
+			}
+		}
+		else {
+			Log.instance().log(TAG.VERY_VERBOSE, p.getName() + " dosent have a algorithm set yet.");
+		}
+		return p;
 	}
 	@Override
 	public IPortfolio createNewPortfolio(String name) {
@@ -54,20 +86,14 @@ public class PortfolioHandler implements IPortfolioHandler{
 		}
 		return false;
 	}
-	public static IPortfolioHandler getInstance() {
+	public static IPortfolioHandler getInstance(IRobot_Algorithms robot) {
 		if(instance == null) {
 			synchronized (PortfolioHandler.class) {
 				if (instance == null)
-					instance = new PortfolioHandler();
+					instance = new PortfolioHandler(robot);
 			}
 		}
 		return instance;
-	}
-	@Override
-	public boolean setupPortfolio(IPortfolio portfolio) {
-		PortfolioSetupGUI setupGUI = new PortfolioSetupGUI(portfolio);
-		
-		return false;
 	}
 	@Override
 	public void addAddObserver(PropertyChangeListener listener) {

@@ -30,10 +30,4 @@ public interface IPortfolioHandler extends IObservable {
 	 */
 	boolean removePortfolio(IPortfolio portfolio);
 	
-	/**
-	 * Will start a GUI for seting up a given portfolio
-	 * @param portfolio The portfolio to be setup
-	 * @return Returns true if new changes was accepted
-	 */
-	boolean setupPortfolio(IPortfolio portfolio);
 }

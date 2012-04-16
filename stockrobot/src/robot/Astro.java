@@ -1,22 +1,22 @@
 package robot;
 
+import generic.Log;
+import generic.Log.TAG;
 import gui.PortfolioController;
 import gui.PortfolioGui;
-import gui.StockInfoGUI;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import algorithms.loader.PluginAlgortihmLoader;
+
 import database.jpa.IJPAHelper;
 import database.jpa.JPAHelper;
-import database.jpa.tables.AlgorithmEntity;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
-
-import algorithms.loader.AlgorithmsLoader;
 
 import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
@@ -38,14 +38,12 @@ import trader.TraderSimulator;
 public class Astro implements IRobot_Algorithms{
 
 	IPortfolioHandler portfolioHandler = null;
-	AlgorithmsLoader algorithmsLoader = null;
 	PortfolioGui portfolioGui = null;
-	StockInfoGUI stockInfoGUI = null;
 	PortfolioController portfolioController = null;
 	ITrader trader = null;
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	Random rand = new Random(System.currentTimeMillis());
-
+	PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
 
 	private List<StockNames> simulatedStocks = null;
 
@@ -56,7 +54,7 @@ public class Astro implements IRobot_Algorithms{
 	 */
 	//TODO: In a new thread?
 	private void start() {
-
+		
 		System.out.println("ASTRo is starting up.");
 
 		if (simulate) {
@@ -65,11 +63,8 @@ public class Astro implements IRobot_Algorithms{
 		}
 
 		trader				= TraderSimulator.getInstance();
-		algorithmsLoader 	= AlgorithmsLoader.getInstance(this);
-		portfolioHandler 	= PortfolioHandler.getInstance();
+		portfolioHandler 	= PortfolioHandler.getInstance(this);
 		portfolioGui 		= new PortfolioGui(portfolioHandler);
-		stockInfoGUI 		= new StockInfoGUI();
-		stockInfoGUI 		= new StockInfoGUI();
 		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
 		while(true) {
@@ -79,7 +74,7 @@ public class Astro implements IRobot_Algorithms{
 						long newInvestment = ((long)rand.nextInt(1000)*1000000);
 
 						p.investAmount(newInvestment);
-						System.out.println("More money invested: " + newInvestment + " to portfolio: " + p);
+						Log.instance().log(TAG.VERBOSE, "More money invested: " + newInvestment + " to portfolio: " + p);
 					}
 				}
 
@@ -112,14 +107,19 @@ public class Astro implements IRobot_Algorithms{
 		}
 
 		if (!alreadyExists) {
+			Log.instance().log(TAG.VERBOSE, "Creating simulation portfolios");
 			for (int i = 1; i <= 2; i++) {
 				PortfolioEntity portfolio = new PortfolioEntity("sim portfolio " + i);
+				
 				jpaHelper.storeObject(portfolio);
-				portfolio.setAlgorithm(new AlgorithmEntity("algorithm" + i, "algorithms.TestAlgorithm"));
+				
+				portfolio.setAlgorithm(algorithmLoader.algortihmsAvailable().get(i-1));
+				
+				jpaHelper.updateObject(portfolio);
+				
 				jpaHelper.investMoney(10000000, portfolio);
 			}
 		}
-		List<StockNames> stockNames = jpaHelper.getAllStockNames();
 		
 		alreadyExists = false;
 		for (StockNames s : jpaHelper.getAllStockNames()) {
@@ -162,8 +162,16 @@ public class Astro implements IRobot_Algorithms{
 
 			if (s.contentEquals("--simulate") || s.contentEquals("-s"))
 				simulate = true;
+			else if (s.contentEquals("-v")) {
+				Log.instance().setFilter(TAG.VERBOSE, true);
+				System.out.println("Verbose mode on.");
+			}
+			else if (s.contentEquals("-vv")) {
+				Log.instance().setFilter(TAG.VERY_VERBOSE, true);
+				System.out.println("VeryVerbose mode on.");
+			}
 			else if (s.contentEquals("-t") || s.contentEquals("--time")) {
-				if (args.length < i+3) {
+				if (args.length > i+1) {
 					try {
 						timeBetweenUpdates = Math.abs(Integer.parseInt(args[i+1]));
 						System.out.println("Algorithm update time set to: " + timeBetweenUpdates + "ms.");
@@ -177,10 +185,14 @@ public class Astro implements IRobot_Algorithms{
 			else if (s.contentEquals("--help")) {
 				System.out.println("ASTRo\nAlgorithm Stock Trading Robot\n\n\t-s or --simulate" + 
 						"\tTo simulate new stocks and more investments.\n" +
-						"\t--time x or -t x\tSet the time between algorithm updates to x ms.\n");
+						"\t--time x or -t x\tSet the time between algorithm updates to x ms.\n" + 
+						"\t -v for more output.\n" +
+						"\t -vv for even more output\n"
+						);
+				System.exit(0);
 			}
 			else {
-				System.out.println("Unknown parameter, aborting\n");
+				System.out.println("Unknown parameter " + s + " , aborting\n");
 				System.exit(1);
 			}
 		}
@@ -191,5 +203,9 @@ public class Astro implements IRobot_Algorithms{
 	@Override
 	public IJPAHelper getJPAHelper() {
 		return jpaHelper;
+	}
+	@Override
+	public ITrader getTrader() {
+		return trader;
 	}
 }

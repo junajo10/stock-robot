@@ -113,4 +113,6 @@ public interface IJPAAlgortihm {
 	 * @return True if it went ok.
 	 */
 	public boolean updateObject(Object o);
+	
+	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable);
 }

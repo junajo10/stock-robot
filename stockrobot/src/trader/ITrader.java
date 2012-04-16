@@ -2,6 +2,7 @@ package trader;
 
 import gui.IObservable;
 import database.jpa.tables.PortfolioEntity;
+import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockPrices;
 
 /**
@@ -24,4 +25,6 @@ public interface ITrader extends IObservable{
 	boolean sellStock(StockPrices s, long amount, PortfolioEntity portfolio);
 	
 	long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntity portfolio);
+
+	boolean sellStock(PortfolioHistory ph, PortfolioEntity portfolio);
 }

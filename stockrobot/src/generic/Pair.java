@@ -1,12 +1,12 @@
 package generic;
 
 /**
+ * Just a simple tuple class
+ * 
  * @author Daniel
  *
  * @param <L> The left object type
  * @param <R> The right object type
- * 
- * Just a simple tuple class
  */
 public class Pair<L, R> {
 	private L left;

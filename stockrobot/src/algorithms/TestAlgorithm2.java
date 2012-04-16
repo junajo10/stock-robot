@@ -1,11 +1,15 @@
 package algorithms;
 
-
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import generic.Log;
 import generic.Pair;
+import generic.Log.TAG;
 import database.jpa.IJPAAlgortihm;
+import database.jpa.tables.AlgorithmSettingDouble;
+import database.jpa.tables.AlgorithmSettingLong;
 import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -14,25 +18,30 @@ import robot.IRobot_Algorithms;
 import trader.ITrader;
 
 /**
- * @author daniel
- *
  * A copy of TestAlgorithm
  * This is to really test that we can have several algorithms in the system.
+ * 
+ * @author daniel
  */
+@AlgorithmPlugin(name="TestAlgorithm2")
 public class TestAlgorithm2 implements IAlgorithm{
 
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
 	ITrader trader = null;
 	IJPAAlgortihm jpaHelper = null;
+	private long buySetting = 5;
+	private long sellSetting = 5;
 
-
+	public TestAlgorithm2() {
+		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm2 constructor");
+	}
 	public TestAlgorithm2(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
 		this.trader = trader;
 		this.jpaHelper = robot.getJPAHelper();
-		System.out.println("Inside TestAlgorithm2 constructor");
+		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm2 constructor");
 	}
 
 	@Override
@@ -45,11 +54,11 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 		for (StockPrices sp : ownedStockes ) {
 
-			List<StockPrices> cs = jpaHelper.getNLatest(sp, 5);
-			if (cs.size() == 5) {
+			List<StockPrices> cs = jpaHelper.getNLatest(sp, (int)sellSetting);
+			if (cs.size() == sellSetting) {
 				long last = Long.MAX_VALUE;
 				boolean sell = true;
-				for (int i = 4; i >= 0; i--) {
+				for (int i = (int)sellSetting-1; i >= 0; i--) {
 					if (cs.get(i).getBuy() < last) {
 						last = cs.get(i).getBuy();
 					}
@@ -69,7 +78,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 				}
 			}
 		}
-		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo(5)) {
+		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo((int)buySetting)) {
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
 			for (int i = 0; i < stockInfo.getRight().size(); i++) {
@@ -103,84 +112,51 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 	@Override
 	public String getName() {
-		return "TestAlgoritm1";
+		return this.getClass().getAnnotation(AlgorithmPlugin.class).name();
 	}
 	@Override
 	public String getDescription() {
-		return "Test algorithm1\n\nBuys when a stock has gone up 3 times in a row\nSells when a stock has gone down 3 times in a row";
+		return "Test algorithm2\n\nBuys when a stock has gone up 3 times in a row\nSells when a stock has gone down 3 times in a row";
+	}
+	
+	@Override
+	public Set<AlgorithmSettingDouble> getDefaultDoubleSettings() {
+		Set<AlgorithmSettingDouble> doubleSettings = new HashSet<AlgorithmSettingDouble>();
+		return doubleSettings;
+	}
+	
+	@Override
+	public Set<AlgorithmSettingLong> getDefaultLongSettings() {
+		Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
+		longSettings.add(new AlgorithmSettingLong("buy", 5, "Number of times a stock has to climb before buying", 1, 1, 100));
+		longSettings.add(new AlgorithmSettingLong("sell", 5, "Number of times a stock has to drop before selling", 2, 1, 100));
+		return longSettings;
 	}
 
-
 	@Override
-	public boolean giveSetting(int id, int value) {
+	public boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings) {
+		// TODO Auto-generated method stub
 		return false;
 	}
-	@Override
-	public boolean giveSetting(int id, String value) {
 
-		return false;
-	}
 	@Override
-	public boolean giveSetting(int id, double value) {
-
-		return false;
-	}
-	@Override
-	public int getNumberOfSettings() {
-
-		return 1;
-	}
-	@Override
-	public String getSettingText(int id) {
-		switch (id) {
-		case 0:
-			return "Buy stock after it has climbed X times:";
-		default:
-			System.out.println("garrr");
+	public boolean giveLongSettings(List<Pair<String, Long>> longSettings) {
+		for (Pair<String, Long> setting : longSettings) {
+			if (setting.getLeft().contentEquals("buy")) {
+				Log.instance().log(TAG.VERY_VERBOSE, "Buy set to: " + setting.getRight());
+				this.buySetting = setting.getRight();
+			}
+			else if (setting.getLeft().contentEquals("sell")) {
+				Log.instance().log(TAG.VERY_VERBOSE, "Sell set to: " + setting.getRight());
+				this.sellSetting = setting.getRight();
+			}
+			else 
+				return false;
 		}
-
-		return null;
+		return true;
 	}
 	@Override
-	public String getSettingType(int id) {
-		switch (id) {
-		case 0:
-			return "int";
-		}
-		return null;
+	public IAlgorithm createInstance(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
+		return new TestAlgorithm2(robot, portfolio, trader);
 	}
-	@Override
-	public String getSettingRange(int id) {
-		switch (id) {
-		case 0:
-			return "1-5000";
-		}
-		return null;
-	}
-	@Override
-	public String getSettingDefault(int id) {
-		switch (id) {
-		case 0:
-			return "3";
-		}
-		return null;
-	}
-	@Override
-	public int getCurrentIntSetting(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public String getCurrentStringSetting(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public double getCurrentDoubleSetting(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-
 }

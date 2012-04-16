@@ -1,0 +1,40 @@
+Meeting Agenda
+Location: Room EE
+Date: 2012-04-16
+Time: 09:15
+Facilitator: Erik Ramqvist
+Note taker: Kristian Sällberg
+Participants: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
+
+1.	Objectives (5 min)
+		Next thursday:
+			* Add more use cases
+			* RAD & SDD => Update to week's demands
+			* 
+
+2.	Reports (15 min)
+
+	* Kristian has added a simple basis for the algorithm settings GUI, with sliders allowing the user to change values
+	* Daniel has optimized the inserter, improved the simulation runner, made design changes to the database
+	* We have not held any meetings
+	
+3.	Discussion items (35 min)
+
+   	* Status on course documents (RAD, SDD, Domain model)
+	
+4.	Outcomes and assignments (5 min)
+
+        	* Long term issues (2 weeks from now)
+            	=> Create a prio list / wish list on features and keep working on it!
+        	* Short term issues
+            	=> We have decided not to do more code until Thursday, we will instead focus on updating the course documents to match this week's deadlines
+			
+        	+++ Specific delegations:
+			*All
+				=> Create a prio list of what we want features to include in the project
+				=> Work together to fix the RAD, SDD, Domain model
+  	 
+5.	Wrap up 
+	Thursday 19:th April
+		* Have the RAD, SDD and Domain model finished for
+		* We will meet tomorrow at 13:00 to start working on the documents
