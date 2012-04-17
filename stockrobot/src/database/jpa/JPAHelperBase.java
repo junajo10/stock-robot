@@ -356,22 +356,13 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp, PortfolioEntity portfolioTable) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
+		List<PortfolioHistory> result = new LinkedList<PortfolioHistory>();
+		for (PortfolioHistory ph : portfolioTable.getHistory()) {
+			if (ph.getStockPrice() == sp)
+				result.add(ph);
+		}
 
-		Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
-
-		q2.select(c);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolioTable);
-		Predicate p2 = em.getCriteriaBuilder().equal(c.get("stockPrice"), sp);
-		Predicate p3 = em.getCriteriaBuilder().equal(c.get("soldDate"), null);
-
-		q2.where(p, p2, p3);
-
-		TypedQuery<PortfolioHistory> query = em.createQuery(q2);
-
-		return query.getResultList();
+		return result;
 	}
 	@Override
 	public List<StockPrices> getNLatest(StockPrices from, int n) {
