@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.GroupLayout;
@@ -14,6 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Mattias Markehed
+ * mattias.markehed@gmail.com
+ *
+ * filename: WizardGui.java
+ * Description:
+ * WizardGui is used create wizard of different kinds.
+ */
 public abstract class WizardGui extends JFrame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 2315845664426240653L;
@@ -33,7 +42,24 @@ public abstract class WizardGui extends JFrame implements PropertyChangeListener
 	protected JButton btn_Back;
 	protected JButton btn_Next;
 	protected JButton btn_Finish;
-
+	
+	//TODO Move event strings to model
+	public static final String EVT_SET_CANCEL_LISTENER = "evt_set_cnl";
+	public static final String EVT_ADD_CANCEL_LISTENER = "evt_add_cnl";
+	public static final String EVT_RMV_CANCEL_LISTENER = "evt_rmv_cnl";
+	
+	public static final String EVT_SET_BACK_LISTENER = "evt_set_bck";
+	public static final String EVT_ADD_BACK_LISTENER = "evt_add_bck";
+	public static final String EVT_RMV_BACK_LISTENER = "evt_rmv_bck";
+	
+	public static final String EVT_SET_NEXT_LISTENER = "evt_set_nxt";
+	public static final String EVT_ADD_NEXT_LISTENER = "evt_add_nxt";
+	public static final String EVT_RMV_NEXT_LISTENER = "evt_rmv_nxt";
+	
+	public static final String EVT_SET_FINISH_LISTENER = "evt_set_fns";
+	public static final String EVT_ADD_FINISH_LISTENER = "evt_add_fns";
+	public static final String EVT_RMV_FINISH_LISTENER = "evt_rmv_fns";
+	
 	/**
 	 * Launch the application.
 	 */
@@ -293,8 +319,64 @@ public abstract class WizardGui extends JFrame implements PropertyChangeListener
 			view.removeActionListener(listener);
 	}
 
-	/*@Override
-	public abstract void propertyChange(PropertyChangeEvent evt) {
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 		
-	}*/
+		//TODO Remove duplicate code
+		//Add/remove cancel listeners
+		if(evt.getPropertyName() == (EVT_SET_CANCEL_LISTENER)){
+			if(evt.getNewValue() instanceof ActionListener)
+				setCancelListener((ActionListener)evt.getNewValue());
+		}else if(evt.getPropertyName() == (EVT_ADD_CANCEL_LISTENER)){
+			if(evt.getNewValue() instanceof ActionListener)
+				addCancelListener((ActionListener)evt.getNewValue());
+		}else if(evt.getPropertyName() == (EVT_RMV_CANCEL_LISTENER)){
+			if(evt.getNewValue() == null)
+				removeCancelListeners();
+			else if(evt.getNewValue() instanceof ActionListener)
+				removeCancelListener((ActionListener)evt.getNewValue());
+		}
+		
+		//Add/remove back listeners
+		else if(evt.getPropertyName() == (EVT_SET_BACK_LISTENER)){
+			if(evt.getNewValue() instanceof ActionListener)
+				setBackListener((ActionListener)evt.getNewValue());
+		}else if(evt.getPropertyName() == (EVT_ADD_BACK_LISTENER)){
+			if(evt.getNewValue() instanceof ActionListener)
+				addBackListener((ActionListener)evt.getNewValue());
+		}else if(evt.getPropertyName() == (EVT_RMV_BACK_LISTENER)){
+			if(evt.getNewValue() == null)
+				removeBackListeners();
+			else if(evt.getNewValue() instanceof ActionListener)
+				removeBackListener((ActionListener)evt.getNewValue());
+		}
+		
+		//Add/remove next listeners
+		else if(evt.getPropertyName() == (EVT_SET_NEXT_LISTENER)){
+			if(evt.getNewValue() instanceof ActionListener)
+				setNextListener((ActionListener)evt.getNewValue());
+		}else if(evt.getPropertyName() == (EVT_ADD_NEXT_LISTENER)){
+			if(evt.getNewValue() instanceof ActionListener)
+				addNextListener((ActionListener)evt.getNewValue());
+		}else if(evt.getPropertyName() == (EVT_RMV_NEXT_LISTENER)){
+			if(evt.getNewValue() == null)
+				removeNextListeners();
+			else if(evt.getNewValue() instanceof ActionListener)
+				removeNextListener((ActionListener)evt.getNewValue());
+		}
+		
+		//Add/remove next listeners
+		else if(evt.getPropertyName() == (EVT_SET_FINISH_LISTENER)){
+			if(evt.getNewValue() instanceof ActionListener)
+				setFinishListener((ActionListener)evt.getNewValue());
+		}else if(evt.getPropertyName() == (EVT_ADD_FINISH_LISTENER)){
+			if(evt.getNewValue() instanceof ActionListener)
+				addFinishListener((ActionListener)evt.getNewValue());
+		}else if(evt.getPropertyName() == (EVT_RMV_FINISH_LISTENER)){
+			if(evt.getNewValue() == null)
+				removeFinishListeners();
+			else if(evt.getNewValue() instanceof ActionListener)
+				removeFinishListener((ActionListener)evt.getNewValue());
+		}
+	}
 }
