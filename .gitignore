@@ -29,6 +29,8 @@ bin
 # Logs and databases #
 ######################
 *.log
+*.properties
+*.script
 #*.sql
 #*.sqlite
 
