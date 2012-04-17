@@ -5,10 +5,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="jar/mysql-connector-java-5.1.18-bin.jar"/>
-	<classpathentry kind="lib" path="jar/sqlitejdbc-v056.jar"/>
-	<classpathentry kind="lib" path="jar/openjpa-all-2.2.0.jar"/>
 	<classpathentry kind="lib" path="jar/jcommon-1.0.17.jar"/>
 	<classpathentry kind="lib" path="jar/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="lib" path="jar/joda-time-2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/kristian/Documents/school/DIT211/stock-robot/stockrobot/jar/openjpa-all-2.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/kristian/Documents/school/DIT211/stock-robot/stockrobot/jar/hsqldb.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
