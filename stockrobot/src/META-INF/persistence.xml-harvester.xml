@@ -11,10 +11,10 @@
 		<class>database.jpa.tables.AlgorithmSettingDouble</class>
 		<class>database.jpa.tables.AlgorithmSettings</class>
 		<properties>
-			<property name="openjpa.ConnectionUserName" value="astrobot" />
-			<property name="openjpa.ConnectionPassword" value="sp4c3" />
-			<property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3306/ASTRO?autoReconnect=true"/> <!-- jdbc:mysql://localhost:8889/TESTALITE, jdbc:mysql://localhost:3306/ASTRO?autoReconnect=true -->
-			<property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver" /> <!-- com.mysql.jdbc.Driver -->
+			<property name="openjpa.ConnectionUserName" value="user" />
+			<property name="openjpa.ConnectionPassword" value="password" />
+			<property name="openjpa.ConnectionURL" value="jdbc:mysql://address:port/database?autoReconnect=true"/>
+			<property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver" />
 			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
 			<property name="openjpa.Log" value="" />
 			<property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
