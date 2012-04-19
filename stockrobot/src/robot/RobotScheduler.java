@@ -21,6 +21,8 @@ public class RobotScheduler implements Runnable{
 
 	private boolean isRunning = false;
 	private volatile boolean pause = false;
+	
+	@SuppressWarnings("unused")
 	private long freq = 0;
 	private long pauseLength = SECOND;
 	private boolean usingServer = false;

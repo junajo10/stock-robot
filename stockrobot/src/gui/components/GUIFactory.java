@@ -30,12 +30,13 @@ public class GUIFactory implements IGUIFactory {
 	private final Color COLOR_FST_CLR_CONTAINER_BORDER 	= new Color(70,100,200);
 	
 	private final Color COLOR_BUTTON			= Color.WHITE;
+	@SuppressWarnings("unused")
 	private final Color COLOR_BUTTON_BORDER		= Color.DARK_GRAY;
 	
 	private final Color COLOR_DEFAULT_BORDER		= Color.DARK_GRAY;
 	
 	@Override
-	public JLabel getDefaultLabel(String text){
+	public JLabel getDefaultLabel(String text) {
 		JLabel label = new JLabel(text);
 		label.setForeground(COLOR_DARK_TEXT);
 		label.setFont(new Font("SansSerif", Font.PLAIN,14));
@@ -44,7 +45,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JLabel getLightLabel(String text){
+	public JLabel getLightLabel(String text) {
 		JLabel label = new JLabel(text);
 		label.setForeground(COLOR_LIGHT_TEXT);
 		label.setFont(new Font("SansSerif", Font.PLAIN,14));
@@ -53,7 +54,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JLabel getSubtitleLabel(String text){
+	public JLabel getSubtitleLabel(String text) {
 		JLabel label = getDefaultLabel(text);
 		label.setFont(new Font("SansSerif", Font.BOLD,14));
 		
@@ -61,7 +62,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JLabel getLightSubtitleLabel(String text){
+	public JLabel getLightSubtitleLabel(String text) {
 		JLabel label = getLightLabel(text);
 		label.setFont(new Font("SansSerif", Font.BOLD,14));
 		
@@ -69,7 +70,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JLabel getTitleLabel(String text){
+	public JLabel getTitleLabel(String text) {
 		JLabel label = getDefaultLabel(text);
 		label.setFont(new Font("SansSerif", Font.BOLD,20));
 		
@@ -77,7 +78,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JLabel getLightTitleLabel(String text){
+	public JLabel getLightTitleLabel(String text) {
 		JLabel label = getDefaultLabel(text);
 		label.setForeground(COLOR_LIGHT_TEXT);
 		label.setFont(new Font("SansSerif", Font.BOLD,20));
@@ -86,7 +87,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 
 	@Override
-	public JButton getDefaultButton(String text){
+	public JButton getDefaultButton(String text) {
 		
 		JButton button = new JButton(text);
 		button.setBackground(COLOR_BUTTON);
@@ -96,7 +97,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JPanel getDefaultContainer(){
+	public JPanel getDefaultContainer() {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(COLOR_CONTAINER_BORDER));
@@ -106,7 +107,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JPanel getFstColoredContainer(){
+	public JPanel getFstColoredContainer() {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(COLOR_FST_CLR_CONTAINER_BORDER));
@@ -127,7 +128,7 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public JFrame modifyDefaultWinow(JFrame window){
+	public JFrame modifyDefaultWinow(JFrame window) {
 		
 		window.setForeground(COLOR_WINDOW_FOREGROUND);
 		window.setBackground(COLOR_WINDOW_BACKGROUND);
@@ -144,14 +145,14 @@ public class GUIFactory implements IGUIFactory {
 	}
 	
 	@Override
-	public Border getDefaultBorder(){
+	public Border getDefaultBorder() {
 		
 		Border border = BorderFactory.createLineBorder(COLOR_DEFAULT_BORDER);
 		return border;
 	}
 	
 	@Override
-	public JTextField getDefaultTextField(){
+	public JTextField getDefaultTextField() {
 		JTextField textField = new JTextField();
 		
 		return textField;
