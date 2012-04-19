@@ -16,8 +16,9 @@ import org.joda.time.DateTimeConstants;
  */
 public class Scheduler implements IScheduler {
 
-	private Date startTime;
-	private Date endTime;
+	//TODO: Implement startTime and endTime
+	//private Date startTime;
+	//private Date endTime;
 	private boolean _shouldRun = true;
 	
 	/**
@@ -60,16 +61,18 @@ public class Scheduler implements IScheduler {
 			return true;
 		}
 
+	//TODO: IMPLEMENT setStartTime
 	@Override
 	public void setStartTime(Date start) {
 		
-		startTime = start;
+		//startTime = start;
 	}
 
+	//TODO: IMPLEMENT setEndTime
 	@Override
 	public void setEndTime(Date end) {
 		
-		endTime = end;
+		//endTime = end;
 	}
 
 	@Override
