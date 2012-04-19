@@ -3,6 +3,7 @@ package gui;
 import generic.FinancialLongConverter;
 import gui.components.GUIFactory;
 import gui.components.IGUIFactory;
+import gui.components.Item_cmb_Portfolio;
 import gui.controller.IController;
 import gui.controller.MainMenuController;
 import gui.mvc.Constants;
@@ -307,30 +308,5 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		});
 	}
 	
-	/**
-	 * @author Mattias Markehed
-	 * mattias.markehed@gmail.com
-	 *
-	 * filename: PortfolioGui.java
-	 * Description:
-	 * Item_cmb_Portfolio is used as an adapter for the mapping IPortfolios
-	 * to the combo box containing portfolios
-	 */
-	protected class Item_cmb_Portfolio{
-		
-		private IPortfolio portfolio;
-		
-		public Item_cmb_Portfolio(IPortfolio portfolio){
-			this.portfolio = portfolio;
-		}
-		
-		public IPortfolio getPortfolio(){
-			return portfolio;
-		}
-		
-		@Override
-		public String toString(){
-			return portfolio.getName();
-		}
-	}
+	
 }

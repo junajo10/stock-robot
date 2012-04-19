@@ -1,5 +1,7 @@
 package gui;
 
+import gui.components.Item_cmb_Portfolio;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -67,7 +69,7 @@ public class PortfolioController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			IPortfolio portfolio = ((PortfolioGui.Item_cmb_Portfolio)((JComboBox)e.getSource()).getSelectedItem()).getPortfolio();
+			IPortfolio portfolio = ((Item_cmb_Portfolio)((JComboBox)e.getSource()).getSelectedItem()).getPortfolio();
 			gui.setPortfolio(portfolio);
 			System.out.println(portfolio);
 			gui.updateCash();
