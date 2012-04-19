@@ -27,7 +27,8 @@ public class MainMenuController implements IController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				StockInfoGUI stockInfoWindow = new StockInfoGUI();
+				//The purpose of this line is just to open a new JFrame
+				new StockInfoGUI();
 			}
 		});
 	}
@@ -39,7 +40,8 @@ public class MainMenuController implements IController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				AlgorithmSettingsView view = new AlgorithmSettingsView( "testalgo" );
+				//The purpose of this line is just to open a new JFrame
+				new AlgorithmSettingsView( "testalgo" );
 			}
 		});
 	}
