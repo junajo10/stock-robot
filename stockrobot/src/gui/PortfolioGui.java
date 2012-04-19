@@ -65,7 +65,8 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 
 	public static void main(String[] args){
 		
-		PortfolioGui gui = new PortfolioGui(null);
+		//This was previously assigned to a local variable, removed it to avoid a warning
+		new PortfolioGui(null);
 	}
 	
 	/**
