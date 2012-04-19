@@ -1,7 +1,5 @@
 package database.jpa;
 
-
-
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -36,7 +34,6 @@ public class MainBasicJPATest {
 		portfolio.setAlgorithm("TestAlgorithm1");
 		jpaHelper.storeObject(portfolio);
 		
-				
 		PortfolioEntity portfolio2 = new PortfolioEntity("portfolio 2");
 		portfolio.setAlgorithm("TestAlgorithm2");
 		jpaHelper.storeObject(portfolio2);
@@ -45,11 +42,14 @@ public class MainBasicJPATest {
 	}
 	@Test
 	public void mainTest() {
+		
 		for (PortfolioEntity p : jpaHelper.getAllPortfolios()) {
 			jpaHelper.investMoney(10000000, p);
 			System.out.println(p);
 		}
+		
 		List<StockNames> stockNames = jpaHelper.getAllStockNames();
+		
 		if (stockNames.size() == 0) {
 			StockNames stockName = new StockNames("Stock1", "MarketA");
 			jpaHelper.storeObject(stockName);
@@ -84,6 +84,7 @@ public class MainBasicJPATest {
 			
 			stockNames = jpaHelper.getAllStockNames(); 
 		}
+		
 		Random r = new Random(System.currentTimeMillis());
 		
 		// create one stockPrice for each stockName
@@ -95,40 +96,32 @@ public class MainBasicJPATest {
 		StockPrices aStock = jpaHelper.getAllStockPrices().get(0);
 		
 		PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
-		PortfolioHistory ph;
+		
 		if (r.nextBoolean())
 			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()), null, 10, p));
 		else
 			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()-10000), new Date(System.currentTimeMillis()), 10, p));
 		jpaHelper.updateObject(p);
 		
-		
 		List<StockPrices> prices = jpaHelper.getAllStockPrices();
+		
 		for (StockPrices s : prices) {
 			System.out.println(s);
 		}
 		
-		
-		
 		List<StockPrices> bla = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
+		
 		System.out.println("Current nr of stocks: " + bla.size());
 		
 		jpaHelper.getAllPortfolios().get(0);
 		
 		System.out.println(jpaHelper.getOldStocks(jpaHelper.getAllPortfolios().get(0)).size());
-		
-		
-		
 		System.out.println(p.getTotalInvestedAmount());
-		
-		
 		System.out.println(jpaHelper.getStockInfo(10).size() + " " + jpaHelper.getStockInfo(10).get(0).getRight().size());
 		
 		for (StockPrices sp2 : jpaHelper.getStockInfo(10).get(0).getRight()) {
 			System.out.println(sp2);
 		}
-		
-		
 		
 		//-------- Test get latest StockPrice from any stockPrice
 		StockPrices old = jpaHelper.getAllStockPrices().get(0);
@@ -137,29 +130,31 @@ public class MainBasicJPATest {
 		System.out.println("Latest stockPrice: " + newestPrice);
 		//------
 		
-		
-		
 		System.out.println();
+		
 		for (PortfolioHistory phistory :  p.getHistory()) {
 			System.out.println(phistory);
-			
 		}
+		
 		System.out.println();
 		
 		StockPrices stock = new StockPrices(jpaHelper.getAllStockNames().get(0), 123, 123, 123, 123, new Date(1233));
+		
 		jpaHelper.storeObject(stock);
 		
 		p.addPortfolioHistory(new PortfolioHistory(stock, new Date(123), new Date(25231434), 77, p));
 		
 		PortfolioHistory pHistory = p.getSpecificPortfolioHistory(stock, 77);
+		
 		System.out.println(pHistory);
+		
 		List<StockPrices> ble = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
+		
 		for (StockPrices sp : ble) {
 			System.out.println(sp.getTime());
 		}
 		
 		jpaHelper.remove(stock);
-		
 	}
 
 	/**
@@ -167,7 +162,6 @@ public class MainBasicJPATest {
 	 */
 	@AfterClass
 	public static void afterClass() {
-		
 		
 		while (jpaHelper.getAllPortfolios().size() > 0) {
 			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
@@ -184,5 +178,4 @@ public class MainBasicJPATest {
 		
 		jpaHelper.stopJPASystem();
 	}
-	
 }
