@@ -18,7 +18,7 @@ public class PortfolioWizardContoller {
 			public void run() {
 				try {
 					PortfolioWizardView frame = new PortfolioWizardView();
-					PortfolioWizardContoller controller = new PortfolioWizardContoller(frame);
+					new PortfolioWizardContoller(frame);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
