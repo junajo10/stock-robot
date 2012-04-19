@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -197,13 +200,19 @@ public class Inserter { // implements IInserter {
 				
 				String companyId = nameToId.get( s.getName() );
 				
+				//Avoid using the deprecated date.toGMTString(), instead
+				//use the new SimpleDateFormat class
+				SimpleDateFormat dateFormat = new SimpleDateFormat();
+				dateFormat.setTimeZone( new SimpleTimeZone(1,"GMT") );
+				dateFormat.applyPattern("dd MMM yyyy HH:mm:ss z");
+				
 				SQLtoInsert.append( "INSERT INTO " + SQL_STOCKPRICE_HIS + " VALUES (" + 
 									addApo( companyId ) + "," + //Name (id)
 									addApo( Integer.toString( s.getVolume() ) ) + ", " +//volume
 									addApo( Double.toString( s.getLastClose() ) ) + ", " +//last close price
 									addApo( Double.toString( s.getBuy() ) ) + ", " +//last close price
 									addApo( Double.toString( s.getSell() ) ) + ", " +//last close price
-									addApo( s.getDate().toGMTString() ) +//Date, TODO: FIX REAL TIME!
+									addApo( dateFormat.format( s.getDate() ) ) +//Date,
 									" ); " );
 				
 				//Send to DB!
