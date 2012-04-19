@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
+import java.util.HashMap;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  * @author Mattias Markehed
@@ -66,10 +68,12 @@ public class WizardGui extends JFrame implements PropertyChangeListener {
 	public static final String EVT_ADD_FINISH_LISTENER = "evt_add_fns";
 	public static final String EVT_RMV_FINISH_LISTENER = "evt_rmv_fns";
 	
+	public static final String EVT_CHANGE_PAGE = "evt_change_page";
+	
 	/**
 	 * Launch the application.
 	 */
-	
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -81,12 +85,15 @@ public class WizardGui extends JFrame implements PropertyChangeListener {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
 	public WizardGui() {
+		
+		pages = new HashMap<String, WizardPage>();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		setMinimumSize(new Dimension(600,400));
@@ -213,12 +220,51 @@ public class WizardGui extends JFrame implements PropertyChangeListener {
 	}
 	
 	/**
+	 * Adds a page to the wizard and indexes it by its name.
+	 * If page with the same name already exists the old page is replaced.
+	 * 
+	 * @param pageName the name to index the page with
+	 * @param page the page to add
+	 * @return true if no page with same index was overwritten. Else false
+	 */
+	public synchronized boolean addPage(String pageName, WizardPage page){
+		
+		boolean pageExisted = false;
+		
+		if(pageName != null && page!=null){
+			pageExisted = pages.get(pageName) != null;
+			pages.put(pageName, page);
+		}
+			
+		return pageExisted;
+	}
+	
+	/**
+	 * 
+	 * @param pageName the name of the page to load
+	 * @return true if the page existed, else false
+	 */
+	public synchronized boolean loadPage(String pageName){
+		
+		boolean pageExisted = false;
+		
+		WizardPage page = pages.get(pageName);
+		pageExisted = page != null;
+		if(pageExisted){
+			System.out.println("name " + pageName);
+			loadScreen(page);
+		}
+		
+		return pageExisted;
+	}
+	
+	/**
 	 * Loads a screen in content panel.
 	 * Only loads the screen if the screen is not currently loaded.
 	 * 
 	 * @param screen the screen to display
 	 */
-	protected synchronized void loadScreen(Component screen){
+	protected synchronized void loadScreen(final WizardPage screen){
 		
 		boolean viewFound = false;
 		for(Component c : pnl_Content.getComponents()){
@@ -228,12 +274,17 @@ public class WizardGui extends JFrame implements PropertyChangeListener {
 				break;
 			}
 		}
-		
+	
 		if(!viewFound){
+			screen.load();
 			pnl_Content.removeAll();
 			pnl_Content.add(screen);
+			pnl_Content.validate();
+			pnl_Content.repaint();
+			System.out.println("loaded " + ((Object)screen).hashCode());
 		}
 	}
+	
 	
 	//== Cancel listeners ==
 	public void addCancelListener(ActionListener listener){
@@ -286,7 +337,7 @@ public class WizardGui extends JFrame implements PropertyChangeListener {
 		removeListeners(btn_Next);
 	}
 	
-	//== Next listeners ==
+	//== Back listeners ==
 	public void addBackListener(ActionListener listener){
 		addListener(btn_Back, listener);
 	}
@@ -383,6 +434,12 @@ public class WizardGui extends JFrame implements PropertyChangeListener {
 				removeFinishListeners();
 			else if(evt.getNewValue() instanceof ActionListener)
 				removeFinishListener((ActionListener)evt.getNewValue());
+		}
+		
+		else if(evt.getPropertyName() == (EVT_CHANGE_PAGE)){
+			if(evt.getNewValue() instanceof String){
+				loadPage((String) evt.getNewValue());
+			}
 		}
 	}
 }
