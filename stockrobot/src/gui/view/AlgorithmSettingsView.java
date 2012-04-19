@@ -56,7 +56,7 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		
 		System.out.println( "Test components!" );
 		
-		AlgorithmSettingsView tc = new AlgorithmSettingsView( "Testalgorithm!" );
+		new AlgorithmSettingsView( "Testalgorithm!" );
 	}
 
 	@Override
