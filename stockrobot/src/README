@@ -1,1 +1,1 @@
-In order to run the system, you need to make a persistence.xml file in src/META-INF/ with youre database settings.
+In order to run the system, you need to make a persistence.xml file in src/META-INF/ with youre database settings. 

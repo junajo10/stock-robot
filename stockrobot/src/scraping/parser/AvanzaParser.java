@@ -13,10 +13,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 import javax.swing.text.html.parser.ParserDelegator;
+
+import org.joda.time.DateTime;
 
 import scraping.model.ParserStock;
 
@@ -45,15 +46,15 @@ public class AvanzaParser implements IParser {
 	public ArrayList<ParserStock> parse(URL url, String market){
 			this.market = market;
 			URLConnection connection;
-			HTMLDocument htmlDoc;
+			
 			ArrayList<ParserStock> stockList = new ArrayList<ParserStock>();
 			try {
 				connection = url.openConnection();
 			    InputStream is = connection.getInputStream();
 			    InputStreamReader isr = new InputStreamReader(is);
 			    BufferedReader br = new BufferedReader(isr);
-			    HTMLEditorKit htmlKit = new HTMLEditorKit();
-			    htmlDoc = (HTMLDocument) htmlKit.createDefaultDocument();
+			    
+			    
 			    HTMLEditorKit.Parser parser = new ParserDelegator();
 			    AvanzaCallback avanzaCb = new AvanzaCallback();
 
@@ -86,9 +87,6 @@ public class AvanzaParser implements IParser {
 		
 		public void setStockList(ArrayList<ParserStock> stockList){
 			this.stockList = stockList;
-		}
-		public ArrayList<ParserStock> getStockList(){
-			return stockList;
 		}
 		
 		private String replaceAvanzaCharacters( String input ) {
@@ -161,20 +159,10 @@ public class AvanzaParser implements IParser {
 	 * @return
 	 */
 	private Date getDate( String time ) {
+		DateTime currDate = new DateTime(System.currentTimeMillis());
+		DateTime d = new DateTime(currDate.getYear(), currDate.getMonthOfYear(), currDate.getDayOfMonth(), Integer.parseInt(time.substring(0,2)), Integer.parseInt(time.substring(3,5)));
 		
-		Date d = new Date();
-		
-		Calendar cal = new GregorianCalendar();
-		cal.set(d.getYear() + 1900, 
-				d.getMonth(), 
-				d.getDate(), 
-				Integer.parseInt(time.substring(0,2)), 
-				Integer.parseInt(time.substring(3,5)), 
-				0);
-		
-		//System.out.println( "getDate:::" + cal.getTime() );
-		
-		return cal.getTime();
+		return d.toDate();
 	}
 
 }

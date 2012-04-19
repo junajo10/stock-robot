@@ -1,0 +1,49 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+ 
+<persistence-unit name="astroportfolio" transaction-type="RESOURCE_LOCAL">
+	<class>database.jpa.tables.PortfolioHistory</class>
+	<class>database.jpa.tables.PortfolioInvestment</class>
+	<class>database.jpa.tables.PortfolioEntity</class>
+	<class>database.jpa.tables.StocksToWatch</class>
+	<class>database.jpa.tables.StockNames</class>
+	<class>database.jpa.tables.StockPrices</class>
+	
+	<class>database.jpa.tables.AlgorithmSettingLong</class>
+	<class>database.jpa.tables.AlgorithmSettingDouble</class>
+	<class>database.jpa.tables.AlgorithmSettings</class>
+	<properties>
+		<property name="openjpa.ConnectionURL" value="jdbc:hsqldb:astrodatabase"/>
+		<property name="openjpa.ConnectionDriverName" value="org.hsqldb.jdbcDriver" />
+		<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+		<property name="openjpa.Log" value="" />
+		<property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
+		<property name="openjpa.jdbc.MappingDefaults"
+		value="ForeignKeyDeleteAction=restrict,
+		JoinForeignKeyDeleteAction=restrict" />
+	</properties>
+</persistence-unit>
+
+<persistence-unit name="testdb" transaction-type="RESOURCE_LOCAL">
+	<class>database.jpa.tables.PortfolioHistory</class>
+	<class>database.jpa.tables.PortfolioInvestment</class>
+	<class>database.jpa.tables.PortfolioEntity</class>
+	<class>database.jpa.tables.StocksToWatch</class>
+	<class>database.jpa.tables.StockNames</class>
+	<class>database.jpa.tables.StockPrices</class>
+	
+	<class>database.jpa.tables.AlgorithmSettingLong</class>
+	<class>database.jpa.tables.AlgorithmSettingDouble</class>
+	<class>database.jpa.tables.AlgorithmSettings</class>
+	<properties>
+		<property name="openjpa.ConnectionURL" value="jdbc:hsqldb:astrotestdatabase"/>
+		<property name="openjpa.ConnectionDriverName" value="org.hsqldb.jdbcDriver" />
+		<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+		<property name="openjpa.Log" value="" />
+		<property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
+		<property name="openjpa.jdbc.MappingDefaults"
+		value="ForeignKeyDeleteAction=restrict,
+		JoinForeignKeyDeleteAction=restrict" />
+	</properties>
+</persistence-unit>
+</persistence>

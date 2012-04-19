@@ -1,9 +1,6 @@
 package database.jpa;
 
-import java.util.List;
-
 //import database.jpa.tables.AlgorithmEntity;
-import database.jpa.tables.PortfolioEntity;
 
 /**
  * To be able to test ASTRo running with real stock data through RobotScheduler, 

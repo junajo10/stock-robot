@@ -86,7 +86,8 @@ public class PortfolioController {
 			
 			SwingUtilities.invokeLater(new Runnable() {
 			    public void run() {
-			    	StockInfoGUI stockInfo = new StockInfoGUI();
+			    	//Used to be assigned to a local variable, removed it because the intention is just to launch a new JFrame subclass
+			    	new StockInfoGUI();
 			    }
 			});
 			

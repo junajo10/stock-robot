@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
  */
 public class FinancialLongConverter {
 	
-	public static final int decimalLength = 6;
+	public static final int DECIMALLENGTH = 6;
 	
 	/*
 	public static void main( String[] args ) {
@@ -52,7 +52,7 @@ public class FinancialLongConverter {
 			decimals = dec.split( "\\." )[1];
 			
 			//Add as many zero's as needed to get decimalLength decimals
-			limit = decimalLength - decimals.length();
+			limit = DECIMALLENGTH - decimals.length();
 		}
 		
 		//If we have only one decimal, increase the amount of zeros
@@ -94,7 +94,7 @@ public class FinancialLongConverter {
 			decimals = dec.split( "\\." )[1];
 			
 			//Add as many zero's as needed to get decimalLength decimals
-			limit = decimalLength - decimals.length();
+			limit = DECIMALLENGTH - decimals.length();
 		}
 		
 		//If we have only one decimal, increase the amount of zeros
@@ -108,7 +108,7 @@ public class FinancialLongConverter {
 		return Long.parseLong( (numbers + decimals).replaceAll("\\.", "") );
 	}
 	public static double toDouble(long input) {
-		return input/(Math.pow(10, decimalLength));
+		return input/(Math.pow(10, DECIMALLENGTH));
 	}
 	public static String toStringTwoDecimalPoints(long input) {
 		DecimalFormat df = new DecimalFormat("#.##");

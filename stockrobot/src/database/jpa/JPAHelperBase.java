@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -155,6 +154,7 @@ class JPAHelperBase implements IJPAHelper {
 
 		//TODO: Fix this to be type safe! I couldn't find a way to compare dates without using JPQL.
 		//Get all prices WITHIN (including ends) start -> end, that are of the company defined in st
+		@SuppressWarnings("unchecked")
 		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery( "SELECT o FROM StockPrices o WHERE o.time >= :startTime AND o.time <= :endTime AND o.stockName.id = :stockId" )
 				.setParameter("startTime", start)
 				.setParameter("endTime",   end)
@@ -196,7 +196,6 @@ class JPAHelperBase implements IJPAHelper {
 		try {
 			em.persist(o);
 		} catch (Exception e) {
-			System.out.println("asdf");
 			em.getTransaction().commit();
 			return false;
 		} finally {
@@ -204,6 +203,7 @@ class JPAHelperBase implements IJPAHelper {
 		}
 		return true;
 	}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public synchronized boolean storeListOfObjects(List list) {
 		em.getTransaction().begin();
@@ -213,6 +213,7 @@ class JPAHelperBase implements IJPAHelper {
 		em.getTransaction().commit();
 		return true;
 	}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public synchronized int storeListOfObjectsDuplicates(List list) {
 		int dup = 0;
@@ -356,22 +357,13 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp, PortfolioEntity portfolioTable) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
+		List<PortfolioHistory> result = new LinkedList<PortfolioHistory>();
+		for (PortfolioHistory ph : portfolioTable.getHistory()) {
+			if (ph.getStockPrice() == sp)
+				result.add(ph);
+		}
 
-		Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
-
-		q2.select(c);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolioTable);
-		Predicate p2 = em.getCriteriaBuilder().equal(c.get("stockPrice"), sp);
-		Predicate p3 = em.getCriteriaBuilder().equal(c.get("soldDate"), null);
-
-		q2.where(p, p2, p3);
-
-		TypedQuery<PortfolioHistory> query = em.createQuery(q2);
-
-		return query.getResultList();
+		return result;
 	}
 	@Override
 	public List<StockPrices> getNLatest(StockPrices from, int n) {
@@ -409,6 +401,7 @@ class JPAHelperBase implements IJPAHelper {
 		
 		return map;
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<StockPrices> getLatestStockPrices() {
 		// TODO: fix in jpa instead.

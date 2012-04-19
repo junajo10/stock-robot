@@ -2,7 +2,6 @@ package portfolio;
 
 import generic.Log;
 import generic.Log.TAG;
-import gui.IObservable;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -24,7 +23,7 @@ import database.jpa.tables.PortfolioEntity;
  * It will start by creating all the portfolio objects.
  * Each portfolio will then create a algorithm instance.
  */
-public class PortfolioHandler implements IPortfolioHandler{
+public final class PortfolioHandler implements IPortfolioHandler{
 
 	private static PortfolioHandler instance = null;
 	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();

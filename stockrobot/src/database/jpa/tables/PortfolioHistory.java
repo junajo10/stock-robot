@@ -64,6 +64,7 @@ public class PortfolioHistory {
 		if (soldDate == null)
 			return null;
 		
+		@SuppressWarnings("unchecked")
 		List<StockPrices> l = em.createQuery("SELECT sp FROM StockPrices sp WHERE sp.time = :tid AND sp.stockName = :namn").setParameter("tid", soldDate).setParameter("namn", stockPrice.getStockName()).getResultList();
 		
 		if (l.size()>0)

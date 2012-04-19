@@ -31,6 +31,7 @@ public class PortfolioWizardContoller {
 					PassablePortfolioBuilder portfoloioBuilder = new PassablePortfolioBuilder(); 
 					PortfolioWizardView frame = new PortfolioWizardView(portfoloioBuilder,null);
 					PortfolioWizardContoller controller = new PortfolioWizardContoller(frame, portfoloioBuilder);
+
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

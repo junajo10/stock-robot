@@ -1,6 +1,5 @@
 package gui;
 
-import gui.components.GUIFactory;
 import gui.controller.StockTableController;
 import gui.view.StockTableView;
 
@@ -16,6 +15,11 @@ import robot.AlphaReceiver;
  */
 public class StockInfoGUI extends JFrame {
 	
+	/**
+	 * Serial version!
+	 */
+	private static final long serialVersionUID = 2592063216811547338L;
+
 	private static final	String 					WINDOW_TITLE = "All publicly traded companies currently recorded in the database.";
 	
 	private					StockTableView 			view;
@@ -25,8 +29,6 @@ public class StockInfoGUI extends JFrame {
 		
 		//TODO: Remove after alpha!
 		AlphaReceiver receiveNotifier = new AlphaReceiver();
-		
-		GUIFactory guiFactory = new GUIFactory();
 		
 		view = new StockTableView();
 		controller = new StockTableController( view );

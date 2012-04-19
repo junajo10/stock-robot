@@ -19,7 +19,7 @@ import database.jpa.tables.StockPrices;
  * A very simple TraderSimulator.
  * It will always say that all trades went ok!
  */
-public class TraderSimulator implements ITrader{
+public final class TraderSimulator implements ITrader{
 	private static TraderSimulator instance = null;
 	private PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
 	private IJPAHelper jpaHelper = JPAHelper.getInstance();

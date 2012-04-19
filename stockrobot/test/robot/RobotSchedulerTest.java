@@ -2,14 +2,11 @@ package robot;
 
 import static org.junit.Assert.*;
 
-import generic.FinancialLongConverter;
 import generic.Log;
 import generic.Pair;
 
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +17,6 @@ import org.junit.Test;
 
 import algorithms.IAlgorithm;
 import database.jpa.IJPAHelper;
-import database.jpa.JPAHelper;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
@@ -28,9 +24,7 @@ import database.jpa.tables.StockPrices;
 import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
 import portfolio.Portfolio;
-import portfolio.PortfolioHandler;
 import trader.ITrader;
-import trader.TraderSimulator;
 
 /**
  * @author Mattias Markehed

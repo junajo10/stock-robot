@@ -1,0 +1,31 @@
+Meeting Agenda
+Location: Room 5205
+Date: 2012-04-19
+Time: 12:00
+Facilitator: 
+Note taker: Kristian Sällberg
+Participants: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
+
+1.	Objectives (5 min)
+		Next tuesday:
+			* 
+
+2.	Reports (15 min)
+
+	* We have fixed the RAD and SDD according to the requirements of the week
+	
+3.	Discussion items (35 min)
+
+   	* We have a lot of entanglements, package entanglements
+	* Clean up unused import warnings
+	* GUI, how will we separate controller and view?
+	* Create a new eclipse project for the server/Harvester?
+	
+4.	Outcomes and assignments (5 min)
+
+    * We will fix entanglements as far as possible, with the goal to minimize problems in STAN
+	* We will look at SWI-xml for easier division between controller and view
+
+5.	Wrap up 
+	Thursday 19:th April
+		* We will meet tomorrow to address the points listed in Outcomes and assignments

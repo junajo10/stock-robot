@@ -22,7 +22,6 @@ import database.jpa.tables.StockPrices;
  * When a object of this class is loaded, it will load the algorithm coupled with it.
  */
 public class PortfolioSimulator implements IPortfolio {
-	private int portfolioId;
 	private PortfolioEntity portfolioTable;
 	private IJPAHelper jpaHelper;
 	private IAlgorithm algorithm;
@@ -34,8 +33,6 @@ public class PortfolioSimulator implements IPortfolio {
 	public PortfolioSimulator(PortfolioEntity portfolioTable, IJPAHelper jpaHelper) {
 		this.portfolioTable = portfolioTable;
 		this.jpaHelper = jpaHelper;
-		
-		System.out.println(portfolioTable);
 	}
 	public boolean setAlgorithm(IAlgorithm algorithm) {
 		this.algorithm = algorithm;

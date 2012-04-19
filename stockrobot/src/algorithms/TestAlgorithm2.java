@@ -50,11 +50,8 @@ public class TestAlgorithm2 implements IAlgorithm{
 			return false;
 		}
 
-		List<StockPrices> ownedStockes = jpaHelper.getCurrentStocks(portfolio.getPortfolioTable());
-
-		for (StockPrices sp : ownedStockes ) {
-
-			List<StockPrices> cs = jpaHelper.getNLatest(sp, (int)sellSetting);
+		for (PortfolioHistory ph : jpaHelper.getCurrentStocksHistory(portfolio.getPortfolioTable())) {
+			List<StockPrices> cs = jpaHelper.getNLatest(ph.getStockPrice(), (int)sellSetting);
 			if (cs.size() == sellSetting) {
 				long last = Long.MAX_VALUE;
 				boolean sell = true;
@@ -67,14 +64,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 				}
 
 				if (sell) {
-					//Sell all
-					List<PortfolioHistory> ph = jpaHelper.getPortfolioHistory(sp, portfolio.getPortfolioTable());
-					for (PortfolioHistory pHistory : ph) {
-						if (pHistory.getSoldDate() == null) {
-							trader.sellStock(sp, pHistory.getAmount(), portfolio.getPortfolioTable());
-							jpaHelper.updateObject(pHistory);
-						}
-					}
+					trader.sellStock(ph, portfolio.getPortfolioTable());
 				}
 			}
 		}

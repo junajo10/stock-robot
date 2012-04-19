@@ -30,6 +30,7 @@ import portfolio.wizard.PassablePortfolioBuilder;
 public class PortfolioWizardView extends WizardGui {
 
 	private static final String TITLE = "Portfolo Wizard";
+	@SuppressWarnings("unused")
 	private static final String SUBTITLE_INFO = "info";
 	
 	public static final String PAGE_START = "start_page";
@@ -189,6 +190,13 @@ public class PortfolioWizardView extends WizardGui {
 				}
 			});
 		}
+		/*
+		// New portfolio
+		JRadioButton rbtn_NewPortfolio = new JRadioButton();
+		rbtn_NewPortfolio.setText("Create new portfolio");
+		rbtn_NewPortfolio.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pnl_PortfolioFrom.add(rbtn_NewPortfolio);
+		*/
 		
 		@Override
 		protected void load() {

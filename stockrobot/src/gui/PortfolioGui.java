@@ -14,7 +14,6 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
@@ -67,7 +66,8 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 
 	public static void main(String[] args){
 		
-		PortfolioGui gui = new PortfolioGui(null);
+		//This was previously assigned to a local variable, removed it to avoid a warning
+		new PortfolioGui(null);
 	}
 	
 	/**

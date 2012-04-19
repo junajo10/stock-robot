@@ -62,12 +62,14 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param list List of objects
 	 * @return True if it went ok
 	 */
+	@SuppressWarnings("rawtypes")
 	public boolean storeListOfObjects(List list);
 	/**
 	 * A special case of storeListOfObjects, this will store the list but ignore duplicates.
 	 * @param list List of objects
 	 * @return the number of objects not stored.
 	 */
+	@SuppressWarnings("rawtypes")
 	public int storeListOfObjectsDuplicates(List list);
 	/**
 	 * Invests money in a given portfolio

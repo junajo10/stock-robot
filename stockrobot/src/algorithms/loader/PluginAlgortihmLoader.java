@@ -21,7 +21,7 @@ import algorithms.IAlgorithm;
  * 
  * @author Daniel
  */
-public class PluginAlgortihmLoader {
+public final class PluginAlgortihmLoader {
 	
 	private static PluginAlgortihmLoader instance = null;
 	private Map<String, IAlgorithm> algorithms;

@@ -29,6 +29,8 @@ bin
 # Logs and databases #
 ######################
 *.log
+*.properties
+*.script
 #*.sql
 #*.sqlite
 
@@ -38,7 +40,6 @@ bin
 ehthumbs.db
 Icon?
 Thumbs.db
-
 
 
 persistence.xml

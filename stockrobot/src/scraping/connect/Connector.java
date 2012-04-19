@@ -1,27 +1,15 @@
 package scraping.connect;
 
-import generic.Log;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import robot.AstroReciever;
 
 
 /**
@@ -108,7 +96,6 @@ public class Connector implements IConnector {
 		}
 	}
 	
-	
 	private class PingReciever implements Runnable {
 		public void run() {
 			while (true) {
@@ -133,8 +120,9 @@ public class Connector implements IConnector {
 						if (!reader.ready()) {
 							removeClientSocket(s);
 						} else {
-							String str = reader.readLine();
-;
+							
+							//This used to be assigned to a local string, but I removed the string to avoid getting a warning
+							reader.readLine();
 						}
 					} catch (IOException e) {
 						removeClientSocket(s);
@@ -166,11 +154,10 @@ public class Connector implements IConnector {
 					
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
-
 	}
 	
 	public static void main(String[] args){
@@ -179,21 +166,11 @@ public class Connector implements IConnector {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
 			connect.sendDataAvailable();
 		}
 	}
-
-
 }
-
-
-
-
-
-
-
-

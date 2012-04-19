@@ -1,6 +1,6 @@
 <xml>
-	<dbuser>user</dbuser>
-	<dbpass>pass</dbpass>
+	<dbuser>root</dbuser>
+	<dbpass>(KappauM)</dbpass>
 	<dbport>0</dbport>
 	<dbname>db</dbname>
 	<dbaddress>localhost</dbaddress>
