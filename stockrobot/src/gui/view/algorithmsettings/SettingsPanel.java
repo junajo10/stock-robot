@@ -21,6 +21,11 @@ import javax.swing.event.ChangeListener;
  */
 public class SettingsPanel extends JPanel implements IView, ChangeListener {
 	
+	/**
+	 * Serial Version!
+	 */
+	private static final long serialVersionUID = -5023291097157808280L;
+	
 	private double _minValue;
 	private double _maxValue;
 	private double _initValue;

@@ -18,6 +18,11 @@ import gui.controller.MainMenuController;
  */
 public class MainMenuView extends JPanel implements IView {
 
+	/**
+	 * Serial version!
+	 */
+	private static final long serialVersionUID = -5839048480274874628L;
+
 	private IController controller;
 	
 	private IGUIFactory guiFactory = new GUIFactory();
