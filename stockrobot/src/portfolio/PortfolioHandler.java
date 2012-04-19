@@ -2,7 +2,6 @@ package portfolio;
 
 import generic.Log;
 import generic.Log.TAG;
-import gui.IObservable;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

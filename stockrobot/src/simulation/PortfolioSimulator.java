@@ -22,7 +22,6 @@ import database.jpa.tables.StockPrices;
  * When a object of this class is loaded, it will load the algorithm coupled with it.
  */
 public class PortfolioSimulator implements IPortfolio {
-	private int portfolioId;
 	private PortfolioEntity portfolioTable;
 	private IJPAHelper jpaHelper;
 	private IAlgorithm algorithm;

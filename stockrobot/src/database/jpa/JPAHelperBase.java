@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -155,6 +154,7 @@ class JPAHelperBase implements IJPAHelper {
 
 		//TODO: Fix this to be type safe! I couldn't find a way to compare dates without using JPQL.
 		//Get all prices WITHIN (including ends) start -> end, that are of the company defined in st
+		@SuppressWarnings("unchecked")
 		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery( "SELECT o FROM StockPrices o WHERE o.time >= :startTime AND o.time <= :endTime AND o.stockName.id = :stockId" )
 				.setParameter("startTime", start)
 				.setParameter("endTime",   end)
@@ -204,6 +204,7 @@ class JPAHelperBase implements IJPAHelper {
 		}
 		return true;
 	}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public synchronized boolean storeListOfObjects(List list) {
 		em.getTransaction().begin();
@@ -213,6 +214,7 @@ class JPAHelperBase implements IJPAHelper {
 		em.getTransaction().commit();
 		return true;
 	}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public synchronized int storeListOfObjectsDuplicates(List list) {
 		int dup = 0;
@@ -400,6 +402,7 @@ class JPAHelperBase implements IJPAHelper {
 		
 		return map;
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<StockPrices> getLatestStockPrices() {
 		// TODO: fix in jpa instead.

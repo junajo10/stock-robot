@@ -4,9 +4,7 @@ import generic.Log;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Handler;
 
-import algorithms.IAlgorithm;
 import portfolio.IPortfolio;
 import portfolio.IPortfolioHandler;
 

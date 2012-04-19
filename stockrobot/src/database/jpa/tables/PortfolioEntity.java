@@ -4,17 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -233,7 +229,13 @@ public class PortfolioEntity {
 		return true;
 	}
 	public boolean removeStockToWatch(StockNames stockName) {
-		return stocksToWatch.remove(stockName);
+		for (StocksToWatch s : stocksToWatch) {
+			if (s.getStockName().getName().equals(stockName.getName())) {
+				stocksToWatch.remove(s);
+				return true;
+			}
+		}
+		return false;
 	}
 	public AlgorithmSettings getAlgortihmSettings() {
 		return algorithmSettings;
