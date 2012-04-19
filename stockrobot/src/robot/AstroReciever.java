@@ -103,7 +103,7 @@ public class AstroReciever {
 							newData = true;
 						} 
 						else {
-							//System.out.println("Recieved heartbeat");
+							
 						}
 					}
 				}
@@ -180,6 +180,10 @@ public class AstroReciever {
 	 * <p>
 	 */
 	public static void main(String[] args) {
+		
+		//Added this suppress because I'm not sure it the GC will remove this 
+		//variable if it's not assigned to a local variable
+		@SuppressWarnings("unused")
 		AstroReciever rec = new AstroReciever();
 		
 		try {
@@ -193,7 +197,6 @@ public class AstroReciever {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//System.out.println("New data? " + rec.newData());
 		} 			
 	 }
 }
