@@ -196,7 +196,6 @@ class JPAHelperBase implements IJPAHelper {
 		try {
 			em.persist(o);
 		} catch (Exception e) {
-			System.out.println("asdf");
 			em.getTransaction().commit();
 			return false;
 		} finally {

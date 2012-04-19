@@ -10,13 +10,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class PluginClassLoader extends ClassLoader {
-	private static final String exportedPackage = "algorithms";
+	private static final String EXPORTEDPACKAGE = "algorithms";
 
 	@Override
 	public Class<?> findClass (String name) {
 		byte[] data = loadClassData (name);
 		
-		return defineClass(exportedPackage + "." + name, data, 0, data.length);
+		return defineClass(EXPORTEDPACKAGE + "." + name, data, 0, data.length);
 	}
 
 	private byte[] loadClassData (String name) {

@@ -54,8 +54,6 @@ public class SimulationHandler {
 		
 		IAlgorithm algorithm = algorithmLoader.getAlgorithm(robotSim, portfolio);
 		
-		if (algorithm == null)
-			System.out.println("apa");
 		portfolio.setAlgorithm(algorithm);
 		
 		if (longSettings != null)
@@ -75,7 +73,7 @@ public class SimulationHandler {
 		
 		initSimulation(algorithmToSimulate, longSettings, doubleSettings);
 		
-		long startingBalance = new Long("100000000000");
+		long startingBalance = Long.valueOf("100000000000");
 		
 		PortfolioEntity port =  portfolio.getPortfolioTable();
 		port.invest(startingBalance, true);

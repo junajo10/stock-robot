@@ -33,8 +33,6 @@ public class PortfolioSimulator implements IPortfolio {
 	public PortfolioSimulator(PortfolioEntity portfolioTable, IJPAHelper jpaHelper) {
 		this.portfolioTable = portfolioTable;
 		this.jpaHelper = jpaHelper;
-		
-		System.out.println(portfolioTable);
 	}
 	public boolean setAlgorithm(IAlgorithm algorithm) {
 		this.algorithm = algorithm;
