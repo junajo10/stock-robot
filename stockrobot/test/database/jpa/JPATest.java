@@ -1,6 +1,5 @@
 package database.jpa;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,15 +15,15 @@ import scraping.database.IInserter;
 import scraping.database.JPAInserter;
 import scraping.model.ParserStock;
 
-
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 
-
 public class JPATest {
+	
 	static IJPAHelper jpaHelper;
 	static Random rand = new Random(System.currentTimeMillis());
+	
 	@BeforeClass
 	public static void beforeClass(){ //First of all
 		jpaHelper = new JPAHelperSimulator();
@@ -78,7 +77,6 @@ public class JPATest {
 		for (StockNames s : p.getStocksToWatch()) {
 			System.out.println(s);
 		}
-		
 	}
 	
 	@Test
@@ -137,11 +135,6 @@ public class JPATest {
 			if (!found) {
 				Assert.fail();
 			}
-		}
-		
-		
-		for (StockPrices sp : jpaHelper.getLatestStockPrices()) {
-			//System.out.println(sp);
 		}
 	}
 	
