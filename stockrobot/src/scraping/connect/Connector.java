@@ -96,7 +96,6 @@ public class Connector implements IConnector {
 		}
 	}
 	
-	
 	private class PingReciever implements Runnable {
 		public void run() {
 			while (true) {
@@ -121,8 +120,9 @@ public class Connector implements IConnector {
 						if (!reader.ready()) {
 							removeClientSocket(s);
 						} else {
-							String str = reader.readLine();
-;
+							
+							//This used to be assigned to a local string, but I removed the string to avoid getting a warning
+							reader.readLine();
 						}
 					} catch (IOException e) {
 						removeClientSocket(s);
@@ -154,11 +154,10 @@ public class Connector implements IConnector {
 					
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
-
 	}
 	
 	public static void main(String[] args){
@@ -167,21 +166,11 @@ public class Connector implements IConnector {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
 			connect.sendDataAvailable();
 		}
 	}
-
-
 }
-
-
-
-
-
-
-
-
