@@ -110,7 +110,7 @@ public class MainBasicJPATest {
 		
 		
 		
-		List bla = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
+		List<StockPrices> bla = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
 		System.out.println("Current nr of stocks: " + bla.size());
 		
 		jpaHelper.getAllPortfolios().get(0);
