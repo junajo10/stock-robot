@@ -159,18 +159,10 @@ public class AvanzaParser implements IParser {
 	 * @return
 	 */
 	private Date getDate( String time ) {
+		DateTime currDate = new DateTime(System.currentTimeMillis());
+		DateTime d = new DateTime(currDate.getYear(), currDate.getMonthOfYear(), currDate.getDayOfMonth(), Integer.parseInt(time.substring(0,2)), Integer.parseInt(time.substring(3,5)));
 		
-		DateTime d = new DateTime(System.currentTimeMillis());
-		
-		Calendar cal = new GregorianCalendar();
-		cal.set(d.getYear() + 1900, 
-				d.getMonthOfYear(), 
-				d.getDayOfMonth(), 
-				Integer.parseInt(time.substring(0,2)), 
-				Integer.parseInt(time.substring(3,5)), 
-				0);
-		
-		return cal.getTime();
+		return d.toDate();
 	}
 
 }
