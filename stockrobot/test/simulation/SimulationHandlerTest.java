@@ -1,13 +1,11 @@
 package simulation;
 
-import static org.junit.Assert.*;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import database.jpa.IJPAHelper;
-import database.jpa.JPAHelper;
 import database.jpa.JPAHelperSimulator;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;

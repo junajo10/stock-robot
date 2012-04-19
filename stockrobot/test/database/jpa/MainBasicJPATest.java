@@ -3,7 +3,6 @@ package database.jpa;
 
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +16,6 @@ import database.jpa.tables.PortfolioHistory;
 import database.jpa.tables.PortfolioEntity;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
-import database.jpa.tables.StocksToWatch;
 
 /**
  * @author Daniel

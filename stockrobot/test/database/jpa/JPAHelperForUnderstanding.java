@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.junit.Test;
-
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
 

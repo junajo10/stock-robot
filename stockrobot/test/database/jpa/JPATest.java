@@ -18,10 +18,8 @@ import scraping.model.ParserStock;
 
 
 import database.jpa.tables.PortfolioEntity;
-import database.jpa.tables.PortfolioInvestment;
 import database.jpa.tables.StockNames;
 import database.jpa.tables.StockPrices;
-import database.jpa.tables.StocksToWatch;
 
 
 public class JPATest {
