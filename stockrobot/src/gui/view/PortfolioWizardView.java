@@ -15,7 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 
 public class PortfolioWizardView extends WizardGui {
@@ -24,6 +23,7 @@ public class PortfolioWizardView extends WizardGui {
 
 	public static final int SCREEN_PORTFOLIO_INFO 	= 0;
 	private static final String TITLE = "Portfolo Wizard";
+	@SuppressWarnings("unused")
 	private static final String SUBTITLE_INFO = "info";
 	
 	private JPanel pnl_PortfolioInfo;
@@ -80,8 +80,6 @@ public class PortfolioWizardView extends WizardGui {
 		pnl_PortfolioFrom.setAlignmentX(Component.LEFT_ALIGNMENT);
 		pnl_PortfolioFrom.setLayout(lou_PortfolioFrom);
 		//pnl_PortfolioFrom.getLayout();
-		
-		JRadioButtonMenuItem mnu_PortfolioFrom = new JRadioButtonMenuItem();
 		
 		// New portfolio
 		JRadioButton rbtn_NewPortfolio = new JRadioButton();
