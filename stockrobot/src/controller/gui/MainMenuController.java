@@ -13,12 +13,14 @@ import viewfactory.ViewFactory;
  *
  */
 public class MainMenuController implements IController {
-
+	StockInfoGUI stockInfoGUI;
 	public MainMenuController() {
 		
 		
 	}
-	
+	public void bindStockInfoGUI(StockInfoGUI stockInfoGUI) {
+		this.stockInfoGUI = stockInfoGUI;
+	}
 	public ActionListener bindStockInfoGUIButton() {
 		
 		return new ActionListener() {
@@ -39,8 +41,7 @@ public class MainMenuController implements IController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//The purpose of this line is just to open a new JFrame
-				ViewFactory.getGetSettingsPanel( "testalgo" );
+				stockInfoGUI.init();
 			}
 		};
 	}

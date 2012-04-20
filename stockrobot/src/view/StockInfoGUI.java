@@ -31,6 +31,10 @@ public class StockInfoGUI extends JFrame {
 	
 	public StockInfoGUI() {
 		
+	}
+
+	public void init() {
+
 		//TODO: Remove after alpha!
 		
 		view = ViewFactory.getStockTableView();
@@ -42,5 +46,6 @@ public class StockInfoGUI extends JFrame {
 		setTitle( WINDOW_TITLE );
 		
 		this.setVisible( true );
+		
 	}
 }

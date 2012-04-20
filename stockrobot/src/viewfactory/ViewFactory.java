@@ -25,6 +25,8 @@ public class ViewFactory {
 		MainMenuView view = new MainMenuView();
 		MainMenuController controller = new MainMenuController();
 		
+		
+		controller.bindStockInfoGUI(getStockInfoGUI());
 		view.bindOpenAlgorithmSettings(controller.bindAlgorithmSettingsGUIButton());
 		view.bindStockInfoWindow(controller.bindStockInfoGUIButton());
 		
@@ -60,7 +62,7 @@ public class ViewFactory {
 		return view;
 	}
 	
-	public static JFrame getStockInfoGUI() { 
+	public static StockInfoGUI getStockInfoGUI() { 
 		
 		StockInfoGUI view = new StockInfoGUI();
 		
