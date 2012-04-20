@@ -1,7 +1,5 @@
 package view;
 
-import gui.mvc.Constants;
-
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -23,12 +21,11 @@ import java.util.List;
 
 import javax.swing.Box;
 
-import controller.gui.IController;
-import controller.gui.MainMenuController;
 
 import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
+import model.trader.ITrader;
 
 
 import utils.global.FinancialLongConverter;
@@ -281,7 +278,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		
-		if(evt.getPropertyName() == Constants.EVENT_TYPE.BUY_STOCK || evt.getPropertyName() == Constants.EVENT_TYPE.SELL_STOCK){
+		if(evt.getPropertyName() == ITrader.BUY_STOCK || evt.getPropertyName() == ITrader.SELL_STOCK){
 			if(evt.getNewValue() instanceof PortfolioEntity){
 				
 				PortfolioEntity portfolio = (PortfolioEntity) evt.getNewValue();

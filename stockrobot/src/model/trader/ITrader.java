@@ -17,8 +17,9 @@ import model.database.jpa.tables.StockPrices;
  */
 public interface ITrader extends IObservable{
 
-	//TODO Add buy and sell methods.  
-	
+	//Stocks
+	public static final String BUY_STOCK 			= "buyStock";
+	public static final String SELL_STOCK 			= "sellStock";	
 	
 	boolean buyStock(StockPrices s, long amount, PortfolioEntity portfolio);
 	

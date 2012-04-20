@@ -1,8 +1,6 @@
 package view;
 
 
-import gui.mvc.Constants;
-
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,13 +16,10 @@ import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
+import model.robot.AlphaReceiver;
 
 import utils.global.FinancialLongConverter;
 import utils.global.Pair;
-
-import controller.gui.IController;
-import controller.gui.StockTableController;
-
 
 
 
@@ -157,7 +152,7 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
-		if( evt.getPropertyName().equals( Constants.EVENT_TYPE.PRICES_UPDATED ) )
+		if( evt.getPropertyName().equals( AlphaReceiver.PRICES_UPDATED ) )
 			updateInfo();
 	}
 }

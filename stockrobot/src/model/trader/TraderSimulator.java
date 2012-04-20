@@ -13,9 +13,6 @@ import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockPrices;
 
-
-import gui.mvc.Constants;
-
 /**
  * @author Daniel
  *
@@ -46,7 +43,7 @@ public final class TraderSimulator implements ITrader{
 			portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
 			jpaHelper.updateObject(portfolio);
 			
-			propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.BUY_STOCK, null, portfolio);
+			propertyChangeSuport.firePropertyChange(BUY_STOCK, null, portfolio);
 		}
 		return true;
 	}
@@ -63,7 +60,7 @@ public final class TraderSimulator implements ITrader{
 			
 			Log.instance().log(Log.TAG.VERBOSE, "Selling " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getBuy()));
 			
-			propertyChangeSuport.firePropertyChange(Constants.EVENT_TYPE.SELL_STOCK, null, portfolio);
+			propertyChangeSuport.firePropertyChange(SELL_STOCK, null, portfolio);
 		} 
 		else
 			return false;

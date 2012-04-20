@@ -5,12 +5,14 @@ import java.beans.PropertyChangeSupport;
 
 import utils.observer.IObservable;
 
-import gui.mvc.Constants;
-
 public class AlphaReceiver implements IObservable {
 
 	private final PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
 	private Thread callEvery60Sec;
+	
+
+	//Socket connections
+	public static final String PRICES_UPDATED 		= "pricesUpdated";
 	
 	public AlphaReceiver() {
 		
@@ -24,7 +26,7 @@ public class AlphaReceiver implements IObservable {
 					
 					try {
 					
-						propertyChangeSuport.firePropertyChange( Constants.EVENT_TYPE.PRICES_UPDATED, null, null );
+						propertyChangeSuport.firePropertyChange( PRICES_UPDATED, null, null );
 						Thread.sleep(20000);
 					
 					} catch( Exception e ) {
