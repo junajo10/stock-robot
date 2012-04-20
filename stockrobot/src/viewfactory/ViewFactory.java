@@ -4,14 +4,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.portfolio.IPortfolioHandler;
+import model.robot.AlphaReceiver;
 import model.trader.ITrader;
 
 import controller.gui.MainMenuController;
+import controller.gui.StockTableController;
 
 import view.AlgorithmSettingsView;
 import view.MainMenuView;
 import view.PortfolioController;
 import view.PortfolioGui;
+import view.StockInfoGUI;
+import view.StockTableView;
+import view.algorithmsettings.SettingsPanel;
 
 public class ViewFactory {
 
@@ -45,6 +50,36 @@ public class ViewFactory {
 	public static JFrame getGetSettingsPanel(String algorithmName) {
 		
 		AlgorithmSettingsView view = new AlgorithmSettingsView(algorithmName);
+		
+		return view;
+	}
+	
+	public static JPanel getSettingsPanel(String desc, double initValue, double minValue, double maxValue) { 
+		
+		SettingsPanel view = new SettingsPanel( desc, initValue, minValue, maxValue );
+		return view;
+	}
+	
+	public static JFrame getStockInfoGUI() { 
+		
+		StockInfoGUI view = new StockInfoGUI();
+		
+		return view;
+	}
+	
+	public static JPanel getStockTableView() { 
+		
+		StockTableView view = new StockTableView();
+		//StockTableController controller = new StockTableController();
+		
+		//TODO: Remove after alpha!
+		AlphaReceiver receiveNotifier = new AlphaReceiver();
+				
+		view = new StockTableView();
+				
+		receiveNotifier.addAddObserver(view);
+		
+		//view.registerController( controller );
 		
 		return view;
 	}

@@ -27,7 +27,7 @@ public class MainMenuController implements IController {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				//The purpose of this line is just to open a new JFrame
-				new StockInfoGUI();
+				ViewFactory.getStockInfoGUI();
 			}
 		};
 	}

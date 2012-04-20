@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import view.algorithmsettings.SettingsPanel;
+import viewfactory.ViewFactory;
 
 public class AlgorithmSettingsView extends JFrame {
 
@@ -47,7 +48,7 @@ public class AlgorithmSettingsView extends JFrame {
 	
 	public void addSetting( String desc, double init, double min, double max ) {
 		
-		SettingsPanel panel = new SettingsPanel( desc, init, min, max );
+		JPanel panel = ViewFactory.getSettingsPanel( desc, init, min, max );
 		container.add( panel );
 	}
 	

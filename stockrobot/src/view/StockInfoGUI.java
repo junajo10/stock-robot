@@ -2,6 +2,9 @@ package view;
 
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import viewfactory.ViewFactory;
 
 import controller.gui.StockTableController;
 
@@ -23,19 +26,14 @@ public class StockInfoGUI extends JFrame {
 
 	private static final	String 					WINDOW_TITLE = "All publicly traded companies currently recorded in the database.";
 	
-	private					StockTableView 			view;
-	private					StockTableController 	controller;
+	private					JPanel 					view;
+	//private					StockTableController 	controller;
 	
 	public StockInfoGUI() {
 		
 		//TODO: Remove after alpha!
-		AlphaReceiver receiveNotifier = new AlphaReceiver();
 		
-		view = new StockTableView();
-		controller = new StockTableController( view );
-		view.registerController( controller );
-		view.init();
-		receiveNotifier.addAddObserver(controller);
+		view = ViewFactory.getStockTableView();
 		
 		setBounds( 100, 200, 800, 600 );
 		add( view );
