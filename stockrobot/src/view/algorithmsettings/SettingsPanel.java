@@ -10,9 +10,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import controller.gui.IController;
-
-import view.IView;
 import view.components.GUIFactory;
 
 /**
@@ -21,7 +18,7 @@ import view.components.GUIFactory;
  * @author kristian
  *
  */
-public class SettingsPanel extends JPanel implements IView, ChangeListener {
+public class SettingsPanel extends JPanel implements ChangeListener {
 	
 	/**
 	 * Serial Version!
@@ -71,12 +68,6 @@ public class SettingsPanel extends JPanel implements IView, ChangeListener {
 		JSlider fromDate = new JSlider( JSlider.HORIZONTAL, (int) Math.round( _minValue ), (int) Math.round( _maxValue ), (int) Math.round( _initValue ) );
 		fromDate.addChangeListener(this);
 		subContainer.add( fromDate );
-	}
-
-	@Override
-	public void registerController(IController controller) {
-		
-		
 	}
 	
 	/**
