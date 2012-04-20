@@ -1,4 +1,4 @@
-package gui.components.wizard;
+package view.components.wizard;
 
 import javax.swing.JPanel;
 

@@ -8,18 +8,17 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 import javax.swing.text.html.parser.ParserDelegator;
 
 import model.scraping.model.ParserStock;
-import model.utils.FinancialLongConverter;
 
 import org.joda.time.DateTime;
+
+import utils.global.FinancialLongConverter;
 
 
 

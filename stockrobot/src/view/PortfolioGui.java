@@ -1,10 +1,5 @@
-package gui;
+package view;
 
-import gui.components.GUIFactory;
-import gui.components.IGUIFactory;
-import gui.components.Item_cmb_Portfolio;
-import gui.controller.IController;
-import gui.controller.MainMenuController;
 import gui.mvc.Constants;
 
 import java.awt.Dimension;
@@ -28,14 +23,18 @@ import java.util.List;
 
 import javax.swing.Box;
 
+import controller.gui.IController;
+import controller.gui.MainMenuController;
+
 import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
-import model.utils.FinancialLongConverter;
 
 
-import view.IView;
-import view.MainMenuView;
+import utils.global.FinancialLongConverter;
+import view.components.GUIFactory;
+import view.components.IGUIFactory;
+import view.components.Item_cmb_Portfolio;
 
 /**
  * @author Mattias Markehed

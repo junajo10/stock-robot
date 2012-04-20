@@ -3,11 +3,12 @@ package model.portfolio;
 
 import java.util.List;
 
+import utils.global.Pair;
+
 import model.algorithms.IAlgorithm;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.utils.Pair;
 
 
 

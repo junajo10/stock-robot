@@ -1,12 +1,13 @@
-package gui;
+package view;
 
-import gui.components.Item_cmb_Portfolio;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
+
+import view.components.Item_cmb_Portfolio;
 
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;

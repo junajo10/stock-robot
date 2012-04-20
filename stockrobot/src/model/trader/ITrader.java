@@ -1,9 +1,9 @@
 package model.trader;
 
+import utils.observer.IObservable;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockPrices;
-import gui.IObservable;
 
 /**
  * @author Mattias Markehed

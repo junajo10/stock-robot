@@ -1,4 +1,4 @@
-package gui.controller;
+package controller.gui;
 
 public interface IController {
 

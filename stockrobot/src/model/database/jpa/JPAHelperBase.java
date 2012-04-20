@@ -17,13 +17,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import utils.global.Pair;
+
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.PortfolioInvestment;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.database.jpa.tables.StocksToWatch;
-import model.utils.Pair;
 
 
 

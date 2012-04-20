@@ -1,4 +1,4 @@
-package gui.graph;
+package view.graph;
 
 
 import javax.swing.JFrame;

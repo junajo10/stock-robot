@@ -6,10 +6,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import gui.components.GUIFactory;
-import gui.components.IGUIFactory;
-import gui.controller.IController;
-import gui.controller.MainMenuController;
+import view.components.GUIFactory;
+import view.components.IGUIFactory;
+
+import controller.gui.IController;
+import controller.gui.MainMenuController;
+
 
 /**
  * 

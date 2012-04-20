@@ -11,8 +11,9 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 
+import utils.global.Pair;
+
 import model.algorithms.IAlgorithm;
-import model.utils.Pair;
 
 
 

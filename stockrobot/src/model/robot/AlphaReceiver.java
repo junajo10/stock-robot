@@ -3,7 +3,8 @@ package model.robot;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import gui.IObservable;
+import utils.observer.IObservable;
+
 import gui.mvc.Constants;
 
 public class AlphaReceiver implements IObservable {

@@ -3,14 +3,15 @@ package model.trader;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import utils.global.FinancialLongConverter;
+import utils.global.Log;
+import utils.global.Log.TAG;
+
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockPrices;
-import model.utils.FinancialLongConverter;
-import model.utils.Log;
-import model.utils.Log.TAG;
 
 
 import gui.mvc.Constants;

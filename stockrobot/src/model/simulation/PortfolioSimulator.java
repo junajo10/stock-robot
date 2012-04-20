@@ -3,14 +3,15 @@ package model.simulation;
 
 import java.util.List;
 
+import utils.global.FinancialLongConverter;
+import utils.global.Pair;
+
 import model.algorithms.IAlgorithm;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
-import model.utils.FinancialLongConverter;
-import model.utils.Pair;
 
 
 

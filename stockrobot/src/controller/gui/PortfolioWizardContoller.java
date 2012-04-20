@@ -1,13 +1,10 @@
-package gui.controller;
+package controller.gui;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import model.portfolio.wizard.PassablePortfolioBuilder;
 
@@ -31,7 +28,7 @@ public class PortfolioWizardContoller {
 					
 					PassablePortfolioBuilder portfoloioBuilder = new PassablePortfolioBuilder(); 
 					PortfolioWizardView frame = new PortfolioWizardView(portfoloioBuilder,null);
-					PortfolioWizardContoller controller = new PortfolioWizardContoller(frame, portfoloioBuilder);
+					new PortfolioWizardContoller(frame, portfoloioBuilder);
 
 					frame.setVisible(true);
 				} catch (Exception e) {

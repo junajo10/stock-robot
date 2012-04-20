@@ -8,6 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import utils.global.Log;
+import utils.global.Pair;
+import utils.global.Log.TAG;
+
 import model.algorithms.IAlgorithm;
 import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
@@ -17,9 +21,6 @@ import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.robot.IRobot_Algorithms;
-import model.utils.Log;
-import model.utils.Pair;
-import model.utils.Log.TAG;
 
 
 /**

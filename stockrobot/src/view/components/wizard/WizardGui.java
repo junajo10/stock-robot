@@ -1,10 +1,8 @@
-package gui.components.wizard;
+package view.components.wizard;
 
-import gui.components.GUIFactory;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -19,7 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+
+import view.components.GUIFactory;
 
 /**
  * @author Mattias Markehed

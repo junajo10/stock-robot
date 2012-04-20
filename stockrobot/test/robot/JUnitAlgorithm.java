@@ -3,14 +3,15 @@ package robot;
 import java.util.List;
 import java.util.Set;
 
+import utils.global.Log;
+import utils.global.Pair;
+
 import model.algorithms.IAlgorithm;
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.portfolio.IPortfolio;
 import model.robot.IRobot_Algorithms;
 import model.trader.ITrader;
-import model.utils.Log;
-import model.utils.Pair;
 
 
 

@@ -1,7 +1,5 @@
 package view;
 
-import gui.controller.IController;
-import gui.controller.StockTableController;
 
 import java.awt.Dimension;
 
@@ -11,7 +9,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import model.utils.Pair;
+import utils.global.Pair;
+
+import controller.gui.IController;
+import controller.gui.StockTableController;
+
 
 
 

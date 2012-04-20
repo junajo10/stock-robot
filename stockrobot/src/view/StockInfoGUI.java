@@ -1,12 +1,12 @@
-package gui;
+package view;
 
-import gui.controller.StockTableController;
 
 import javax.swing.JFrame;
 
+import controller.gui.StockTableController;
+
 import model.robot.AlphaReceiver;
 
-import view.StockTableView;
 
 /**
  * Class to wrap the Stock Table View and possibly other related classes

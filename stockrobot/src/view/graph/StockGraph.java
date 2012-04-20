@@ -1,4 +1,4 @@
-package gui.graph;
+package view.graph;
 
 
 import java.awt.Color;
@@ -15,7 +15,6 @@ import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.utils.FinancialLongConverter;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -26,6 +25,8 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.RectangleInsets;
+
+import utils.global.FinancialLongConverter;
 
 
 

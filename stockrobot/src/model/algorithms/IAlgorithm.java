@@ -4,12 +4,13 @@ package model.algorithms;
 import java.util.List;
 import java.util.Set;
 
+import utils.global.Pair;
+
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.portfolio.IPortfolio;
 import model.robot.IRobot_Algorithms;
 import model.trader.ITrader;
-import model.utils.Pair;
 
 
 

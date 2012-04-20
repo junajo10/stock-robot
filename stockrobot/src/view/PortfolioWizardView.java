@@ -1,10 +1,5 @@
 package view;
 
-import gui.components.Item_cmb_Portfolio;
-import gui.components.GUIFactory;
-import gui.components.IGUIFactory;
-import gui.components.wizard.WizardGui;
-import gui.components.wizard.WizardPage;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -23,6 +18,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import view.components.GUIFactory;
+import view.components.IGUIFactory;
+import view.components.Item_cmb_Portfolio;
+import view.components.wizard.WizardGui;
+import view.components.wizard.WizardPage;
+
 import model.portfolio.IPortfolio;
 import model.portfolio.PortfolioHandler;
 import model.portfolio.wizard.PassablePortfolioBuilder;
@@ -30,8 +31,8 @@ import model.portfolio.wizard.PassablePortfolioBuilder;
 
 public class PortfolioWizardView extends WizardGui {
 
+	private static final long serialVersionUID = -8663054371650265836L;
 	private static final String TITLE = "Portfolo Wizard";
-	@SuppressWarnings("unused")
 	private static final String SUBTITLE_INFO = "info";
 	
 	public static final String PAGE_START = "start_page";
@@ -97,6 +98,7 @@ public class PortfolioWizardView extends WizardGui {
 	
 	public class PortfolioPage extends WizardPage{
 
+		private static final long serialVersionUID = -2778856056038951343L;
 		//private JPanel pnl_PortfolioInfo;
 		JRadioButton rbtn_ClonePortfolio;
 		JRadioButton rbtn_NewPortfolio;
@@ -225,7 +227,8 @@ public class PortfolioWizardView extends WizardGui {
 	
 	public class PortfolioNewPage extends WizardPage{
 
-		
+		private static final long serialVersionUID = 20596476598729363L;
+
 		public PortfolioNewPage() {
 					
 			

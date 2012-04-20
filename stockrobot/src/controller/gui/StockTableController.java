@@ -1,4 +1,4 @@
-package gui.controller;
+package controller.gui;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -8,9 +8,9 @@ import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.utils.FinancialLongConverter;
-import model.utils.Pair;
 
+import utils.global.FinancialLongConverter;
+import utils.global.Pair;
 import view.StockTableView;
 
 

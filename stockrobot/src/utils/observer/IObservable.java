@@ -1,4 +1,4 @@
-package gui;
+package utils.observer;
 
 import java.beans.PropertyChangeListener;
 

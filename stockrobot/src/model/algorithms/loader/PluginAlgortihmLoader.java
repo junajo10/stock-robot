@@ -6,12 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import utils.global.Log;
+import utils.global.Log.TAG;
+
 import model.algorithms.IAlgorithm;
 import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.robot.IRobot_Algorithms;
-import model.utils.Log;
-import model.utils.Log.TAG;
 
 
 

@@ -3,16 +3,17 @@ package model.portfolio;
 
 import java.util.List;
 
+import utils.global.FinancialLongConverter;
+import utils.global.Log;
+import utils.global.Pair;
+import utils.global.Log.TAG;
+
 import model.algorithms.IAlgorithm;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.utils.FinancialLongConverter;
-import model.utils.Log;
-import model.utils.Pair;
-import model.utils.Log.TAG;
 
 
 

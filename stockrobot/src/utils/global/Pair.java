@@ -1,4 +1,4 @@
-package model.utils;
+package utils.global;
 
 /**
  * Just a simple tuple class

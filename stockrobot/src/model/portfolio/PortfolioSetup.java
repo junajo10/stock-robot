@@ -3,7 +3,8 @@ package model.portfolio;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import gui.IObservable;
+import utils.observer.IObservable;
+
 
 /**
  * @author Mattias Markehed

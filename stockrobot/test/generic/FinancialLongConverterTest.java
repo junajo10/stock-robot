@@ -3,13 +3,14 @@ package generic;
 import java.util.Arrays;
 import java.util.Collection;
 
-import model.utils.FinancialLongConverter;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
+import utils.global.FinancialLongConverter;
 
 
 @RunWith( value = Parameterized.class )

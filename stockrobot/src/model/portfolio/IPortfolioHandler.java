@@ -1,8 +1,9 @@
 package model.portfolio;
 
-import gui.IObservable;
 
 import java.util.List;
+
+import utils.observer.IObservable;
 
 /**
  * @author Daniel

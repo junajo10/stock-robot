@@ -1,11 +1,13 @@
 package view;
 
-import gui.controller.IController;
-import gui.view.algorithmsettings.SettingsPanel;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import view.algorithmsettings.SettingsPanel;
+
+import controller.gui.IController;
 
 public class AlgorithmSettingsView extends JFrame implements IView {
 

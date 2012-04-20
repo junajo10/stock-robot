@@ -1,6 +1,6 @@
 package view;
 
-import gui.controller.IController;
+import controller.gui.IController;
 
 public interface IView  {
 	

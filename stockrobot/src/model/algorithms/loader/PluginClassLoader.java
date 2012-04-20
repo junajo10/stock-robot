@@ -8,7 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import model.utils.SettingParser;
+import utils.SettingParser;
+
 
 
 public class PluginClassLoader extends ClassLoader {

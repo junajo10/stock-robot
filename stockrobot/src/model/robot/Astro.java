@@ -1,12 +1,15 @@
 package model.robot;
 
-import gui.PortfolioController;
-import gui.PortfolioGui;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import utils.global.Log;
+import utils.global.Log.TAG;
+import view.PortfolioController;
+import view.PortfolioGui;
 
 import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
@@ -19,8 +22,6 @@ import model.portfolio.IPortfolioHandler;
 import model.portfolio.PortfolioHandler;
 import model.trader.ITrader;
 import model.trader.TraderSimulator;
-import model.utils.Log;
-import model.utils.Log.TAG;
 
 
 

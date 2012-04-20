@@ -1,9 +1,7 @@
-package gui.view.algorithmsettings;
+package view.algorithmsettings;
 
 import java.awt.TextField;
 
-import gui.components.GUIFactory;
-import gui.controller.IController;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -12,7 +10,10 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import controller.gui.IController;
+
 import view.IView;
+import view.components.GUIFactory;
 
 /**
  * 

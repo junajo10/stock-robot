@@ -4,9 +4,10 @@ package model.robot;
 import java.util.LinkedList;
 import java.util.List;
 
+import utils.global.Log;
+
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
-import model.utils.Log;
 
 
 /**

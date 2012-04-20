@@ -4,10 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import utils.SettingParser;
+import utils.global.FileHelper;
+
 import model.algorithms.AlgorithmPlugin;
 import model.algorithms.IAlgorithm;
-import model.utils.FileHelper;
-import model.utils.SettingParser;
 
 
 

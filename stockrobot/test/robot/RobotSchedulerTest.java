@@ -22,10 +22,11 @@ import model.portfolio.Portfolio;
 import model.robot.IRobot_Algorithms;
 import model.robot.RobotScheduler;
 import model.trader.ITrader;
-import model.utils.Log;
-import model.utils.Pair;
 
 import org.junit.Test;
+
+import utils.global.Log;
+import utils.global.Pair;
 
 
 

@@ -4,9 +4,10 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
-import model.utils.Pair;
 
 import org.junit.Test;
+
+import utils.global.Pair;
 
 
 public class PairTest {

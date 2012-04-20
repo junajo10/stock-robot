@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import utils.global.Log;
+import utils.global.Pair;
+import utils.global.Log.TAG;
+
 import model.database.jpa.IJPAAlgortihm;
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
@@ -13,9 +17,6 @@ import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
 import model.robot.IRobot_Algorithms;
 import model.trader.ITrader;
-import model.utils.Log;
-import model.utils.Pair;
-import model.utils.Log.TAG;
 
 
 /**

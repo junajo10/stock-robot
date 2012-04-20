@@ -1,4 +1,4 @@
-package model.utils;
+package utils.global;
 
 
 import java.io.File;

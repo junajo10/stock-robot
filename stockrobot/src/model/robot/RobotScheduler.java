@@ -1,7 +1,7 @@
 package model.robot;
 
+import utils.global.Log;
 import model.portfolio.IPortfolioHandler;
-import model.utils.Log;
 
 /**
  * Description:

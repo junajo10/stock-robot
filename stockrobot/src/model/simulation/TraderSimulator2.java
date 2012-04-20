@@ -3,13 +3,14 @@ package model.simulation;
 
 import java.beans.PropertyChangeListener;
 
+import utils.global.Log;
+import utils.global.Log.TAG;
+
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockPrices;
 import model.trader.ITrader;
-import model.utils.Log;
-import model.utils.Log.TAG;
 
 
 /**
