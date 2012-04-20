@@ -30,7 +30,7 @@ public class StockInfoGUI extends JFrame {
 	//private					StockTableController 	controller;
 	
 	public StockInfoGUI() {
-		
+		init();
 	}
 
 	public void init() {

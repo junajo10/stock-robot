@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 
 import view.components.Item_cmb_Portfolio;
+import viewfactory.ViewFactory;
 
 import model.portfolio.IPortfolio;
 
@@ -91,7 +92,8 @@ public class PortfolioController {
 			SwingUtilities.invokeLater(new Runnable() {
 			    public void run() {
 			    	//Used to be assigned to a local variable, removed it because the intention is just to launch a new JFrame subclass
-			    	new StockInfoGUI();
+			    	ViewFactory.getStockInfoGUI();
+			    	//ViewFactory.getStockTableView();
 			    }
 			});
 		}

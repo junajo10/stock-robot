@@ -4,7 +4,6 @@ package controller.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import view.StockInfoGUI;
 import viewfactory.ViewFactory;
 
 /**
@@ -13,14 +12,14 @@ import viewfactory.ViewFactory;
  *
  */
 public class MainMenuController implements IController {
-	StockInfoGUI stockInfoGUI;
 	public MainMenuController() {
 		
 		
 	}
-	public void bindStockInfoGUI(StockInfoGUI stockInfoGUI) {
-		this.stockInfoGUI = stockInfoGUI;
+	
+	public void bindStockInfoGUI() {
 	}
+	
 	public ActionListener bindStockInfoGUIButton() {
 		
 		return new ActionListener() {
@@ -41,7 +40,7 @@ public class MainMenuController implements IController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				stockInfoGUI.init();
+				ViewFactory.getGetSettingsPanel("Blaha");
 			}
 		};
 	}

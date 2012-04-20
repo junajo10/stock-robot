@@ -8,7 +8,6 @@ import model.robot.AlphaReceiver;
 import model.trader.ITrader;
 
 import controller.gui.MainMenuController;
-import controller.gui.StockTableController;
 
 import view.AlgorithmSettingsView;
 import view.MainMenuView;
@@ -24,15 +23,14 @@ public class ViewFactory {
 		
 		MainMenuView view = new MainMenuView();
 		MainMenuController controller = new MainMenuController();
+		//controller.bindStockInfoGUI(getStockInfoGUI());
 		
-		
-		controller.bindStockInfoGUI(getStockInfoGUI());
 		view.bindOpenAlgorithmSettings(controller.bindAlgorithmSettingsGUIButton());
 		view.bindStockInfoWindow(controller.bindStockInfoGUIButton());
 		
 		return view;
 	}
-	
+
 	public static JFrame getPortfolioView(IPortfolioHandler portfolioHandler, ITrader trader){
 		
 		PortfolioGui view = new PortfolioGui(portfolioHandler);

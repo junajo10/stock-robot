@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Dimension;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -61,7 +62,6 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	
 	private IGUIFactory guiFactory = new GUIFactory();
 	
-
 	public static void main(String[] args){
 		
 		//This was previously assigned to a local variable, removed it to avoid a warning
@@ -201,6 +201,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		
 		// ======Main menu ==============
 		JPanel pnl_MainMenu = ViewFactory.getMainMenuView();
+		//JComponent pnl_MainMenu = mainMenuFactory.build();
 		
 		pnl_BoxContainer.add( (MainMenuView)pnl_MainMenu );
 		
