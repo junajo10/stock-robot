@@ -1,5 +1,6 @@
 package model.scraping.core;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import model.scraping.parser.IParserRunner;
@@ -25,8 +26,12 @@ public class Harvester {
 		while(true){
 			System.out.print("ASTRo: ");
 			Scanner in = new Scanner(System.in);
-			String input = in.nextLine();
-			takeCommand(input);
+			try {
+				String input = in.nextLine();
+				takeCommand(input);
+			} catch (NoSuchElementException e) {
+
+			}
 			
 		}
 	}

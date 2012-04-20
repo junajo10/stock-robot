@@ -68,9 +68,9 @@ public class ParserRunner implements IParserRunner {
 					 * Reciever on robot not implemented yet, uncomment when. */
 					connector.sendDataAvailable();
 					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
-					if(timeElapsed < 60000){
+					if(timeElapsed < 20000){
 						try {
-							Thread.sleep(60000-timeElapsed);
+							Thread.sleep(20000-timeElapsed);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}

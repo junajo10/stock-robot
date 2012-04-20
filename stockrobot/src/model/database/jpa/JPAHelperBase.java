@@ -222,7 +222,7 @@ class JPAHelperBase implements IJPAHelper {
 		int dup = 0;
 		for (Object o : list) {
 			if (em.getTransaction().isActive())
-				em.getTransaction().commit();
+				em.getTransaction().rollback();
 			try {
 				em.getTransaction().begin();
 				em.merge(o);
@@ -232,7 +232,7 @@ class JPAHelperBase implements IJPAHelper {
 			}
 		}
 		if (em.getTransaction().isActive())
-			em.getTransaction().commit();
+			em.getTransaction().rollback();
 		return dup;
 	}
 	@Override

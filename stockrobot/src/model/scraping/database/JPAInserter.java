@@ -60,7 +60,7 @@ public class JPAInserter implements IInserter {
 		int newStockPrices = 0;
 		List<StockPrices> newStocks = new LinkedList<StockPrices>();
 		Stack<StockNames> newStockNames = new Stack<StockNames>();
-		
+
 		for (ParserStock s : stocks) {
 			if (s.getBuy() != 0 && s.getSell() != 0) {
 				if (!latestMap.containsKey(s.getName())) {
@@ -73,7 +73,6 @@ public class JPAInserter implements IInserter {
 				}
 				else {
 					StockPrices latest = latestMap.get(s.getName());
-
 					if (!latest.getTime().equals(s.getDate())) {
 						StockPrices sp = new StockPrices(latest.getStockName(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate());
 						newStocks.add(sp);
