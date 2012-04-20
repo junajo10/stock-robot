@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JFrame;
+
 import utils.global.Log;
 import utils.global.Log.TAG;
 import view.PortfolioController;
-import view.PortfolioGui;
+import viewfactory.ViewFactory;
 
 import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
@@ -40,7 +42,7 @@ import model.trader.TraderSimulator;
 public class Astro implements IRobot_Algorithms{
 
 	IPortfolioHandler portfolioHandler = null;
-	PortfolioGui portfolioGui = null;
+	JFrame portfolioGui = null;
 	PortfolioController portfolioController = null;
 	ITrader trader = null;
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
@@ -66,8 +68,8 @@ public class Astro implements IRobot_Algorithms{
 
 		trader				= TraderSimulator.getInstance();
 		portfolioHandler 	= PortfolioHandler.getInstance(this);
-		portfolioGui 		= new PortfolioGui(portfolioHandler);
-		portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
+		portfolioGui 		= ViewFactory.getPortfolioView(portfolioHandler,trader);
+		//portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
 		while(true) {
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {

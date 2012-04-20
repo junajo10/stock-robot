@@ -4,10 +4,8 @@ package controller.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-
-import view.AlgorithmSettingsView;
 import view.StockInfoGUI;
+import viewfactory.ViewFactory;
 
 /**
  * 
@@ -21,9 +19,9 @@ public class MainMenuController implements IController {
 		
 	}
 	
-	public void bindStockInfoGUIButton( JButton btn ) {
+	public ActionListener bindStockInfoGUIButton() {
 		
-		btn.addActionListener(new ActionListener() {
+		return new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -31,19 +29,19 @@ public class MainMenuController implements IController {
 				//The purpose of this line is just to open a new JFrame
 				new StockInfoGUI();
 			}
-		});
+		};
 	}
 	
-	public void bindAlgorithmSettingsGUIButton( JButton btn ) {
+	public ActionListener bindAlgorithmSettingsGUIButton() {
 		
-		btn.addActionListener( new ActionListener() {
+		return  new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
 				//The purpose of this line is just to open a new JFrame
-				new AlgorithmSettingsView( "testalgo" );
+				ViewFactory.getGetSettingsPanel( "testalgo" );
 			}
-		});
+		};
 	}
 }

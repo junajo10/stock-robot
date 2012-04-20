@@ -35,6 +35,7 @@ import utils.global.FinancialLongConverter;
 import view.components.GUIFactory;
 import view.components.IGUIFactory;
 import view.components.Item_cmb_Portfolio;
+import viewfactory.ViewFactory;
 
 /**
  * @author Mattias Markehed
@@ -202,10 +203,8 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		// ===========================
 		
 		// ======Main menu ==============
-		IView pnl_MainMenu = new MainMenuView();
-		IController menuController = new MainMenuController();
-		pnl_MainMenu.registerController(menuController);
-		pnl_MainMenu.init();
+		JPanel pnl_MainMenu = ViewFactory.getMainMenuView();
+		
 		pnl_BoxContainer.add( (MainMenuView)pnl_MainMenu );
 		
 		if(portfolioHandler != null){

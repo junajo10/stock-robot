@@ -7,9 +7,7 @@ import javax.swing.JPanel;
 
 import view.algorithmsettings.SettingsPanel;
 
-import controller.gui.IController;
-
-public class AlgorithmSettingsView extends JFrame implements IView {
+public class AlgorithmSettingsView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +22,6 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		init();
 	}
 	
-	@Override
 	public void init() {
 		
 		//Main container for the algorithm settings window
@@ -61,9 +58,5 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		new AlgorithmSettingsView( "Testalgorithm!" );
 	}
 
-	@Override
-	public void registerController(IController controller) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

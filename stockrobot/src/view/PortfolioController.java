@@ -10,34 +10,21 @@ import javax.swing.SwingUtilities;
 import view.components.Item_cmb_Portfolio;
 
 import model.portfolio.IPortfolio;
-import model.portfolio.IPortfolioHandler;
-import model.trader.ITrader;
 
 
 public class PortfolioController {
 
 	private PortfolioGui gui;
-	private IPortfolioHandler portfolioHandler;
-	private ITrader trader;
 	
-	public PortfolioController(PortfolioGui gui, IPortfolioHandler portfolioHandler, ITrader trader){
+	public PortfolioController(PortfolioGui view){
 		
-		this.gui = gui;
-		this.portfolioHandler = portfolioHandler;
-		this.trader = trader;
+		gui = view;
 		
-		hookGui();
 	}
 	
-	private void hookGui(){
+	public ActionListener getBalanceHistoryListener() {
 		
-		portfolioHandler.addAddObserver(gui);
-		trader.addAddObserver(gui);
-		gui.addBalanceHistoryListener(new BalanceHistoryListener());
-		gui.addChangeAlgorithmListener(new ChangeAlgorithmListener());
-		gui.addChangePortfolioListener(new ChangePortfolioListener());
-		gui.addStockListener(new ShowStockListener());
-		
+		return new BalanceHistoryListener();
 	}
 	
 	/**
@@ -52,6 +39,11 @@ public class PortfolioController {
 		}
 	}
 	
+	public ActionListener getChangeAlgorithmListener() {
+		
+		return new ChangeAlgorithmListener();
+	}
+	
 	/**
 	 * Listener for the button change algorithm in portfolio gui
 	 */
@@ -62,6 +54,11 @@ public class PortfolioController {
 			
 			System.out.println("Pressed change");
 		}
+	}
+	
+	public ActionListener getChangePortfolioListener() {
+		
+		return new ChangePortfolioListener();
 	}
 	
 	/**
@@ -78,6 +75,11 @@ public class PortfolioController {
 		}
 	}
 	
+	public ActionListener getShowStockListener() {
+		
+		return new ShowStockListener();
+	}
+	
 	/**
 	 * Listener for the button change algorithm in portfolio gui
 	 */
@@ -92,8 +94,6 @@ public class PortfolioController {
 			    	new StockInfoGUI();
 			    }
 			});
-			
-			System.out.println("herro");
 		}
 	}
 }

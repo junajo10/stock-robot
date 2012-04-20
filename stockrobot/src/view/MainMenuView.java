@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,27 +11,26 @@ import javax.swing.SwingConstants;
 import view.components.GUIFactory;
 import view.components.IGUIFactory;
 
-import controller.gui.IController;
-import controller.gui.MainMenuController;
-
-
 /**
  * 
  * @author kristian
  *
  */
-public class MainMenuView extends JPanel implements IView {
+public class MainMenuView extends JPanel {
 
 	/**
 	 * Serial version!
 	 */
 	private static final long serialVersionUID = -5839048480274874628L;
-
-	private IController controller;
 	
 	private IGUIFactory guiFactory = new GUIFactory();
+	private JButton btn_openAlgorithmSettingsWindow; 
+	private JButton btn_openStockInfoWindow;
 	
-	public MainMenuView() {}
+	
+	public MainMenuView() {
+		init();
+	}
 	
 	public void init() {
 		
@@ -46,25 +47,25 @@ public class MainMenuView extends JPanel implements IView {
 		header.setHorizontalAlignment(SwingConstants.LEFT);
 		pnl_Container.add(header);
 		
-		//Open stock info window!
-		JButton btn_openStockInfoWindow = guiFactory.getDefaultButton( "Open Stock Info" );
+		GUIFactory fact = new GUIFactory();
+		
+		btn_openStockInfoWindow = fact.getDefaultButton("Stock Info");
 		pnl_Container.add(btn_openStockInfoWindow);
 		
-		//Bind the open stock info window to actually open a window
-		((MainMenuController) controller).bindStockInfoGUIButton(btn_openStockInfoWindow);
+		btn_openAlgorithmSettingsWindow = fact.getDefaultButton("Algorithm settings");
+		pnl_Container.add(btn_openAlgorithmSettingsWindow);
 		
-		//Algorithm settings button
-		JButton btn_openAlgorithmSettingsWindow = guiFactory.getDefaultButton( "Open Algorithm Settings" );
-		pnl_Container.add( btn_openAlgorithmSettingsWindow );
-		
-		//Bind bindAlgorithmSettingsGUIButton to open a new algorithm setting view
-		((MainMenuController) controller).bindAlgorithmSettingsGUIButton( btn_openAlgorithmSettingsWindow );
 	}
 	
-	@Override
-	public void registerController(IController controller) {
-		// TODO Auto-generated method stub
-		
-		this.controller = controller;
+	//Bind bindAlgorithmSettingsGUIButton to open a new algorithm setting view
+	public void bindStockInfoWindow(ActionListener listener) {
+		btn_openStockInfoWindow.addActionListener(listener);
 	}
+
+	//Open stock info window!
+	public void bindOpenAlgorithmSettings(ActionListener listener) {
+		btn_openAlgorithmSettingsWindow.addActionListener(listener);
+	}
+	
+	
 }
