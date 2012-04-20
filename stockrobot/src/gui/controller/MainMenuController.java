@@ -1,12 +1,13 @@
 package gui.controller;
 
 import gui.StockInfoGUI;
-import gui.view.AlgorithmSettingsView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+
+import view.AlgorithmSettingsView;
 
 /**
  * 

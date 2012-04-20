@@ -4,7 +4,10 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
+import model.utils.Pair;
+
 import org.junit.Test;
+
 
 public class PairTest {
 	Random rand = new Random(System.currentTimeMillis());

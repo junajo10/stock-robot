@@ -8,9 +8,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 
-import portfolio.IPortfolio;
-import portfolio.IPortfolioHandler;
-import trader.ITrader;
+import model.portfolio.IPortfolio;
+import model.portfolio.IPortfolioHandler;
+import model.trader.ITrader;
+
 
 public class PortfolioController {
 

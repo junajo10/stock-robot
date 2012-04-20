@@ -6,14 +6,16 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
+import model.database.jpa.JPAHelperSimulator;
+import model.database.jpa.tables.PortfolioEntity;
+import model.database.jpa.tables.PortfolioHistory;
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import database.jpa.tables.PortfolioHistory;
-import database.jpa.tables.PortfolioEntity;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
 
 /**
  * @author Daniel

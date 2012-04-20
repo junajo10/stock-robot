@@ -2,10 +2,11 @@ package scraping;
 
 import java.sql.Date;
 
+import model.scraping.model.ParserStock;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-import scraping.model.ParserStock;
 
 /**
  * Test the PriceDataRepresentation

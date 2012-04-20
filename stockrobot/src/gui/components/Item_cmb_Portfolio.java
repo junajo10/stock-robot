@@ -1,6 +1,6 @@
 package gui.components;
 
-import portfolio.IPortfolio;
+import model.portfolio.IPortfolio;
 
 /**
  * @author Mattias Markehed

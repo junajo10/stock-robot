@@ -4,8 +4,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
+
 
 /**
  * This class will contain unit tests, but is 

@@ -4,15 +4,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import database.jpa.IJPAHelper;
-import database.jpa.JPAHelper;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
+import model.utils.FinancialLongConverter;
+import model.utils.Pair;
 
-import generic.FinancialLongConverter;
-import generic.Pair;
+import view.StockTableView;
+
+
 import gui.mvc.Constants;
-import gui.view.StockTableView;
 
 /**
  * Controller class for the StockTableView, basically tell's the

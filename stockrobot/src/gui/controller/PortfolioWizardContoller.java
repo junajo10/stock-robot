@@ -9,9 +9,10 @@ import java.awt.event.ItemListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import portfolio.wizard.PassablePortfolioBuilder;
+import model.portfolio.wizard.PassablePortfolioBuilder;
 
-import gui.view.PortfolioWizardView;
+import view.PortfolioWizardView;
+
 
 public class PortfolioWizardContoller {
 

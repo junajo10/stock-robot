@@ -1,15 +1,17 @@
 package simulation;
 
 
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelperSimulator;
+import model.database.jpa.tables.PortfolioEntity;
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
+import model.simulation.SimulationHandler;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import database.jpa.IJPAHelper;
-import database.jpa.JPAHelperSimulator;
-import database.jpa.tables.PortfolioEntity;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
 
 public class SimulationHandlerTest {
 	private static SimulationHandler simulationHandler = null;

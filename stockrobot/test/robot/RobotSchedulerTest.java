@@ -2,8 +2,6 @@ package robot;
 
 import static org.junit.Assert.*;
 
-import generic.Log;
-import generic.Pair;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -13,18 +11,23 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
+import model.algorithms.IAlgorithm;
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.tables.PortfolioEntity;
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
+import model.portfolio.IPortfolio;
+import model.portfolio.IPortfolioHandler;
+import model.portfolio.Portfolio;
+import model.robot.IRobot_Algorithms;
+import model.robot.RobotScheduler;
+import model.trader.ITrader;
+import model.utils.Log;
+import model.utils.Pair;
+
 import org.junit.Test;
 
-import algorithms.IAlgorithm;
-import database.jpa.IJPAHelper;
-import database.jpa.tables.PortfolioEntity;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
 
-import portfolio.IPortfolio;
-import portfolio.IPortfolioHandler;
-import portfolio.Portfolio;
-import trader.ITrader;
 
 /**
  * @author Mattias Markehed

@@ -7,17 +7,20 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelperSimulator;
+import model.database.jpa.tables.PortfolioEntity;
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
+import model.scraping.database.IInserter;
+import model.scraping.database.JPAInserter;
+import model.scraping.model.ParserStock;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import scraping.database.IInserter;
-import scraping.database.JPAInserter;
-import scraping.model.ParserStock;
 
-import database.jpa.tables.PortfolioEntity;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
 
 public class JPATest {
 	

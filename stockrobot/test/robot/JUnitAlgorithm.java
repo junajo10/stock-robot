@@ -3,14 +3,16 @@ package robot;
 import java.util.List;
 import java.util.Set;
 
-import portfolio.IPortfolio;
-import trader.ITrader;
+import model.algorithms.IAlgorithm;
+import model.database.jpa.tables.AlgorithmSettingDouble;
+import model.database.jpa.tables.AlgorithmSettingLong;
+import model.portfolio.IPortfolio;
+import model.robot.IRobot_Algorithms;
+import model.trader.ITrader;
+import model.utils.Log;
+import model.utils.Pair;
 
-import database.jpa.tables.AlgorithmSettingDouble;
-import database.jpa.tables.AlgorithmSettingLong;
-import generic.Log;
-import generic.Pair;
-import algorithms.IAlgorithm;
+
 
 public class JUnitAlgorithm implements IAlgorithm{
 

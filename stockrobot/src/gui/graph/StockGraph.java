@@ -1,6 +1,5 @@
 package gui.graph;
 
-import generic.FinancialLongConverter;
 
 import java.awt.Color;
 import java.util.Date;
@@ -12,6 +11,12 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
+import model.utils.FinancialLongConverter;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -22,10 +27,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 
-import database.jpa.IJPAHelper;
-import database.jpa.JPAHelper;
-import database.jpa.tables.StockNames;
-import database.jpa.tables.StockPrices;
+
 
 /**
  * Example of an simple JFreeChart time-graph of a stock.

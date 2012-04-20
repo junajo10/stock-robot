@@ -4,7 +4,6 @@ import java.awt.TextField;
 
 import gui.components.GUIFactory;
 import gui.controller.IController;
-import gui.view.IView;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -12,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import view.IView;
 
 /**
  * 
