@@ -74,14 +74,10 @@ public class Log {
 		}
 	}
 	
-	public static Log instance(){
+	public synchronized static Log instance(){
 		
 		if(log == null){
-			synchronized(Log.class){
-				if(log == null){
-					log = new Log();
-				}
-			}
+			log = new Log();
 		}
 		
 		return log;
