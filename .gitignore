@@ -46,3 +46,4 @@ persistence.xml
 *priceinfo_db.xml
 
 .classpath
+configuration.xml
