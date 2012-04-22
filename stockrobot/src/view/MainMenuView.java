@@ -26,7 +26,7 @@ public class MainMenuView extends JPanel {
 	private IGUIFactory guiFactory = new GUIFactory();
 	private JButton btn_openAlgorithmSettingsWindow; 
 	private JButton btn_openStockInfoWindow;
-	
+	private JButton btn_openSimulation;
 	
 	public MainMenuView() {
 		init();
@@ -55,6 +55,9 @@ public class MainMenuView extends JPanel {
 		btn_openAlgorithmSettingsWindow = fact.getDefaultButton("Algorithm settings");
 		pnl_Container.add(btn_openAlgorithmSettingsWindow);
 		
+		btn_openSimulation = fact.getDefaultButton("Simulation");
+		pnl_Container.add(btn_openSimulation);
+		
 	}
 	
 	//Bind bindAlgorithmSettingsGUIButton to open a new algorithm setting view
@@ -67,5 +70,8 @@ public class MainMenuView extends JPanel {
 		btn_openAlgorithmSettingsWindow.addActionListener(listener);
 	}
 	
+	public void bindOpenSimulation(ActionListener listener) {
+		btn_openSimulation.addActionListener(listener);
+	}
 	
 }

@@ -138,6 +138,11 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		}
 		return instance;
 	}
+	public static IPortfolioHandler getInstance() {
+		if (instance != null)
+			return instance;
+		return null;
+	}
 	@Override
 	public void addAddObserver(PropertyChangeListener listener) {
 		propertyChangeSuport.addPropertyChangeListener(listener);

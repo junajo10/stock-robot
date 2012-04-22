@@ -43,6 +43,8 @@ public class SimulationHandler {
 	
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
+		
+		clearTestDatabase();
 	}
 	private void initSimulation(String algorithmToSimulate, List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
 		PortfolioEntity portfolioEntity = new PortfolioEntity("Simulated Portfolio");
