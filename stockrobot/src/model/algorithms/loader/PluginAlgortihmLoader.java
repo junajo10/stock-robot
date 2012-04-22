@@ -87,11 +87,9 @@ public final class PluginAlgortihmLoader {
 	 * @return an instance of PluginAlgorithmLoader
 	 */
 	public static PluginAlgortihmLoader getInstance() {
-		if(instance == null) {
-			synchronized (PluginAlgortihmLoader.class) {
-				if (instance == null)
-					instance = new PluginAlgortihmLoader();
-			}
+		synchronized (PluginAlgortihmLoader.class) {
+			if (instance == null)
+				instance = new PluginAlgortihmLoader();
 		}
 		return instance;
 	}

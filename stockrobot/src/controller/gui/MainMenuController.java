@@ -29,7 +29,7 @@ public class MainMenuController implements IController {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				//The purpose of this line is just to open a new JFrame
-				ViewFactory.getStockInfoGUI();
+				stockInfoGUI.init();
 			}
 		};
 	}
@@ -41,7 +41,7 @@ public class MainMenuController implements IController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				stockInfoGUI.init();
+				ViewFactory.getGetSettingsPanel( "testalgo" );
 			}
 		};
 	}

@@ -14,9 +14,6 @@ import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
 
 
-
-
-
 /**
  * @author Daniel
  *
@@ -117,7 +114,7 @@ public class PortfolioSimulator implements IPortfolio {
 	public boolean updateAlgorithm() {
 		if (algorithm == null)
 			return false;
-		this.updateAlgorithm();
+		algorithm.update();
 		return true;
 	}
 }

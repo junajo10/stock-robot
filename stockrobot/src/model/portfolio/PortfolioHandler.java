@@ -132,11 +132,9 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		return false;
 	}
 	public static IPortfolioHandler getInstance(IRobot_Algorithms robot) {
-		if(instance == null) {
-			synchronized (PortfolioHandler.class) {
-				if (instance == null)
-					instance = new PortfolioHandler(robot);
-			}
+		synchronized (PortfolioHandler.class) {
+			if (instance == null)
+				instance = new PortfolioHandler(robot);
 		}
 		return instance;
 	}

@@ -57,7 +57,7 @@ public class TraderSimulator2 implements ITrader{
 		for (PortfolioHistory ph : portfolio.getHistory()) {
 			if (ph.getSoldDate() == null) {
 				if (ph.getStockPrice().getTime() == s.getTime()) {
-					if (ph.getStockPrice().getStockName().getName() == s.getStockName().getName()) {
+					if (ph.getStockPrice().getStockName().getName().contentEquals(s.getStockName().getName())) {
 						if (ph.getAmount() == amount) {
 							portfolio.soldFor(s.getBuy()*amount, jpaHelper);
 							ph.setSoldDate(latest.getTime());
