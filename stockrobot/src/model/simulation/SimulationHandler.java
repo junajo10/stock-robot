@@ -153,7 +153,7 @@ public class SimulationHandler {
 		}
 	}
 	private void updateAlgorithm() {
-		portfolio.getAlgorithm().update();
+		portfolio.updateAlgorithm();
 	}
 	private void end() {
 		jpaHelper.getEntityManager().close();

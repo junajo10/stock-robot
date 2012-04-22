@@ -82,7 +82,7 @@ public class Astro implements IRobot_Algorithms{
 					}
 				}
 
-				p.getAlgorithm().update();
+				p.updateAlgorithm();
 			}
 			try {
 				Thread.sleep(timeBetweenUpdates);

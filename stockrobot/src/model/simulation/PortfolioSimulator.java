@@ -56,12 +56,6 @@ public class PortfolioSimulator implements IPortfolio {
 	}
 
 	@Override
-	public IAlgorithm getAlgorithm() {
-		return algorithm;
-	}
-
-
-	@Override
 	public long getInvestedAmount() {
 		return jpaHelper.getTotalInvestedAmount(portfolioTable);
 	}
@@ -118,5 +112,12 @@ public class PortfolioSimulator implements IPortfolio {
 	@Override
 	public PortfolioEntity getPortfolioTable() {
 		return portfolioTable;
+	}
+	@Override
+	public boolean updateAlgorithm() {
+		if (algorithm == null)
+			return false;
+		this.updateAlgorithm();
+		return true;
 	}
 }

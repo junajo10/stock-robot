@@ -48,7 +48,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 	@Override
 	public boolean update() {
-		if (portfolio.getPortfolioTable().getBalance() < 1000000) {
+		if (portfolio.getUnusedAmount() < 1000000) {
 			return false;
 		}
 

@@ -48,6 +48,7 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		}
 		Log.instance().log(TAG.VERY_VERBOSE, "Done creating portfolios");
 	}
+	
 	private IPortfolio createExistingPortfolio(PortfolioEntity pt) {
 		Portfolio p = new Portfolio(pt);
 		
@@ -55,8 +56,16 @@ public final class PortfolioHandler implements IPortfolioHandler{
 			IAlgorithm algorithm = algorithmLoader.getAlgorithm(robot, p);
 			
 			if (algorithm != null) {
+				if (!pt.getAlgortihmSettings().isInitiated()) {
+					pt.getAlgortihmSettings().initiate(algorithm.getDefaultDoubleSettings(), algorithm.getDefaultLongSettings());
+					jpaHelper.updateObject(pt);
+				}
+				algorithm.giveDoubleSettings(pt.getAlgortihmSettings().getCurrentDoubleSettings());
+				algorithm.giveLongSettings(pt.getAlgortihmSettings().getCurrentLongSettings());
+				
 				p.setAlgorithm(algorithm);
 				listOfPortfolios.add(p);
+				
 				Log.instance().log(TAG.VERY_VERBOSE, p.getName() + " algorithm set to: " + algorithm.getName());
 			}
 			else {

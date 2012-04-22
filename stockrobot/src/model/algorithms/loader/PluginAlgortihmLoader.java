@@ -62,9 +62,6 @@ public final class PluginAlgortihmLoader {
 			// Create a new algorithm from a template
 			IAlgorithm algorithm = algorithms.get(portfolioEntity.getAlgortihmSettings().getAlgorithmName()).createInstance(robot, portfolio, robot.getTrader());
 			
-			// Initiate the algorithm to the settings in this portfolio
-			portfolioEntity.getAlgortihmSettings().initiate(algorithm);
-			
 			return algorithm;
 		}
 		else {

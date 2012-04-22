@@ -16,9 +16,6 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 
 
-
-
-
 /**
  * An object of this class will hold one portfolio.
  * When a object of this class is loaded, it will load the algorithm coupled with it.
@@ -40,9 +37,6 @@ public class Portfolio implements IPortfolio {
 		this.algorithm = algorithm;
 
 		Log.instance().log(TAG.VERY_VERBOSE, "Portfolio " + getName() + " is loaded");
-	}
-	public Portfolio(PortfolioEntity portfolioTable, IJPAHelper jpaHelper) {
-
 	}
 	public Portfolio(PortfolioEntity pt) {
 		// Portfolio without algorithm yet.
@@ -66,20 +60,10 @@ public class Portfolio implements IPortfolio {
 	}
 
 	@Override
-	public IAlgorithm getAlgorithm() {
-		return algorithm;
-	}
-
-	@Override
 	public boolean setAlgorithm(IAlgorithm algorithm) {
-		//portfolioTable.setAlgorithm(algorithm);
-		//jpaHelper.updateObject(portfolioTable);
-		
 		this.algorithm = algorithm;
-		
 		return true;
 	}
-
 	@Override
 	public long getInvestedAmount() {
 		return jpaHelper.getTotalInvestedAmount(portfolioTable);
@@ -139,5 +123,13 @@ public class Portfolio implements IPortfolio {
 	@Override
 	public PortfolioEntity getPortfolioTable() {
 		return portfolioTable;
+	}
+	@Override
+	public boolean updateAlgorithm() {
+		if (this.algorithm != null) {
+			algorithm.update();
+			return true;
+		}
+		return false;
 	}
 }
