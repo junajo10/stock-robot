@@ -54,7 +54,9 @@ public class SimulationHandler {
 		
 		PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
 		
-		IAlgorithm algorithm = algorithmLoader.getAlgorithm(robotSim, portfolio);
+		IAlgorithm algorithm = algorithmLoader.loadAlgorithm(algorithmLoader.getAlgorithmNames().get(0));
+		algorithm.setPortfolio(portfolio);
+		algorithm.setRobot(robotSim);
 		
 		portfolio.setAlgorithm(algorithm);
 		

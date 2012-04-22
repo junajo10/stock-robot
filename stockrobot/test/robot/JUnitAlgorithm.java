@@ -11,7 +11,6 @@ import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.portfolio.IPortfolio;
 import model.robot.IRobot_Algorithms;
-import model.trader.ITrader;
 
 
 
@@ -81,10 +80,13 @@ public class JUnitAlgorithm implements IAlgorithm{
 	}
 
 	@Override
-	public IAlgorithm createInstance(IRobot_Algorithms robot,
-			IPortfolio portfolio, ITrader trader) {
-		// TODO Auto-generated method stub
-		return null;
+	public void setRobot(IRobot_Algorithms robot) {
+		
+	}
+
+	@Override
+	public void setPortfolio(IPortfolio p) {
+		
 	}
 }
 

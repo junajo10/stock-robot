@@ -8,7 +8,6 @@ import model.robot.AlphaReceiver;
 import model.trader.ITrader;
 
 import controller.gui.MainMenuController;
-import controller.gui.StockTableController;
 
 import view.AlgorithmSettingsView;
 import view.MainMenuView;

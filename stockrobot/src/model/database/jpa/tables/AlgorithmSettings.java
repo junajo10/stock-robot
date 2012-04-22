@@ -13,10 +13,6 @@ import javax.persistence.Embeddable;
 
 import utils.global.Pair;
 
-import model.algorithms.IAlgorithm;
-
-
-
 
 /**
  * This will hold the settings of a given portfolio's algorithm.

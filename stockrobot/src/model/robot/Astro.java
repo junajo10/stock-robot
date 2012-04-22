@@ -13,7 +13,6 @@ import utils.global.Log.TAG;
 import view.PortfolioController;
 import viewfactory.ViewFactory;
 
-import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
@@ -24,9 +23,6 @@ import model.portfolio.IPortfolioHandler;
 import model.portfolio.PortfolioHandler;
 import model.trader.ITrader;
 import model.trader.TraderSimulator;
-
-
-
 
 
 /**
@@ -44,10 +40,10 @@ public class Astro implements IRobot_Algorithms{
 	IPortfolioHandler portfolioHandler = null;
 	JFrame portfolioGui = null;
 	PortfolioController portfolioController = null;
-	ITrader trader = null;
+	ITrader trader = TraderSimulator.getInstance();
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	Random rand = new Random(System.currentTimeMillis());
-	PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+	//PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
 
 	private List<StockNames> simulatedStocks = null;
 
@@ -60,14 +56,13 @@ public class Astro implements IRobot_Algorithms{
 	private void start() {
 		
 		System.out.println("ASTRo is starting up.");
-
+		portfolioHandler 	= PortfolioHandler.getInstance(this);
+		
 		if (simulate) {
 			simulatedStocks = new ArrayList<StockNames>();
 			initSimulationState();
 		}
-
-		trader				= TraderSimulator.getInstance();
-		portfolioHandler 	= PortfolioHandler.getInstance(this);
+		
 		portfolioGui 		= ViewFactory.getPortfolioView(portfolioHandler,trader);
 		//portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 
@@ -113,15 +108,12 @@ public class Astro implements IRobot_Algorithms{
 		if (!alreadyExists) {
 			Log.instance().log(TAG.VERBOSE, "Creating simulation portfolios");
 			for (int i = 1; i <= 2; i++) {
-				PortfolioEntity portfolio = new PortfolioEntity("sim portfolio " + i);
 				
-				jpaHelper.storeObject(portfolio);
+				IPortfolio portfolio = portfolioHandler.createNewPortfolio("sim portfolio " + i);
 				
-				portfolio.setAlgorithm(algorithmLoader.algortihmsAvailable().get(i-1));
+				portfolioHandler.setAlgorithm(portfolio, portfolioHandler.getAlgorithmNames().get(i-1));
 				
-				jpaHelper.updateObject(portfolio);
-				
-				jpaHelper.investMoney(10000000, portfolio);
+				jpaHelper.investMoney(10000000, portfolio.getPortfolioTable());
 			}
 		}
 		
