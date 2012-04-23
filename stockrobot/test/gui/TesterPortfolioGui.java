@@ -50,4 +50,14 @@ class TestPortfolioHandler implements IPortfolioHandler{
 	@Override
 	public void removeObserver(PropertyChangeListener listener) {
 	}
+	@Override
+	public List<String> getAlgorithmNames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean setAlgorithm(IPortfolio p, String algorithmName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
