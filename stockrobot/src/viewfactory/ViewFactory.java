@@ -54,6 +54,20 @@ public class ViewFactory {
 		return view;
 	}
 	
+	public static JFrame getPortfolioWizard(IPortfolioHandler handler){
+		
+		//TODO fix
+		/*
+		PortfolioWizardView view = new PortfolioWizardView(handler);
+		PortfolioWizardContoller controller = new PortfolioWizardContoller(view);
+		
+		view.setCancelListener(controller.getCancelListener());
+		view.getPageStart().setCreateFromNewListener(controller.getFromNewListener());
+		view.getPageStart().setCreateFromCloneListener(controller.getFromCloneListener());
+		*/
+		return null;
+	}
+	
 	public static JFrame getGetSettingsPanel(String algorithmName) {
 		
 		AlgorithmSettingsView view = new AlgorithmSettingsView(algorithmName);
