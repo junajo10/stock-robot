@@ -19,11 +19,9 @@ public final class JPAHelper extends JPAHelperBase {
 	 * @return An instance of JPAHelper
 	 */
 	public static IJPAHelper getInstance() {
-		if(instance == null) {
-			synchronized (JPAHelperBase.class) {
-				if (instance == null)
-					instance = new JPAHelper(); 
-			}
+		synchronized (JPAHelperBase.class) {
+			if (instance == null)
+				instance = new JPAHelper(); 
 		}
 		return instance;
 	}

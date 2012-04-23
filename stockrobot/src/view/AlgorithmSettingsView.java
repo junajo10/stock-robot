@@ -5,7 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import view.algorithmsettings.SettingsPanel;
 import viewfactory.ViewFactory;
 
 public class AlgorithmSettingsView extends JFrame {

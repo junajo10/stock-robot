@@ -13,10 +13,6 @@ import javax.persistence.Embeddable;
 
 import utils.global.Pair;
 
-import model.algorithms.IAlgorithm;
-
-
-
 
 /**
  * This will hold the settings of a given portfolio's algorithm.
@@ -49,22 +45,23 @@ public class AlgorithmSettings {
 	public String getAlgorithmName() {
 		return algorithmName;
 	}
-	public void initiate(IAlgorithm algorithm) {
-		if (!initiated) {
-			this.doubleSettings = algorithm.getDefaultDoubleSettings();
-			this.longSettings = algorithm.getDefaultLongSettings();
-		}
-		algorithm.giveDoubleSettings(getCurrentDoubleSettings());
-		algorithm.giveLongSettings(getCurrentLongSettings());
+	public boolean isInitiated() {
+		return initiated;
 	}
-	private List<Pair<String, Long>> getCurrentLongSettings() {
+	public void initiate(Set<AlgorithmSettingDouble> doubleSettings, Set<AlgorithmSettingLong> longSettings) {
+		this.doubleSettings = doubleSettings;
+		this.longSettings = longSettings;
+		
+		this.initiated = true;
+	}
+	public List<Pair<String, Long>> getCurrentLongSettings() {
 		List<Pair<String, Long>> currentLongSettings = new ArrayList<Pair<String,Long>>();
 		for (AlgorithmSettingLong setting : longSettings) {
 			currentLongSettings.add(new Pair<String, Long>(setting.getName(), setting.getValue()));
 		}
 		return currentLongSettings;
 	}
-	private List<Pair<String, Double>> getCurrentDoubleSettings() {
+	public List<Pair<String, Double>> getCurrentDoubleSettings() {
 		List<Pair<String, Double>> currentDoubleSettings = new ArrayList<Pair<String,Double>>();
 		for (AlgorithmSettingDouble setting : doubleSettings) {
 			currentDoubleSettings.add(new Pair<String, Double>(setting.getName(), setting.getValue()));

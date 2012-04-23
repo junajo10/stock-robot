@@ -14,9 +14,6 @@ import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
 
 
-
-
-
 /**
  * @author Daniel
  *
@@ -54,12 +51,6 @@ public class PortfolioSimulator implements IPortfolio {
 	public List<Pair<StockPrices, StockPrices>> getHistoryStocks() {
 		return jpaHelper.getOldStocks(portfolioTable);
 	}
-
-	@Override
-	public IAlgorithm getAlgorithm() {
-		return algorithm;
-	}
-
 
 	@Override
 	public long getInvestedAmount() {
@@ -118,5 +109,12 @@ public class PortfolioSimulator implements IPortfolio {
 	@Override
 	public PortfolioEntity getPortfolioTable() {
 		return portfolioTable;
+	}
+	@Override
+	public boolean updateAlgorithm() {
+		if (algorithm == null)
+			return false;
+		algorithm.update();
+		return true;
 	}
 }

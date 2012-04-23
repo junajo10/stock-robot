@@ -8,11 +8,13 @@ import model.robot.AlphaReceiver;
 import model.trader.ITrader;
 
 import controller.gui.MainMenuController;
+import controller.gui.SimulationController;
 
 import view.AlgorithmSettingsView;
 import view.MainMenuView;
 import view.PortfolioController;
 import view.PortfolioGui;
+import view.SimulationView;
 import view.StockInfoGUI;
 import view.StockTableView;
 import view.algorithmsettings.SettingsPanel;
@@ -24,9 +26,14 @@ public class ViewFactory {
 		MainMenuView view = new MainMenuView();
 		MainMenuController controller = new MainMenuController();
 		//controller.bindStockInfoGUI(getStockInfoGUI());
+
+		
+		//controller.bindStockInfoGUI(getStockInfoGUI());
+		controller.bindSimulationView(getSimulationView());
 		
 		view.bindOpenAlgorithmSettings(controller.bindAlgorithmSettingsGUIButton());
 		view.bindStockInfoWindow(controller.bindStockInfoGUIButton());
+		view.bindOpenSimulation(controller.bindSimulationButton());
 		
 		return view;
 	}
@@ -82,5 +89,12 @@ public class ViewFactory {
 		//view.registerController( controller );
 		
 		return view;
+	}
+	public static SimulationView getSimulationView() {
+		SimulationView sv = new SimulationView();
+		
+		SimulationController sc = new SimulationController(sv);
+		
+		return sv;
 	}
 }

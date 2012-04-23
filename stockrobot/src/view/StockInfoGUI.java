@@ -6,10 +6,6 @@ import javax.swing.JPanel;
 
 import viewfactory.ViewFactory;
 
-import controller.gui.StockTableController;
-
-import model.robot.AlphaReceiver;
-
 
 /**
  * Class to wrap the Stock Table View and possibly other related classes

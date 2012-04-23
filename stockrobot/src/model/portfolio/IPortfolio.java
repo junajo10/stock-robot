@@ -38,12 +38,7 @@ public interface IPortfolio {
 	 */
 	List<Pair<StockPrices, StockPrices>> getHistoryStocks();
 	
-	/**
-	 * Gets the algorithm to this portfolio
-	 * @return The algorithm
-	 */
-	IAlgorithm getAlgorithm();
-	
+	boolean updateAlgorithm();
 	/**
 	 * Sets a new algorithm to a portfolio
 	 * @param algorithmId Id of the new algorithm

@@ -48,7 +48,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 	@Override
 	public boolean update() {
-		if (portfolio.getPortfolioTable().getBalance() < 1000000) {
+		if (portfolio.getUnusedAmount() < 1000000) {
 			return false;
 		}
 
@@ -148,7 +148,13 @@ public class TestAlgorithm2 implements IAlgorithm{
 		return true;
 	}
 	@Override
-	public IAlgorithm createInstance(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
-		return new TestAlgorithm2(robot, portfolio, trader);
+	public void setRobot(IRobot_Algorithms robot) {
+		this.robot = robot;
+		this.jpaHelper = robot.getJPAHelper();
+		this.trader = robot.getTrader();
+	}
+	@Override
+	public void setPortfolio(IPortfolio p) {
+		this.portfolio = p;
 	}
 }

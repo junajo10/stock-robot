@@ -43,6 +43,8 @@ public class SimulationHandler {
 	
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
+		
+		clearTestDatabase();
 	}
 	private void initSimulation(String algorithmToSimulate, List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
 		PortfolioEntity portfolioEntity = new PortfolioEntity("Simulated Portfolio");
@@ -54,7 +56,10 @@ public class SimulationHandler {
 		
 		PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
 		
-		IAlgorithm algorithm = algorithmLoader.getAlgorithm(robotSim, portfolio);
+		IAlgorithm algorithm = algorithmLoader.loadAlgorithm(algorithmLoader.getAlgorithmNames().get(0));
+		
+		algorithm.setPortfolio(portfolio);
+		algorithm.setRobot(robotSim);
 		
 		portfolio.setAlgorithm(algorithm);
 		
@@ -153,7 +158,7 @@ public class SimulationHandler {
 		}
 	}
 	private void updateAlgorithm() {
-		portfolio.getAlgorithm().update();
+		portfolio.updateAlgorithm();
 	}
 	private void end() {
 		jpaHelper.getEntityManager().close();

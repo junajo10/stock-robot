@@ -1,20 +1,17 @@
 package model.algorithms.loader;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import utils.global.Log;
-import utils.global.Log.TAG;
+import utils.SettingParser;
+import utils.global.FileHelper;
 
+import model.algorithms.AlgorithmPlugin;
 import model.algorithms.IAlgorithm;
-import model.database.jpa.tables.PortfolioEntity;
-import model.portfolio.IPortfolio;
-import model.robot.IRobot_Algorithms;
-
-
 
 
 /**
@@ -26,71 +23,73 @@ import model.robot.IRobot_Algorithms;
 public final class PluginAlgortihmLoader {
 	
 	private static PluginAlgortihmLoader instance = null;
-	private Map<String, IAlgorithm> algorithms;
+	
+	Map<String, Class<?>> algorithmMap = new HashMap<String, Class<?>>();
+	
+	public List<String> getAlgorithmNames() {
+		List<String> algorithmNames = new ArrayList<String>();
+		algorithmNames.addAll(algorithmMap.keySet());
+		return algorithmNames;
+	}
 	
 	private PluginAlgortihmLoader() {
-		int number = reloadAlgorithms();
-		
-		Log.instance().log(TAG.VERY_VERBOSE, "Found " + number + " algorithms.");
+		reloadAlgorithmClasses();
 	}
-	/**
-	 * Reloads algorithms avalible to portfolios.
-	 * @return the number of algorithms found.
-	 */
-	public int reloadAlgorithms() {
-		int numberOfAlgorithms = 0;
-		algorithms = new HashMap<String, IAlgorithm>();
-		// Load all algorithms
-		for (IAlgorithm a : PluginLoader.loadAlgorithms()) {
-			if (algorithms.containsKey(a.getName())) 
-				Log.instance().log(TAG.ERROR, "Duplicate names" + a.getName());
-			else {
-				algorithms.put(a.getName(), a);
-				numberOfAlgorithms++;
+	public void reloadAlgorithmClasses() {
+		String pluginPath = SettingParser.getAlgorithmPath();
+		
+		List<File> files = FileHelper.getFiles(new File(pluginPath));
+		PluginClassLoader pluginLoader = new PluginClassLoader();
+		
+		algorithmMap.clear();
+
+		for (File f : files) {
+			if (f.getName().contains(".class")) {
+				String ny = f.getName().replaceAll(".class", "");
+
+				try {
+					Class<?> c = pluginLoader.loadClass(ny);
+					
+					if(c.getAnnotation(AlgorithmPlugin.class) != null) {
+						algorithmMap.put(ny, c);
+					}
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
-		
-		for (IAlgorithm a : algorithms.values()) {
-			Log.instance().log(TAG.VERY_VERBOSE, "Found and loaded algorithm: " + a.getName());
-		}
-		return numberOfAlgorithms;
 	}
-	public IAlgorithm getAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio) {
-		PortfolioEntity portfolioEntity = portfolio.getPortfolioTable();
-		
-		if (algorithms.containsKey(portfolioEntity.getAlgortihmSettings().getAlgorithmName())) {
-			// Create a new algorithm from a template
-			IAlgorithm algorithm = algorithms.get(portfolioEntity.getAlgortihmSettings().getAlgorithmName()).createInstance(robot, portfolio, robot.getTrader());
-			
-			// Initiate the algorithm to the settings in this portfolio
-			portfolioEntity.getAlgortihmSettings().initiate(algorithm);
-			
-			return algorithm;
+	public IAlgorithm loadAlgorithm(String algorithmName) {
+		if (algorithmMap.containsKey(algorithmName)) {
+			Object plugin;
+			try {
+				plugin = algorithmMap.get(algorithmName).newInstance();
+				if(plugin instanceof IAlgorithm){
+					return (IAlgorithm)plugin;
+				}
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
 		}
 		else {
-			Log.instance().log(TAG.ERROR, "Couldent find algorithm to portfolio: " + portfolio);
-			return null;
+			for (String a : algorithmMap.keySet())
+				System.out.println(a);
 		}
-	}
-	/**
-	 * This method will return all the available algorithms names.
-	 * @return a list of algorithm names
-	 */
-	public List<String> algortihmsAvailable() {
-		List<String> a = new ArrayList<String>();
-		a.addAll(algorithms.keySet());
-		return a;
+		
+		System.out.println(algorithmName + " apapapa" + algorithmMap.size());
+		return null;
 	}
 	/**
 	 * Gets an instance of PluginAlgorithmLoader
 	 * @return an instance of PluginAlgorithmLoader
 	 */
 	public static PluginAlgortihmLoader getInstance() {
-		if(instance == null) {
-			synchronized (PluginAlgortihmLoader.class) {
-				if (instance == null)
-					instance = new PluginAlgortihmLoader();
-			}
+		synchronized (PluginAlgortihmLoader.class) {
+			if (instance == null)
+				instance = new PluginAlgortihmLoader();
 		}
 		return instance;
 	}

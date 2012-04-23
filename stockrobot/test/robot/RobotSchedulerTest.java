@@ -277,11 +277,6 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 		public List<Pair<StockPrices, StockPrices>> getHistoryStocks() {
 			return null;
 		}
-
-		@Override
-		public IAlgorithm getAlgorithm() {
-			return algorithm;
-		}
 		
 		public boolean setAlgorithm(IAlgorithm algorithm) {
 			this.algorithm = algorithm;
@@ -340,6 +335,12 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 		public PortfolioEntity getPortfolioTable() {
 			return null;
 		}
+
+		@Override
+		public boolean updateAlgorithm() {
+			this.algorithm.update();
+			return false;
+		}
 	}
 	
 
@@ -374,6 +375,16 @@ public class RobotSchedulerTest implements IRobot_Algorithms{
 		}
 		@Override
 		public void removeObserver(PropertyChangeListener listener) {
+		}
+		@Override
+		public List<String> getAlgorithmNames() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public boolean setAlgorithm(IPortfolio p, String algorithmName) {
+			// TODO Auto-generated method stub
+			return false;
 		}
 	}
 

@@ -30,5 +30,9 @@ public interface IPortfolioHandler extends IObservable {
 	 * @return Returns true if it was successfully removed
 	 */
 	boolean removePortfolio(IPortfolio portfolio);
+
+	List<String> getAlgorithmNames();
+	
+	public boolean setAlgorithm(IPortfolio p, String algorithmName);
 	
 }

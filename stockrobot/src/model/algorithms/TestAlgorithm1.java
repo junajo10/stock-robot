@@ -26,7 +26,7 @@ import model.trader.ITrader;
  * @author daniel
  */
 @AlgorithmPlugin(name="TestAlgorithm1")
-public class TestAlgorithm implements IAlgorithm{
+public class TestAlgorithm1 implements IAlgorithm{
 
 	IRobot_Algorithms robot;
 	IPortfolio portfolio;
@@ -35,10 +35,10 @@ public class TestAlgorithm implements IAlgorithm{
 	private long buySetting = 3;
 	private long sellSetting = 3;
 
-	public TestAlgorithm() {
+	public TestAlgorithm1() {
 		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm constructor");
 	}
-	public TestAlgorithm(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
+	public TestAlgorithm1(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
 		this.robot = robot;
 		this.portfolio = portfolio;
 		this.trader = trader;
@@ -157,7 +157,13 @@ public class TestAlgorithm implements IAlgorithm{
 		return true;
 	}
 	@Override
-	public IAlgorithm createInstance(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
-		return new TestAlgorithm(robot, portfolio, trader);
+	public void setRobot(IRobot_Algorithms robot) {
+		this.robot = robot;
+		this.jpaHelper = robot.getJPAHelper();
+		this.trader = robot.getTrader();
+	}
+	@Override
+	public void setPortfolio(IPortfolio p) {
+		this.portfolio = p;
 	}
 }

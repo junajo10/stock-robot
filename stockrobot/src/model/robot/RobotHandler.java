@@ -146,7 +146,7 @@ public class RobotHandler {
 			
 			running = true;
 			startTime = System.currentTimeMillis();
-			portfolio.getAlgorithm().update();
+			portfolio.updateAlgorithm();
 			time = System.currentTimeMillis() - startTime;
 			running = false;
 		}
