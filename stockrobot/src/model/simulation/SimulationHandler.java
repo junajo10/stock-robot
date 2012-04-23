@@ -1,10 +1,11 @@
 package model.simulation;
 
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,12 +35,15 @@ import model.robot.IRobot_Algorithms;
  * @author Daniel
  */
 public class SimulationHandler {
+	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	private IJPAHelper jpaSimHelper;
 	private IJPAHelper jpaHelper = JPAHelper.getInstance();
 	
 	private PortfolioSimulator portfolio = null;
 
 	private IRobot_Algorithms robotSim = new RobotSimulator();
+	
+	private int progress = 0;
 	
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
@@ -80,7 +84,7 @@ public class SimulationHandler {
 		
 		initSimulation(algorithmToSimulate, longSettings, doubleSettings);
 		
-		long startingBalance = Long.valueOf("100000000000");
+		long startingBalance = Long.valueOf("10000000000000");
 		
 		PortfolioEntity port =  portfolio.getPortfolioTable();
 		port.invest(startingBalance, true);
@@ -103,11 +107,10 @@ public class SimulationHandler {
 		
 		List<StockPrices> stockPrices = new ArrayList<StockPrices>();
 		for (StockPrices p : jpaHelper.getStockPricesReverseOrdered(howManyStocksBack)) {
-			//System.out.println(p);
-			curr ++;
-			
-			if (curr%50 == 0)
-				Log.instance().log(TAG.NORMAL, "Simulation " + ((double)curr/(double)max)*100 + "% done");
+			curr++;
+			if (curr%5 == 0) {
+				setProgress((int) (((double)curr/(double)max)*100));
+			}
 			
 			if (p.getTime().equals(lastSeenTime) || lastSeenTime == null) {
 				StockPrices sp = new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
@@ -128,8 +131,10 @@ public class SimulationHandler {
 				
 				updateAlgorithm();
 			}
+			if (curr>=max)
+				break;
 		}
-		
+		setProgress(100);
 		Log.instance().log(TAG.VERBOSE, "Simulation before selling of stocks: Current balance: " + portfolio.getPortfolioTable().getBalance());
 		
 		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
@@ -142,6 +147,11 @@ public class SimulationHandler {
 		Log.instance().log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
 
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
+	}
+	private void setProgress(int i) {
+		firePropertyChange("Progress", progress, i);
+		progress = i;
+		System.out.println(i);
 	}
 	public void clearTestDatabase() {
 		while (jpaSimHelper.getAllPortfolios().size() > 0) {
@@ -164,22 +174,16 @@ public class SimulationHandler {
 		jpaHelper.getEntityManager().close();
 		jpaSimHelper.getEntityManager().close();
 	}
-	public static void main(String args[]) {
-		Log.instance().setFilter(TAG.VERY_VERBOSE, true);
-		SimulationHandler sim = new SimulationHandler();
-		sim.clearTestDatabase();
-		
-		List<Pair<String, Long>> longSettings = new LinkedList<Pair<String,Long>>();
-		longSettings.add(new Pair<String, Long>("buy", (long)4));
-		longSettings.add(new Pair<String, Long>("sell", (long)4));
-		
-		
-		double diff = sim.simulateAlgorithm("TestAlgorithm1", 300, longSettings, null);
-		sim.clearTestDatabase();
-		diff -= 100;
-		if (diff > 0)
-			Log.instance().log(TAG.NORMAL, "Simulation done, increase balance: " + diff + "%");
-		else
-			Log.instance().log(TAG.NORMAL, "Simulation done, decrease balance: " + diff + "%");
-	}
+	
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+    }
 }

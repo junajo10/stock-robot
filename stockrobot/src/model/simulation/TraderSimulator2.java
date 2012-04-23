@@ -38,8 +38,9 @@ public class TraderSimulator2 implements ITrader{
 
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntity portfolio) {
-		if (s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio) > portfolio.getBalance())
+		if (amount > 0 && s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio) > portfolio.getBalance()) {
 			return false;
+		}
 
 		portfolio.bougthFor(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio), jpaHelper);
 
@@ -68,7 +69,7 @@ public class TraderSimulator2 implements ITrader{
 				}
 			}
 		}
-		Log.instance().log(TAG.ERROR, "SellStock in traderSimulator2: Couldent find stock: " + s);
+		Log.instance().log(TAG.VERY_VERBOSE, "SellStock in traderSimulator2: Couldent find stock: " + s);
 		return false;
 	}
 

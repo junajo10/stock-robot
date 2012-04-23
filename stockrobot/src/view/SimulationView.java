@@ -73,7 +73,7 @@ public class SimulationView extends JFrame {
 					jButton1.setText("jButton1");
 					jProgressBar1 = new JProgressBar();
 					jPanel1.add(jProgressBar1, BorderLayout.CENTER);
-					jProgressBar1.setValue(50);
+					jProgressBar1.setValue(0);
 
 			}
 			pack();
@@ -110,7 +110,11 @@ public class SimulationView extends JFrame {
 	}
 
 	public String getSelectedAlgorithm() {
-		System.out.println(jComboBox1.getSelectedItem());
 		return jComboBox1.getSelectedItem().toString();
+	}
+
+	public void setProgress(int newValue) {
+		this.jProgressBar1.setValue(newValue);
+		
 	}
 }
