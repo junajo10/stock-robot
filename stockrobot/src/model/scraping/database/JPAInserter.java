@@ -1,14 +1,9 @@
 package model.scraping.database;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import model.database.jpa.IJPAParser;
 import model.database.jpa.JPAHelper;
@@ -20,12 +15,10 @@ import model.scraping.model.ParserStock;
 
 public class JPAInserter implements IInserter {
 	
-	EntityManagerFactory factory;
-	EntityManager em;
-	IJPAParser helper;
+	private IJPAParser helper;
 	
 	
-	Map<String, StockPrices> latestMap = null;
+	private Map<String, StockPrices> latestMap = null;
 	
 	/*
 	public static void main( String[] args ) {
@@ -109,7 +102,7 @@ public class JPAInserter implements IInserter {
 		
 		return newStockPrices;
 	}
-	
+	/*
 	@Override
 	public boolean updateAllMarkets(List<ParserStock> s) {
 		
@@ -139,5 +132,6 @@ public class JPAInserter implements IInserter {
 		}
 		
 		return true;
-	}	
+	}
+	*/
 }

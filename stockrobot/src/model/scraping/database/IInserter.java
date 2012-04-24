@@ -27,5 +27,5 @@ public interface IInserter {
 	 * @param s
 	 * @return
 	 */
-	public boolean updateAllMarkets( List<ParserStock> s );
+	//public boolean updateAllMarkets( List<ParserStock> s );
 }
