@@ -8,13 +8,15 @@ import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.Portfolio;
-import viewfactory.ViewFactory;
+import viewfactory.wizard.portfolio.PortfolioWizardFactory;
 
 public class TesterPortfolioGui {
 
 	public static void main(String[] args) {
+			
 		TestPortfolioHandler pHandler = new TestPortfolioHandler(null);
-		ViewFactory.getPortfolioWizard(pHandler);
+		
+		PortfolioWizardFactory.buildPortfolioWizard(pHandler);
 	}
 }
 
@@ -61,3 +63,4 @@ class TestPortfolioHandler implements IPortfolioHandler{
 		return false;
 	}
 }
+

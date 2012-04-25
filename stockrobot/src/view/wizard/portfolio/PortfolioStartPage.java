@@ -1,9 +1,9 @@
 package view.wizard.portfolio;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -27,7 +27,7 @@ import view.wizard.WizardPage;
 
 public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
 
-	private JRadioButton rbtn_ClonePortfolio;
+	private JRadioButton rbtn_ClonePortfolio; 
 	private JRadioButton rbtn_NewPortfolio;
 	private JPanel pnl_PortfolioToClone;
 	private JComboBox cmb_ClonePortfolioList;
@@ -108,9 +108,7 @@ public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
 		cmb_ClonePortfolioList.setEnabled(false);
 		cmb_ClonePortfolioList.setModel(cmb_hld_ClonePortfolioList);
 		pnl_PortfolioFrom.add(pnl_PortfolioToClone);
-		
-		pnl_PortfolioFrom.add(new JLabel("herp"));
-		
+				
 		this.add(pnl_PortfolioFrom);
 		//========================================
 	}
@@ -147,5 +145,10 @@ public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
 	public void setEnabledPanelClone(boolean enabled){
 		
 		cmb_ClonePortfolioList.setEnabled(enabled);
+		
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 	}
 }
