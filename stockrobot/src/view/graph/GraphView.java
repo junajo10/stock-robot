@@ -57,7 +57,7 @@ public class GraphView extends JFrame {
         nameField.setSize(100, 20);
         panel.add( nameField );
         
-        addSomething = new JButton( "Add something" );
+        addSomething = new JButton( "Show stock on chart" );
         panel.add( addSomething );
     }
     

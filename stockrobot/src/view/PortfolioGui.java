@@ -77,7 +77,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		guiFactory.modifyDefaultWinow(this);
 		setResizable(true);
 		
-		setTitle("Portfolio");
+		setTitle("ASTRo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 260, 499);
 		contentPane = guiFactory.getMainContainer();
