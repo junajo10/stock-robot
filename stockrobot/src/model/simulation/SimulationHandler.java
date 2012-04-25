@@ -44,7 +44,8 @@ public class SimulationHandler {
 	private IRobot_Algorithms robotSim = new RobotSimulator();
 	
 	private int progress = 0;
-	
+
+	private Map<String, Long> latestPieData = new HashMap<String, Long>();
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
 		
@@ -81,6 +82,8 @@ public class SimulationHandler {
 	public double simulateAlgorithm(String algorithmToSimulate, int howManyStocksBack,
 			List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
 		
+		
+		latestPieData.clear();
 		
 		initSimulation(algorithmToSimulate, longSettings, doubleSettings);
 		
@@ -139,6 +142,8 @@ public class SimulationHandler {
 		
 		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
 			if (ph.getSoldDate() == null) {
+				fillPie(ph.getStockPrice().getStockName().getName(), ph.getAmount(), ph.getStockPrice().getBuy());
+				
 				Log.instance().log(TAG.VERY_VERBOSE, "Simulation: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
 				robotSim.getTrader().sellStock(ph.getStockPrice(), ph.getAmount(), portfolio.getPortfolioTable());
 			}
@@ -147,6 +152,16 @@ public class SimulationHandler {
 		Log.instance().log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
 
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
+	}
+	private void fillPie(String name, long amount, long buy) {
+		if (latestPieData.containsKey(name)) {
+			latestPieData.put(name, amount*buy + latestPieData.get(name));
+		}
+		else
+			latestPieData.put(name, amount*buy);
+	}
+	public Map<String, Long> getLatestPieData() {
+		return latestPieData;
 	}
 	private void setProgress(int i) {
 		firePropertyChange("Progress", progress, i);
