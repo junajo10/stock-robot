@@ -27,7 +27,7 @@ public class ViewFactory {
 		
 		MainMenuView view = new MainMenuView();
 		MainMenuController controller = new MainMenuController();
-//		controller.bindStockInfoGUI(getStockInfoGUI());
+		controller.bindStockInfoGUI(getStockInfoGUI());
 
 		controller.bindSimulationView(getSimulationView());
 		controller.bindGraphView(getGraphView());
