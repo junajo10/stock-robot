@@ -21,8 +21,9 @@ import org.jfree.data.xy.XYDataset;
 import viewfactory.ViewFactory;
 
 /**
- * A simple demonstration application showing how to create a line chart using data from an
- * {@link XYDataset}.
+ * A simple view in which users can add as many companies stock price's as they like to.
+ * 
+ * @author kristian
  *
  */
 public class GraphView extends JFrame {
@@ -41,7 +42,7 @@ public class GraphView extends JFrame {
     public GraphView( final String title ) {
 
         super( title );
-
+        
         JPanel panel = new JPanel();
         panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
         add( panel );
@@ -60,7 +61,12 @@ public class GraphView extends JFrame {
         panel.add( addSomething );
     }
     
+    /**
+     * Called from outside to set this visible
+     */
     public void init() {
+    	
+    	System.out.println( "INIT INIT INIT INIT!!!!" );
     	
     	pack();
     	setVisible( true );
@@ -78,6 +84,11 @@ public class GraphView extends JFrame {
         return dataset;
     }
     
+    /**
+     * Will be called from outside this view to fill the model with 
+     * 
+     * @param series
+     */
     public void insertSeries( TimeSeries series ) {
     	
     	((TimeSeriesCollection) dataset).addSeries(series);
@@ -92,15 +103,15 @@ public class GraphView extends JFrame {
      */
     private JFreeChart createChart(final XYDataset dataset) {
         
-        // create the chart...
+        //Create the chart...
         final JFreeChart chart = ChartFactory.createTimeSeriesChart(
         		"Stock price over time.",
         		"time",
         		"price",
         		dataset,
-        		true, // create legend?
-        		false, // generate tooltips?
-        		false // generate URLs?
+        		true, //create legend?
+        		false, //generate tooltips?
+        		false //generate URLs?
         );
 
         //Pimp the chart!
@@ -117,12 +128,21 @@ public class GraphView extends JFrame {
         return chart;
     }
    
-/// CONTROLLER COMMUNICATION WINDOW!
+    /**
+     * Controller window where it is able to register
+     * 
+     * @param listener
+     */
     public void bindAddStockButton( ActionListener listener ) {
     	
     	addSomething.addActionListener( listener );
     }
     
+    /**
+     * Getter for the current user entered company name
+     * 
+     * @return stock name
+     */
     public String getCurrentWantedStock() {
     	
     	return nameField.getText();

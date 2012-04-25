@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import view.SimulationView;
 import view.StockInfoGUI;
+import view.graph.GraphView;
 import viewfactory.ViewFactory;
 
 /**
@@ -17,7 +18,8 @@ public class MainMenuController implements IController {
 
 	StockInfoGUI stockInfoGUI;
 	SimulationView simulationView;
-
+	GraphView graphView;
+	
 	public MainMenuController() {
 		
 		
@@ -30,6 +32,11 @@ public class MainMenuController implements IController {
 
 	public void bindSimulationView(SimulationView simulationView) {
 		this.simulationView = simulationView;
+	}
+	
+	public void bindGraphView(GraphView graphView) {
+		
+		this.graphView = graphView;
 	}
 	
 	public ActionListener bindStockInfoGUIButton() {
@@ -57,15 +64,31 @@ public class MainMenuController implements IController {
 			}
 		};
 	}
+	
 	public ActionListener bindSimulationButton() {
 		
 		return new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("aoaoaoa");
+				
 				//The purpose of this line is just to open a new JFrame
 				simulationView.init();
+			}
+		};
+	}
+	
+	public ActionListener bindOpenGraphButton() {
+		
+		return new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				System.out.println( "bind open graph" );
+				
+				//The purpose of this line is just to open a new JFrame
+				graphView.init();
 			}
 		};
 	}

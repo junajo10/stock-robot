@@ -27,13 +27,15 @@ public class ViewFactory {
 		
 		MainMenuView view = new MainMenuView();
 		MainMenuController controller = new MainMenuController();
-		controller.bindStockInfoGUI(getStockInfoGUI());
+//		controller.bindStockInfoGUI(getStockInfoGUI());
 
 		controller.bindSimulationView(getSimulationView());
+		controller.bindGraphView(getGraphView());
 		
 		view.bindOpenAlgorithmSettings(controller.bindAlgorithmSettingsGUIButton());
 		view.bindStockInfoWindow(controller.bindStockInfoGUIButton());
 		view.bindOpenSimulation(controller.bindSimulationButton());
+		view.bindOpenGraphView(controller.bindOpenGraphButton());
 		
 		return view;
 	}
@@ -124,7 +126,7 @@ public class ViewFactory {
 		gC.bindGraphView( gV );
 		
 		gV.bindAddStockButton( gC.bindAddStock() );
-		gV.init();
+		//gV.init();
 		
 		return gV;
 	}
