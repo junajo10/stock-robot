@@ -51,7 +51,7 @@ public class ViewFactory {
 		view.addBalanceHistoryListener(controller.getBalanceHistoryListener());
 		view.addChangeAlgorithmListener(controller.getChangeAlgorithmListener());
 		view.addChangePortfolioListener(controller.getChangePortfolioListener());
-		view.addStockListener(controller.getShowStockListener());
+		//view.addStockListener(controller.getShowStockListener());
 		
 		return view;
 	}

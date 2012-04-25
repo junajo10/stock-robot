@@ -2,7 +2,6 @@ package view;
 
 import java.awt.Dimension;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -175,29 +174,6 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		btn_AlgorithmChange.setEnabled(false);
 		pnl_AlgorithmChange.add(btn_AlgorithmChange);
 		// ===============================
-		
-		// ======Stock Container======
-		JPanel pnl_StockContainer = guiFactory.getDefaultContainer();
-		pnl_BoxContainer.add(pnl_StockContainer);
-		pnl_StockContainer.setLayout(new BoxLayout(pnl_StockContainer, BoxLayout.Y_AXIS));
-		
-		Component horizontalStrut_2 = Box.createHorizontalStrut(200);
-		pnl_StockContainer.add(horizontalStrut_2);
-		
-		
-		JPanel pnl_StockName = guiFactory.getInvisibleContainer();
-		pnl_StockContainer.add(pnl_StockName);
-		
-		JLabel lbl_stocks = guiFactory.getSubtitleLabel("Stock");
-		pnl_StockName.add(lbl_stocks);
-		
-		JPanel pnl_ShowStock = guiFactory.getInvisibleContainer();
-		pnl_StockContainer.add(pnl_ShowStock);
-		
-		btn_ShowStock = guiFactory.getDefaultButton("Stock");
-		btn_ShowStock.setEnabled(true);
-		pnl_ShowStock.add(btn_ShowStock);
-		// ===========================
 		
 		// ======Main menu ==============
 		JPanel pnl_MainMenu = ViewFactory.getMainMenuView();
