@@ -23,7 +23,9 @@ public class MainMenuController implements IController {
 		
 	}
 	
-	public void bindStockInfoGUI() {
+	public void bindStockInfoGUI(StockInfoGUI stockInfoGUI) {
+		
+		this.stockInfoGUI = stockInfoGUI;
 	}
 
 	public void bindSimulationView(SimulationView simulationView) {

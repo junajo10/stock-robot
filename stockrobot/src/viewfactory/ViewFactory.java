@@ -7,6 +7,7 @@ import model.portfolio.IPortfolioHandler;
 import model.robot.AlphaReceiver;
 import model.trader.ITrader;
 
+import controller.gui.GraphController;
 import controller.gui.MainMenuController;
 import controller.gui.SimulationController;
 
@@ -18,6 +19,7 @@ import view.SimulationView;
 import view.StockInfoGUI;
 import view.StockTableView;
 import view.algorithmsettings.SettingsPanel;
+import view.graph.GraphView;
 
 public class ViewFactory {
 
@@ -25,10 +27,8 @@ public class ViewFactory {
 		
 		MainMenuView view = new MainMenuView();
 		MainMenuController controller = new MainMenuController();
-		//controller.bindStockInfoGUI(getStockInfoGUI());
+		controller.bindStockInfoGUI(getStockInfoGUI());
 
-		
-		//controller.bindStockInfoGUI(getStockInfoGUI());
 		controller.bindSimulationView(getSimulationView());
 		
 		view.bindOpenAlgorithmSettings(controller.bindAlgorithmSettingsGUIButton());
@@ -110,5 +110,22 @@ public class ViewFactory {
 		SimulationController sc = new SimulationController(sv);
 		
 		return sv;
+	}
+	
+	/**
+	 * Create a new graphView and hook it up with a corresponding controller
+	 * 
+	 * @return
+	 */
+	public static GraphView getGraphView() {
+		
+		GraphView gV = new GraphView( "Graph view" );
+		GraphController gC = new GraphController();
+		gC.bindGraphView( gV );
+		
+		gV.bindAddStockButton( gC.bindAddStock() );
+		gV.init();
+		
+		return gV;
 	}
 }
