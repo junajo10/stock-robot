@@ -48,7 +48,7 @@ public class Astro implements IRobot_Algorithms{
 	private List<StockNames> simulatedStocks = null;
 
 	private static boolean simulate = false;
-	private static int timeBetweenUpdates = 1000;
+	private static int timeBetweenUpdates = 1500;
 	/**
 	 * Starts the system up
 	 */

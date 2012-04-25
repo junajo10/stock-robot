@@ -151,7 +151,6 @@ public class SimulationHandler {
 	private void setProgress(int i) {
 		firePropertyChange("Progress", progress, i);
 		progress = i;
-		System.out.println(i);
 	}
 	public void clearTestDatabase() {
 		while (jpaSimHelper.getAllPortfolios().size() > 0) {
