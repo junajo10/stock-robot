@@ -50,7 +50,7 @@ public class TestAlgorithm1 implements IAlgorithm{
 	@Override
 	public boolean update() {
 
-		Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: UPDATE!" );
+		//Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: UPDATE!" );
 
 		if (portfolio.getPortfolioTable().getBalance() < 1000000) {
 			return false;
@@ -90,15 +90,16 @@ public class TestAlgorithm1 implements IAlgorithm{
 
 				//Buy!
 				if (buy) {
-					Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: BUY!" );
 					//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
 					long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 					if( firstStockBuyPrice != 0 ) {
 
 						long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
 
-						if (amount > 0)
+						if (amount > 0) {
+							Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo1: BUY!" );
 							buyStock( stockInfo.getRight().get(0), amount );
+						}
 					}
 				}
 			}

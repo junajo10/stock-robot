@@ -3,6 +3,7 @@ package model.simulation;
 
 import java.beans.PropertyChangeListener;
 
+import utils.global.FinancialLongConverter;
 import utils.global.Log;
 import utils.global.Log.TAG;
 
@@ -38,6 +39,8 @@ public class TraderSimulator2 implements ITrader{
 
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntity portfolio) {
+		if (amount <= 0)
+			return false;
 		if (amount > 0 && s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio) > portfolio.getBalance()) {
 			return false;
 		}
@@ -46,7 +49,7 @@ public class TraderSimulator2 implements ITrader{
 
 		portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
 		jpaHelper.updateObject(portfolio);
-
+		Log.instance().log(TAG.VERBOSE, "Simulator: Buying " + amount + " of " + s.getStockName().getName() + " for: " + FinancialLongConverter.toDouble(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio)));
 		return true;
 	}
 
@@ -83,7 +86,7 @@ public class TraderSimulator2 implements ITrader{
 			Log.instance().log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
 			return false;
 		}
-		Log.instance().log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + ph.getStockPrice().getBuy()*ph.getAmount());
+		Log.instance().log(TAG.VERBOSE, "Simulator: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
 		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
 		ph.setSoldDate(latest.getTime());

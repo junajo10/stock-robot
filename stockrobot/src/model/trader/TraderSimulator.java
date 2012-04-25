@@ -72,7 +72,7 @@ public final class TraderSimulator implements ITrader{
 			Log.instance().log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
 			return false;
 		}
-		Log.instance().log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + ph.getStockPrice().getBuy()*ph.getAmount());
+		Log.instance().log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
 		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
 		ph.setSoldDate(latest.getTime());
