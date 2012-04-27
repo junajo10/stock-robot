@@ -1,8 +1,7 @@
 package model.database.jpa;
 
-import java.util.Map;
-
-import javax.persistence.Persistence;
+import org.apache.openjpa.persistence.OpenJPAEntityManagerFactory;
+import org.apache.openjpa.persistence.OpenJPAPersistence;
 
 /**
  * @author Daniel
@@ -11,8 +10,8 @@ import javax.persistence.Persistence;
  */
 public class JPAHelperSimulator extends JPAHelperBase{
 	public JPAHelperSimulator() {
-		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
-		factory = Persistence.createEntityManagerFactory("testdb", map);
+		OpenJPAEntityManagerFactory factory = OpenJPAPersistence.createEntityManagerFactory("testdb", "persistence.xml");
+
 		this.em = factory.createEntityManager();
 	}
 }
