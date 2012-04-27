@@ -1,8 +1,7 @@
 package model.database.jpa;
 
-import java.util.Map;
-
-import javax.persistence.Persistence;
+import org.apache.openjpa.persistence.OpenJPAEntityManagerFactory;
+import org.apache.openjpa.persistence.OpenJPAPersistence;
 
 /**
  * @author Daniel
@@ -30,8 +29,7 @@ public final class JPAHelper extends JPAHelperBase {
 	 * Inits the jpa system.
 	 */
 	private void initJPASystem() {
-		Map<Object,Object> map = new java.util.HashMap<Object,Object>();
-		factory = Persistence.createEntityManagerFactory("astroportfolio", map);
+		OpenJPAEntityManagerFactory factory = OpenJPAPersistence.createEntityManagerFactory("astroportfolio", "persistence.xml");
 
 		em = factory.createEntityManager();
 	}
