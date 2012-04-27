@@ -16,5 +16,4 @@ public class PortfolioWizardModel extends WizardPageModel{
 		
 		return newModel;
 	}
-
 }
