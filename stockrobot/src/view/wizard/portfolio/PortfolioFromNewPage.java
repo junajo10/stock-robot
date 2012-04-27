@@ -1,6 +1,7 @@
 package view.wizard.portfolio;
 
 import java.awt.Component;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -31,4 +32,6 @@ public class PortfolioFromNewPage extends WizardPage<PortfolioWizardModel> {
 		this.add(lbl_PortfolioName);
 		//========================================
 	}
+
+	
 }

@@ -1,98 +1,68 @@
-package viewfactory.wizard.portfolio;
+package viewfactory.wizard.portfolio;import view.wizard.portfolio.PortfolioPages;
 
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import model.database.jpa.tables.PortfolioEntity;
-import model.portfolio.IPortfolio;
+import controller.wizard.WizardContoller;
+import controller.wizard.portfolio.WizardStartPageController;
+
 import model.portfolio.IPortfolioHandler;
-import model.portfolio.Portfolio;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 import view.wizard.WizardPage;
 import view.wizard.WizardView;
+import view.wizard.portfolio.PortfolioFromNewPage;
 import view.wizard.portfolio.PortfolioStartPage;
 
 public class PortfolioWizardFactory {
 
-	public static WizardView buildPortfolioWizard(){
+	public static WizardView buildPortfolioWizard(final IPortfolioHandler portfolioHandler){
 		
-		WizardModel wizardModel = new WizardModel();
+		final WizardModel wizardModel = new WizardModel();
     	wizardModel.setTitle("Portfolio Wizard");
-
     	final WizardView wizard = new WizardView(wizardModel);
-		
+    	wizard.setCancelListener(WizardContoller.getCancelListener(wizard));
+    	wizard.setEnableCancel(true);
+    	wizard.setBackListener(WizardContoller.getBackListener(wizardModel));
+    	wizard.setNextListener(WizardContoller.getNextListener(wizardModel));
+    	
+    	wizardModel.addAddObserver(wizard);
+    	
 		SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	WizardModel wizardModel = new WizardModel();
-            	wizardModel.setTitle("Portfolio Wizard");
-		
-            	WizardPage<PortfolioWizardModel> startPage = buildStartPage(wizardModel,new TestPortfolioHandler(new ArrayList<IPortfolio>()));
+			
+			public void run() {
+            	WizardPage<PortfolioWizardModel> startPage = buildStartPage(wizard,wizardModel,portfolioHandler);
             	wizard.registerPage(1,startPage);
-            	wizard.loadScreen(1);
+            	WizardPage<PortfolioWizardModel> fromNewPage = buildFromNewPage(wizardModel, portfolioHandler);
+            	wizard.registerPage(2,fromNewPage);
+            	wizardModel.setNextPage(1);
+            	wizardModel.goNextPage();
+            	//wizard.loadScreen(PortfolioPages.PAGE_START);
             }
         });
+		
 		
 		return wizard;
 	}
 	
-	private static WizardPage<PortfolioWizardModel> buildStartPage(WizardModel wizardModel, IPortfolioHandler portfolioHandler){
+	private static WizardPage<PortfolioWizardModel> buildStartPage(WizardView wizardView, WizardModel wizardModel, IPortfolioHandler portfolioHandler){
 		
 		PortfolioWizardModel pageModel = new PortfolioWizardModel(wizardModel);
 		PortfolioStartPage startPage = new PortfolioStartPage(wizardModel, pageModel, portfolioHandler);
+		WizardStartPageController controller = new WizardStartPageController(startPage, wizardView, wizardModel);
+		startPage.setCreateFromNewListener(controller.getFromNewListener());
+		startPage.setCreateFromCloneListener(controller.getFromCloneListener());
+		pageModel.addAddObserver(startPage);
+		//
+		//startPage.setCreateFromNewListener(controller.getFromNewListener());
 		
 		return startPage;
 	}
 	
-	public static void main(String[] args){
+	private static WizardPage<PortfolioWizardModel> buildFromNewPage(WizardModel wizardModel, IPortfolioHandler portfolioHandler){
+		PortfolioWizardModel pageModel = new PortfolioWizardModel(wizardModel);
+		PortfolioFromNewPage fromNewPage = new PortfolioFromNewPage(wizardModel, pageModel);
 		
-		buildPortfolioWizard();
-	}
-}
-
-class TestPortfolioHandler implements IPortfolioHandler{
-
-	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
-	
-	public TestPortfolioHandler(List<IPortfolio> portfolios) {
-				
-		if(portfolios != null)
-			listOfPortfolios.addAll(portfolios);
-	}
-	@Override
-	public IPortfolio createNewPortfolio(String name) {
-		PortfolioEntity pt = new PortfolioEntity(name);
-		return new Portfolio(pt);
-	}
-
-	@Override
-	public List<IPortfolio> getPortfolios() {
-		return listOfPortfolios;
-	}
-
-	@Override
-	public boolean removePortfolio(IPortfolio portfolio) {
-	
-		return false;
-	}
-
-	@Override
-	public void addAddObserver(PropertyChangeListener listener) {
-	}
-	@Override
-	public void removeObserver(PropertyChangeListener listener) {
-	}
-	@Override
-	public List<String> getAlgorithmNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public boolean setAlgorithm(IPortfolio p, String algorithmName) {
-		// TODO Auto-generated method stub
-		return false;
+		return fromNewPage;
 	}
 }

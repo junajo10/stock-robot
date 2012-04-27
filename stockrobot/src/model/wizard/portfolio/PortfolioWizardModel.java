@@ -3,7 +3,7 @@ package model.wizard.portfolio;
 import model.wizard.WizardModel;
 import model.wizard.WizardPageModel;
 
-public class PortfolioWizardModel extends WizardPageModel {
+public class PortfolioWizardModel extends WizardPageModel{
 
 	public PortfolioWizardModel(WizardModel wizardModel) {
 		super(wizardModel);

@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import model.wizard.WizardModel;
 import utils.global.Log;
@@ -132,7 +133,6 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 		);
 		
 		pnl_MainPane.setLayout(lou_MainLayout);
-		this.add(new JLabel("herp"));
 		//================================
 		
 		//setScreen(SCREEN_PORTFOLIO_INFO);
@@ -169,19 +169,24 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	 * 
 	 * @param screen the screen to display
 	 */
-	public synchronized void loadScreen(int screen){
+	public synchronized void loadScreen(final int screen){
 		
-		WizardPage<?> page = pages.get(screen);
-	
-		Log.instance().log(Log.TAG.NORMAL, "loading screen");
-		if(page != null){
-			pnl_Content.removeAll();
-			pnl_Content.add(page);
-			page.add(new JLabel("herp2"));
-			//this.validate();
-			//this.setVisible(true);
-			Log.instance().log(Log.TAG.NORMAL, "page loading");
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			public void run() {
+				WizardPage<?> page = pages.get(screen);
+				
+				Log.instance().log(Log.TAG.NORMAL, "loading screen");
+				if(page != null){
+					pnl_Content.removeAll();
+					pnl_Content.add(page);
+					pnl_Content.validate();
+					pnl_Content.repaint();					
+					
+					Log.instance().log(Log.TAG.NORMAL, "Loading page " + screen);
+				}
+            }
+        });
 	}
 	 
 	public synchronized void registerPage(int screen, WizardPage<?> page){
@@ -194,17 +199,33 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 		setListener(btn_Cancel, listener);
 	}
 	
+	public void addCancelListener(ActionListener listener){
+		addListener(btn_Cancel, listener);
+	}
+	
+	public void removeCancelListener(ActionListener listener){
+		removeListener(btn_Cancel,listener);
+	}
+	
 	public void removeCancelListeners(){
 		removeListeners(btn_Cancel);
 	}
 	
 	public void setEnableCancel(boolean enable){
-		removeListeners(btn_Cancel);
+		disableButton(btn_Cancel,enable);
 	}
 	
 	//== Finish listeners ==
 	public void setFinishListener(ActionListener listener){
 		setListener(btn_Finish, listener);
+	}
+	
+	public void addFinishListener(ActionListener listener){
+		addListener(btn_Finish, listener);
+	}
+	
+	public void removeFinishListener(ActionListener listener){
+		removeListener(btn_Finish,listener);
 	}
 
 	public void removeFinishListeners(){
@@ -212,12 +233,20 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	}
 	
 	public void setEnableFinish(boolean enable){
-		removeListeners(btn_Finish);
+		disableButton(btn_Finish,enable);
 	}
 	
 	//== Next listeners ==
 	public void setNextListener(ActionListener listener){
 		setListener(btn_Next, listener);
+	}
+	
+	public void addNextListener(ActionListener listener){
+		addListener(btn_Next, listener);
+	}
+	
+	public void removeNextListener(ActionListener listener){
+		removeListener(btn_Next,listener);
 	}
 
 	public void removeNextListeners(){
@@ -225,20 +254,28 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	}
 	
 	public void setEnableNext(boolean enable){
-		removeListeners(btn_Next);
+		disableButton(btn_Next,enable);
 	}
 	
 	//== Back listeners ==
-	private void setBackListener(ActionListener listener){
+	public void setBackListener(ActionListener listener){
 		setListener(btn_Back, listener);
 	}
+	
+	public void addBackListener(ActionListener listener){
+		addListener(btn_Back, listener);
+	}
 
-	private void removeBackListeners(){
+	public void removeBackListener(ActionListener listener){
+		removeListener(btn_Back,listener);
+	}
+	
+	public void removeBackListeners(){
 		removeListeners(btn_Back);
 	}
 	
 	public void setEnableBack(boolean enable){
-		removeListeners(btn_Back);
+		disableButton(btn_Back,enable);
 	}
 	
 	//== listeners ==
@@ -248,7 +285,7 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	}
 	
 	private void addListener(JButton view, ActionListener listener){
-		view.setEnabled(true);
+		//view.setEnabled(true);
 		view.addActionListener(listener);
 	}
 	
@@ -262,7 +299,7 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 			view.setEnabled(false);
 	}
 	
-	private void removeListeners(JButton view){
+	public void removeListeners(JButton view){
 		view.setEnabled(false);
 		for(ActionListener listener : view.getActionListeners())
 			view.removeActionListener(listener);
@@ -295,14 +332,15 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 				
 				loadScreen(page);
 			}
-			
-		}else if(evt.getPropertyName() == (WizardModel.EVT_PAGE_NEXT_CHANGE)){
-			
+		}
+		else if(evt.getPropertyName() == (WizardModel.EVT_PAGE_NEXT_CHANGE)){
 			setEnableNext(model.getNextPage() != null);
-		}else if(evt.getPropertyName() == (WizardModel.EVT_PAGE_BACK_CHANGE)){
+		}
+		else if(evt.getPropertyName() == (WizardModel.EVT_PAGE_BACK_CHANGE)){
 			
 			setEnableBack(model.getNextPage() != null);
-		}else if(evt.getPropertyName() == (WizardModel.EVT_CAN_FINISH_CHANGE)){
+		}
+		else if(evt.getPropertyName() == (WizardModel.EVT_CAN_FINISH_CHANGE)){
 				
 			setEnableFinish(model.isAllowedFinish());
 		}

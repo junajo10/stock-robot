@@ -64,10 +64,10 @@ public class WizardModel implements IObservable {
 		if(nextPage == null){
 			removeNextPage();
 		}else{
-			Integer oldNextPage = this.nextPage;
+			//Integer oldNextPage = this.nextPage;
 			this.nextPage = nextPage;
-			observers.firePropertyChange(EVT_PAGE_NEXT_CHANGE, oldNextPage, nextPage);
 		}
+		observers.firePropertyChange(EVT_PAGE_NEXT_CHANGE, null, nextPage);
 	}
 	
 	public void removeNextPage(){
@@ -81,13 +81,21 @@ public class WizardModel implements IObservable {
 		return nextPage;
 	}
 	
-	public void goNextPage(){
+	public Integer goNextPage(){
+		
+		Integer tempNext = nextPage;
+		
 		if(nextPage != null){
-			Integer prev = historyPages.peek();
+			Integer prev = null;
+			if(historyPages.size() > 0){
+				prev = historyPages.peek();
+			}
 			historyPages.add(nextPage);
 			nextPage = null;
 			observers.firePropertyChange(EVT_PAGE_CURRENT_CHANGE, prev, historyPages.get(historyPages.size()-1));
 		}
+		
+		return tempNext;
 	}
 	
 	public Integer getBackPage(){
@@ -103,14 +111,17 @@ public class WizardModel implements IObservable {
 		return prevPage;
 	}
 	
-	public void goBackPage(){
+	public Integer goBackPage(){
+		
+		Integer prev = null;
 		
 		if(historyPages.size() > 1){
 			Integer current = historyPages.pop();
-			Integer prev = historyPages.peek();
-			historyPages.remove(historyPages.size()-1);
+			prev = historyPages.peek();
 			observers.firePropertyChange(EVT_PAGE_CURRENT_CHANGE, current, prev);
 		}
+		
+		return prev;
 	}
 	
 	//TODO determine if it can finished
@@ -119,7 +130,7 @@ public class WizardModel implements IObservable {
 	}
 	
 	public Integer getActivePage(){
-		return historyPages.remove(historyPages.size()-1);
+		return historyPages.get(historyPages.size()-1);
 	}
 
 	@Override
