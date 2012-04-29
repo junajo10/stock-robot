@@ -9,6 +9,8 @@ import java.util.Map;
 
 import utils.SettingParser;
 import utils.global.FileHelper;
+import utils.global.Log;
+import utils.global.Log.TAG;
 
 import model.algorithms.AlgorithmPlugin;
 import model.algorithms.IAlgorithm;
@@ -51,6 +53,7 @@ public final class PluginAlgortihmLoader {
 					Class<?> c = pluginLoader.loadClass(ny);
 					
 					if(c.getAnnotation(AlgorithmPlugin.class) != null) {
+						Log.instance().log(TAG.VERBOSE, "Found algorithm: " + ny);
 						algorithmMap.put(ny, c);
 					}
 				} catch (ClassNotFoundException e) {
@@ -78,8 +81,6 @@ public final class PluginAlgortihmLoader {
 			for (String a : algorithmMap.keySet())
 				System.out.println(a);
 		}
-		
-		System.out.println(algorithmName + " apapapa" + algorithmMap.size());
 		return null;
 	}
 	/**

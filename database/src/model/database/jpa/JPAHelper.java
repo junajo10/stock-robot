@@ -1,5 +1,7 @@
 package model.database.jpa;
 
+import java.io.File;
+
 import org.apache.openjpa.persistence.OpenJPAEntityManagerFactory;
 import org.apache.openjpa.persistence.OpenJPAPersistence;
 
@@ -29,11 +31,27 @@ public final class JPAHelper extends JPAHelperBase {
 	 * Inits the jpa system.
 	 */
 	private void initJPASystem() {
+		fixPersistenceXML();
+		
 		OpenJPAEntityManagerFactory factory = OpenJPAPersistence.createEntityManagerFactory("astroportfolio", "persistence.xml");
 
 		em = factory.createEntityManager();
 	}
 	
+	private void fixPersistenceXML() {
+		File f = new File("src/META-INF/persistence.xml");
+		
+		System.out.println(f.getAbsolutePath());
+		
+		if (f.exists())
+			System.out.println("exists");
+		else {
+			System.out.println("dosent exist");
+			
+			
+		}
+	}
+
 	private JPAHelper() {
 		initJPASystem();
 	}
