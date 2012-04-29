@@ -83,7 +83,15 @@ class JPAHelperBase implements IJPAHelper {
 		
 		query.setMaxResults(limit);
 		
-		return query.getResultList();
+		List<StockPrices> result = query.getResultList();
+		
+		List<StockPrices> list = new ArrayList<StockPrices>();
+		
+		for (int i = result.size()-1; i >= 0; i--) {
+			list.add(result.get(i));
+		}
+		
+		return list;
 	}
 	@Override
 	public List<StocksToWatch> getAllStocksToWatch() {
