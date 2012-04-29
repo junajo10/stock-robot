@@ -2,12 +2,18 @@ package view.graph;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.StockNames;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -32,7 +38,8 @@ public class GraphView extends JFrame {
 	
 	private JButton addSomething;
 	private XYDataset dataset;
-	private JTextField nameField;
+	private JComboBox dropDown;
+	private JPanel panel;
 	
     /**
      * Creates a new demo.
@@ -43,7 +50,7 @@ public class GraphView extends JFrame {
 
         super( title );
         
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
         add( panel );
         
@@ -53,12 +60,34 @@ public class GraphView extends JFrame {
         chartPanel.setPreferredSize( new java.awt.Dimension( 800, 600 ) );
         panel.add(chartPanel);
         
-        nameField = new JTextField();
-        nameField.setSize(100, 20);
-        panel.add( nameField );
+        //Create  a drop down that will store all company names
+        constructDropDown();
         
         addSomething = new JButton( "Show stock on chart" );
         panel.add( addSomething );
+    }
+    
+    /**
+     * Construct constructDropDown  
+     */
+    private void constructDropDown() {
+    	
+    	//Request all stock names from the database.
+    	//They have been loaded not long ago and will be cached in JPA, so it's quick to ask for them here
+    	
+    	IJPAHelper jpaHelper = JPAHelper.getInstance();
+		List<StockNames> nameList = jpaHelper.getAllStockNames();
+		
+		//Store all stock names to a String array 
+		String[] names = new String[nameList.size()];
+		for( int i = 0; i < nameList.size(); i ++ ) {
+			
+			names[ i ] = nameList.get( i ).getName();
+		}
+		
+		//Instantiate drop down
+    	dropDown = new JComboBox( names );
+    	panel.add( dropDown );
     }
     
     /**
@@ -145,7 +174,7 @@ public class GraphView extends JFrame {
      */
     public String getCurrentWantedStock() {
     	
-    	return nameField.getText();
+    	return dropDown.getSelectedItem().toString();
     }
     
     /**
@@ -155,6 +184,8 @@ public class GraphView extends JFrame {
      */
     public static void main(final String[] args) {
 
-        ViewFactory.getGraphView();
+        GraphView apa = ViewFactory.getGraphView();
+        apa.setSize( 800, 600 );
+        apa.setVisible( true );
     }
 }
