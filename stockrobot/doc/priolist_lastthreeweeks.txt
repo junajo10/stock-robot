@@ -1,0 +1,48 @@
+Nedan följer en priolista för dem sista tre veckorna. 
+
+.+ SDD: Baka in på rätt ställe
+.+ Setta up wizard för databasen
+.+ Manuell trader
+.+ Grafen, fler inställningar i den
+.+ Signaler mellan server och klient
+.+ Göra massa use cases
+.+ Göra färdigt RAD och SDD
+.+ Göra JUnit tester
+.+ Rensa gammal kod
+.+ Försöka få in någon slags timeline
+.+ Snygga till start guit
+.+ bryta ut main menu
+.+ Algorithm settings ska kopplas in
+.+ PortfolioHistory ska ha en view
+.+ Planera vår presentation
+.+ Ta bort entanglements (ViewFactoryMemberInterface?)
+.+ Köra genom kvalitetstester
+.+ Kolla upp factoryn
+.+ Få ut extradata från historiken? (/Adam)
+.+ Fixa bättre kommentering överlag
+.+ Kolla coverage
+
+Viktigast (rankat i grupper, och i grupperna viktigast högst upp): 
+
+Göra färdigt RAD och SDD
+SDD: Baka in på rätt ställe
+Göra massa use cases
+Kolla coverage
+Göra JUnit tester
+Planera vår presentation samt kolla hur lång tid allt tar
+
+bryta ut main menu
+Snygga till start guit
+PortfolioHistory ska ha en view
+Algorithm settings ska kopplas in
+
+Fixa bättre kommentering överlag
+Köra genom kvalitetstester
+Kolla upp factoryn
+Ta bort entanglements (ViewFactoryMemberInterface?)
+Försöka få in någon slags timeline
+Grafen, fler inställningar i den
+Manuell trader
+Setta up wizard för databasen
+
+Få ut extradata från historiken? (/Adam)
