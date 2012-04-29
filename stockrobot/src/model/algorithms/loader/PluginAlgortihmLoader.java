@@ -12,8 +12,6 @@ import utils.global.FileHelper;
 import utils.global.Log;
 import utils.global.Log.TAG;
 
-import model.algorithms.AlgorithmPlugin;
-import model.algorithms.IAlgorithm;
 
 
 /**

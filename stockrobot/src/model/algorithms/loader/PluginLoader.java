@@ -9,8 +9,6 @@ import java.util.Map;
 import utils.SettingParser;
 import utils.global.FileHelper;
 
-import model.algorithms.AlgorithmPlugin;
-import model.algorithms.IAlgorithm;
 
 
 // KASTA

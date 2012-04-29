@@ -8,7 +8,7 @@ import utils.global.Log;
 import utils.global.Pair;
 import utils.global.Log.TAG;
 
-import model.algorithms.IAlgorithm;
+import model.algorithms.loader.IAlgorithm;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;

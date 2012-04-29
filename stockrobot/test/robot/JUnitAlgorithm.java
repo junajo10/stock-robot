@@ -6,7 +6,7 @@ import java.util.Set;
 import utils.global.Log;
 import utils.global.Pair;
 
-import model.algorithms.IAlgorithm;
+import model.algorithms.loader.IAlgorithm;
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.portfolio.IPortfolio;

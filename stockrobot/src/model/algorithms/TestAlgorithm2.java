@@ -8,6 +8,8 @@ import utils.global.Log;
 import utils.global.Pair;
 import utils.global.Log.TAG;
 
+import model.algorithms.loader.AlgorithmPlugin;
+import model.algorithms.loader.IAlgorithm;
 import model.database.jpa.IJPAAlgortihm;
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;

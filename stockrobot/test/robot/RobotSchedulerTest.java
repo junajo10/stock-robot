@@ -11,7 +11,7 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
-import model.algorithms.IAlgorithm;
+import model.algorithms.loader.IAlgorithm;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.StockNames;

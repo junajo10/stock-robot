@@ -10,7 +10,6 @@ import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.portfolio.IPortfolio;
 import model.robot.IRobot_Algorithms;
-import model.trader.ITrader;
 
 
 
@@ -48,7 +47,7 @@ public interface IAlgorithm {
 	boolean giveLongSettings(List<Pair<String, Long>> longSettings);
 	// ---------------------------------------
 	
-	IAlgorithm createInstance(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader);
-
 	void setRobot(IRobot_Algorithms robot);
+
+	void setPortfolio(IPortfolio p);
 }
