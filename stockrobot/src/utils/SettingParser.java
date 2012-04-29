@@ -50,13 +50,6 @@ public class SettingParser {
 						+  chooser.getSelectedFile());
 			}
 		}
-/*
- * <?xml version="1.0" encoding="UTF-8" ?>
-<settings>
-	<algorithmPath>/home/daniel/plugin/</algorithmPath>
-</settings>
-
- */
 
 		try {
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
