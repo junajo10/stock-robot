@@ -1,0 +1,35 @@
+Meeting Agenda
+Location: Mattias apartment
+Date: 2012-04-29
+Time: 18:30
+Facilitator: Kristian Sällberg 
+Note taker: Mattias Markehed
+Participants: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist
+
+1.	Objectives (5 min)
+		Next meeing:
+			* Work on portfolio wizard
+			* Continue with documentation
+			* Look at timeline libraries
+
+2.	Reports (15 min)
+   * No solution to the entanglement issue.	
+   * Fixed some bugs in the wizard including events not fiering properly.
+	* Fixed the graph view to include a dropdown menu of stocknames.
+	* Fixed some basic settings interfaces to simplify the setup of ASTRo however this fix is only temporary(the real setup will use the wizard).
+   
+3.	Discussion items (35 min)
+	* How we will fix the circular dependencies, however we couldent resolve this in a nice way. Discussion will continue.
+	
+4.	Outcomes and assignments (5 min)
+	* Kristian: Come up with a gui that shows how the trader works. Featuring some kind of timeline view. Also start implementing this. Depending on how large it will grow, maybe also finish it? 
+	* Daniel: Finish the robothandler.
+	* Mattias: continue with the PortfolioWizard.
+   
+   * Work on usecases.
+   * Continue the discussion on entanglement with adam.
+
+5.	Wrap up 
+	Wednesday 2:th May
+		* Look at different MVC view factories to find inspiration in how to solve our circular dependencies
+		* Discuss further use cases
