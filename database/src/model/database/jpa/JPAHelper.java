@@ -1,6 +1,8 @@
 package model.database.jpa;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import org.apache.openjpa.persistence.OpenJPAEntityManagerFactory;
 import org.apache.openjpa.persistence.OpenJPAPersistence;
@@ -14,6 +16,54 @@ import org.apache.openjpa.persistence.OpenJPAPersistence;
  */
 public final class JPAHelper extends JPAHelperBase {
 	private static JPAHelper instance = null;
+	
+	private static String TMPPERSISTENCE = "<persistence xmlns=\"http://java.sun.com/xml/ns/persistence\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\">\n" +
+
+"<persistence-unit name=\"astroportfolio\" transaction-type=\"RESOURCE_LOCAL\">\n" +
+"	<class>model.database.jpa.tables.PortfolioHistory</class>\n" +
+"	<class>model.database.jpa.tables.PortfolioInvestment</class>\n" +
+"	<class>model.database.jpa.tables.PortfolioEntity</class>\n" +
+"	<class>model.database.jpa.tables.StocksToWatch</class>\n" +
+"	<class>model.database.jpa.tables.StockNames</class>\n" +
+"	<class>model.database.jpa.tables.StockPrices</class>\n" +
+"	<class>model.database.jpa.tables.AlgorithmSettingLong</class>\n" +
+"	<class>model.database.jpa.tables.AlgorithmSettingDouble</class>\n" +
+"	<class>model.database.jpa.tables.AlgorithmSettings</class>\n" +
+"	<properties>\n" +
+"		<property name=\"openjpa.ConnectionUserName\" value=\"astrobot\"/>\n" +
+"		<property name=\"openjpa.ConnectionPassword\" value=\"sp4c3\"/>\n" +
+"		<property name=\"openjpa.ConnectionURL\" value=\"jdbc:hsqldb:testnewnew\"/> <!-- jdbc:hsqldb:testnewnew, jdbc:mysql://localhost:8889/TESTALITE, jdbc:mysql://localhost:3306/ASTRO?autoReconnect=true -->\n" +
+"		<property name=\"openjpa.ConnectionDriverName\" value=\"org.hsqldb.jdbcDriver\"/> <!--  org.hsqldb.jdbcDriver -->\n" +
+"		<property name=\"openjpa.jdbc.SynchronizeMappings\" value=\"buildSchema\"/>\n" +
+"		<property name=\"openjpa.Log\" value=\"\"/>\n" +
+"		<property name=\"openjpa.ConnectionFactoryProperties\" value=\"printParameters=true\"/>\n" +
+"		<property name=\"openjpa.jdbc.MappingDefaults\" value=\"ForeignKeyDeleteAction=restrict,   JoinForeignKeyDeleteAction=restrict\"/>\n" +
+"	</properties>\n" +
+"</persistence-unit>\n" +
+
+"<persistence-unit name=\"testdb\" transaction-type=\"RESOURCE_LOCAL\">\n" +
+"	<class>model.database.jpa.tables.PortfolioHistory</class>\n" +
+"	<class>model.database.jpa.tables.PortfolioInvestment</class>\n" +
+"	<class>model.database.jpa.tables.PortfolioEntity</class>\n" +
+"	<class>model.database.jpa.tables.StocksToWatch</class>\n" +
+"	<class>model.database.jpa.tables.StockNames</class>\n" +
+"	<class>model.database.jpa.tables.StockPrices</class>\n" +
+"	<class>model.database.jpa.tables.AlgorithmSettingLong</class>\n" +
+"	<class>model.database.jpa.tables.AlgorithmSettingDouble</class>\n" +
+"	<class>model.database.jpa.tables.AlgorithmSettings</class>\n" +
+"	<properties>\n" +
+"		<property name=\"openjpa.ConnectionUserName\" value=\"astrobot\"/>\n" +
+"		<property name=\"openjpa.ConnectionPassword\" value=\"sp4c3\"/>\n" +
+"		<property name=\"openjpa.ConnectionURL\" value=\"jdbc:hsqldb:apr292012\"/> <!-- jdbc:hsqldb:testnewnew, jdbc:mysql://localhost:8889/TESTALITE, jdbc:mysql://localhost:3306/ASTRO?autoReconnect=true, jdbc:hsqldb:testnewnew2 -->\n" +
+"		<property name=\"openjpa.ConnectionDriverName\" value=\"org.hsqldb.jdbcDriver\"/> <!--  org.hsqldb.jdbcDriver com.mysql.jdbc.Driver -->\n" +
+"		<property name=\"openjpa.jdbc.SynchronizeMappings\" value=\"buildSchema\"/>\n" +
+"		<property name=\"openjpa.Log\" value=\"\"/>\n" +
+"		<property name=\"openjpa.ConnectionFactoryProperties\" value=\"printParameters=true\"/>\n" +
+"		<property name=\"openjpa.jdbc.MappingDefaults\" value=\"ForeignKeyDeleteAction=restrict,   JoinForeignKeyDeleteAction=restrict\"/>\n" +
+"	</properties>\n" +
+"</persistence-unit>\n" +
+"</persistence>"; 
+	
 	
 	/**
 	 * Creates an instance of JPAHelper if it doesn't  already exist, and returns the instance of it.
@@ -39,7 +89,7 @@ public final class JPAHelper extends JPAHelperBase {
 	}
 	
 	private void fixPersistenceXML() {
-		File f = new File("src/META-INF/persistence.xml");
+		File f = new File("bin/META-INF/persistence.xml");
 		
 		System.out.println(f.getAbsolutePath());
 		
@@ -47,6 +97,20 @@ public final class JPAHelper extends JPAHelperBase {
 			System.out.println("exists");
 		else {
 			System.out.println("dosent exist");
+			
+			try {
+				f.createNewFile();
+				
+				FileWriter fw = new FileWriter(f);
+				
+				fw.write(TMPPERSISTENCE);
+				fw.flush();
+				fw.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 		}
