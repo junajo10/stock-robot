@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  */
 public class Connector implements IConnector {
-	private final int PORT_NR      = 45000;
+	private final int PORT_NR;
 	private final int PING_DELAY = 550;
 	
 	private Map<Socket,Socket > clients;
@@ -29,7 +29,8 @@ public class Connector implements IConnector {
 	boolean sendNewData = false;
 	ServerSocket recieve;
 	
-	public Connector() {
+	public Connector(int PORT_NR) {
+		this.PORT_NR = PORT_NR;
 		clients = new ConcurrentHashMap<Socket, Socket>();
 		AstroServer server = new AstroServer();
 		AstroSender sender = new AstroSender();
@@ -76,7 +77,6 @@ public class Connector implements IConnector {
 						e.printStackTrace();
 						clients.remove(s);
 					}
-					// System.out.println("Sending to:"+s.getPort());
 				}
 				if(sendNewData){
 					sendNewData = false;
@@ -116,8 +116,6 @@ public class Connector implements IConnector {
 						if (!reader.ready()) {
 							removeClientSocket(s);
 						} else {
-							
-							//This used to be assigned to a local string, but I removed the string to avoid getting a warning
 							reader.readLine();
 						}
 					} catch (IOException e) {
@@ -154,7 +152,7 @@ public class Connector implements IConnector {
 	}
 	
 	public static void main(String[] args){
-		Connector connect = new Connector();
+		Connector connect = new Connector(45000);
 		while(true){
 			try {
 				Thread.sleep(5000);
@@ -162,7 +160,6 @@ public class Connector implements IConnector {
 				
 				e.printStackTrace();
 			}
-			
 			connect.sendDataAvailable(22);
 		}
 	}

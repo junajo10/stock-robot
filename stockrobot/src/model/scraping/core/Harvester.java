@@ -24,9 +24,9 @@ public class Harvester {
 
 		System.out.println("*** ASTRo Harvester started. ***");
 		System.out.println("*** Write help for help. ***");
+		Scanner in = new Scanner(System.in);
 		while(true){
 			System.out.print("ASTRo: ");
-			Scanner in = new Scanner(System.in);
 			try {
 				String input = in.nextLine();
 				takeCommand(input);
