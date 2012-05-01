@@ -1,0 +1,33 @@
+Meeting Agenda
+Location: Monaden
+Date: 2012-04-26
+Time: 15:00
+Facilitator: Mattias Markehed 
+Note taker: Daniel Malmqvist
+Participants: Kristian Sällberg, Mattias Markehed, Daniel Malmqvist, Erik Ramqvist
+
+1.	Objectives (5 min)
+		Next meeing:
+			* Simplfy settings of database and algorithm location
+			* Fix a bit in the graph to use a dropdown etc
+			* Look at timeline librarys
+
+2.	Reports (15 min)
+	* We have received some feedback to solve the circular dependencies and will continue to work with it.
+	* SWI-XML probably wont work for us, we will continue with swing instead
+	* Adam has given us a list of things to fix, mostly with documentation and testcases.
+	* We have solved most of the warnings in the project.
+
+3.	Discussion items (35 min)
+	* How we will fix the circular dependencies, however we couldent resolve this in a nice way. Discussion will continue.
+	* Last friday we sat at Mattias to fix some of the entaglements, we also refactored major part of the code to better fit a MVC model.
+	
+4.	Outcomes and assignments (5 min)
+	* Fix some basic settings interfaces to simplify the setup of ASTRo
+	* Fix the graph view to include a dropdown menu of stocknames
+	* Continue with the PortfolioWizard.
+
+5.	Wrap up 
+	Sunday 29:th April
+		* Continue the discussion of our entanglement issue.
+		* Add the diagrams to our SDD and RAD etc.
