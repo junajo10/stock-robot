@@ -1,6 +1,9 @@
 package model.robot;
 
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -13,6 +16,8 @@ import viewfactory.ViewFactory;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.PortfolioHandler;
@@ -46,7 +51,7 @@ public class Astro implements IRobot_Algorithms{
 	
 	private static String serverAdress;
 	private static int serverPort = -1;
-	
+	private List<StockNames> simulatedStocks = null;
 	/**
 	 * Starts the system up
 	 */
@@ -67,6 +72,7 @@ public class Astro implements IRobot_Algorithms{
 		apa.start();
 		
 		if (simulate) {
+			simulatedStocks = new ArrayList<StockNames>();
 			initSimulationState();
 		}
 		
@@ -92,6 +98,9 @@ public class Astro implements IRobot_Algorithms{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			if (simulate && serverPort == -1)
+				simulateNewStocks();
 		}
 
 	}
@@ -120,13 +129,38 @@ public class Astro implements IRobot_Algorithms{
 				jpaHelper.investMoney(10000000, portfolio.getPortfolioTable());
 			}
 		}
+		if (serverPort == -1) {
+			alreadyExists = false;
+			for (StockNames s : jpaHelper.getAllStockNames()) {
+				if (s.getName().contains("sim stock")) {
+					alreadyExists = true;
+					simulatedStocks.add(s);
+				}
+			}
+			if (!alreadyExists) {
+				for (int i = 1; i <= 10; i++) {
+					simulatedStocks.add(new StockNames("sim stock" + i, "Market" + i%3));
+					jpaHelper.storeObject(simulatedStocks.get(i-1));
+				}
+				simulateNewStocks();
+			}
+		}
+		
 	}
 	@Override
 	public boolean reportToUser(String message) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	/**
+	 * Just add a new stock
+	 */
+	private void simulateNewStocks() {
+		for (StockNames sn : simulatedStocks) {
+			StockPrices sp = new StockPrices(sn, rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), new Date(System.currentTimeMillis()));
+			jpaHelper.storeObjectIfPossible(sp);
+		}
+	}
 	public static void main(String args[]) {
 		Astro astro = new Astro();
 
