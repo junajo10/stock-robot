@@ -35,7 +35,7 @@ public class SimulationRunner implements IParserRunner {
 		//parser = new AvanzaParser();
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
-		connector = new Connector();
+		connector = new Connector(port);
 	}
 	@Override
 	public void run() {
