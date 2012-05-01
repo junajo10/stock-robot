@@ -20,14 +20,14 @@ import java.net.Socket;
 public class AstroReciever {
 	
 	private final int PORT_NR = 45000;
-	private final int PING_PORT_NR = 45001;
+	//private final int PING_PORT_NR = 45001;
 	private final String SERVER_ADRESS = "localhost";
 	private final int RECIEVE_DELAY = 300;
 	private final int PING_DELAY = 450;
 	
 	private boolean newData = false;
 	private Socket serverSocket;
-	private Socket serverPingSocket;
+	//private Socket serverPingSocket;
 	boolean isConnected = false;
 	
 	public AstroReciever() {
@@ -115,8 +115,8 @@ public class AstroReciever {
 		public boolean connect(){
 			try {
 				serverSocket = new Socket(SERVER_ADRESS, PORT_NR);
-				serverPingSocket = new Socket(SERVER_ADRESS, PING_PORT_NR);
-				serverPingSocket.setKeepAlive(true);
+				//serverPingSocket = new Socket(SERVER_ADRESS, PING_PORT_NR);
+				//serverPingSocket.setKeepAlive(true);
 				serverSocket.setKeepAlive(true);
 				inFromServer = new InputStreamReader(serverSocket.getInputStream());
 				fromServer = new BufferedReader(inFromServer);
@@ -145,7 +145,7 @@ public class AstroReciever {
 			while(true){
 				while(isConnected && serverSocket.isConnected()){
 					try {
-						outToServer = serverPingSocket.getOutputStream();
+						outToServer = serverSocket.getOutputStream();
 						PrintWriter pw = new PrintWriter(outToServer, true);
 						pw.println("");
 						pw.flush();

@@ -22,14 +22,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Connector implements IConnector {
 	private final int PORT_NR      = 45000;
-	private final int PING_PORT_NR = 45001;
 	private final int PING_DELAY = 550;
 	
 	private Map<Socket,Socket > clients;
 	
 	boolean sendNewData = false;
 	ServerSocket recieve;
-	ServerSocket pingSocket;
 	
 	public Connector() {
 		clients = new ConcurrentHashMap<Socket, Socket>();
@@ -62,7 +60,7 @@ public class Connector implements IConnector {
 		@Override
 		public void run() {
 			while (true) {
-				Collection<Socket> clientSockets = clients.values();
+				Collection<Socket> clientSockets = clients.keySet();
 				for (Socket s : clientSockets) {
 					String send = "" + System.currentTimeMillis();
 					try {
@@ -75,7 +73,6 @@ public class Connector implements IConnector {
 						pw.flush();
 						pw.checkError();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						clients.remove(s);
 					}
@@ -89,7 +86,6 @@ public class Connector implements IConnector {
 					int delay = 200 - (clientSockets.size()*10);
 					Thread.sleep(delay);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -143,13 +139,10 @@ public class Connector implements IConnector {
 		public void run() {
 			try {
 				recieve = new ServerSocket(PORT_NR);
-				pingSocket = new ServerSocket(PING_PORT_NR);
 				while (true) {
 					Socket clientSocket = recieve.accept();
-					Socket clientPingSocket = pingSocket.accept();
-					clientPingSocket.setKeepAlive(true);
 					clientSocket.setKeepAlive(true);
-					clients.put(clientPingSocket, clientSocket);
+					clients.put(clientSocket, clientSocket);
 					System.out.println("Client connected, total clients: " + clients.size());
 					
 				}
