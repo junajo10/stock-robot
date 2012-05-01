@@ -11,11 +11,11 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
-import model.algorithms.loader.IAlgorithm;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
+import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.Portfolio;

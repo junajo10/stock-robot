@@ -9,7 +9,6 @@ import java.util.List;
 import utils.global.Log;
 import utils.global.Log.TAG;
 
-import model.algorithms.loader.IAlgorithm;
 import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;

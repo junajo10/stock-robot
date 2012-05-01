@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.scraping.connect.Connector;
+import model.scraping.connect.HarvesterServer;
 import model.scraping.connect.IConnector;
 import model.scraping.database.IInserter;
 import model.scraping.database.JPAInserter;
@@ -34,8 +35,10 @@ public class ParserRunner implements IParserRunner {
 	IScheduler scheduler;
 	IInserter inserter;
 	IConnector connector;
+	HarvesterServer server;
 	
-	public ParserRunner(){
+	public ParserRunner(int port){
+		this.server = new HarvesterServer(port);
 		parser = new AvanzaParser();
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
@@ -61,12 +64,12 @@ public class ParserRunner implements IParserRunner {
 					for(URL url : avanzaStockMarkets.keySet()){
 						stockList.addAll(parser.parse(url, avanzaStockMarkets.get(url)));
 					}
-					inserter.insertStockData(stockList);
+					int newRows = inserter.insertStockData(stockList);
 					
 					Long timeElapsed = System.currentTimeMillis() - timeBefore;
 					/* Send a message to the robot saying that new data is available.
 					 * Reciever on robot not implemented yet, uncomment when. */
-					connector.sendDataAvailable();
+					connector.sendDataAvailable(newRows);
 					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
 					if(timeElapsed < 20000){
 						try {

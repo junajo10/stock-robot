@@ -9,13 +9,13 @@ import utils.global.Pair;
 import utils.global.Log.TAG;
 
 import model.algorithms.loader.AlgorithmPlugin;
-import model.algorithms.loader.IAlgorithm;
 import model.database.jpa.IJPAAlgortihm;
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
+import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.robot.IRobot_Algorithms;
 import model.trader.ITrader;
@@ -50,6 +50,9 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 	@Override
 	public boolean update() {
+		
+		Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo2: UPDATE!" );
+		
 		if (portfolio.getUnusedAmount() < 1000000) {
 			return false;
 		}

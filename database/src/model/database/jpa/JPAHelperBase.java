@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -16,6 +15,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.apache.openjpa.persistence.OpenJPAEntityManager;
 
 import utils.global.Pair;
 
@@ -38,7 +39,7 @@ import model.database.jpa.tables.StocksToWatch;
  * @author Daniel
  */
 class JPAHelperBase implements IJPAHelper {
-	EntityManager em = null;
+	OpenJPAEntityManager em = null;
 	EntityManagerFactory factory;
 
 	@Override
@@ -203,14 +204,14 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public synchronized boolean storeObjectIfPossible(Object o) {
-		em.getTransaction().begin();
 		try {
+			em.getTransaction().begin();
 			em.persist(o);
+			em.getTransaction().commit();
 		} catch (Exception e) {
-			em.getTransaction().commit();
+			if (em.getTransaction().isActive())
+				em.getTransaction().rollback();
 			return false;
-		} finally {
-			em.getTransaction().commit();
 		}
 		return true;
 	}
@@ -399,7 +400,7 @@ class JPAHelperBase implements IJPAHelper {
 	}
 
 	@Override
-	public EntityManager getEntityManager() {
+	public OpenJPAEntityManager getEntityManager() {
 		return em;
 	}
 	@Override

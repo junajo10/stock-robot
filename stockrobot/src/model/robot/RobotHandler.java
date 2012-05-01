@@ -61,6 +61,7 @@ public class RobotHandler {
 		
 		//Only adds algorithms that isn't currently running
 		for(IPortfolio portfolio : portfolioHandler.getPortfolios()){
+			
 			boolean found = false;
 			for(AlgorithmThread adapter : stillRunning){
 				if(adapter.getPortfolio() == portfolio){
@@ -75,6 +76,7 @@ public class RobotHandler {
 				aThread.start();
 			}
 		}
+		System.out.println("apa");
 	}
 	
 	/**
@@ -146,9 +148,13 @@ public class RobotHandler {
 			
 			running = true;
 			startTime = System.currentTimeMillis();
+			
 			portfolio.updateAlgorithm();
+			
+			
 			time = System.currentTimeMillis() - startTime;
 			running = false;
+			
 		}
 		
 	}

@@ -1,6 +1,9 @@
 package model.robot;
 
 import utils.global.Log;
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelper;
+import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 
 /**
@@ -13,8 +16,9 @@ import model.portfolio.IPortfolioHandler;
  */
 public class RobotScheduler implements Runnable{
 
-	private RobotHandler handler;	
-
+	//private RobotHandler handler;	
+	IPortfolioHandler portfolioHandler;
+	
 	public static final long MILLI_SECOND = 1;
 	public static final long SECOND = 1000*MILLI_SECOND;
 	public static final long MINUTE = 60*SECOND;
@@ -30,17 +34,18 @@ public class RobotScheduler implements Runnable{
 	RobotSchedulerClient client;
 
 	public RobotScheduler(IPortfolioHandler portfolioHandler){
-		handler = new RobotHandler(portfolioHandler);
+		//handler = new RobotHandler(portfolioHandler);
 		this.pauseLength = 5*SECOND;
 		usingServer = false;
+		this.portfolioHandler = portfolioHandler;
 	}
 	public RobotScheduler(IPortfolioHandler portfolioHandler, String host, int port){
-		handler = new RobotHandler(portfolioHandler);
+		//handler = new RobotHandler(portfolioHandler);
+		this.portfolioHandler = portfolioHandler;
 		usingServer = true;
 
 		client = new RobotSchedulerClient(this, host, port);
 		client.start();
-
 	}
 	/**
 	 * Completely stops the runner after current run is through
@@ -145,9 +150,12 @@ public class RobotScheduler implements Runnable{
 			}
 
 			if (usingServer) {
-				Log.instance().log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN using client server!" );
-				RobotScheduler.this.handler.runAlgorithms();
+				Log.instance().log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN using client server!" + JPAHelper.getInstance().getAllStockPrices().size() + " stockPrices");
+				runAlgorithms();
 
+				IJPAHelper jpaHelper = JPAHelper.getInstance();
+				jpaHelper.getEntityManager().evictAll();
+				
 				synchronized (this) {
 					try {
 						wait();
@@ -158,7 +166,9 @@ public class RobotScheduler implements Runnable{
 			}
 			else {
 				Log.instance().log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN!" );
-				RobotScheduler.this.handler.runAlgorithms();
+				
+				
+				runAlgorithms();
 
 				try {
 					Thread.sleep(pauseLength);
@@ -169,6 +179,11 @@ public class RobotScheduler implements Runnable{
 
 			}
 		}
+	}
+	
+	public void runAlgorithms() {
+		for (IPortfolio p : portfolioHandler.getPortfolios())
+			p.updateAlgorithm();
 	}
 
 	/**

@@ -45,4 +45,7 @@ public interface IJPAParser {
 	 * @return True if it went ok.
 	 */
 	public boolean updateObject(Object o);
+	
+	public boolean storeObject(Object o);
+	public boolean storeObjectIfPossible(Object o);
 }

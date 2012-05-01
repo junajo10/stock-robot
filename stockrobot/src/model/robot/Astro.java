@@ -1,9 +1,6 @@
 package model.robot;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -16,8 +13,6 @@ import viewfactory.ViewFactory;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
-import model.database.jpa.tables.StockNames;
-import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.PortfolioHandler;
@@ -44,11 +39,14 @@ public class Astro implements IRobot_Algorithms{
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	Random rand = new Random(System.currentTimeMillis());
 	//PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
-
-	private List<StockNames> simulatedStocks = null;
+	RobotScheduler rs = null;
 
 	private static boolean simulate = false;
 	private static int timeBetweenUpdates = 1500;
+	
+	private static String serverAdress;
+	private static int serverPort = -1;
+	
 	/**
 	 * Starts the system up
 	 */
@@ -58,14 +56,23 @@ public class Astro implements IRobot_Algorithms{
 		System.out.println("ASTRo is starting up.");
 		portfolioHandler 	= PortfolioHandler.getInstance(this);
 		
+		if (serverPort > 0) {
+			rs = new RobotScheduler(portfolioHandler, serverAdress, serverPort);
+		}
+		else {
+			rs = new RobotScheduler(portfolioHandler);
+		}
+		
+		Thread apa = new Thread(rs);
+		apa.start();
+		
 		if (simulate) {
-			simulatedStocks = new ArrayList<StockNames>();
 			initSimulationState();
 		}
 		
 		portfolioGui 		= ViewFactory.getPortfolioView(portfolioHandler,trader);
 		//portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
-
+		
 		while(true) {
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
 				if (simulate) {
@@ -77,7 +84,7 @@ public class Astro implements IRobot_Algorithms{
 					}
 				}
 
-				p.updateAlgorithm();
+				//p.updateAlgorithm();
 			}
 			try {
 				Thread.sleep(timeBetweenUpdates);
@@ -85,9 +92,6 @@ public class Astro implements IRobot_Algorithms{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			if (simulate)
-				simulateNewStocks();
 		}
 
 	}
@@ -116,34 +120,7 @@ public class Astro implements IRobot_Algorithms{
 				jpaHelper.investMoney(10000000, portfolio.getPortfolioTable());
 			}
 		}
-		
-		alreadyExists = false;
-		for (StockNames s : jpaHelper.getAllStockNames()) {
-			if (s.getName().contains("sim stock")) {
-				alreadyExists = true;
-				simulatedStocks.add(s);
-			}
-		}
-		if (!alreadyExists) {
-			for (int i = 1; i <= 10; i++) {
-				simulatedStocks.add(new StockNames("sim stock" + i, "Market" + i%3));
-				jpaHelper.storeObject(simulatedStocks.get(i-1));
-			}
-			simulateNewStocks();
-		}
 	}
-
-	/**
-	 * Just add a new stock
-	 */
-	private void simulateNewStocks() {
-		for (StockNames sn : simulatedStocks) {
-			StockPrices sp = new StockPrices(sn, rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), new Date(System.currentTimeMillis()));
-			jpaHelper.storeObjectIfPossible(sp);
-		}
-	}
-
-
 	@Override
 	public boolean reportToUser(String message) {
 		// TODO Auto-generated method stub
@@ -178,6 +155,27 @@ public class Astro implements IRobot_Algorithms{
 					}
 				}
 			}
+			else if (s.contentEquals("--server")) {
+				if (args.length > i+1) {
+					try {
+						String[] serverInput = args[i+1].split(":");
+						
+						
+						if (serverInput.length == 2) {
+							serverAdress = serverInput[0];
+							serverPort = Integer.parseInt(serverInput[1]);
+							
+							System.out.println("Server Adress: " + serverAdress + ":" + serverPort);
+						}
+						i++;
+					} catch (NumberFormatException e) {
+						System.out.println("Not a valid server format.");
+						System.exit(1);
+					}
+				}
+			}
+			
+			
 			else if (s.contentEquals("--help")) {
 				System.out.println("ASTRo\nAlgorithm Stock Trading Robot\n\n\t-s or --simulate" + 
 						"\tTo simulate new stocks and more investments.\n" +

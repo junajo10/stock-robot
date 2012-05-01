@@ -5,12 +5,13 @@ import java.util.Scanner;
 
 import model.scraping.parser.IParserRunner;
 import model.scraping.parser.ParserRunner;
+import model.scraping.parser.SimulationRunner;
 
 
 public class Harvester {
 	private static Thread parserThread;
 	private static IParserRunner parserRunner;
-	
+	private static int serverPort = 12344;
 	/**
 	 * Main class for the Parsing part of the program.
 	 * <p>
@@ -48,7 +49,8 @@ public class Harvester {
 			System.out.println("status         => Prints status on the parse.");
 			System.out.println("stop           => Temporarly stop the parser thread.");	
 			System.out.println("force stop     => Forces the parser to stop parse. Warning! May corrupt database.");	
-			System.out.println("restart parser => Restarts the parser.");		
+			System.out.println("restart parser => Restarts the parser.");
+			System.out.println("port #         => Sets serverPort to # default is 12344.");		
 			System.out.println("exit => Exits the entire program.");		
 			System.out.println("*** END OF HELP ***");
 		}			
@@ -65,6 +67,10 @@ public class Harvester {
 					System.out.println("*** Parser not started or dead. ***");
 				}
 		}
+		else if (str.equals("simulation start")) {
+			System.out.println("Starting simulation");
+			startSimulation();
+		}
 		else if(str.equals("stop")){
 			System.out.println("*** STATUS ***");
 			if(stopParser()){
@@ -73,6 +79,19 @@ public class Harvester {
 			else{
 				System.out.println("*** Parser already stopped or not started.");
 			}
+		}
+		else if (str.startsWith("port")) {
+			String portNumber = str.substring(5);
+			System.out.println(portNumber);
+			try {
+				int port = Integer.parseInt(portNumber);
+				
+				System.out.println("Server port set to: " + port);
+				serverPort = port;
+			} catch (NumberFormatException e) {
+				System.out.println("Malformed portnumber");
+			}
+			
 		}
 		else if(str.equals("force stop")){
 			System.out.println("*** STATUS ***");
@@ -97,6 +116,15 @@ public class Harvester {
 	}
 	
 	
+	private static boolean startSimulation() {
+		parserRunner = new SimulationRunner(serverPort);
+		parserThread = new Thread(parserRunner);
+		parserThread.start();
+		parserRunner.startParser();
+		
+		return true;
+	}
+
 	/**
 	 * Force a start of the parser thread.
 	 * @return True if thread started.
@@ -104,7 +132,7 @@ public class Harvester {
 	 * Otherwise false.
 	 */
 	private static boolean startParser(){
-		parserRunner = new ParserRunner();
+		parserRunner = new ParserRunner(serverPort);
 		parserThread = new Thread(parserRunner);
 		parserThread.start();
 		parserRunner.startParser();

@@ -52,7 +52,7 @@ public class Connector implements IConnector {
 	 * 
 	 */
 	@Override
-	public void sendDataAvailable() {
+	public void sendDataAvailable(int newRows) {
 		System.out.println("Sending new data to clients.");
 		sendNewData = true;
 	}
@@ -170,7 +170,7 @@ public class Connector implements IConnector {
 				e.printStackTrace();
 			}
 			
-			connect.sendDataAvailable();
+			connect.sendDataAvailable(22);
 		}
 	}
 }

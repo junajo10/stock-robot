@@ -2,7 +2,7 @@ package model.database.jpa;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import org.apache.openjpa.persistence.OpenJPAEntityManager;
 
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
@@ -94,7 +94,7 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	//public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable);
 
 
-	public EntityManager getEntityManager();
+	public OpenJPAEntityManager getEntityManager();
 	
 	
 	public List<StockPrices> getLatestStockPrices();

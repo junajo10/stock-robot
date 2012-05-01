@@ -1,4 +1,4 @@
-package model.algorithms.loader;
+package model.portfolio;
 
 
 import java.util.List;
@@ -8,7 +8,6 @@ import utils.global.Pair;
 
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
-import model.portfolio.IPortfolio;
 import model.robot.IRobot_Algorithms;
 
 

@@ -13,7 +13,6 @@ import utils.global.Log;
 import utils.global.Pair;
 import utils.global.Log.TAG;
 
-import model.algorithms.loader.IAlgorithm;
 import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
@@ -21,6 +20,7 @@ import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
+import model.portfolio.IAlgorithm;
 import model.robot.IRobot_Algorithms;
 
 

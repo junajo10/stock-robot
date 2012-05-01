@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.portfolio.IAlgorithm;
+
 import utils.SettingParser;
 import utils.global.FileHelper;
 import utils.global.Log;
