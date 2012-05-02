@@ -2,6 +2,8 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import scraping.parser.SimulationRunnerTest;
+import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
 
@@ -20,7 +22,9 @@ import database.jpa.MainBasicJPATest;
 	PairTest.class,
 	//JPAHelperForUnderstanding.class,
 	JPATest.class,
-	MainBasicJPATest.class
+	MainBasicJPATest.class,
+	SimulationHandlerTest.class,
+	SimulationRunnerTest.class
 })
 
 public class TestSuiteForEverything {
