@@ -1,0 +1,20 @@
+::::User::::							::::ASTRo::::
+__________________________________________________________________________________________
+
+Starts ASTRo
+
+										Launches "Portfolio Window"
+										
+Presses "Graph View" from the "Main Menu"
+
+										Launches "Graph view"
+
+{Possibly an eternal loop}
+User might select any stock available from a drop down
+Then press "Show stock on chart"
+										
+										The graph window loads all recorded info on the stock and shows it in the chart
+{/Possibly an eternal loop}
+										
+User closes window
+										The window is shut down
