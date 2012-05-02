@@ -9,9 +9,7 @@ import model.database.jpa.IJPAParser;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.scraping.connect.Connector;
 import model.scraping.connect.HarvesterServer;
-import model.scraping.connect.IConnector;
 import model.scraping.database.IInserter;
 import model.scraping.database.JPAInserter;
 import model.scraping.scheduler.IScheduler;
@@ -28,7 +26,6 @@ public class SimulationRunner implements IParserRunner {
 	//AvanzaParser parser;
 	IScheduler scheduler;
 	IInserter inserter;
-	IConnector connector;
 	HarvesterServer server;
 	IJPAParser jpaHelper = JPAHelper.getInstance();
 	private List<StockNames> simulatedStocks = new ArrayList<StockNames>();
@@ -36,10 +33,8 @@ public class SimulationRunner implements IParserRunner {
 	
 	public SimulationRunner(int port){
 		this.server = new HarvesterServer(port);
-		//parser = new AvanzaParser();
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
-		connector = new Connector(port);
 	}
 	@Override
 	public void run() {
