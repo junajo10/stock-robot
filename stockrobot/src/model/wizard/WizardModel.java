@@ -68,9 +68,12 @@ public class WizardModel implements IObservable {
 		return subtitle;
 	}
 	
-	public void setFinish(){
+	public void setFinish(boolean canFinish){
 		
-		observers.firePropertyChange(EVT_CAN_FINISH_CHANGE, null, nextPage);
+		boolean tFinish = this.canFinish;
+		this.canFinish = canFinish;
+		observers.firePropertyChange(EVT_CAN_FINISH_CHANGE, tFinish, canFinish);
+		
 	}
 	
 	public void setNextPage(Integer nextPage){
@@ -138,7 +141,7 @@ public class WizardModel implements IObservable {
 	
 	//TODO determine if it can finished
 	public boolean isAllowedFinish(){
-		return false;
+		return canFinish;
 	}
 	
 	public Integer getActivePage(){

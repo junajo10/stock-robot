@@ -25,9 +25,10 @@ public class WizardFromNewPageController {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			
-			if(e.getStateChange() == ItemEvent.DESELECTED){
-			}else if(e.getStateChange() == ItemEvent.SELECTED){
-				model.setFinish();
+			if(e.getStateChange() == ItemEvent.SELECTED){
+				model.setFinish(true);
+			}else if(e.getStateChange() == ItemEvent.DESELECTED){
+				model.setFinish(false);
 			}
 		}
 	}
