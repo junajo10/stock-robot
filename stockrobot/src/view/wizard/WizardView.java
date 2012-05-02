@@ -163,7 +163,6 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 		}
 		
 		lbl_Subtitle.setText(subtitle);
-		System.out.println("herrrrr");
 	}
 	
 	/**

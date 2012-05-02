@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 
 
 import model.algorithms.loader.PluginAlgortihmLoader;
-import model.algorithms.loader.PluginLoader;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 

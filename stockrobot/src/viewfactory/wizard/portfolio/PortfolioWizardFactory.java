@@ -1,4 +1,4 @@
-package viewfactory.wizard.portfolio;import view.wizard.portfolio.PortfolioPages;
+package viewfactory.wizard.portfolio;
 
 
 import javax.swing.SwingUtilities;

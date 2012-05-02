@@ -6,12 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-import javax.swing.SwingUtilities;
-
-import model.wizard.portfolio.PortfolioWizardModel;
-
 import utils.observer.IObservable;
-import view.wizard.WizardPage;
 
 /**
  * 
