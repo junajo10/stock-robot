@@ -19,8 +19,8 @@ import java.net.Socket;
  */
 public class AstroReciever {
 	
-	private final int PORT_NR = 45000;
-	private final String SERVER_ADRESS = "localhost";
+	private final int PORT_NR;
+	private final String SERVER_ADRESS;
 	private final int RECIEVE_DELAY = 300;
 	private final int PING_DELAY = 450;
 	
@@ -28,7 +28,10 @@ public class AstroReciever {
 	private Socket serverSocket;
 	boolean isConnected = false;
 	
-	public AstroReciever() {
+	
+	public AstroReciever(String SERVER_ADRESS, int PORT_NR ) {
+		this.PORT_NR = PORT_NR;
+		this.SERVER_ADRESS = SERVER_ADRESS;
 		AstroClient client = new AstroClient();
 		Pinger ping = new Pinger();
 		
@@ -152,6 +155,7 @@ public class AstroReciever {
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
+						//TODO: Maybe remove print.
 						System.err.println("Disconnected from server.");
 						isConnected = false;
 					}
@@ -167,32 +171,4 @@ public class AstroReciever {
 		}
 		
 	}
-
-	/**
-	 * Method only for testing!
-	 * Change PORT_NR and address to the correct value.
-	 * <p>
-	 * Not to be included in final version.
-	 * <p>
-	 */
-	public static void main(String[] args) {
-		
-		//Added this suppress because I'm not sure it the GC will remove this 
-		//variable if it's not assigned to a local variable
-		@SuppressWarnings("unused")
-		AstroReciever rec = new AstroReciever();
-		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-		while(true){
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		} 			
-	 }
 }
