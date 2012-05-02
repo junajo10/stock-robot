@@ -2,9 +2,12 @@ package scraping.parser;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelper;
 import model.scraping.parser.SimulationRunner;
 
 /**
@@ -21,12 +24,22 @@ public class SimulationRunnerTest {
 	@Before
 	public void setup() {
 		
+		IJPAHelper helper = JPAHelper.getInstance();
+		helper.getEntityManager().evictAll();
+		
 		//Setup a random port between 10000 and 11000 
 		port = 25000 + (int) Math.round( Math.random() * 4000 );
 		
 		System.out.println("port: " + port);
 		
 		runner = new SimulationRunner( port );
+	}
+	
+	@After
+	public void tearDown() {
+		
+		runner.stopParser();
+		runner = null;
 	}
 	
 	@Test
@@ -53,14 +66,34 @@ public class SimulationRunnerTest {
 	@Test
 	public void started() {
 		
-		//Start the thread
-		runner.run();
+		Thread th = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				//Start the thread
+				System.out.println( "RUN!!" );
+				runner.run();
+				System.out.println( "status??" + runner.status() );
+			}
+		});
+		th.start();
+		
+		//Wait some to make sure the runner starts running
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
 		
 		//The runner has not yet been told to start, and should not have started
 		boolean isRunning = true;
 		
 		//Test status() some times to see that it gets the right result back
 		for( int i = 0; i < 1000 + (int) Math.round( Math.random() * 1000 ); i ++ ) {
+			
+			System.out.println( "status" + runner.status() );
 			
 			isRunning = runner.status();
 			
@@ -72,5 +105,20 @@ public class SimulationRunnerTest {
 		//We want isRunning to be false here, even after testing it 1000 to 2000 times.
 		//This is merely to ensure nothing strange happens in the first few runs
 		Assert.assertTrue( isRunning );
+	}
+	
+	@Test
+	public void startAndStop() {
+		
+		//Start
+		runner.run();
+		boolean runningAfterRun = runner.status();
+		
+		//Stop
+		runner.stopRunner();
+		boolean runningAfterStop = runner.status();
+		
+		//Check so it's started and stopped
+		Assert.assertTrue( runningAfterRun && !runningAfterStop );
 	}
 }
