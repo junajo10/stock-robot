@@ -1,4 +1,4 @@
-package generic;
+package utils;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,7 +12,12 @@ import org.junit.runners.Parameterized.Parameters;
 
 import utils.global.FinancialLongConverter;
 
-
+/**
+ * Test class for the financial long converter
+ * 
+ * @author kristian
+ *
+ */
 @RunWith( value = Parameterized.class )
 public class FinancialLongConverterTest {
 	

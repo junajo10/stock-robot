@@ -1,8 +1,9 @@
-import generic.FinancialLongConverterTest;
-import generic.PairTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+
+import utils.FinancialLongConverterTest;
+import utils.PairTest;
 
 import database.jpa.JPATest;
 import database.jpa.MainBasicJPATest;
@@ -19,7 +20,7 @@ import database.jpa.MainBasicJPATest;
 	PairTest.class,
 	//JPAHelperForUnderstanding.class,
 	JPATest.class,
-	MainBasicJPATest.class,
+	MainBasicJPATest.class
 })
 
 public class TestSuiteForEverything {
