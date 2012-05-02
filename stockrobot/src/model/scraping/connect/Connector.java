@@ -56,6 +56,14 @@ public class Connector implements IConnector {
 		sendNewData = true;
 	}
 	
+	/**
+	 * 
+	 * @return Number of connected clients.
+	 */
+	public int getConnected(){
+		return clients.size();
+	}
+	
 	private class AstroSender implements Runnable {
 
 		@Override
