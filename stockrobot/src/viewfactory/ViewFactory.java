@@ -10,6 +10,7 @@ import model.trader.ITrader;
 import controller.gui.GraphController;
 import controller.gui.MainMenuController;
 import controller.gui.SimulationController;
+import controller.gui.StockTableHistoryController;
 
 import view.AlgorithmSettingsView;
 import view.MainMenuView;
@@ -17,6 +18,7 @@ import view.PortfolioController;
 import view.PortfolioGui;
 import view.SimulationView;
 import view.StockInfoGUI;
+import view.StockTableHistoryView;
 import view.StockTableView;
 import view.algorithmsettings.SettingsPanel;
 import view.graph.GraphView;
@@ -31,13 +33,25 @@ public class ViewFactory {
 
 		controller.bindSimulationView(getSimulationView());
 		controller.bindGraphView(getGraphView());
+		controller.bindHistoryView(getHistoryView());
+		
 		
 		view.bindOpenAlgorithmSettings(controller.bindAlgorithmSettingsGUIButton());
 		view.bindStockInfoWindow(controller.bindStockInfoGUIButton());
 		view.bindOpenSimulation(controller.bindSimulationButton());
 		view.bindOpenGraphView(controller.bindOpenGraphButton());
 		
+		view.bindHistory(controller.bindHistoryButton());
+		
+		
 		return view;
+	}
+
+	private static StockTableHistoryView getHistoryView() {
+		StockTableHistoryView sthw = new StockTableHistoryView(0);
+		new StockTableHistoryController(sthw);
+		
+		return sthw;
 	}
 
 	public static JFrame getPortfolioView(IPortfolioHandler portfolioHandler, ITrader trader){

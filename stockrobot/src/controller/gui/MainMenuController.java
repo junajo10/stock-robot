@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import view.SimulationView;
 import view.StockInfoGUI;
+import view.StockTableHistoryView;
 import view.graph.GraphView;
 import viewfactory.ViewFactory;
 
@@ -19,6 +20,7 @@ public class MainMenuController implements IController {
 	StockInfoGUI stockInfoGUI;
 	SimulationView simulationView;
 	GraphView graphView;
+	StockTableHistoryView sthw;
 	
 	public MainMenuController() {
 		
@@ -39,6 +41,9 @@ public class MainMenuController implements IController {
 		this.graphView = graphView;
 	}
 	
+	public void bindHistoryView(StockTableHistoryView sthw) {
+		this.sthw = sthw;
+	}
 	public ActionListener bindStockInfoGUIButton() {
 		
 		return new ActionListener() {
@@ -92,4 +97,17 @@ public class MainMenuController implements IController {
 			}
 		};
 	}
+	
+	public ActionListener bindHistoryButton() {
+		
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//The purpose of this line is just to open a new JFrame
+				sthw.init();
+			}
+		};
+	}
+	
 }

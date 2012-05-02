@@ -69,10 +69,14 @@ public class PortfolioController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			IPortfolio portfolio = ((Item_cmb_Portfolio)((JComboBox)e.getSource()).getSelectedItem()).getPortfolio();
-			gui.setPortfolio(portfolio);
-			System.out.println(portfolio);
-			gui.updateCash();
+			if ((Item_cmb_Portfolio)((JComboBox)e.getSource()).getSelectedItem() != null) {
+
+				IPortfolio portfolio = ((Item_cmb_Portfolio)((JComboBox)e.getSource()).getSelectedItem()).getPortfolio();
+				gui.setPortfolio(portfolio);
+				System.out.println(portfolio);
+				gui.updateCash();
+			}
+			
 		}
 	}
 	

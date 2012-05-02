@@ -28,6 +28,7 @@ public class MainMenuView extends JPanel {
 	private JButton btn_openStockInfoWindow;
 	private JButton btn_openSimulation;
 	private JButton btn_openGraphView;
+	private JButton btn_openHistory;
 	
 	public MainMenuView() {
 		init();
@@ -61,6 +62,11 @@ public class MainMenuView extends JPanel {
 		
 		btn_openGraphView = fact.getDefaultButton("Graph view");
 		pnl_Container.add(btn_openGraphView);
+		
+		
+		btn_openHistory = fact.getDefaultButton("History");
+		pnl_Container.add(btn_openHistory);
+		
 	}
 	
 	//Bind bindAlgorithmSettingsGUIButton to open a new algorithm setting view
@@ -79,5 +85,8 @@ public class MainMenuView extends JPanel {
 	
 	public void bindOpenGraphView(ActionListener listener) {
 		btn_openGraphView.addActionListener(listener);
-	}	
+	}
+	public void bindHistory(ActionListener listener) {
+		btn_openHistory.addActionListener(listener);
+	}
 }
