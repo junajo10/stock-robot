@@ -26,4 +26,8 @@ public abstract class WizardPageModel implements IObservable {
 	public void removeObserver(PropertyChangeListener listener){
 		observers.removePropertyChangeListener(listener);
 	}
+	
+	public abstract boolean canFinish();
+	
+	public abstract void finish();
 }

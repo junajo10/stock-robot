@@ -17,6 +17,7 @@ public abstract class WizardPage<T> extends JPanel  implements PropertyChangeLis
 	public WizardPage(WizardModel wizardModel, T pageModel){
 		this.wizardModel = wizardModel;
 		this.pageModel = pageModel;
+		
 	}
 	
 	public void propertyChange(PropertyChangeEvent evt) {

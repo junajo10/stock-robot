@@ -1,11 +1,18 @@
 package view.wizard.portfolio;
 
 import java.awt.Component;
-import java.beans.PropertyChangeEvent;
+import java.awt.event.ItemListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+
+import model.algorithms.loader.PluginAlgortihmLoader;
+import model.algorithms.loader.PluginLoader;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
@@ -16,7 +23,8 @@ import view.wizard.WizardPage;
 public class PortfolioFromNewPage extends WizardPage<PortfolioWizardModel> {
 
 	private static final long serialVersionUID = 20596476598729363L;
-
+	private JComboBox cmb_algorithms;
+	
 	public PortfolioFromNewPage(WizardModel wizardModel, PortfolioWizardModel pageModel) {
 		super(wizardModel, pageModel);
 					
@@ -30,8 +38,38 @@ public class PortfolioFromNewPage extends WizardPage<PortfolioWizardModel> {
 		this.setPreferredSize(null);
 		JLabel lbl_PortfolioName = factory.getDefaultLabel("Portfolio Name:");
 		this.add(lbl_PortfolioName);
+		
+		JPanel pnl_balance = factory.getInvisibleContainer();
+		JLabel lbl_balance = factory.getDefaultLabel("Balance");
+		pnl_balance.add(lbl_balance);
+		JTextField txt_balance = factory.getDefaultTextField();
+		txt_balance.setColumns(15);
+		pnl_balance.add(txt_balance);
+		this.add(pnl_balance);
+		
+		List<String> algorithms = PluginAlgortihmLoader.getInstance().getAlgorithmNames();
+		cmb_algorithms = new JComboBox(algorithms.toArray());
+		
+		this.add(cmb_algorithms);
 		//========================================
+		
+		
+	}
+	
+	public void addAlgorithmListener(ItemListener listener){
+		cmb_algorithms.addItemListener(listener);
+	}
+	
+	public void setAlgorithmListener(ItemListener listener){
+		removeAlgorithmListeners();
+		addAlgorithmListener(listener);
 	}
 
+	public void removeAlgorithmListeners(){
+		for(ItemListener l : cmb_algorithms.getItemListeners()){
+			cmb_algorithms.removeItemListener(l);
+		}
+	}
+	
 	
 }

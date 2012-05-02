@@ -146,6 +146,7 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	 */
 	public void setTitle(String title) {		
 		lbl_Title.setText(title);
+		this.validate();
 	}
 	
 	/**
@@ -156,11 +157,13 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	 */
 	public void setSubtitle(String subtitle){
 		
+		
 		if(!lbl_Subtitle.isVisible()){
 			lbl_Subtitle.setVisible(true);
 		}
 		
 		lbl_Subtitle.setText(subtitle);
+		System.out.println("herrrrr");
 	}
 	
 	/**
@@ -308,13 +311,13 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		
-		if(evt.getPropertyName() == (WizardModel.EVT_TITLE_CHANGE)){
+		if(evt.getPropertyName().equals(WizardModel.EVT_TITLE_CHANGE)){
 			if(evt.getNewValue() instanceof String) {
 				String title = (String) evt.getNewValue();
 				setTitle(title);
 			}
 		}
-		else if(evt.getPropertyName() == (WizardModel.EVT_SUBTITLE_CHANGE)){
+		else if(evt.getPropertyName().equals(WizardModel.EVT_SUBTITLE_CHANGE)){
 			if(evt.getNewValue() instanceof String) {
 				String subtitle = (String) evt.getNewValue();
 				setSubtitle(subtitle);

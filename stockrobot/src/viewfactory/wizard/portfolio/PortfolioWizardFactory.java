@@ -4,6 +4,7 @@ package viewfactory.wizard.portfolio;import view.wizard.portfolio.PortfolioPages
 import javax.swing.SwingUtilities;
 
 import controller.wizard.WizardContoller;
+import controller.wizard.portfolio.WizardFromNewPageController;
 import controller.wizard.portfolio.WizardStartPageController;
 
 import model.portfolio.IPortfolioHandler;
@@ -19,7 +20,8 @@ public class PortfolioWizardFactory {
 	public static WizardView buildPortfolioWizard(final IPortfolioHandler portfolioHandler){
 		
 		final WizardModel wizardModel = new WizardModel();
-    	wizardModel.setTitle("Portfolio Wizard");
+    	
+    	
     	final WizardView wizard = new WizardView(wizardModel);
     	wizard.setCancelListener(WizardContoller.getCancelListener(wizard));
     	wizard.setEnableCancel(true);
@@ -27,6 +29,9 @@ public class PortfolioWizardFactory {
     	wizard.setNextListener(WizardContoller.getNextListener(wizardModel));
     	
     	wizardModel.addAddObserver(wizard);
+    	
+    	wizardModel.setTitle("Portfolio Wizard");
+    	wizardModel.setSubtitle("Portfolio Wizard");
     	
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -62,6 +67,9 @@ public class PortfolioWizardFactory {
 	private static WizardPage<PortfolioWizardModel> buildFromNewPage(WizardModel wizardModel, IPortfolioHandler portfolioHandler){
 		PortfolioWizardModel pageModel = new PortfolioWizardModel(wizardModel);
 		PortfolioFromNewPage fromNewPage = new PortfolioFromNewPage(wizardModel, pageModel);
+		WizardFromNewPageController controller = new WizardFromNewPageController(fromNewPage, wizardModel);
+		fromNewPage.setAlgorithmListener(controller.getAlgorithmListener());
+		
 		
 		return fromNewPage;
 	}

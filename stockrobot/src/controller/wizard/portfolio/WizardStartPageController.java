@@ -9,7 +9,6 @@ import model.wizard.WizardModel;
 
 
 import view.wizard.WizardView;
-import view.wizard.portfolio.PortfolioFromNewPage;
 import view.wizard.portfolio.PortfolioPages;
 import view.wizard.portfolio.PortfolioStartPage;
 

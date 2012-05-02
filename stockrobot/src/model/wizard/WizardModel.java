@@ -6,7 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import javax.swing.SwingUtilities;
+
+import model.wizard.portfolio.PortfolioWizardModel;
+
 import utils.observer.IObservable;
+import view.wizard.WizardPage;
 
 /**
  * 
@@ -31,6 +36,7 @@ public class WizardModel implements IObservable {
 	private Stack<Integer> historyPages;
 	private Integer nextPage;
 	private Set<Integer> pages;
+	private boolean canFinish = false;
 	
 	private PropertyChangeSupport observers;
 	
@@ -41,7 +47,7 @@ public class WizardModel implements IObservable {
 	}
 	
 	public void setTitle(String title){
-		String oldTitle = title;
+		String oldTitle = WizardModel.this.title;
 		this.title = title;
 		observers.firePropertyChange(EVT_TITLE_CHANGE, oldTitle, title);
 	}
@@ -50,21 +56,27 @@ public class WizardModel implements IObservable {
 		return title;
 	}
 	
-	public void setSubtitle(String subtitle){
-		String oldSubtitle = subtitle;
-		this.subtitle = subtitle;
-		observers.firePropertyChange(EVT_SUBTITLE_CHANGE, oldSubtitle, subtitle);
+	public void setSubtitle(final String subtitle){
+		
+        String oldSubtitle = WizardModel.this.subtitle;
+        WizardModel.this.subtitle = subtitle;
+        observers.firePropertyChange(EVT_SUBTITLE_CHANGE, oldSubtitle, subtitle);
+		
 	}
 	
 	public String getSubtitle() {
 		return subtitle;
 	}
 	
+	public void setFinish(){
+		
+		observers.firePropertyChange(EVT_CAN_FINISH_CHANGE, null, nextPage);
+	}
+	
 	public void setNextPage(Integer nextPage){
 		if(nextPage == null){
 			removeNextPage();
 		}else{
-			//Integer oldNextPage = this.nextPage;
 			this.nextPage = nextPage;
 		}
 		observers.firePropertyChange(EVT_PAGE_NEXT_CHANGE, null, nextPage);

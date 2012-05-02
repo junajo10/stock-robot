@@ -16,4 +16,16 @@ public class PortfolioWizardModel extends WizardPageModel{
 		
 		return newModel;
 	}
+
+	@Override
+	public boolean canFinish() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		
+	}
 }
