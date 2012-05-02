@@ -1,0 +1,16 @@
+::::User::::							::::ASTRo::::
+__________________________________________________________________________________________
+
+Starts ASTRo
+
+										Launches Portfolio Window
+										
+Presses "Simulation"
+
+										Launches Simulation Window
+										
+User selects an algorithm and hits go
+										Simulation will run, when done displays a message of result.
+										And a piechart of investments
+										
+User closes window
