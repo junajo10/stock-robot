@@ -1,11 +1,13 @@
 package model.database.jpa;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.openjpa.persistence.OpenJPAEntityManager;
 
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
+import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.database.jpa.tables.StocksToWatch;
 
@@ -100,4 +102,7 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	public List<StockPrices> getLatestStockPrices();
 	
 	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable);
+	
+	
+	StockPrices getPricesForStock( StockNames st, Date date );
 }

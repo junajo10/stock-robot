@@ -17,6 +17,10 @@ import model.scraping.database.JPAInserter;
 import model.scraping.scheduler.IScheduler;
 import model.scraping.scheduler.Scheduler;
 
+/**
+ * 
+ * @author Daniel
+ */
 public class SimulationRunner implements IParserRunner {
 
 	boolean run = false;

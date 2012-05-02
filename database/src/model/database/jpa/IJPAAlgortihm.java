@@ -94,12 +94,6 @@ public interface IJPAAlgortihm {
 	 */
 	public List<StockPrices> getNLatest(StockPrices from, int n);
 	
-	/**
-	 * Returns a list of portfolioHistorys associated with a given portfolio
-	 * @param portfolio
-	 * @return a list of portfolioHistorys
-	 */
-	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntity portfolio);
 
 	/**
 	 * Returns a list of portfolioHistorys associated with a given portfolio and a StockPrice

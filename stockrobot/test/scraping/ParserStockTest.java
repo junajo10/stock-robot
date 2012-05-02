@@ -21,21 +21,21 @@ public class ParserStockTest {
 	@Test
 	public void testPriceDataRepresentation() {
 		
-		float multiplier = (float) Math.random() * 20;
+		long multiplier = (long) Math.random() * 20;
 		
 		int 	vol 	= 29038 + (int) Math.round( Math.random() * 199 );
-		float 	latest 	= (float) 123.344	* multiplier;
-		float 	buy 	= (float) 1383.44	* multiplier;
-		float 	sell 	= (float) 294.33	* multiplier;
+		long 	latest 	= (long) 123	* multiplier;
+		long 	buy 	= (long) 1383	* multiplier;
+		long 	sell 	= (long) 294	* multiplier;
 		Date 	date 	= new Date(2884444);
 		
 		//Price to test
 		ParserStock pdr = new ParserStock( "VOLVO" );
 		pdr.setVolume( vol );
-		//TODO: FIX TEST.
-		//pdr.setLastClose( latest );
-		//pdr.setBuy( buy );
-		//pdr.setSell( sell );
+
+		pdr.setLastClose( latest );
+		pdr.setBuy( buy );
+		pdr.setSell( sell );
 		pdr.setDate( date );
 		
 		Assert.assertTrue( 	pdr.getVolume() 	== vol 		&&

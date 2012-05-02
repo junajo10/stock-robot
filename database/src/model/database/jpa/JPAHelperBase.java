@@ -161,6 +161,30 @@ class JPAHelperBase implements IJPAHelper {
 
 		return query.getResultList();
 	}
+	
+	@Override
+	public StockPrices getPricesForStock( StockNames st, Date date ) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<StockPrices> cri = cb.createQuery(StockPrices.class);
+
+		Root<StockPrices> root = cri.from(StockPrices.class);
+
+		Predicate correctName = em.getCriteriaBuilder().equal( root.get("stockName"), st );
+
+		Predicate correctDate = em.getCriteriaBuilder().equal( root.get("time"), date );
+		
+		cri.select(root);
+		cri.where(correctName);
+		cri.where(correctDate);
+		
+		TypedQuery<StockPrices> query = em.createQuery(cri);
+
+		if (query.getResultList().size() == 1)
+			return query.getResultList().get(0);
+		
+		System.out.println("ASDFASDFASDF");
+		return null;
+	}
 	@Override
 	public List<StockPrices> getPricesForStockPeriod( StockNames st, Date start, Date end ) {
 
@@ -289,23 +313,6 @@ class JPAHelperBase implements IJPAHelper {
 		}
 
 		return history;
-	}
-	@Override
-	public List<PortfolioHistory> getPortfolioHistory(PortfolioEntity portfolio) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<PortfolioHistory> q2 = cb.createQuery(PortfolioHistory.class);
-
-		Root<PortfolioHistory> c = q2.from(PortfolioHistory.class);
-
-		q2.select(c);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio"), portfolio);
-		
-		q2.where(p);
-		
-		TypedQuery<PortfolioHistory> query = em.createQuery(q2);
-		
-		return query.getResultList();
 	}
 	@Override
 	public List<Pair<StockPrices, StockPrices>> getOldStocks(
