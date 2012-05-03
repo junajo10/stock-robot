@@ -24,20 +24,36 @@ public class SimulationRunnerTest {
 	@Before
 	public void setup() {
 		
-		IJPAHelper helper = JPAHelper.getInstance();
-		helper.getEntityManager().evictAll();
+		try {
+			
+			IJPAHelper helper = JPAHelper.getInstance();
+			helper.getEntityManager().evictAll();
+			
+			//Setup a random port between 10000 and 11000 
+			port = 25000 + (int) Math.round( Math.random() * 4000 );
+			
+			runner = new SimulationRunner( port );
+			
+			Thread th = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					runner.run();
+				}
+			});
+			th.start();
 		
-		//Setup a random port between 10000 and 11000 
-		port = 25000 + (int) Math.round( Math.random() * 4000 );
-		
-		System.out.println("port: " + port);
-		
-		runner = new SimulationRunner( port );
+		} catch( Exception e ) {
+			
+			e.printStackTrace();
+		}
 	}
 	
 	@After
 	public void tearDown() {
 		
+		runner.stopRunner();
 		runner.stopParser();
 		runner = null;
 	}
@@ -66,18 +82,7 @@ public class SimulationRunnerTest {
 	@Test
 	public void started() {
 		
-		Thread th = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				//Start the thread
-				System.out.println( "RUN!!" );
-				runner.run();
-				System.out.println( "status??" + runner.status() );
-			}
-		});
-		th.start();
+		runner.startParser();
 		
 		//Wait some to make sure the runner starts running
 		try {
@@ -92,8 +97,6 @@ public class SimulationRunnerTest {
 		
 		//Test status() some times to see that it gets the right result back
 		for( int i = 0; i < 1000 + (int) Math.round( Math.random() * 1000 ); i ++ ) {
-			
-			System.out.println( "status" + runner.status() );
 			
 			isRunning = runner.status();
 			
@@ -111,11 +114,11 @@ public class SimulationRunnerTest {
 	public void startAndStop() {
 		
 		//Start
-		runner.run();
+		runner.startParser();
 		boolean runningAfterRun = runner.status();
 		
 		//Stop
-		runner.stopRunner();
+		runner.stopParser();
 		boolean runningAfterStop = runner.status();
 		
 		//Check so it's started and stopped
