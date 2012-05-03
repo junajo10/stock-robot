@@ -64,6 +64,24 @@ public class Connector implements IConnector {
 		return clients.size();
 	}
 	
+	/**
+	 * Shutdowns the server.
+	 * <p>
+	 * Method used for testing.
+	 */
+	public void shutdown(){
+		Collection<Socket> clientCpy = clients.keySet();
+		for(Socket s : clientCpy){
+			clients.remove(s);
+			try {
+				s.close();
+			} catch (IOException e) {
+
+			}
+		}
+	}
+	
+	
 	private class AstroSender implements Runnable {
 
 		@Override
