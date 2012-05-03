@@ -58,7 +58,7 @@ public class Astro implements IRobot_Algorithms{
 	//TODO: In a new thread?
 	private void start() {
 		
-		System.out.println("ASTRo is starting up.");
+		Log.instance().log(TAG.NORMAL, "ASTRo is starting up.");
 		portfolioHandler 	= PortfolioHandler.getInstance(this);
 		
 		if (serverPort > 0) {

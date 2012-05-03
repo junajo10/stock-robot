@@ -52,7 +52,6 @@ public class StockTableHistoryController {
 			@Override
 			public void contentsChanged(ListDataEvent e) {
 				String selected = (String) ((DefaultComboBoxModel)e.getSource()).getSelectedItem();
-				System.out.println(selected);
 				
 				if (selected != null) {
 					sthw.setSelectedPortfolio(1);
