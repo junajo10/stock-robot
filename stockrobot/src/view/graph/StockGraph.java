@@ -27,6 +27,15 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 
 import utils.global.FinancialLongConverter;
+import javax.swing.JMenuItem;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.Dimension;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JRadioButtonMenuItem;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -51,6 +60,7 @@ public class StockGraph extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 
+	@SuppressWarnings("deprecation")
 	public StockGraph(int size_x, int size_y, boolean plotted) {
         super("Stock graph over time.");
         jpa = JPAHelper.getInstance();
@@ -66,9 +76,65 @@ public class StockGraph extends JFrame {
         		true, // generate tooltips?
         		false // generate URLs?
         );
+        
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+        
+        JMenu mnFile = new JMenu("File");
+        menuBar.add(mnFile);
+        
+        JMenuItem mntmSetDate = new JMenuItem("Set date");
+        mnFile.add(mntmSetDate);
+        
+        JMenuItem mntmClose = new JMenuItem("Close");
+        mntmClose.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent arg0) {
+        		System.exit(0);
+        	}
+        });
+        mnFile.add(mntmClose);
+        
+        JMenu mnView = new JMenu("View");
+        menuBar.add(mnView);
+        
+        JRadioButtonMenuItem rdbtnmntmNormal = new JRadioButtonMenuItem("Normal");
+        rdbtnmntmNormal.setSelected(true);
+        mnView.add(rdbtnmntmNormal);
+        
+        JRadioButtonMenuItem rdbtnmntmCandlesticks = new JRadioButtonMenuItem("CandleSticks");
+        rdbtnmntmCandlesticks.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseReleased(MouseEvent arg0) {
+        		System.out.println("Candlesticks view!");
+        	}
+
+
+        });
+        mnView.add(rdbtnmntmCandlesticks);
+        
+        JRadioButtonMenuItem rdbtnmntmHighlow = new JRadioButtonMenuItem("High-Low");
+        mnView.add(rdbtnmntmHighlow);
+        
+        JRadioButtonMenuItem rdbtnmntmMovingAverage = new JRadioButtonMenuItem("Moving Average");
+        mnView.add(rdbtnmntmMovingAverage);
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(size_x, size_y));
+        chartPanel.setZoomAroundAnchor(true);
+        chartPanel.setRefreshBuffer(true);
+        chartPanel.setFillZoomRectangle(false);
+        chartPanel.setEnforceFileExtensions(false);
+        chartPanel.setPreferredSize(new Dimension(797, 448));
         setContentPane(chartPanel);
+        GroupLayout gl_chartPanel = new GroupLayout(chartPanel);
+        gl_chartPanel.setHorizontalGroup(
+        	gl_chartPanel.createParallelGroup(Alignment.LEADING)
+        		.addGap(0, 867, Short.MAX_VALUE)
+        );
+        gl_chartPanel.setVerticalGroup(
+        	gl_chartPanel.createParallelGroup(Alignment.TRAILING)
+        		.addGap(0, 401, Short.MAX_VALUE)
+        );
+        chartPanel.setLayout(gl_chartPanel);
         if (plotted) {
 	        XYPlot plot = (XYPlot) chart.getPlot();
 	        plot.setBackgroundPaint(Color.lightGray);
@@ -90,7 +156,8 @@ public class StockGraph extends JFrame {
 	 * @param name stock to be added.
 	 */
 	public void addStock(StockNames name){
-    	TimeSeries serie = new TimeSeries(name.getName(), Minute.class);
+    	@SuppressWarnings("deprecation")
+		TimeSeries serie = new TimeSeries(name.getName(), Minute.class);
         List<StockPrices> priceList = jpa.getPricesForStock(name);
         for(StockPrices stock : priceList){
         	Date date = stock.getTime();
