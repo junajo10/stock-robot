@@ -47,3 +47,5 @@ persistence.xml
 
 .classpath
 configuration.xml
+
+*.lck

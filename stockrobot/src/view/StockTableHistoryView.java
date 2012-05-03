@@ -154,10 +154,13 @@ public class StockTableHistoryView extends JFrame {
 		private TableModel model;
 
 		private IJPAHelper jpaHelper = JPAHelper.getInstance();
-		private PortfolioEntity portfolio = jpaHelper.getAllPortfolios().get(0);
+		private PortfolioEntity portfolio;
 		
 		public StockTableHistoryViewPanel() {
-			init();
+			if (jpaHelper.getAllPortfolios().size()>0) {
+				portfolio = jpaHelper.getAllPortfolios().get(0);
+				init();
+			}
 		}
 		public void setPortfolio(int portfolio) {
 			this.portfolio = jpaHelper.getAllPortfolios().get(portfolio);
