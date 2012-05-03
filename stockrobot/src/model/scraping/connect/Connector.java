@@ -27,9 +27,12 @@ public class Connector implements IConnector {
 	private Map<Socket,Socket > clients;
 	
 	boolean sendNewData = false;
-	ServerSocket recieve;
+	boolean shouldRun;
+	
+	private ServerSocket recieve;
 	
 	public Connector(int PORT_NR) {
+		shouldRun = true;
 		this.PORT_NR = PORT_NR;
 		clients = new ConcurrentHashMap<Socket, Socket>();
 		AstroServer server = new AstroServer();
@@ -43,6 +46,7 @@ public class Connector implements IConnector {
 		serverThread.start();
 		astroSender.start();
 		pingerThread.start();
+
 	}
 
 	/**
@@ -70,6 +74,7 @@ public class Connector implements IConnector {
 	 * Method used for testing.
 	 */
 	public void shutdown(){
+		shouldRun = false;
 		Collection<Socket> clientCpy = clients.keySet();
 		for(Socket s : clientCpy){
 			clients.remove(s);
@@ -79,6 +84,11 @@ public class Connector implements IConnector {
 
 			}
 		}
+		try {
+			recieve.close();
+		} catch (IOException e1) {
+			
+		}
 	}
 	
 	
@@ -86,7 +96,7 @@ public class Connector implements IConnector {
 
 		@Override
 		public void run() {
-			while (true) {
+			while (shouldRun) {
 				Collection<Socket> clientSockets = clients.keySet();
 				for (Socket s : clientSockets) {
 					String send = "" + System.currentTimeMillis();
@@ -120,7 +130,7 @@ public class Connector implements IConnector {
 	
 	private class PingReciever implements Runnable {
 		public void run() {
-			while (true) {
+			while (shouldRun) {
 				int delay = 0;
 				Collection<Socket> pSockets = clients.keySet();
 				for (Socket s : pSockets) {
@@ -139,10 +149,12 @@ public class Connector implements IConnector {
 						removeClientSocket(s);
 					}
 					try {
-						if (!reader.ready()) {
-							removeClientSocket(s);
-						} else {
-							reader.readLine();
+						if(reader != null){
+							if (!reader.ready()) {
+								removeClientSocket(s);
+							} else {
+								reader.readLine();
+							}
 						}
 					} catch (IOException e) {
 						removeClientSocket(s);
@@ -154,6 +166,7 @@ public class Connector implements IConnector {
 		private void removeClientSocket(Socket s){
 			System.out.println("Client disconnected.");
 			clients.remove(s);
+
 		}
 	}
 	
@@ -163,16 +176,14 @@ public class Connector implements IConnector {
 		public void run() {
 			try {
 				recieve = new ServerSocket(PORT_NR);
-				while (true) {
-					Socket clientSocket = recieve.accept();
+				while (shouldRun) {
+					Socket clientSocket = recieve.accept();					
 					clientSocket.setKeepAlive(true);
 					clients.put(clientSocket, clientSocket);
 					System.out.println("Client connected, total clients: " + clients.size());
 					
 				}
 			} catch (IOException e) {
-				
-				e.printStackTrace();
 			}
 		}
 	}

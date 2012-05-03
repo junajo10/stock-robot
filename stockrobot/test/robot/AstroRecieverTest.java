@@ -2,6 +2,8 @@ package robot;
 
 
 
+import java.net.BindException;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -29,36 +31,36 @@ public class AstroRecieverTest {
 	 * <p>
 	 * Not to be included in final version.
 	 * <p>
-
+	 */
 	public static void main(String[] args) {
 		//Added this suppress because I'm not sure it the GC will remove this 
 		//variable if it's not assigned to a local variable
 		@SuppressWarnings("unused")
 		AstroReciever rec = new AstroReciever("localhost", 45000);
-		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-		while(true){
+			
 			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
 			}
-		} 			
-	 */
+			while(true){
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			} 			
+		}
+
 	
 	@Before
 	public void setup(){
-		if(server==null){
-			server = new Connector(port);
-		}
+		
 	}
 	
 	@Test 
-	public void SendNewData(){
+	public void sendNewData(){
+		server = new Connector(port);
 		client = new AstroReciever("localhost", port);
 		try {
 			Thread.sleep(300);
@@ -71,21 +73,34 @@ public class AstroRecieverTest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		server.shutdown();
 		Assert.assertTrue(client.newData());
+		client.close();
 	}	
 	
-	//@Test 
-	public void ClientDisconnect(){
+	@Test
+	public void clientDisconnect() throws BindException{
+		server = new Connector(port);
+		client = new AstroReciever("localhost", port);
+		System.out.println(server.getConnected());
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Assert.assertTrue(client.newData());
+		client.close();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println(server.getConnected());
+		Assert.assertTrue(server.getConnected()==0);
+		server.shutdown();
 	}	
 	
 	//@Test 
-	public void ServerDisconnect(){
+	public void serverDisconnect(){
 		server.sendDataAvailable(20);
 		try {
 			Thread.sleep(500);

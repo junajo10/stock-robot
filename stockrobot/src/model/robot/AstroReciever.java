@@ -25,11 +25,14 @@ public class AstroReciever {
 	private final int PING_DELAY = 450;
 	
 	private boolean newData = false;
+	private boolean shouldRun;
+	
 	private Socket serverSocket;
 	boolean isConnected = false;
 	
 	
 	public AstroReciever(String SERVER_ADRESS, int PORT_NR ) {
+		shouldRun = true;
 		this.PORT_NR = PORT_NR;
 		this.SERVER_ADRESS = SERVER_ADRESS;
 		AstroClient client = new AstroClient();
@@ -58,13 +61,27 @@ public class AstroReciever {
 
 	}
 	
+	/**
+	 * Closes the connection to the server
+	 * <p>
+	 * Used for testing.
+	 *
+	 */
+	public void close() {
+		shouldRun = false;
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+		}
+	}
+	
 	private class AstroClient implements Runnable {
 		
 		InputStreamReader inFromServer;
 		BufferedReader fromServer;
 		@Override
 		public void run() {
-			while (true) {
+			while (shouldRun) {
 				if(!isConnected){
 					connect();
 				}
@@ -141,7 +158,7 @@ public class AstroReciever {
 		OutputStream outToServer;
 		@Override
 		public void run() {
-			while(true){
+			while(shouldRun){
 				while(isConnected && serverSocket.isConnected()){
 					try {
 						outToServer = serverSocket.getOutputStream();
@@ -171,4 +188,5 @@ public class AstroReciever {
 		}
 		
 	}
+
 }
