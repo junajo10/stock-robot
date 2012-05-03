@@ -1,0 +1,34 @@
+Meeting Agenda
+Location: On a bench, outside chalmers.
+Date: 2012-05-03
+Time: 12:00
+Facilitator: Erik Ramqvist
+Note taker: Erik Ramqvist
+Participants: Erik Ramqvist, Mattias Markehed, Daniel Malmqvist
+
+1. Objectives (5 min)
+Next meeing:
+* Complete issues on priority list
+* Mail adam about concrete MVC-example
+
+
+2. Reports (15 min)
+* Wizard is now working.
+* More tests have been added.
+* We have to little code coverage in our tests.
+* Still some entanglement.
+
+3. Discussion items (35 min)
+* We must fix main-menu fuctionallity in some way.
+* We need more GUI-items.
+
+
+4. Outcomes and assignments (5 min)
+* Kristian: Get well.
+* We should all work on the issue-list.
+* Make our test cover more code.
+* Fix engtaglement, we will  mail adam. 
+
+5. Wrap up
+* We will spend more time coding, fixing the issue-list!
+
