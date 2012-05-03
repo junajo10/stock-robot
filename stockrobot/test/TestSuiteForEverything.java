@@ -2,6 +2,7 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import robot.AstroRecieverTest;
 import scraping.parser.SimulationRunnerTest;
 import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
@@ -26,7 +27,8 @@ import database.jpa.MainBasicJPATest;
 	MainBasicJPATest.class,
 	SimulationHandlerTest.class,
 	//SimulationRunnerTest.class
-	Item_cmb_PortfolioTest.class
+	Item_cmb_PortfolioTest.class,
+	AstroRecieverTest.class
 })
 
 public class TestSuiteForEverything {
