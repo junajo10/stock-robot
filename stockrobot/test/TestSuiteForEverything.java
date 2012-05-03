@@ -6,6 +6,7 @@ import scraping.parser.SimulationRunnerTest;
 import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
+import view.components.Item_cmb_PortfolioTest;
 
 import database.jpa.JPATest;
 import database.jpa.MainBasicJPATest;
@@ -24,7 +25,8 @@ import database.jpa.MainBasicJPATest;
 	JPATest.class,
 	MainBasicJPATest.class,
 	SimulationHandlerTest.class,
-	SimulationRunnerTest.class
+	//SimulationRunnerTest.class
+	Item_cmb_PortfolioTest.class
 })
 
 public class TestSuiteForEverything {
