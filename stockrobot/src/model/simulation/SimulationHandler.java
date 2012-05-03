@@ -184,11 +184,6 @@ public class SimulationHandler {
 	private void updateAlgorithm() {
 		portfolio.updateAlgorithm();
 	}
-	private void end() {
-		jpaHelper.getEntityManager().close();
-		jpaSimHelper.getEntityManager().close();
-	}
-	
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }

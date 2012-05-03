@@ -3,7 +3,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import robot.AstroRecieverTest;
-import scraping.parser.SimulationRunnerTest;
 import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
