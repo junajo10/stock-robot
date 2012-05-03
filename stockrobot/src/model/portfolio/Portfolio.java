@@ -35,7 +35,7 @@ public class Portfolio implements IPortfolio {
 		this.portfolioTable = portfolioTable;
 		this.algorithm = algorithm;
 
-		Log.instance().log(TAG.VERY_VERBOSE, "Portfolio " + getName() + " is loaded");
+		Log.instance().log(TAG.VERY_VERBOSE, "Portfolio " + portfolioTable.getName() + " is loaded");
 	}
 	public Portfolio(PortfolioEntity pt) {
 		// Portfolio without algorithm yet.

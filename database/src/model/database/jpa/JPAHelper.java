@@ -23,7 +23,6 @@ public final class JPAHelper extends JPAHelperBase {
 "	<class>model.database.jpa.tables.PortfolioHistory</class>\n" +
 "	<class>model.database.jpa.tables.PortfolioInvestment</class>\n" +
 "	<class>model.database.jpa.tables.PortfolioEntity</class>\n" +
-"	<class>model.database.jpa.tables.StocksToWatch</class>\n" +
 "	<class>model.database.jpa.tables.StockNames</class>\n" +
 "	<class>model.database.jpa.tables.StockPrices</class>\n" +
 "	<class>model.database.jpa.tables.AlgorithmSettingLong</class>\n" +
@@ -44,7 +43,6 @@ public final class JPAHelper extends JPAHelperBase {
 "	<class>model.database.jpa.tables.PortfolioHistory</class>\n" +
 "	<class>model.database.jpa.tables.PortfolioInvestment</class>\n" +
 "	<class>model.database.jpa.tables.PortfolioEntity</class>\n" +
-"	<class>model.database.jpa.tables.StocksToWatch</class>\n" +
 "	<class>model.database.jpa.tables.StockNames</class>\n" +
 "	<class>model.database.jpa.tables.StockPrices</class>\n" +
 "	<class>model.database.jpa.tables.AlgorithmSettingLong</class>\n" +
@@ -89,9 +87,12 @@ public final class JPAHelper extends JPAHelperBase {
 	
 	private void fixPersistenceXML() {
 		File f = new File("bin/META-INF/persistence.xml");
-		
+		File folder = new File("bin/META-INF");
 		System.out.println(f.getAbsolutePath());
 		
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
 		if (f.exists())
 			System.out.println("exists");
 		else {

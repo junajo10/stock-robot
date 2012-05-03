@@ -89,9 +89,6 @@ public class MainMenuController implements IController {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-				System.out.println( "bind open graph" );
-				
 				//The purpose of this line is just to open a new JFrame
 				graphView.init();
 			}

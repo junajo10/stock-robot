@@ -123,7 +123,7 @@ public class ViewFactory {
 	public static SimulationView getSimulationView() {
 		SimulationView sv = new SimulationView();
 		
-		SimulationController sc = new SimulationController(sv);
+		new SimulationController(sv);
 		
 		return sv;
 	}

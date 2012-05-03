@@ -1,1 +1,5 @@
-In order to run the system, you need to make a persistence.xml file in src/META-INF/ with youre database settings. 
+A default persistence will be created the first time the system is started.
+
+If you wish to change look in doc folder for examples.
+
+For setting a different plugin path just edit configuration.xml.

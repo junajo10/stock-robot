@@ -77,10 +77,6 @@ public final class PluginAlgortihmLoader {
 				e.printStackTrace();
 			}
 		}
-		else {
-			for (String a : algorithmMap.keySet())
-				System.out.println(a);
-		}
 		return null;
 	}
 	/**

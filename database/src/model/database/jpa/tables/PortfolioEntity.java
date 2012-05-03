@@ -1,7 +1,5 @@
 package model.database.jpa.tables;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -55,11 +53,7 @@ public class PortfolioEntity {
     @CollectionTable(name = "investments")
     private Set<PortfolioInvestment> investments = new HashSet<PortfolioInvestment>();
     
-	
-	@ElementCollection
-    @CollectionTable(name = "stocksToWatch")
-	private Set<StocksToWatch> stocksToWatch = new HashSet<StocksToWatch>();
-	
+		
 	@Embedded
 	private AlgorithmSettings algorithmSettings;
 	
@@ -173,17 +167,6 @@ public class PortfolioEntity {
 		return name + " | " + balance;
 	}
 	/**
-	 * Will return a list of StockNames this portfolio is set to watch
-	 * @return a list of StockNames this portfolio is set to watch
-	 */
-	public List<StockNames> getStocksToWatch() {
-		List<StockNames> stocks = new ArrayList<StockNames>();
-		for (StocksToWatch stw : stocksToWatch) {
-			stocks.add(stw.getStockName());
-		}
-		return stocks;
-	}
-	/**
 	 * Helper method that the trader will use to remove money from the portfolio
 	 * @param amount amount to remove from the portfolio
 	 */
@@ -224,19 +207,6 @@ public class PortfolioEntity {
 				result -= pi.getAmount();
 		}
 		return result;
-	}
-	public boolean addStockToWatch(StockNames stockName) {
-		stocksToWatch.add(new StocksToWatch(stockName));
-		return true;
-	}
-	public boolean removeStockToWatch(StockNames stockName) {
-		for (StocksToWatch s : stocksToWatch) {
-			if (s.getStockName().getName().equals(stockName.getName())) {
-				stocksToWatch.remove(s);
-				return true;
-			}
-		}
-		return false;
 	}
 	public AlgorithmSettings getAlgortihmSettings() {
 		return algorithmSettings;
