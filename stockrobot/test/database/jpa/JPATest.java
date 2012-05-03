@@ -67,22 +67,6 @@ public class JPATest {
 		}
 	}
 	@Test
-	public void testStocksToWatch() {
-		PortfolioEntity p = new PortfolioEntity("StockToWatchTest");
-		jpaHelper.storeObject(p);
-		
-		StockNames stockName = new StockNames("stock", "market");
-		jpaHelper.storeObject(stockName);
-		
-		p.addStockToWatch(stockName);
-		jpaHelper.updateObject(p);
-		
-		for (StockNames s : p.getStocksToWatch()) {
-			System.out.println(s);
-		}
-	}
-	
-	@Test
 	public void testAddStocks() {
 		List<ParserStock> list = new ArrayList<ParserStock>(); 
 		

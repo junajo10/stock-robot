@@ -25,7 +25,6 @@ import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.PortfolioInvestment;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.database.jpa.tables.StocksToWatch;
 
 
 
@@ -93,18 +92,6 @@ class JPAHelperBase implements IJPAHelper {
 		}
 		
 		return list;
-	}
-	@Override
-	public List<StocksToWatch> getAllStocksToWatch() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<StocksToWatch> q2 = cb.createQuery(StocksToWatch.class);
-
-		Root<StocksToWatch> c = q2.from(StocksToWatch.class);
-
-		q2.select(c);
-
-		TypedQuery<StocksToWatch> query = em.createQuery(q2);
-		return query.getResultList();
 	}
 	@Override
 	public List<Pair<StockNames, List<StockPrices>>> getStockInfo(int nLatest) {
@@ -284,13 +271,7 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public List<StockNames> getStockNames(PortfolioEntity portfolioTable) {
-
-		if (portfolioTable.watchAllStocks()) {
-			return getAllStockNames();
-		}
-		else {
-			return portfolioTable.getStocksToWatch();
-		}
+		return getAllStockNames();
 	}
 	@Override
 	public List<StockPrices> getCurrentStocks(PortfolioEntity portfolioTable) {
