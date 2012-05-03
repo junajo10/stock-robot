@@ -6,29 +6,21 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
-import model.database.jpa.JPAHelperSimulator;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import testhelpers.DatabaseCleaner;
 
 /**
  * @author Daniel
  *
  * This is mainly a test class for learning JPA.
 */
-public class MainBasicJPATest {
-	private static JPAHelperSimulator jpaHelper;
-
-	@BeforeClass
-	public static void beforeClass(){ //First of all
-		jpaHelper = new JPAHelperSimulator();
-	}
+public class MainBasicJPATest extends DatabaseCleaner {
 	
 	@Test 
 	public void addNewPortfolios() {
@@ -44,6 +36,17 @@ public class MainBasicJPATest {
 	}
 	@Test
 	public void mainTest() {
+		
+	//__ These two blocks of code are stolen from above, just to provide portfolios 
+	//	 to test now that everything is wiped from the DB between tests
+		PortfolioEntity portfolio = new PortfolioEntity("portfolio 1");
+		portfolio.setAlgorithm("TestAlgorithm1");
+		jpaHelper.storeObject(portfolio);
+		
+		PortfolioEntity portfolio2 = new PortfolioEntity("portfolio 2");
+		portfolio.setAlgorithm("TestAlgorithm2");
+		jpaHelper.storeObject(portfolio2);
+	//
 		
 		for (PortfolioEntity p : jpaHelper.getAllPortfolios()) {
 			jpaHelper.investMoney(10000000, p);
@@ -157,27 +160,5 @@ public class MainBasicJPATest {
 		}
 		
 		jpaHelper.remove(stock);
-	}
-
-	/**
-	 * Removes all entitys from the database
-	 */
-	@AfterClass
-	public static void afterClass() {
-		
-		while (jpaHelper.getAllPortfolios().size() > 0) {
-			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
-			jpaHelper.remove(p);
-		}
-	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
-	    	System.out.println(sp);
-	    	jpaHelper.remove(sp);
-	    }
-		for (StockNames sn : jpaHelper.getAllStockNames()) {
-			System.out.println(sn);
-	    	jpaHelper.remove(sn);
-		}
-		
-		jpaHelper.stopJPASystem();
 	}
 }

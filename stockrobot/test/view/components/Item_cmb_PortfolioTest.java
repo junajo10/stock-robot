@@ -2,13 +2,15 @@ package view.components;
 
 import junit.framework.Assert;
 
-import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.portfolio.Portfolio;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import testhelpers.DatabaseCleaner;
 
 /**
  * Test Item_cmb_PortfolioTest
@@ -16,7 +18,7 @@ import org.junit.Test;
  * @author kristian
  *
  */
-public class Item_cmb_PortfolioTest {
+public class Item_cmb_PortfolioTest extends DatabaseCleaner {
 
 	Item_cmb_Portfolio toTest;
 	IPortfolio portfolio;
@@ -24,15 +26,20 @@ public class Item_cmb_PortfolioTest {
 	@Before
 	public void setup() {
 		
-		//Apparently needed just to set JPA up so it's possible to test the created portfolio later
-		JPAHelper.getInstance();
-		
 		//Stuff Item_cmb_Portfolio uses:
 		PortfolioEntity ent = new PortfolioEntity( "Item_cmb_PortfolioTest::Test" );
 		portfolio = new Portfolio( ent );
 		
 		//Initialize the tested class
 		toTest = new Item_cmb_Portfolio( portfolio );
+	}
+	
+	@After
+	public void tearDown() {
+		
+		//Prepare for GC
+		portfolio = null;
+		toTest = null;
 	}
 	
 	/**
