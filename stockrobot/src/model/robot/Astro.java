@@ -43,7 +43,7 @@ public class Astro implements IRobot_Algorithms{
 	ITrader trader = TraderSimulator.getInstance();
 	IJPAHelper jpaHelper = JPAHelper.getInstance();
 	Random rand = new Random(System.currentTimeMillis());
-	//PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+
 	RobotScheduler rs = null;
 
 	private static boolean simulate = false;
@@ -55,7 +55,6 @@ public class Astro implements IRobot_Algorithms{
 	/**
 	 * Starts the system up
 	 */
-	//TODO: In a new thread?
 	private void start() {
 		
 		Log.instance().log(TAG.NORMAL, "ASTRo is starting up.");
@@ -77,7 +76,6 @@ public class Astro implements IRobot_Algorithms{
 		}
 		
 		portfolioGui 		= ViewFactory.getPortfolioView(portfolioHandler,trader);
-		//portfolioController = new PortfolioController(portfolioGui,portfolioHandler,trader);
 		
 		while(true) {
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
@@ -89,13 +87,10 @@ public class Astro implements IRobot_Algorithms{
 						Log.instance().log(TAG.VERBOSE, "More money invested: " + newInvestment + " to portfolio: " + p);
 					}
 				}
-
-				//p.updateAlgorithm();
 			}
 			try {
 				Thread.sleep(timeBetweenUpdates);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

@@ -9,7 +9,6 @@ import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.database.jpa.tables.StocksToWatch;
 
 
 /**
@@ -41,12 +40,6 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @return A list of stockPrices
 	 */
 	public List<StockPrices> getStockPricesReverseOrdered(int limit);
-	/**
-	 * Will give back all StocksToWatch
-	 * @return A list of StocksToWatch
-	 */
-	public List<StocksToWatch> getAllStocksToWatch();
-	
 	/**
 	 * Updates an object to the database
 	 * @param o The object to be updated.

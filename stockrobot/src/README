@@ -1,4 +1,5 @@
 A default persistence will be created the first time the system is started.
 
 If you wish to change look in doc folder for examples.
-  
+
+For setting a different plugin path just edit configuration.xml.

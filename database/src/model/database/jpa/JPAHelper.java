@@ -89,9 +89,12 @@ public final class JPAHelper extends JPAHelperBase {
 	
 	private void fixPersistenceXML() {
 		File f = new File("bin/META-INF/persistence.xml");
-		
+		File folder = new File("bin/META-INF");
 		System.out.println(f.getAbsolutePath());
 		
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
 		if (f.exists())
 			System.out.println("exists");
 		else {
