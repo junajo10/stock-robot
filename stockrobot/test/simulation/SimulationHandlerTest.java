@@ -1,5 +1,9 @@
 package simulation;
 
+import java.util.Date;
+
+import model.database.jpa.tables.StockNames;
+import model.database.jpa.tables.StockPrices;
 import model.simulation.SimulationHandler;
 
 import org.junit.Before;
@@ -9,8 +13,7 @@ import testhelpers.DatabaseCleaner;
 
 /**
  * 
- * @author ???
- *
+ * @author Daniel
  */
 public class SimulationHandlerTest extends DatabaseCleaner {
 	
@@ -20,8 +23,14 @@ public class SimulationHandlerTest extends DatabaseCleaner {
 	public void before() { //First of all, create a simulationHandler
 		
 		simulationHandler = new SimulationHandler();
+		StockNames sn = new StockNames("Test stock", "Market");
+		
+		jpaHelper.storeObject(sn);
+		
+		for (int i = 0; i < 100; i++) {
+			jpaHelper.storeObject(new StockPrices(sn, 10, 10, 10*i, 10*i, new Date(i*10000)));
+		}
 	}
-	
 	@Test
 	public void test() {
 		simulationHandler.clearTestDatabase();
