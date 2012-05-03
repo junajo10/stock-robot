@@ -126,7 +126,9 @@ public final class PortfolioHandler implements IPortfolioHandler{
 	@Override
 	public boolean removePortfolio(IPortfolio portfolio) {
 		if (portfolio.getPortfolioTable().getBalance() == 0) {
+			listOfPortfolios.remove(portfolio);
 			jpaHelper.remove(portfolio.getPortfolioTable());
+			return true;
 		}
 		return false;
 	}

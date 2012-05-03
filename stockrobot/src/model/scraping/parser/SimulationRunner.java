@@ -23,7 +23,7 @@ public class SimulationRunner implements IParserRunner {
 
 	boolean run = false;
 	boolean close = false;
-	//AvanzaParser parser;
+
 	IScheduler scheduler;
 	IInserter inserter;
 	HarvesterServer server;

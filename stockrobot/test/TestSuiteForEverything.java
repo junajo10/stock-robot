@@ -2,6 +2,8 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import portfolio.PortfolioHandlerTest;
+
 import robot.AstroRecieverTest;
 import robot.RobotSchedulerTest;
 import scraping.ParserStockTest;
@@ -38,7 +40,8 @@ import database.jpa.MainBasicJPATest;
 	Item_cmb_PortfolioTest.class,
 	AstroRecieverTest.class,
 	ParserStockTest.class,
-	RobotSchedulerTest.class,
+	PortfolioHandlerTest.class,
+	RobotSchedulerTest.class
 })
 
 public class TestSuiteForEverything {

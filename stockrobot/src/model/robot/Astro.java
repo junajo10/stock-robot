@@ -79,7 +79,7 @@ public class Astro implements IRobot_Algorithms{
 		
 		while(true) {
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {
-				if (simulate) {
+				if (simulate && p.getName().contains("sim portfolio")) {
 					if (rand.nextInt(10) == 1) {
 						long newInvestment = ((long)rand.nextInt(1000)*1000000);
 
