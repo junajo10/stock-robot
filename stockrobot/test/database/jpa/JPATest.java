@@ -7,8 +7,6 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
-import model.database.jpa.IJPAHelper;
-import model.database.jpa.JPAHelperSimulator;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
@@ -16,21 +14,14 @@ import model.scraping.database.IInserter;
 import model.scraping.database.JPAInserter;
 import model.scraping.model.ParserStock;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import testhelpers.DatabaseCleaner;
 
-
-public class JPATest {
+public class JPATest extends DatabaseCleaner {
 	
-	static IJPAHelper jpaHelper;
 	static Random rand = new Random(System.currentTimeMillis());
 	
-	@BeforeClass
-	public static void beforeClass(){ //First of all
-		jpaHelper = new JPAHelperSimulator();
-	}
 	@Test(expected=Exception.class)
 	public void testDuplicateEntry() {
 		StockPrices sp = new StockPrices(new StockNames("Stock1", "marketA"), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
@@ -152,6 +143,10 @@ public class JPATest {
 		
 		Assert.assertEquals(amountToInvest, p.getBalance());
 	}
+	
+	/*
+	 * 
+	 * TODO: fix this to add some stock with connected prices before running the test. Right now it checks with a clean database
 	@Test
 	public void testStockNamesGetPrices() {
 		boolean found = false;
@@ -163,21 +158,5 @@ public class JPATest {
 		if (!found) {
 			Assert.fail();
 		}
-	}
-	/**
-	 * Removes all entitys from the database
-	 */
-	@AfterClass
-	public static void afterClass() {
-		while (jpaHelper.getAllPortfolios().size() > 0) {
-			PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
-			jpaHelper.remove(p);
-		}
-	    for (StockPrices sp : jpaHelper.getAllStockPrices()) {
-	    	jpaHelper.remove(sp);
-	    }
-		for (StockNames sn : jpaHelper.getAllStockNames()) {
-	    	jpaHelper.remove(sn);
-		}
-	}
+	}*/
 }

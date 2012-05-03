@@ -1,4 +1,6 @@
+package testhelpers;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 
 import model.database.jpa.IJPAHelper;
@@ -20,17 +22,32 @@ import model.database.jpa.tables.StockPrices;
 public class DatabaseCleaner {
 
 	//Protected variables, accessible in subclasses
-	protected IJPAHelper jpaHelper;
+	protected static IJPAHelper jpaHelper;
 	
+	/**
+	 * Before each class DB test suite is instantiated
+	 */
 	@BeforeClass
-	public void before() {
+	public static void beforeClass() {
 		
 		jpaHelper = JPAHelper.getInstance();
 		cleanDatabase();
 	}  
 	
+	/**
+	 * Before every test in a suite
+	 */
+	@Before
+	public void before() {
+		
+		cleanDatabase();
+	}
+	
+	/**
+	 * After running each DB test suite completely
+	 */
 	@AfterClass
-	public void after() {
+	public static void afterClass() {
 		
 		cleanDatabase();
 		jpaHelper = null;
@@ -41,7 +58,7 @@ public class DatabaseCleaner {
 	/**
 	 * Clean Database
 	 */
-	private void cleanDatabase() {
+	private static void cleanDatabase() {
 		
 		while( jpaHelper.getAllPortfolios().size() > 0 ) {
 			
