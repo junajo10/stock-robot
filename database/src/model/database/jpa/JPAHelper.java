@@ -30,9 +30,8 @@ public final class JPAHelper extends JPAHelperBase {
 "	<class>model.database.jpa.tables.AlgorithmSettingDouble</class>\n" +
 "	<class>model.database.jpa.tables.AlgorithmSettings</class>\n" +
 "	<properties>\n" +
-"		<property name=\"openjpa.ConnectionUserName\" value=\"astrobot\"/>\n" +
-"		<property name=\"openjpa.ConnectionPassword\" value=\"sp4c3\"/>\n" +
-"		<property name=\"openjpa.ConnectionURL\" value=\"jdbc:hsqldb:testnewnew\"/> <!-- jdbc:hsqldb:testnewnew, jdbc:mysql://localhost:8889/TESTALITE, jdbc:mysql://localhost:3306/ASTRO?autoReconnect=true -->\n" +
+"		<property name=\"openjpa.Multithreaded\" value=\"true\"/>\n " +
+"		<property name=\"openjpa.ConnectionURL\" value=\"jdbc:hsqldb:astrodatabase\"/>\n" +
 "		<property name=\"openjpa.ConnectionDriverName\" value=\"org.hsqldb.jdbcDriver\"/> <!--  org.hsqldb.jdbcDriver -->\n" +
 "		<property name=\"openjpa.jdbc.SynchronizeMappings\" value=\"buildSchema\"/>\n" +
 "		<property name=\"openjpa.Log\" value=\"\"/>\n" +
@@ -52,9 +51,8 @@ public final class JPAHelper extends JPAHelperBase {
 "	<class>model.database.jpa.tables.AlgorithmSettingDouble</class>\n" +
 "	<class>model.database.jpa.tables.AlgorithmSettings</class>\n" +
 "	<properties>\n" +
-"		<property name=\"openjpa.ConnectionUserName\" value=\"astrobot\"/>\n" +
-"		<property name=\"openjpa.ConnectionPassword\" value=\"sp4c3\"/>\n" +
-"		<property name=\"openjpa.ConnectionURL\" value=\"jdbc:hsqldb:apr292012\"/> <!-- jdbc:hsqldb:testnewnew, jdbc:mysql://localhost:8889/TESTALITE, jdbc:mysql://localhost:3306/ASTRO?autoReconnect=true, jdbc:hsqldb:testnewnew2 -->\n" +
+"		<property name=\"openjpa.Multithreaded\" value=\"true\"/>\n " +
+"		<property name=\"openjpa.ConnectionURL\" value=\"jdbc:hsqldb:astrotestdatabase\"/>\n" +
 "		<property name=\"openjpa.ConnectionDriverName\" value=\"org.hsqldb.jdbcDriver\"/> <!--  org.hsqldb.jdbcDriver com.mysql.jdbc.Driver -->\n" +
 "		<property name=\"openjpa.jdbc.SynchronizeMappings\" value=\"buildSchema\"/>\n" +
 "		<property name=\"openjpa.Log\" value=\"\"/>\n" +
@@ -63,6 +61,7 @@ public final class JPAHelper extends JPAHelperBase {
 "	</properties>\n" +
 "</persistence-unit>\n" +
 "</persistence>"; 
+	
 	
 	
 	/**
