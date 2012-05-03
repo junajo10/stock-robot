@@ -57,8 +57,11 @@ public class AstroReciever {
 			newData = false;
 			return true;
 		}
-		return false;
-
+		while(!newData){
+			
+		}
+		newData = false;
+		return true;
 	}
 	
 	/**
