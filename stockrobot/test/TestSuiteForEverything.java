@@ -32,7 +32,7 @@ import database.jpa.MainBasicJPATest;
 	JPATest.class,
 	MainBasicJPATest.class,
 	SimulationHandlerTest.class,
-//	SimulationRunnerTest.class,
+	SimulationRunnerTest.class,
 	Item_cmb_PortfolioTest.class,
 	AstroRecieverTest.class
 })

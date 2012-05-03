@@ -24,6 +24,8 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 	private boolean okToShutDown = false;
 	private Thread th;
 	
+	private static final int pollingTime = 100;
+	
 	@Before
 	public void setup() {
 		
@@ -46,9 +48,6 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 					
 					e.printStackTrace();
 				}
-				
-				
-				
 			}
 		} );
 		th.start();
@@ -56,50 +55,45 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		while( !runnercreated ) {
 			
 			try {
-				Thread.sleep(100);
+				Thread.sleep(pollingTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		System.out.println( "AAAA" );
 	}
 	
 	@After
 	public void tearDown() {
 		
-		System.out.println( "After1" );
-		
-			new Thread( new Runnable() {
-				
-				@Override
-				public void run() {
-					
-					try {
-						if(th != null)
-							th.join();
-						
-						if(runner != null)
-							runner.stopParser();
-						
-						okToShutDown = true;
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}					
-				}
+		new Thread( new Runnable() {
 			
-			}).start();
+			@Override
+			public void run() {
+				
+				try {
+					if(th != null)
+						th.join();
+					
+					if(runner != null)
+						runner.stopParser();
+					
+					okToShutDown = true;
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}					
+			}
+		
+		}).start();
 		
 		while( okToShutDown ) {
 			
 			try {
-				Thread.sleep(100);
+				Thread.sleep(pollingTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-			
 		
 		runnercreated = false;
 		
@@ -111,16 +105,14 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 	@Test
 	public void notYetStarted() {
 		
-		Assert.assertTrue(true);
-		
-		System.out.println( "notYetStarted" );
-		/*
 		while( !runnercreated ) {
 			
-			System.out.println("not runninbf");
+			try {
+				Thread.sleep(pollingTime);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		System.out.println("RUNNING");
 		
 		//The runner has not yet been told to start, and should not have started
 		boolean isRunning = false;
@@ -130,41 +122,29 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 			
 			isRunning = runner.status();
 			
-			System.out.println( "LOOP!" );
-			
 			//If the status method of SimulationRunner has returned true here, then we know something is wrong!
 			if( isRunning )
 				break;
 		}
 		
-		System.out.println( "LOOP FINISHGED" + isRunning );
-		
 		//We want isRunning to be false here, even after testing it 1000 to 2000 times.
 		//This is merely to ensure nothing strange happens in the first few runs
 		Assert.assertFalse( isRunning );
-		*/
 	}
 	
 	@Test
 	public void started() {
 		
-		System.out.println( "started" );
-		
-		Assert.assertTrue(true);
-		
-		System.out.println( "started" );
-		/*
-		while( !runnercreated ) {}
+		while( !runnercreated ) {
+			
+			try {
+				Thread.sleep(pollingTime);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		runner.startParser();
-		
-		//Wait some to make sure the runner starts running
-		try {
-			Thread.sleep(15000);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
 		
 		//The runner has not yet been told to start, and should not have started
 		boolean isRunning = true;
@@ -182,20 +162,19 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		//We want isRunning to be false here, even after testing it 1000 to 2000 times.
 		//This is merely to ensure nothing strange happens in the first few runs
 		Assert.assertTrue( isRunning );
-		*/
 	}
 	
 	@Test
 	public void startAndStop() {
 		
-		System.out.println( "startAndStop" );
-		
-		Assert.assertTrue(true);
-		
-		System.out.println( "startAndStop" );
-		
-		/*
-		while( !runnercreated ) {}
+		while( !runnercreated ) {
+			
+			try {
+				Thread.sleep(pollingTime);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		//Start
 		runner.startParser();
@@ -207,6 +186,5 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		
 		//Check so it's started and stopped
 		Assert.assertTrue( runningAfterRun && !runningAfterStop );
-		*/
 	}
 }
