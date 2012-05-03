@@ -44,8 +44,9 @@ public final class TraderSimulator implements ITrader{
 			jpaHelper.updateObject(portfolio);
 			
 			propertyChangeSuport.firePropertyChange(BUY_STOCK, null, portfolio);
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override

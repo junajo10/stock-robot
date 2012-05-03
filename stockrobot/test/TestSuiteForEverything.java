@@ -6,6 +6,7 @@ import portfolio.PortfolioHandlerTest;
 
 import robot.AstroRecieverTest;
 import robot.RobotSchedulerTest;
+import robot.TraderTest;
 import scraping.ParserStockTest;
 import scraping.parser.SimulationRunnerTest;
 import simulation.SimulationHandlerTest;
@@ -41,6 +42,7 @@ import database.jpa.MainBasicJPATest;
 	AstroRecieverTest.class,
 	ParserStockTest.class,
 	PortfolioHandlerTest.class,
+	TraderTest.class,
 	RobotSchedulerTest.class
 })
 
