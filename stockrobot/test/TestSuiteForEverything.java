@@ -21,7 +21,6 @@ import database.jpa.MainBasicJPATest;
 @Suite.SuiteClasses({
 	FinancialLongConverterTest.class,
 	PairTest.class,
-	//JPAHelperForUnderstanding.class,
 	JPATest.class,
 	MainBasicJPATest.class,
 	SimulationHandlerTest.class,
