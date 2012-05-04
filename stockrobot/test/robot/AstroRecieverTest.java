@@ -82,7 +82,6 @@ public class AstroRecieverTest {
 	public void clientDisconnect() throws BindException{
 		server = new Connector(port);
 		client = new AstroReciever("localhost", port);
-		System.out.println(server.getConnected());
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -94,20 +93,29 @@ public class AstroRecieverTest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.println(server.getConnected());
 		Assert.assertTrue(server.getConnected()==0);
 		server.shutdown();
 	}	
 	
-	//@Test 
+	@Test 
 	public void serverDisconnect(){
+		server = new Connector(port);
+		client = new AstroReciever("localhost", port);
 		server.sendDataAvailable(20);
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		server.shutdown();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		Assert.assertTrue(client.newData());
+		Assert.assertTrue(!client.isConnected());
+		client.close();
 	}
 	
 

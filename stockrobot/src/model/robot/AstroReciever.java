@@ -78,6 +78,15 @@ public class AstroReciever {
 		}
 	}
 	
+	/**
+	 * Checks if AstroReciever is connected to server.
+	 * <p>
+	 * Used for testing.
+	 */
+	public boolean isConnected() {
+		return isConnected;
+	}
+	
 	private class AstroClient implements Runnable {
 		
 		InputStreamReader inFromServer;
