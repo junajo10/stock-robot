@@ -12,7 +12,7 @@ import scraping.parser.SimulationRunnerTest;
 import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
-import view.components.Item_cmb_PortfolioTest;
+import view.components.ItemCmbPortfolioTest;
 
 import database.jpa.JPATest;
 import database.jpa.MainBasicJPATest;
@@ -38,7 +38,7 @@ import database.jpa.MainBasicJPATest;
 	MainBasicJPATest.class,
 	SimulationHandlerTest.class,
 	SimulationRunnerTest.class,
-	Item_cmb_PortfolioTest.class,
+	ItemCmbPortfolioTest.class,
 	AstroRecieverTest.class,
 	ParserStockTest.class,
 	PortfolioHandlerTest.class,

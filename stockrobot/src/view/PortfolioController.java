@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 
-import view.components.Item_cmb_Portfolio;
+import view.components.ItemCmbPortfolio;
 import viewfactory.ViewFactory;
 
 import model.portfolio.IPortfolio;
@@ -69,9 +69,9 @@ public class PortfolioController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if ((Item_cmb_Portfolio)((JComboBox)e.getSource()).getSelectedItem() != null) {
+			if ((ItemCmbPortfolio)((JComboBox)e.getSource()).getSelectedItem() != null) {
 
-				IPortfolio portfolio = ((Item_cmb_Portfolio)((JComboBox)e.getSource()).getSelectedItem()).getPortfolio();
+				IPortfolio portfolio = ((ItemCmbPortfolio)((JComboBox)e.getSource()).getSelectedItem()).getPortfolio();
 				gui.setPortfolio(portfolio);
 				System.out.println(portfolio);
 				gui.updateCash();

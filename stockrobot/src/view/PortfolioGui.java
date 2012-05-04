@@ -31,7 +31,7 @@ import model.trader.ITrader;
 import utils.global.FinancialLongConverter;
 import view.components.GUIFactory;
 import view.components.IGUIFactory;
-import view.components.Item_cmb_Portfolio;
+import view.components.ItemCmbPortfolio;
 import viewfactory.ViewFactory;
 
 /**
@@ -237,7 +237,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 			cmb_hld_portfolio.removeAllElements();
 			for(int i = 0; i < portfolios.size(); i++){
 				
-				cmb_hld_portfolio.addElement(new Item_cmb_Portfolio(portfolios.get(i)));
+				cmb_hld_portfolio.addElement(new ItemCmbPortfolio(portfolios.get(i)));
 			}
 			if(portfolios.contains(selected))
 				cmb_hld_portfolio.setSelectedItem(selected);

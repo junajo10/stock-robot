@@ -22,7 +22,7 @@ import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 import view.components.GUIFactory;
 import view.components.IGUIFactory;
-import view.components.Item_cmb_Portfolio;
+import view.components.ItemCmbPortfolio;
 import view.wizard.WizardPage;
 
 public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
@@ -122,7 +122,7 @@ public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
 			cmb_hld_ClonePortfolioList.removeAllElements();
 			for(int i = 0; i < portfolios.size(); i++){
 				
-				cmb_hld_ClonePortfolioList.addElement(new Item_cmb_Portfolio(portfolios.get(i)));
+				cmb_hld_ClonePortfolioList.addElement(new ItemCmbPortfolio(portfolios.get(i)));
 			}
 			if(portfolios.contains(selected))
 				cmb_hld_ClonePortfolioList.setSelectedItem(selected);

@@ -18,9 +18,9 @@ import testhelpers.DatabaseCleaner;
  * @author kristian
  *
  */
-public class Item_cmb_PortfolioTest extends DatabaseCleaner {
+public class ItemCmbPortfolioTest extends DatabaseCleaner {
 
-	Item_cmb_Portfolio toTest;
+	ItemCmbPortfolio toTest;
 	IPortfolio portfolio;
 	
 	@Before
@@ -31,7 +31,7 @@ public class Item_cmb_PortfolioTest extends DatabaseCleaner {
 		portfolio = new Portfolio( ent );
 		
 		//Initialize the tested class
-		toTest = new Item_cmb_Portfolio( portfolio );
+		toTest = new ItemCmbPortfolio( portfolio );
 	}
 	
 	@After

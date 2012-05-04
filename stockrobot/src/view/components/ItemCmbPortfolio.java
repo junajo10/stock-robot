@@ -11,11 +11,11 @@ import model.portfolio.IPortfolio;
  * Item_cmb_Portfolio is used as an adapter for the mapping IPortfolios
  * to the combo box containing portfolios
  */
-public class Item_cmb_Portfolio{
+public class ItemCmbPortfolio{
 	
 	private IPortfolio portfolio;
 	
-	public Item_cmb_Portfolio(IPortfolio portfolio){
+	public ItemCmbPortfolio(IPortfolio portfolio){
 		this.portfolio = portfolio;
 	}
 	
