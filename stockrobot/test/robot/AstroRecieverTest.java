@@ -32,7 +32,7 @@ public class AstroRecieverTest {
 	 * Not to be included in final version.
 	 * <p>
 	 */
-	public static void main(String[] args) {
+		/*public static void main(String[] args) {
 		//Added this suppress because I'm not sure it the GC will remove this 
 		//variable if it's not assigned to a local variable
 		@SuppressWarnings("unused")
@@ -50,7 +50,20 @@ public class AstroRecieverTest {
 					e.printStackTrace();
 				}
 			} 			
+		}*/
+	
+	/*public static void main(String[] args){
+		Connector connect = new Connector(45000);
+		while(true){
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+			connect.sendDataAvailable(22);
 		}
+	}*/
 
 	
 	@Before

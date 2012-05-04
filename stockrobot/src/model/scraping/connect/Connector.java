@@ -187,17 +187,4 @@ public class Connector implements IConnector {
 			}
 		}
 	}
-	
-	public static void main(String[] args){
-		Connector connect = new Connector(45000);
-		while(true){
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
-			}
-			connect.sendDataAvailable(22);
-		}
-	}
 }
