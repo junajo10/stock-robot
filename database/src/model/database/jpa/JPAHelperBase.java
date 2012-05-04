@@ -22,7 +22,6 @@ import utils.global.Pair;
 
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
-import model.database.jpa.tables.PortfolioInvestment;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 
@@ -333,27 +332,7 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public long getTotalInvestedAmount(PortfolioEntity portfolioTable) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<PortfolioInvestment> q2 = cb.createQuery(PortfolioInvestment.class);
-
-		Root<PortfolioInvestment> c = q2.from(PortfolioInvestment.class);
-
-		q2.select(c);
-
-		TypedQuery<PortfolioInvestment> query = em.createQuery(q2);
-
-		Predicate p = em.getCriteriaBuilder().equal(c.get("portfolio").get("portfolioId"), portfolioTable.getPortfolioId());
-		Predicate p2 = em.getCriteriaBuilder().notEqual(c.get("invested"), false);
-
-		q2.where(p, p2);
-
-		List<PortfolioInvestment> result = query.getResultList();
-
-		long sum = 0;
-		for (PortfolioInvestment ph : result)
-			sum += ph.getAmount();
-
-				return sum;
+		return portfolioTable.getTotalInvestedAmount();
 	}
 	@Override
 	public List<PortfolioHistory> getPortfolioHistory(StockPrices sp, PortfolioEntity portfolioTable) {

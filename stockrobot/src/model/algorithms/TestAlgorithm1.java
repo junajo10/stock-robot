@@ -40,15 +40,6 @@ public class TestAlgorithm1 implements IAlgorithm{
 	public TestAlgorithm1() {
 		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm constructor");
 	}
-	public TestAlgorithm1(IRobot_Algorithms robot, IPortfolio portfolio, ITrader trader) {
-		this.robot = robot;
-		this.portfolio = portfolio;
-		this.trader = trader;
-		this.jpaHelper = robot.getJPAHelper();
-
-		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm constructor");
-	}
-
 	@Override
 	public boolean update() {
 

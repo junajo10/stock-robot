@@ -3,6 +3,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import portfolio.PortfolioHandlerTest;
+import portfolio.PortfolioTest;
 
 import robot.AstroRecieverTest;
 import robot.RobotSchedulerTest;
@@ -43,6 +44,7 @@ import database.jpa.MainBasicJPATest;
 	ParserStockTest.class,
 	PortfolioHandlerTest.class,
 	TraderTest.class,
+	PortfolioTest.class,
 	RobotSchedulerTest.class
 })
 
