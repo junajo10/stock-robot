@@ -21,6 +21,7 @@ import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
 import view.components.ItemCmbPortfolioTest;
+import model.wizard.WizardModelTest;
 
 /**
  * Class to wrap other unit test classes, so we can test everything we want to in one single run
@@ -55,7 +56,7 @@ import view.components.ItemCmbPortfolioTest;
 	RobotSchedulerTest.class,
 	WizardControllerTest.class,
 	WizardFromNewPageControllerTest.class,
-	
+	WizardModelTest.class,
 })
 
 public class TestSuiteForEverything {

@@ -74,7 +74,7 @@ public class WizardFromNewPageControllerTest {
 		
 		listener.itemStateChanged(fakeEvent);
 		
-		Assert.assertEquals( true, toTest.getWizardModel().getFinish() );
+		Assert.assertEquals( true, toTest.getWizardModel().isAllowedFinish() );
 	}
 	
 	/**
@@ -109,6 +109,6 @@ public class WizardFromNewPageControllerTest {
 		
 		listener.itemStateChanged(fakeEvent);
 		
-		Assert.assertEquals( false, toTest.getWizardModel().getFinish() );
+		Assert.assertEquals( false, toTest.getWizardModel().isAllowedFinish() );
 	}
 }
