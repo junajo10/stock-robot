@@ -7,6 +7,7 @@ import controller.gui.MainMenuControllerTest;
 import controller.gui.SimulationControllerTest;
 import controller.wizard.WizardContoller;
 import controller.wizard.WizardControllerTest;
+import controller.wizard.portfolio.WizardFromNewPageControllerTest;
 
 import portfolio.PortfolioHandlerTest;
 import portfolio.PortfolioTest;
@@ -55,6 +56,8 @@ import database.jpa.MainBasicJPATest;
 	PortfolioTest.class,
 	RobotSchedulerTest.class,
 	WizardControllerTest.class,
+	WizardFromNewPageControllerTest.class,
+	
 })
 
 public class TestSuiteForEverything {
