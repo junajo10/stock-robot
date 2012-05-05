@@ -3,7 +3,6 @@ package portfolio;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.database.jpa.IJPAHelper;
