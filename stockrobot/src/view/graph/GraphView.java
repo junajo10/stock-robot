@@ -94,8 +94,6 @@ public class GraphView extends JFrame {
      */
     public void init() {
     	
-    	System.out.println( "INIT INIT INIT INIT!!!!" );
-    	
     	pack();
     	setVisible( true );
     }
