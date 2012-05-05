@@ -1,7 +1,5 @@
 package model.scraping.scheduler;
 
-import java.util.Date;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 
@@ -61,27 +59,12 @@ public class Scheduler implements IScheduler {
 			return true;
 		}
 
-	//TODO: IMPLEMENT setStartTime
-	@Override
-	public void setStartTime(Date start) {
-		
-		//startTime = start;
-	}
-
-	//TODO: IMPLEMENT setEndTime
-	@Override
-	public void setEndTime(Date end) {
-		
-		//endTime = end;
-	}
-
 	@Override
 	public void shouldRun(boolean run) {
 		
 		_shouldRun = run;
 	}
 	
-
 	public long timeUntilNextParse() {
 		long time = 0;
 		

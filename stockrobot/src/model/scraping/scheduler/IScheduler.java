@@ -17,21 +17,6 @@ public interface IScheduler {
 	 */
 	public boolean shouldRun();
 	
-	/**
-	 * A date that represents what the start time for a specific data source should be
-	 * 
-	 * @param start
-	 * @return
-	 */
-	public void setStartTime( Date start );
-	
-	/**
-	 * A date that represents what the end time for a specific data source should be
-	 * 
-	 * @param end
-	 * @return
-	 */
-	public void setEndTime( Date end );
 	
 	/**
 	 * Ignore time, can be set to true or false,
