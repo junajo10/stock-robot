@@ -30,4 +30,6 @@ public abstract class WizardPageModel implements IObservable {
 	public abstract boolean canFinish();
 	
 	public abstract void finish();
+	
+	public PropertyChangeSupport getObservers() { return observers; }
 }
