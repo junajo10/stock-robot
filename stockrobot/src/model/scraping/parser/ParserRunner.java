@@ -37,6 +37,8 @@ public class ParserRunner implements IParserRunner {
 	IConnector connector;
 	HarvesterServer server;
 	
+	boolean skipScheduler = false;
+	
 	public ParserRunner(int port){
 		this.server = new HarvesterServer(port);
 		parser = new AvanzaParser();
@@ -44,6 +46,15 @@ public class ParserRunner implements IParserRunner {
 		scheduler = new Scheduler();
 		connector = new Connector(port);
 	}
+	
+	/**
+	 * This method is here only for unit testing purposes, skipping the shouldRun call
+	 */
+	public void setSkipScheduler() {
+		
+		skipScheduler = true;
+	}
+	
 	@Override
 	public void run() {
 		Map<URL, String> avanzaStockMarkets = new HashMap<URL, String>();
@@ -58,7 +69,7 @@ public class ParserRunner implements IParserRunner {
 			while(run){
 				
 				//Should run right now?
-				if( scheduler.shouldRun() ) {
+				if( scheduler.shouldRun() || skipScheduler ) {
 					ArrayList<ParserStock> stockList = new ArrayList<ParserStock>();
 					Long timeBefore = System.currentTimeMillis();
 					for(URL url : avanzaStockMarkets.keySet()){
