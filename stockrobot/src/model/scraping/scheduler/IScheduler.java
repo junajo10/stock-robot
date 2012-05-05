@@ -1,7 +1,5 @@
 package model.scraping.scheduler;
 
-import java.util.Date;
-
 /**
  *
  * Abstract interface for the Scheduler.
