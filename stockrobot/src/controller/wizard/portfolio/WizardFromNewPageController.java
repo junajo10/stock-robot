@@ -32,4 +32,7 @@ public class WizardFromNewPageController {
 			}
 		}
 	}
+	
+	public PortfolioFromNewPage getPage() { return page; }
+	public WizardModel getWizardModel() { return model; }
 }
