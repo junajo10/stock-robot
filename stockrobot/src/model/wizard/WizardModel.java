@@ -71,6 +71,16 @@ public class WizardModel implements IObservable {
 		
 	}
 	
+	/**
+	 * Return this.canFinish
+	 * 
+	 * @return
+	 */
+	public boolean getFinish() {
+		
+		return this.canFinish;
+	}
+	
 	public void setNextPage(Integer nextPage){
 		if(nextPage == null){
 			removeNextPage();
