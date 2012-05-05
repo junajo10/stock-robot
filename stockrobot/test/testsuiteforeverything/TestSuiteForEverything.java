@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import controller.gui.MainMenuControllerTest;
+import controller.gui.SimulationControllerTest;
 
 import portfolio.PortfolioHandlerTest;
 import portfolio.PortfolioTest;
@@ -39,6 +40,7 @@ import database.jpa.MainBasicJPATest;
 	FinancialLongConverterTest.class,
 	PairTest.class,
 	MainMenuControllerTest.class,
+	SimulationControllerTest.class,
 	JPATest.class,
 	MainBasicJPATest.class,
 	SimulationHandlerTest.class,
