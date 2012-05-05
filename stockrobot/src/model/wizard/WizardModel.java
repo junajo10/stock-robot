@@ -71,16 +71,6 @@ public class WizardModel implements IObservable {
 		
 	}
 	
-	/**
-	 * Return this.canFinish
-	 * 
-	 * @return
-	 */
-	public boolean getFinish() {
-		
-		return this.canFinish;
-	}
-	
 	public void setNextPage(Integer nextPage){
 		if(nextPage == null){
 			removeNextPage();
@@ -163,7 +153,9 @@ public class WizardModel implements IObservable {
 		observers.removePropertyChangeListener(listener);
 	}
 	
+	public PropertyChangeSupport getObservers() { return observers; }
 	
+	//TODO: Swing is single threaded, do we really need synchronized here? /kristian
 	/**
 	 * Adds a page to the wizard and indexes it by its name.
 	 * If page with the same name already exists the old page is replaced.
