@@ -21,6 +21,7 @@ import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
 import view.components.ItemCmbPortfolioTest;
+import model.scraping.SchedulerTest;
 import model.wizard.WizardModelTest;
 import model.wizard.WizardPageModelTest;
 
@@ -59,6 +60,7 @@ import model.wizard.WizardPageModelTest;
 	WizardFromNewPageControllerTest.class,
 	WizardModelTest.class,
 	WizardPageModelTest.class,
+	SchedulerTest.class,
 })
 
 public class TestSuiteForEverything {
