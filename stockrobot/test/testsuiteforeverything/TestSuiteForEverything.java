@@ -3,6 +3,8 @@ package testsuiteforeverything;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import controller.gui.MainMenuControllerTest;
+
 import portfolio.PortfolioHandlerTest;
 import portfolio.PortfolioTest;
 
@@ -36,6 +38,7 @@ import database.jpa.MainBasicJPATest;
 @Suite.SuiteClasses({
 	FinancialLongConverterTest.class,
 	PairTest.class,
+	MainMenuControllerTest.class,
 	JPATest.class,
 	MainBasicJPATest.class,
 	SimulationHandlerTest.class,
@@ -46,7 +49,7 @@ import database.jpa.MainBasicJPATest;
 	PortfolioHandlerTest.class,
 	TraderTest.class,
 	PortfolioTest.class,
-	RobotSchedulerTest.class
+	RobotSchedulerTest.class,
 })
 
 public class TestSuiteForEverything {
