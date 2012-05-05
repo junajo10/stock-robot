@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
@@ -16,21 +15,15 @@ import javax.swing.text.html.parser.ParserDelegator;
 
 import model.scraping.model.ParserStock;
 
-import org.joda.time.DateTime;
-
 import utils.global.FinancialLongConverter;
-
-
+import utils.global.ParseDateFromString;
 
 /**
- * 
  * 
  * A parser made specifically for the Avanza homepage.
  * Uses the build in HTML-parser by Oracle, to parse a HTML page.
  * 
- * 
  * @author Erik
- * 
  * 
  */
 public class AvanzaParser implements IParser {
@@ -65,8 +58,6 @@ public class AvanzaParser implements IParser {
 				e1.printStackTrace();
 			}
 			return stockList;
-
-
 	}
 	
 	/**
@@ -138,7 +129,7 @@ public class AvanzaParser implements IParser {
 				}
 				else if(counter==9){
 					stock.setMarket(market);
-					stock.setDate(getDate(input));
+					stock.setDate(ParseDateFromString.getDate(input));
 					stockList.add(stock);
 					counter=0;
 					startNewStock = false;
@@ -150,19 +141,4 @@ public class AvanzaParser implements IParser {
 			}
 		}
 	}
-	
-	/**
-	 * 
-	 * 
-	 * 
-	 * @param time 
-	 * @return
-	 */
-	private Date getDate( String time ) {
-		DateTime currDate = new DateTime(System.currentTimeMillis());
-		DateTime d = new DateTime(currDate.getYear(), currDate.getMonthOfYear(), currDate.getDayOfMonth(), Integer.parseInt(time.substring(0,2)), Integer.parseInt(time.substring(3,5)));
-		
-		return d.toDate();
-	}
-
 }
