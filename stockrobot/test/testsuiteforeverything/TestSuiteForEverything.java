@@ -5,6 +5,8 @@ import org.junit.runners.Suite;
 
 import controller.gui.MainMenuControllerTest;
 import controller.gui.SimulationControllerTest;
+import controller.wizard.WizardContoller;
+import controller.wizard.WizardControllerTest;
 
 import portfolio.PortfolioHandlerTest;
 import portfolio.PortfolioTest;
@@ -52,6 +54,7 @@ import database.jpa.MainBasicJPATest;
 	TraderTest.class,
 	PortfolioTest.class,
 	RobotSchedulerTest.class,
+	WizardControllerTest.class,
 })
 
 public class TestSuiteForEverything {
