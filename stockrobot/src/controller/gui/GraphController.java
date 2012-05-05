@@ -78,4 +78,6 @@ public class GraphController implements IController {
 		
 		_view = view; 
 	}
+	
+	public GraphView getView() { return _view; }
 }
