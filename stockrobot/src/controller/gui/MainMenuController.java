@@ -17,10 +17,10 @@ import viewfactory.ViewFactory;
  */
 public class MainMenuController implements IController {
 
-	StockInfoGUI stockInfoGUI;
-	SimulationView simulationView;
-	GraphView graphView;
-	StockTableHistoryView sthw;
+	private StockInfoGUI stockInfoGUI;
+	private SimulationView simulationView;
+	private GraphView graphView;
+	private StockTableHistoryView sthw;
 	
 	public MainMenuController() {
 		
@@ -44,6 +44,16 @@ public class MainMenuController implements IController {
 	public void bindHistoryView(StockTableHistoryView sthw) {
 		this.sthw = sthw;
 	}
+	
+	//Getters for testing
+	public StockInfoGUI getStockInfoGUI() { return stockInfoGUI; }
+	
+	public SimulationView getSimulationView() { return simulationView; }
+	
+	public GraphView getGraphView() { return graphView; }
+	
+	public StockTableHistoryView getStockTableHistoryView() { return sthw; }
+	
 	public ActionListener bindStockInfoGUIButton() {
 		
 		return new ActionListener() {
