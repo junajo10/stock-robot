@@ -3,15 +3,15 @@ package testsuiteforeverything;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import controller.gui.GraphControllerTest;
 import controller.gui.MainMenuControllerTest;
 import controller.gui.SimulationControllerTest;
-import controller.wizard.WizardContoller;
 import controller.wizard.WizardControllerTest;
+import database.jpa.JPATest;
+import database.jpa.MainBasicJPATest;
 import controller.wizard.portfolio.WizardFromNewPageControllerTest;
-
 import portfolio.PortfolioHandlerTest;
 import portfolio.PortfolioTest;
-
 import robot.AstroRecieverTest;
 import robot.RobotSchedulerTest;
 import robot.TraderTest;
@@ -21,9 +21,6 @@ import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
 import view.components.ItemCmbPortfolioTest;
-
-import database.jpa.JPATest;
-import database.jpa.MainBasicJPATest;
 
 /**
  * Class to wrap other unit test classes, so we can test everything we want to in one single run
@@ -44,6 +41,7 @@ import database.jpa.MainBasicJPATest;
 	PairTest.class,
 	MainMenuControllerTest.class,
 	SimulationControllerTest.class,
+	GraphControllerTest.class,
 	JPATest.class,
 	MainBasicJPATest.class,
 	SimulationHandlerTest.class,
