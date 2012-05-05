@@ -23,7 +23,8 @@ public interface IScheduler {
 	 * 
 	 * @param ignore
 	 */
-	public void shouldRun(boolean run);
+	public void setShouldRun(boolean run);
+	public boolean getShouldRun();
 	
 	
 	/**
