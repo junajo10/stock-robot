@@ -16,6 +16,7 @@ import robot.AstroRecieverTest;
 import robot.RobotSchedulerTest;
 import robot.TraderTest;
 import scraping.ParserStockTest;
+import scraping.parser.AvanzaParserTest;
 import scraping.parser.SimulationRunnerTest;
 import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
@@ -61,6 +62,7 @@ import model.wizard.WizardPageModelTest;
 	WizardModelTest.class,
 	WizardPageModelTest.class,
 	SchedulerTest.class,
+	AvanzaParserTest.class,
 })
 
 public class TestSuiteForEverything {
