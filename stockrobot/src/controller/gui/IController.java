@@ -44,6 +44,11 @@ public interface IController extends PropertyChangeListener{
 	public void addSubController(IController subController);
 	
 	/**
+	 * Lets the user define whatever subControllers are needed in this class.
+	 */
+	public void defineSubControllers();
+	
+	/**
 	 * The unique name for this controller, this can be used to sort out which subController should start.
 	 * @return
 	 */
