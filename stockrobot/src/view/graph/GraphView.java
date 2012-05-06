@@ -23,8 +23,6 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
-import viewfactory.ViewFactory;
-
 /**
  * A simple view in which users can add as many companies stock price's as they like to.
  * 
@@ -172,17 +170,5 @@ public class GraphView extends JFrame {
     public String getCurrentWantedStock() {
     	
     	return dropDown.getSelectedItem().toString();
-    }
-    
-    /**
-     * Starting point for the demonstration application.
-     *
-     * @param args  ignored.
-     */
-    public static void main(final String[] args) {
-
-        GraphView apa = ViewFactory.getGraphView();
-        apa.setSize( 800, 600 );
-        apa.setVisible( true );
     }
 }
