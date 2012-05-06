@@ -41,17 +41,26 @@ public class AstroController implements IController {
 
 	@Override
 	public void display(Object model) {
+		
+		
+		if (this.model == null) {
+			this.model = new AstroModel();
+		}
+		
 		view.addActions(getActionListeners());
 		
 		view.addPropertyChangeListener(this);
 		
-		view.display(model);
+		view.display(this.model);
 	}
 
 	@Override
 	public void cleanup() {
 		view.removePropertyChangeListener(this);
 		view.cleanup();
+		
+		model.cleanup();
+		model = null;
 	}
 
 	@Override

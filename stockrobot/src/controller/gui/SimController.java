@@ -1,14 +1,37 @@
 package controller.gui;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JComboBox;
+
+import model.simulation.SimModel;
 
 import utils.global.Pair;
 import view.SimView;
 
 public class SimController implements IController {
 	SimView view = new SimView();
+	SimModel model;
+	
+	ActionListener startSimulation = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	ActionListener comboBoxListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			model.setAlgorithm((String)((JComboBox)e.getSource()).getSelectedItem());
+		}
+	};
+	
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
@@ -17,7 +40,10 @@ public class SimController implements IController {
 
 	@Override
 	public void display(Object model) {
-		view.display(model);
+		if (this.model == null)
+			this.model = new SimModel();
+		
+		view.display(this.model);
 		
 	}
 
@@ -29,8 +55,10 @@ public class SimController implements IController {
 
 	@Override
 	public List<Pair<String, ActionListener>> getActionListeners() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pair<String, ActionListener>> actions = new ArrayList<Pair<String,ActionListener>>();
+		actions.add(new Pair<String, ActionListener>("Start Simulation", startSimulation));
+		actions.add(new Pair<String, ActionListener>("ComboboxListener", comboBoxListener));
+		return actions;
 	}
 
 	@Override

@@ -98,4 +98,6 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	
 	
 	StockPrices getPricesForStock( StockNames st, Date date );
+	
+	public void close();
 }

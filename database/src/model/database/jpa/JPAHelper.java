@@ -71,6 +71,10 @@ public final class JPAHelper extends JPAHelperBase {
 			if (instance == null)
 				instance = new JPAHelper(); 
 		}
+		
+		if (!instance.getEntityManager().isOpen())
+			instance.initJPASystem();
+		
 		return instance;
 	}
 	

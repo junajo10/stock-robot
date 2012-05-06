@@ -1,12 +1,15 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -19,11 +22,17 @@ import javax.swing.JSlider;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import model.simulation.SimModel;
+
 public class SimView extends JFrame implements IView {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
+	JComboBox comboBox = new JComboBox();
+	JButton btnSimulate = new JButton("Simulate");
+	DefaultComboBoxModel algorithms;
+	SimModel model;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -49,18 +58,32 @@ public class SimView extends JFrame implements IView {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JButton btnSimulate = new JButton("Simulate");
 		
-		JComboBox comboBox = new JComboBox();
+		
+		
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Apa", "Bepa"}));
 		
-		JSlider slider = new JSlider();
+		final JSlider slider = new JSlider();
 		slider.setValue(300);
 		slider.setMaximum(2000);
+		
+		slider.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				
+				if (model != null) {
+					System.out.println("apapapapa" + slider.getValue());
+					model.setStocksBack(slider.getValue());
+					
+					textField.setText("" + slider.getValue());
+				}
+			}
+		});
 		
 		JLabel lblNumberOfStocks = new JLabel("Number of stocks to simulate");
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setText("300");
 		textField.setColumns(10);
 		
@@ -110,18 +133,39 @@ public class SimView extends JFrame implements IView {
 
 	@Override
 	public void display(Object model) {
+		this.model = (SimModel) model;
+		
+		algorithms = new DefaultComboBoxModel();
+		for (String a : this.model.getAlgorithms()) {
+			algorithms.addElement(a);
+		}
+		comboBox.setModel(algorithms);
+		
+		
 		setVisible(true);
 	}
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
+		for (ActionListener a : comboBox.getActionListeners()) {
+			comboBox.removeActionListener(a);
+		}
 		
+		for (ActionListener a : btnSimulate.getActionListeners()) {
+			btnSimulate.removeActionListener(a);
+		}
 	}
 
 	@Override
 	public void addActions(List<Pair<String, ActionListener>> actions) {
-		// TODO Auto-generated method stub
-		
+		for (Pair<String, ActionListener> action : actions) {
+			if (action.getLeft().contentEquals("ComboboxListener")) {
+				comboBox.addActionListener(action.getRight());
+			}
+			
+			else if (action.getLeft().contentEquals("Start Simulation")) {
+				btnSimulate.addActionListener(action.getRight());
+			}
+		}
 	}
 }

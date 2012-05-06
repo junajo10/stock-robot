@@ -398,4 +398,8 @@ class JPAHelperBase implements IJPAHelper {
 		
 		return query.getResultList();
 	}
+	@Override
+	public void close() {
+		em.close();
+	}
 }
