@@ -79,7 +79,7 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 		List<Pair<StockNames,List<StockPrices>>> stockInfo = jpa.getStockInfo(1);
 		
 		//Define column names
-		String[] tableColumnNames = {"Name","Market","Buy","Sell","Latest","Volume","Time"};
+		String[] tableColumnNames = {"Name","Market","Buy","Sell","Latest","Volume","Time", ""};
 		
 		//Create storage for row data
 		Object[][] rows = new Object[stockInfo.size()][tableColumnNames.length];

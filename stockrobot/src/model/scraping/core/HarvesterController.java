@@ -21,13 +21,25 @@ public class HarvesterController {
 	    view.addbtnStopParserListener(new StopBtnListener());
 	    
 	}
-	
-	
+
 	private class StartBtnListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			model.startParser();
+			try {
+				int port = Integer.parseInt(view.getPortTextbox());
+				model.setPort(port);
+				System.out.println("*** Server port set to: " + port);
+				
+				if(view.simulateStocksChecked()){
+					model.startSimulation();
+				}
+				else {
+					model.startParser();
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("*** Malformed portnumber");
+			}
 		}
 	}
 	
