@@ -1,13 +1,17 @@
 package model.scraping.core;
 
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 import model.scraping.parser.IParserRunner;
 import model.scraping.parser.ParserRunner;
 import model.scraping.parser.SimulationRunner;
 
-
+/**
+ * Harvester model.
+ * <p>
+ * Takes commands from a controller.
+ * <p>
+ * @param args
+ * @author Erik
+ */
 public class Harvester {
 	private Thread parserThread;
 	private IParserRunner parserRunner;
