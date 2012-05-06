@@ -32,13 +32,14 @@ public class StartController implements IController {
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("WIEE" + evt);
 	}
 
 	@Override
 	public void display(Object model) {
 		this.model = (StartModel) model;
+
+		view.addPropertyChangeListener(this);
 		
 		view.addActions(getActionListeners());
 		

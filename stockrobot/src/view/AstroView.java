@@ -14,16 +14,34 @@ import javax.swing.JProgressBar;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowStateListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.List;
 
 import javax.swing.JButton;
 
+import utils.WindowCloseAdapter;
 import utils.global.Pair;
 
 public class AstroView extends JFrame implements IView {
 
+	PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	
+	int i = 2133;
 	private JPanel contentPane;
-
+	JButton btnSimulate = new JButton("Simulate");
+	
+	WindowListener windowListener = new WindowCloseAdapter() {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			System.out.println("apapapa");
+			pcs.firePropertyChange("Window Close", i++, i+=22);
+		}
+	};
+	
 	/**
 	 * Launch the application.
 	 */
@@ -44,7 +62,6 @@ public class AstroView extends JFrame implements IView {
 	 * Create the frame.
 	 */
 	public AstroView() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 254, 223);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -62,7 +79,7 @@ public class AstroView extends JFrame implements IView {
 		JButton btnStocks = new JButton("Stocks");
 		btnStocks.setEnabled(false);
 		
-		JButton btnSimulate = new JButton("Simulate");
+		
 		
 		JButton btnGraph = new JButton("Graph");
 		btnGraph.setEnabled(false);
@@ -112,17 +129,34 @@ public class AstroView extends JFrame implements IView {
 	@Override
 	public void display(Object model) {
 		setVisible(true);
+		addWindowListener(windowListener);
+		
+		
+		pcs.firePropertyChange("display", i++, i+=22);
 	}
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
-		
+		removeWindowListener(windowListener);
 	}
 
 	@Override
 	public void addActions(List<Pair<String, ActionListener>> actions) {
-		// TODO Auto-generated method stub
-		
+		for (Pair<String, ActionListener> action : actions) {
+			if (action.getLeft().contentEquals("Start Simulation")) {
+				btnSimulate.addActionListener(action.getRight());
+			}
+		}
 	}
+	
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		System.out.println("anropas");
+		pcs.addPropertyChangeListener(listener);
+	}
+    
+    
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    	pcs.removePropertyChangeListener(listener);
+    }
 }
