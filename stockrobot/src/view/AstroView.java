@@ -25,11 +25,14 @@ import utils.global.Pair;
 
 public class AstroView extends JFrame implements IView {
 
+	private static final long serialVersionUID = 2371008027508651564L;
+
 	PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	
 	int i = 2133;
 	private JPanel contentPane;
 	JButton btnSimulate = new JButton("Simulate");
+	JButton btnGraph = new JButton("Graph");
 	
 	WindowListener windowListener = new WindowCloseAdapter() {
 		@Override
@@ -75,10 +78,6 @@ public class AstroView extends JFrame implements IView {
 		JButton btnStocks = new JButton("Stocks");
 		btnStocks.setEnabled(false);
 		
-		
-		
-		JButton btnGraph = new JButton("Graph");
-		btnGraph.setEnabled(false);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -138,6 +137,8 @@ public class AstroView extends JFrame implements IView {
 		for (Pair<String, ActionListener> action : actions) {
 			if (action.getLeft().contentEquals("Start Simulation")) {
 				btnSimulate.addActionListener(action.getRight());
+			} else if (action.getLeft().contentEquals("Open GraphWindow")) {
+				btnGraph.addActionListener(action.getRight());
 			}
 		}
 	}
