@@ -21,7 +21,10 @@ public class Harvester {
 	 * @author Erik
 	 */
 	public static void main(String[] args) {
-
+		Harvester harvest = new Harvester();
+	}
+	
+	public Harvester(){
 		System.out.println("*** ASTRo Harvester started. ***");
 		System.out.println("*** Write help for help. ***");
 		Scanner in = new Scanner(System.in);
@@ -42,7 +45,7 @@ public class Harvester {
 	 * 
 	 * @param str command to the Harvester from the console.
 	 */
-	private static void takeCommand(String str){
+	private void takeCommand(String str){
 		if(str.equals("help")){
 			System.out.println("*** ASTRo commandline help ***");
 			System.out.println("Syntax: (command) => (explanation)");
@@ -116,7 +119,7 @@ public class Harvester {
 	}
 	
 	
-	private static boolean startSimulation() {
+	private boolean startSimulation() {
 		parserRunner = new SimulationRunner(serverPort);
 		parserThread = new Thread(parserRunner);
 		parserThread.start();
@@ -131,7 +134,7 @@ public class Harvester {
 	 * <p>
 	 * Otherwise false.
 	 */
-	private static boolean startParser(){
+	private boolean startParser(){
 		parserRunner = new ParserRunner(serverPort);
 		parserThread = new Thread(parserRunner);
 		parserThread.start();
@@ -149,7 +152,7 @@ public class Harvester {
 	 * Otherwise false.
 	 */
 	@SuppressWarnings("deprecation")
-	private static boolean forceStop(){
+	private boolean forceStop(){
 		if(parserThread==null){
 			return false;
 		}
@@ -169,7 +172,7 @@ public class Harvester {
 	 * <p>
 	 * Otherwise false.
 	 */
-	private static boolean stopParser(){
+	private boolean stopParser(){
 		
 		if(parserThread==null){
 			return false;
@@ -190,7 +193,7 @@ public class Harvester {
 	 * <p>
 	 * Otherwise false.
 	 */
-	private static boolean status(){
+	private boolean status(){
 		
 		if(parserThread==null){
 			return false;
