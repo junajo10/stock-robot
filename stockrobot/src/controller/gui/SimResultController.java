@@ -18,7 +18,6 @@ public class SimResultController implements IController {
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println(evt.getPropertyName());
 		if (evt.getPropertyName().contentEquals("Sim Result Close")) {
 			cleanup();
 		}
@@ -36,8 +35,6 @@ public class SimResultController implements IController {
 			System.out.println(evt.getPropertyName());
 			view.setProgress((Integer)evt.getNewValue());
 		}
-		else
-			System.out.println("missa: " + evt.getPropertyName());
 	}
 
 	@Override
@@ -63,7 +60,6 @@ public class SimResultController implements IController {
 
 	@Override
 	public void cleanup() {
-		System.out.println("SimResultController cleanup");
 		view.cleanup();
 		this.model = null;
 	}

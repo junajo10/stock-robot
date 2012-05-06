@@ -21,7 +21,6 @@ public class SimController implements IController {
 	ActionListener startSimulation = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("apapapa");
 			for (IController c : subControllers) {
 				if (c.getName().contentEquals("SimulationController")) {
 					c.display(model);

@@ -91,7 +91,7 @@ public class SimulationHandler extends SimModel {
 		
 		initSimulation(algorithmToSimulate, longSettings, doubleSettings);
 		
-		long startingBalance = Long.valueOf("10000000000000");
+		long startingBalance = getInitialValue();
 		
 		PortfolioEntity port =  portfolio.getPortfolioTable();
 		port.invest(startingBalance, true);
@@ -161,7 +161,6 @@ public class SimulationHandler extends SimModel {
 		setWorth(portfolio.getCurrentWorth());
 		updatePieData();
 		
-		System.out.println("Simulation balance: " + portfolio.getPortfolioTable().getBalance());
 		Log.instance().log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
 
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;

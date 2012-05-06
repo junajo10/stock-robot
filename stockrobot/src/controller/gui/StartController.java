@@ -30,7 +30,6 @@ public class StartController implements IController {
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println("WIEE" + evt);
 	}
 
 	@Override
