@@ -16,11 +16,17 @@ import view.SimView;
 public class SimController implements IController {
 	SimView view = new SimView();
 	SimModel model;
+	List<IController> subControllers = new ArrayList<IController>();
 	
 	ActionListener startSimulation = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			System.out.println("apapapa");
+			for (IController c : subControllers) {
+				if (c.getName().contentEquals("SimulationController")) {
+					c.display(model);
+				}
+			}
 			
 		}
 	};
@@ -43,6 +49,8 @@ public class SimController implements IController {
 		if (this.model == null)
 			this.model = new SimModel();
 		
+		
+		view.addActions(getActionListeners());
 		view.display(this.model);
 		
 	}
@@ -63,8 +71,7 @@ public class SimController implements IController {
 
 	@Override
 	public void addSubController(IController subController) {
-		// TODO Auto-generated method stub
-		
+		this.subControllers.add(subController);
 	}
 
 	@Override

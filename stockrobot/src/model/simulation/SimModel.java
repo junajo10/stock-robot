@@ -2,8 +2,6 @@ package model.simulation;
 
 import java.util.List;
 
-import org.junit.Ignore;
-
 import model.algorithms.loader.PluginAlgortihmLoader;
 
 public class SimModel {
@@ -14,6 +12,10 @@ public class SimModel {
 	public SimModel() {
 		if (algorithmLoader.getAlgorithmNames().size() == 0)
 			algorithmLoader.reloadAlgorithmClasses();
+		
+		if (algorithmLoader.getAlgorithmNames().size() > 0) 
+			algorithm = algorithmLoader.getAlgorithmNames().get(0);
+		setStocksBack(300);
 	}
 	
 	public String getAlgorithm() {
