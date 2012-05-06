@@ -9,9 +9,9 @@ import model.scraping.parser.SimulationRunner;
 
 
 public class Harvester {
-	private static Thread parserThread;
-	private static IParserRunner parserRunner;
-	private static int serverPort = 12344;
+	private Thread parserThread;
+	private IParserRunner parserRunner;
+	private int serverPort = 12344;
 	/**
 	 * Main class for the Parsing part of the program.
 	 * <p>
