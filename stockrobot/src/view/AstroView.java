@@ -20,6 +20,8 @@ import java.util.List;
 
 import javax.swing.JButton;
 
+import controller.gui.AstroController;
+
 import utils.WindowCloseAdapter;
 import utils.global.Pair;
 
@@ -134,10 +136,12 @@ public class AstroView extends JFrame implements IView {
 
 	@Override
 	public void addActions(List<Pair<String, ActionListener>> actions) {
+		
 		for (Pair<String, ActionListener> action : actions) {
-			if (action.getLeft().contentEquals("Start Simulation")) {
+			
+			if (action.getLeft().contentEquals(AstroController.START_SIMULATION)) {
 				btnSimulate.addActionListener(action.getRight());
-			} else if (action.getLeft().contentEquals("Open GraphWindow")) {
+			} else if (action.getLeft().contentEquals(AstroController.OPEN_GRAPHWINDOW)) {
 				btnGraph.addActionListener(action.getRight());
 			}
 		}

@@ -18,6 +18,10 @@ import view.AstroView;
  */
 public class AstroController implements IController {
 	
+	public static final String CLASSNAME = "Astro Controller";
+	public static final String OPEN_GRAPHWINDOW = "openGraphwindow";
+	public static final String START_SIMULATION = "startSimulation";
+	
 	AstroModel model;
 	AstroView view = new AstroView();
 	List<IController> subControllers = new ArrayList<IController>();
@@ -30,6 +34,17 @@ public class AstroController implements IController {
 		public void actionPerformed(ActionEvent e) {
 			for (IController c : subControllers) {
 				if (c.getName().contentEquals("SimController")) {
+					c.display(null);
+				}
+			}
+		}
+	};
+	
+	ActionListener openGraph = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (IController c : subControllers) {
+				if (c.getName().contentEquals(GraphController.CLASS_NAME)) {
 					c.display(null);
 				}
 			}
@@ -81,7 +96,8 @@ public class AstroController implements IController {
 	@Override
 	public List<Pair<String, ActionListener>> getActionListeners() {
 		List<Pair<String, ActionListener>> actions = new ArrayList<Pair<String,ActionListener>>();
-		actions.add(new Pair<String, ActionListener>("Start Simulation", startSim));
+		actions.add(new Pair<String, ActionListener>(START_SIMULATION, startSim));
+		actions.add(new Pair<String, ActionListener>(OPEN_GRAPHWINDOW, openGraph));
 		return actions;
 	}
 
@@ -93,7 +109,7 @@ public class AstroController implements IController {
 
 	@Override
 	public String getName() {
-		return "Astro Controller";
+		return CLASSNAME;
 	}
 
 	@Override
