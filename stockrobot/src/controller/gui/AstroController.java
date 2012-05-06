@@ -29,18 +29,28 @@ public class AstroController implements IController {
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
+		
+		if (evt.getPropertyName().contentEquals("Window Close")) {
+			System.out.println("AstroController: view closing, calling cleanup");
+			
+			cleanup();
+		}
+		
 		
 	}
 
 	@Override
 	public void display(Object model) {
 		view.addActions(getActionListeners());
+		
+		view.addPropertyChangeListener(this);
+		
 		view.display(model);
 	}
 
 	@Override
 	public void cleanup() {
+		view.removePropertyChangeListener(this);
 		view.cleanup();
 	}
 

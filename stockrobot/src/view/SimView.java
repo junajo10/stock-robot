@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -11,14 +10,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import utils.global.Pair;
-import javax.swing.JToggleButton;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
 import javax.swing.JTextField;

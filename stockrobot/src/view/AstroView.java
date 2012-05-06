@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -16,7 +14,6 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.event.WindowStateListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
@@ -37,8 +34,7 @@ public class AstroView extends JFrame implements IView {
 	WindowListener windowListener = new WindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
-			System.out.println("apapapa");
-			pcs.firePropertyChange("Window Close", i++, i+=22);
+			pcs.firePropertyChange("Window Close", false, true);
 		}
 	};
 	
@@ -130,9 +126,6 @@ public class AstroView extends JFrame implements IView {
 	public void display(Object model) {
 		setVisible(true);
 		addWindowListener(windowListener);
-		
-		
-		pcs.firePropertyChange("display", i++, i+=22);
 	}
 
 	@Override
@@ -151,7 +144,6 @@ public class AstroView extends JFrame implements IView {
 	
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		System.out.println("anropas");
 		pcs.addPropertyChangeListener(listener);
 	}
     

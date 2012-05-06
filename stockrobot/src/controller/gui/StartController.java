@@ -17,8 +17,6 @@ public class StartController implements IController {
 	List<IController> subControllers = new ArrayList<IController>();
 	
 	
-	
-	
 	ActionListener startAstroAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -38,8 +36,6 @@ public class StartController implements IController {
 	@Override
 	public void display(Object model) {
 		this.model = (StartModel) model;
-
-		view.addPropertyChangeListener(this);
 		
 		view.addActions(getActionListeners());
 		
