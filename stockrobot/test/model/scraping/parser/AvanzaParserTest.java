@@ -1,4 +1,4 @@
-package scraping.parser;
+package model.scraping.parser;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package scraping.parser;
+package model.scraping.parser;
 
 import junit.framework.Assert;
 
