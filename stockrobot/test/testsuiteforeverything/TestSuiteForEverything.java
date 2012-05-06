@@ -15,14 +15,15 @@ import portfolio.PortfolioTest;
 import robot.AstroRecieverTest;
 import robot.RobotSchedulerTest;
 import robot.TraderTest;
-import scraping.ParserStockTest;
-import scraping.parser.AvanzaParserTest;
-import scraping.parser.SimulationRunnerTest;
 import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
 import view.components.ItemCmbPortfolioTest;
+import model.scraping.ParserRunnerTest;
+import model.scraping.ParserStockTest;
 import model.scraping.SchedulerTest;
+import model.scraping.parser.AvanzaParserTest;
+import model.scraping.parser.SimulationRunnerTest;
 import model.wizard.WizardModelTest;
 import model.wizard.WizardPageModelTest;
 
@@ -63,6 +64,7 @@ import model.wizard.WizardPageModelTest;
 	WizardPageModelTest.class,
 	SchedulerTest.class,
 	AvanzaParserTest.class,
+	ParserRunnerTest.class,
 })
 
 public class TestSuiteForEverything {
