@@ -23,7 +23,7 @@ public class StartController implements IController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			for (IController c : subControllers) {
-				if (c.getName().contentEquals("MainMenu")) {
+				if (c.getName().contentEquals("Astro Controller")) {
 					c.display(null);
 				}
 			}

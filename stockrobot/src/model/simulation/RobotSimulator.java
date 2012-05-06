@@ -19,12 +19,6 @@ public class RobotSimulator implements IRobot_Algorithms {
 	}
 	
 	@Override
-	public boolean reportToUser(String message) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public IJPAHelper getJPAHelper() {
 		return jpaSimHelper;
 	}

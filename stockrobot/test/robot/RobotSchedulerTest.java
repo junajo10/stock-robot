@@ -245,12 +245,6 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		assertFalse(tSched.isAlive());
 	}
 	*/
-
-	@Override
-	public boolean reportToUser(String message) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	/**
 	 * Scaled of portfolio 
