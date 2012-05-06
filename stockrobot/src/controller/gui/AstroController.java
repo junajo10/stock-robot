@@ -81,4 +81,10 @@ public class AstroController implements IController {
 		return "Astro Controller";
 	}
 
+	@Override
+	public void defineSubControllers() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

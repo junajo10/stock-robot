@@ -72,4 +72,10 @@ public class StartController implements IController {
 		return null;
 	}
 
+	@Override
+	public void defineSubControllers() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

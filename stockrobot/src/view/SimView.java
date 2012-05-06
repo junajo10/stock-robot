@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import model.simulation.SimModel;
+import javax.swing.SwingConstants;
 
 public class SimView extends JFrame implements IView {
 
@@ -32,6 +33,7 @@ public class SimView extends JFrame implements IView {
 	JButton btnSimulate = new JButton("Simulate");
 	DefaultComboBoxModel algorithms;
 	SimModel model;
+	private JTextField textField_1;
 	
 	/**
 	 * Launch the application.
@@ -88,6 +90,13 @@ public class SimView extends JFrame implements IView {
 		textField.setColumns(10);
 		
 		JButton btnConfigureAlgorithm = new JButton("Configure Algorithm");
+		
+		JLabel lblAmountToStart = new JLabel("Amount to start with");
+		
+		textField_1 = new JTextField();
+		textField_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		textField_1.setText("100000");
+		textField_1.setColumns(10);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -108,7 +117,12 @@ public class SimView extends JFrame implements IView {
 							.addComponent(slider, 0, 0, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-							.addGap(229))))
+							.addGap(229))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(textField_1, Alignment.LEADING)
+								.addComponent(lblAmountToStart, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addContainerGap(356, Short.MAX_VALUE))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -126,7 +140,11 @@ public class SimView extends JFrame implements IView {
 							.addComponent(lblNumberOfStocks)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(156, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblAmountToStart)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(98, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

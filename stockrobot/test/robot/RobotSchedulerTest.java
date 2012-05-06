@@ -337,6 +337,12 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 			this.algorithm.update();
 			return false;
 		}
+
+		@Override
+		public long getCurrentWorth() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 	}
 	
 

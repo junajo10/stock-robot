@@ -8,6 +8,7 @@ import utils.global.Pair;
 
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
+import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.portfolio.IAlgorithm;
@@ -116,5 +117,18 @@ public class PortfolioSimulator implements IPortfolio {
 			return false;
 		algorithm.update();
 		return true;
+	}
+	@Override
+	public long getCurrentWorth() {
+		long currentWorth = getUnusedAmount();
+		
+		for (PortfolioHistory ph : portfolioTable.getHistory()) {
+			if (ph.getSoldDate() == null) {
+				StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
+				currentWorth += latest.getSell()*ph.getAmount();
+			}
+		}
+		
+		return currentWorth;
 	}
 }

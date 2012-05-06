@@ -100,5 +100,7 @@ public interface IPortfolio {
 	boolean isStopSellingFlagSet();
 	
 	PortfolioEntity getPortfolioTable();
+	
+	long getCurrentWorth();
 
 }

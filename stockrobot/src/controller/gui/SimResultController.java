@@ -65,4 +65,10 @@ public class SimResultController implements IController {
 		return "SimulationController";
 	}
 
+	@Override
+	public void defineSubControllers() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

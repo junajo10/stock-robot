@@ -44,4 +44,10 @@ public class MainController implements IController {
 		return "MainMenu";
 	}
 
+	@Override
+	public void defineSubControllers() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -44,8 +44,12 @@ public class SimulationHandler {
 	private IRobot_Algorithms robotSim = new RobotSimulator();
 	
 	private int progress = 0;
-
+	private long worth = 0;
 	private Map<String, Long> latestPieData = new HashMap<String, Long>();
+	private int updatePieAt = 0;
+	private int nextPieStep = 25;
+	
+	
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
 		
@@ -125,6 +129,7 @@ public class SimulationHandler {
 			else {
 				lastSeenTime = p.getTime();
 				
+				
 				StockPrices sp = new StockPrices(nameStockNameMap.get(p.getStockName().getName()), 
 						p.getVolume(), p.getLatest(), p.getBuy(), p.getSell(), new Date(p.getTime().getTime()));
 				
@@ -133,6 +138,9 @@ public class SimulationHandler {
 				jpaSimHelper.storeListOfObjects(stockPrices);
 				
 				updateAlgorithm();
+				
+				setWorth(portfolio.getCurrentWorth());
+				
 			}
 			if (curr>=max)
 				break;
@@ -149,9 +157,24 @@ public class SimulationHandler {
 			}
 		}
 
+		
+		setWorth(portfolio.getCurrentWorth());
+		updatePieData();
+		
 		Log.instance().log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
 
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
+	}
+	private void updatePieData() {
+		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
+			if (ph.getSoldDate() == null) {
+				fillPie(ph.getStockPrice().getStockName().getName(), ph.getAmount(), ph.getStockPrice().getBuy());
+			}
+		}
+	}
+	private void setWorth(long currentWorth) {
+		firePropertyChange("Portfolio Worth", worth, currentWorth);
+		worth = currentWorth;
 	}
 	private void fillPie(String name, long amount, long buy) {
 		if (latestPieData.containsKey(name)) {
@@ -159,11 +182,22 @@ public class SimulationHandler {
 		}
 		else
 			latestPieData.put(name, amount*buy);
+		
+		firePropertyChange("newPieData", null, latestPieData);
 	}
 	public Map<String, Long> getLatestPieData() {
 		return latestPieData;
 	}
 	private void setProgress(int i) {
+		
+		if (i>=updatePieAt || i == 100) {
+			
+			updatePieData();
+			updatePieAt = i+nextPieStep;
+			
+			System.out.println(i + " " + updatePieAt);
+		}
+		
 		firePropertyChange("Progress", progress, i);
 		progress = i;
 	}
