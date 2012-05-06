@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import utils.global.Log;
 import utils.global.Log.TAG;
 import view.PortfolioController;
-import viewfactory.ViewFactory;
+//import viewfactory.ViewFactory;
 
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
@@ -75,7 +75,7 @@ public class Astro implements IRobot_Algorithms{
 			initSimulationState();
 		}
 		
-		portfolioGui 		= ViewFactory.getPortfolioView(portfolioHandler,trader);
+		//portfolioGui 		= ViewFactory.getPortfolioView(portfolioHandler,trader);
 		
 		while(true) {
 			for (IPortfolio p : portfolioHandler.getPortfolios()) {

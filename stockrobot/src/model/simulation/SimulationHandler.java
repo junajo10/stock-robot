@@ -34,7 +34,7 @@ import model.robot.IRobot_Algorithms;
  * 
  * @author Daniel
  */
-public class SimulationHandler {
+public class SimulationHandler extends SimModel {
 	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	private IJPAHelper jpaSimHelper;
 	private IJPAHelper jpaHelper = JPAHelper.getInstance();
@@ -161,6 +161,7 @@ public class SimulationHandler {
 		setWorth(portfolio.getCurrentWorth());
 		updatePieData();
 		
+		System.out.println("Simulation balance: " + portfolio.getPortfolioTable().getBalance());
 		Log.instance().log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
 
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
@@ -173,7 +174,7 @@ public class SimulationHandler {
 		}
 	}
 	private void setWorth(long currentWorth) {
-		firePropertyChange("Portfolio Worth", worth, currentWorth);
+		firePropertyChange("Portfolio Worth", getInitialValue(), currentWorth);
 		worth = currentWorth;
 	}
 	private void fillPie(String name, long amount, long buy) {
@@ -189,7 +190,6 @@ public class SimulationHandler {
 		return latestPieData;
 	}
 	private void setProgress(int i) {
-		
 		if (i>=updatePieAt || i == 100) {
 			
 			updatePieData();
@@ -229,4 +229,15 @@ public class SimulationHandler {
     protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }
+	public void startSimulation() {
+		Thread simulationThread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				simulateAlgorithm(getAlgorithm(), getStocksBack(), null, null);
+			}
+		});
+		simulationThread.start();
+		
+	}
 }

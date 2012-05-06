@@ -8,7 +8,7 @@ public class SimModel {
 	private String algorithm;
 	private int stocksBack;
 	private PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
-	
+	private long initialValue = Long.valueOf("10000000000000");
 	public SimModel() {
 		if (algorithmLoader.getAlgorithmNames().size() == 0)
 			algorithmLoader.reloadAlgorithmClasses();
@@ -33,6 +33,11 @@ public class SimModel {
 	public List<String> getAlgorithms() {
 		return algorithmLoader.getAlgorithmNames();
 	}
-	
+	public void setInitialValue(long value) {
+		this.initialValue = value;
+	}
+	public long getInitialValue() {
+		return initialValue;
+	}
 	
 }
