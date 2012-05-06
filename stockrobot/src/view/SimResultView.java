@@ -29,13 +29,13 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
 
 public class SimResultView extends JFrame implements IView {
 
+	private static final long serialVersionUID = -5877884096041331653L;
 	private JPanel contentPane;
 	JProgressBar progressBar = new JProgressBar();
 	PropertyChangeSupport pcs = new PropertyChangeSupport(this);

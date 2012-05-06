@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -27,6 +26,7 @@ import javax.swing.SwingConstants;
 
 public class SimView extends JFrame implements IView {
 
+	private static final long serialVersionUID = -4933445365240811334L;
 	private JPanel contentPane;
 	private JTextField textField;
 	JComboBox comboBox = new JComboBox();

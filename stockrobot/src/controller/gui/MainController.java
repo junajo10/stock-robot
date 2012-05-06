@@ -6,7 +6,6 @@ import java.util.List;
 
 import utils.global.Pair;
 import view.IView;
-import view.MainMenuView;
 
 public class MainController implements IController {
 	IView view;

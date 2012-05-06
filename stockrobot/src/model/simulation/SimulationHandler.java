@@ -44,7 +44,6 @@ public class SimulationHandler extends SimModel {
 	private IRobot_Algorithms robotSim = new RobotSimulator();
 	
 	private int progress = 0;
-	private long worth = 0;
 	private Map<String, Long> latestPieData = new HashMap<String, Long>();
 	private int updatePieAt = 0;
 	private int nextPieStep = 25;
@@ -174,7 +173,6 @@ public class SimulationHandler extends SimModel {
 	}
 	private void setWorth(long currentWorth) {
 		firePropertyChange("Portfolio Worth", getInitialValue(), currentWorth);
-		worth = currentWorth;
 	}
 	private void fillPie(String name, long amount, long buy) {
 		if (latestPieData.containsKey(name)) {

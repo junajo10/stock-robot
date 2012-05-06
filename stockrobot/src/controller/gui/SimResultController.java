@@ -2,7 +2,6 @@ package controller.gui;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ public class SimResultController implements IController {
 	SimResultView view;
 	SimulationHandler model;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().contentEquals("Sim Result Close")) {
