@@ -15,7 +15,7 @@ import viewfactory.ViewFactory;
  * @author kristian
  *
  */
-public class MainMenuController implements IController {
+public class MainMenuController {
 
 	private StockInfoGUI stockInfoGUI;
 	private SimulationView simulationView;

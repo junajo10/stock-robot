@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,12 +15,23 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
-public class StartView extends JFrame {
+import model.robot.StartModel;
+
+import utils.global.Pair;
+
+public class StartView extends JFrame implements IView {
 	private static final long serialVersionUID = -8131015783822143236L;
 	private JPanel contentPane;
 	private JTextField txtLocalhost;
 	private JTextField textField;
-
+	JButton btnStartAstro = new JButton("Start ASTRo");
+	JButton btnStopParser = new JButton("Stop Parser");
+	JButton btnStopAstro = new JButton("Stop ASTRo");
+	JButton btnStartParser = new JButton("Start Parser");
+	
+	private StartModel model;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -39,22 +52,23 @@ public class StartView extends JFrame {
 	 * Create the frame.
 	 */
 	public StartView() {
+		setResizable(false);
 		setTitle("Stock Robot");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 378, 209);
+		setBounds(100, 100, 371, 209);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JCheckBox chckbxSimulateStocks = new JCheckBox("Simulate Stocks");
 		
-		JButton btnStartParser = new JButton("Start Parser");
+		
 		
 		txtLocalhost = new JTextField();
 		txtLocalhost.setText("localhost:54551");
 		txtLocalhost.setColumns(10);
 		
-		JButton btnStartAstro = new JButton("Start ASTRo");
+		
 		
 		textField = new JTextField();
 		textField.setText("54551");
@@ -64,32 +78,34 @@ public class StartView extends JFrame {
 		
 		JLabel lblParserServer = new JLabel("Parser server:");
 		
-		JButton btnStopParser = new JButton("Stop Parser");
 		
-		JButton btnStopAstro = new JButton("Stop ASTRo");
+		btnStopParser.setEnabled(false);
+		
+		
+		btnStopAstro.setEnabled(false);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(chckbxSimulateStocks)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblPort)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(textField, 0, 0, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnStartParser)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnStopParser))
-						.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblParserServer)
+						.addComponent(txtLocalhost)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnStartAstro)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnStopAstro))
-						.addComponent(lblParserServer))
-					.addContainerGap(113, Short.MAX_VALUE))
+							.addComponent(btnStopAstro)))
+					.addContainerGap(96, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -110,8 +126,34 @@ public class StartView extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnStartAstro)
 						.addComponent(btnStopAstro))
-					.addContainerGap(116, Short.MAX_VALUE))
+					.addContainerGap(23, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
+	}
+
+	@Override
+	public void display(Object model) {
+		this.model = (StartModel) model;
+		
+		txtLocalhost.setText(this.model.getParserServer());
+		
+		this.setVisible(true);
+		
+		
+	}
+
+	@Override
+	public void cleanup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addActions(List<Pair<String, ActionListener>> actions) {
+		for (Pair<String, ActionListener> action : actions) {
+			if (action.getLeft().contentEquals("Start Astro"))
+				btnStartAstro.addActionListener(action.getRight());
+		}
+		
 	}
 }

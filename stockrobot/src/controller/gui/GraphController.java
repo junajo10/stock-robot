@@ -21,7 +21,7 @@ import view.graph.GraphView;
  * @author kristian
  *
  */
-public class GraphController implements IController {
+public class GraphController {
 	
 	//Keep a reference of the view to be able to insert and read stuff from it
 	GraphView _view;
