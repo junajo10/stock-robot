@@ -1,4 +1,4 @@
-package view;
+package controller.gui;
 
 
 import java.awt.event.ActionEvent;
@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 
+import view.PortfolioGui;
 import view.components.ItemCmbPortfolio;
 import viewfactory.ViewFactory;
 
