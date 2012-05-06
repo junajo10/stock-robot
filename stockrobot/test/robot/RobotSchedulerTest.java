@@ -18,8 +18,8 @@ import model.database.jpa.tables.StockPrices;
 import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
+import model.portfolio.IRobot_Algorithms;
 import model.portfolio.Portfolio;
-import model.robot.IRobot_Algorithms;
 import model.robot.RobotScheduler;
 import model.trader.ITrader;
 

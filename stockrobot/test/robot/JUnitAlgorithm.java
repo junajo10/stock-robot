@@ -10,7 +10,7 @@ import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
-import model.robot.IRobot_Algorithms;
+import model.portfolio.IRobot_Algorithms;
 
 
 

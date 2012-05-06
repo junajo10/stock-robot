@@ -20,6 +20,7 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
+import model.portfolio.IRobot_Algorithms;
 import model.portfolio.PortfolioHandler;
 import model.trader.ITrader;
 import model.trader.TraderSimulator;

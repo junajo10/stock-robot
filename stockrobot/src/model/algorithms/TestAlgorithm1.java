@@ -18,7 +18,7 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
-import model.robot.IRobot_Algorithms;
+import model.portfolio.IRobot_Algorithms;
 import model.trader.ITrader;
 
 

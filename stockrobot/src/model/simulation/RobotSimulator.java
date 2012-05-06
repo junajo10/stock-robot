@@ -2,7 +2,7 @@ package model.simulation;
 
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelperSimulator;
-import model.robot.IRobot_Algorithms;
+import model.portfolio.IRobot_Algorithms;
 import model.trader.ITrader;
 
 /**

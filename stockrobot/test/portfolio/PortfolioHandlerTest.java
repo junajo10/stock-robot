@@ -9,8 +9,8 @@ import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelperSimulator;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
+import model.portfolio.IRobot_Algorithms;
 import model.portfolio.PortfolioHandler;
-import model.robot.IRobot_Algorithms;
 import model.trader.ITrader;
 
 public class PortfolioHandlerTest implements IRobot_Algorithms {

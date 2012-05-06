@@ -3,6 +3,7 @@ package model.robot;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.portfolio.IPortfolioHandler;
+import model.portfolio.IRobot_Algorithms;
 import model.portfolio.PortfolioHandler;
 import model.trader.ITrader;
 import model.trader.TraderSimulator;
