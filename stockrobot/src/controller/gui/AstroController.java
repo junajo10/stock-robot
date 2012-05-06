@@ -11,10 +11,19 @@ import model.robot.AstroModel;
 import utils.global.Pair;
 import view.AstroView;
 
+/**
+ * 
+ * @author daniel
+ *
+ */
 public class AstroController implements IController {
+	
 	AstroModel model;
 	AstroView view = new AstroView();
 	List<IController> subControllers = new ArrayList<IController>();
+	
+	//Hardcoded sub controllers:
+	private IController graphController;
 	
 	ActionListener startSim = new ActionListener() {
 		@Override
@@ -26,6 +35,12 @@ public class AstroController implements IController {
 			}
 		}
 	};
+	
+	public AstroController() {
+		
+		//For now, just call this when the constructor is called. That way differentiating define from display
+		defineSubControllers();
+	}
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -83,8 +98,8 @@ public class AstroController implements IController {
 
 	@Override
 	public void defineSubControllers() {
-		// TODO Auto-generated method stub
 		
+		graphController = new GraphController();
+		this.subControllers.add( graphController );
 	}
-
 }

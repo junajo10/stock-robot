@@ -27,10 +27,10 @@ import view.graph.GraphView;
  */
 public class GraphController implements IController {
 	
-	private static final String CLASS_NAME = "GraphController";
-	private static final String BIND_GRAPH_VIEW = "bindGraphView";
+	public static final String CLASS_NAME = "GraphController";
+	public static final String BIND_GRAPH_VIEW = "bindGraphView";
 	
-	private static final String WINDOW_TITLE = "Stock prices on a graph";
+	public static final String WINDOW_TITLE = "Stock prices on a graph";
 	
 	
 	
@@ -43,6 +43,10 @@ public class GraphController implements IController {
 	public GraphController() {
 		
 		retList = new ArrayList<Pair<String,ActionListener>>();
+		retList.add( new Pair<String, ActionListener>( BIND_GRAPH_VIEW, bindGraphView() ) );
+		
+		_view = new GraphView( WINDOW_TITLE );
+		_view.addActions(getActionListeners());
 	}
 	
 	@Override
@@ -54,8 +58,7 @@ public class GraphController implements IController {
 	@Override
 	public void display(Object model) {
 		
-		_view = new GraphView( WINDOW_TITLE );
-		_view.bindAddStockButton( getActionListeners().get(0).getRight() );
+		
 		
 		_view.init();
 	}
@@ -108,10 +111,6 @@ public class GraphController implements IController {
 	@Override
 	public List<Pair<String, ActionListener>> getActionListeners() {
 		
-		
-		
-		retList.add( new Pair<String, ActionListener>( BIND_GRAPH_VIEW, bindGraphView() ) );
-		
 		return retList;
 	}
 	
@@ -132,6 +131,7 @@ public class GraphController implements IController {
 
 	@Override
 	public void defineSubControllers() {
+		
 		
 		//We have no sub controllers at this level
 	}

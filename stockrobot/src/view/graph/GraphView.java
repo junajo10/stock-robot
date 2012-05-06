@@ -23,13 +23,18 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
+import controller.gui.GraphController;
+
+import utils.global.Pair;
+import view.IView;
+
 /**
  * A simple view in which users can add as many companies stock price's as they like to.
  * 
  * @author kristian
  *
  */
-public class GraphView extends JFrame {
+public class GraphView extends JFrame implements IView {
 
 	private static final long serialVersionUID = -7937601249697689239L;
 	
@@ -151,16 +156,6 @@ public class GraphView extends JFrame {
         
         return chart;
     }
-   
-    /**
-     * Controller window where it is able to register
-     * 
-     * @param listener
-     */
-    public void bindAddStockButton( ActionListener listener ) {
-    	
-    	addSomething.addActionListener( listener );
-    }
     
     /**
      * Getter for the current user entered company name
@@ -171,4 +166,25 @@ public class GraphView extends JFrame {
     	
     	return dropDown.getSelectedItem().toString();
     }
+
+	@Override
+	public void display(Object model) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cleanup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addActions(List<Pair<String, ActionListener>> actions) {
+		for (Pair<String, ActionListener> action : actions) {
+			if (action.getLeft().contentEquals(GraphController.BIND_GRAPH_VIEW)) {
+				addSomething.addActionListener(action.getRight());
+			}
+		}
+	}
 }
