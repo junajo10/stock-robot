@@ -1,12 +1,11 @@
 package view;
 
-
 import java.awt.Dimension;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 //import javax.swing.JFrame;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,12 +15,9 @@ import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.robot.AlphaReceiver;
 
 import utils.global.FinancialLongConverter;
 import utils.global.Pair;
-
-
 
 /**
  * Wrapping a JTable, fetching data from the price DB and inserting it.
@@ -30,38 +26,25 @@ import utils.global.Pair;
  * @author kristian
  *
  */
-public class StockTableView extends JPanel implements PropertyChangeListener {
+public class StockTableView extends JFrame implements IView {
 	
 	private static final long serialVersionUID = -4930147798113095136L;
 	
+	private static final String WINDOW_TITLE = "All publicly traded companies currently recorded in the database.";
+	
+	private JPanel holder;
 	private JTable table;
 	private JScrollPane scroller;
 	private TableModel model;
 	
-	/*
-	//Keeping to make it easy to test this class
-	public static void main( String[] args ) {
-		
-		StockTableView view = new StockTableView();
-		
-		JFrame frame = new JFrame();
-		frame.setBounds( 100, 100, 700, 700 );
-		frame.add( view );
-		frame.show();
-		
-		try {
-			Thread.sleep(40000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		view.updateInfo();
-	}
-	*/
-	
 	public StockTableView() {
-		init();
+		
+		setBounds( 100, 200, 800, 600 );
+		
+		holder = new JPanel();
+		add(holder);
+		
+		setTitle( WINDOW_TITLE );
 	}
 	
 	/**
@@ -143,16 +126,28 @@ public class StockTableView extends JPanel implements PropertyChangeListener {
 		//Create scroll bar
 		scroller = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroller.setPreferredSize(new Dimension( 800, 600 ));
-		add( scroller );
+		holder.add( scroller );
 		
 		repaint();
+		
+		setVisible( true );
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
+	public void display(Object model) {
+		// TODO Auto-generated method stub
+		init();
+	}
+
+	@Override
+	public void cleanup() {
 		// TODO Auto-generated method stub
 		
-		if( evt.getPropertyName().equals( AlphaReceiver.PRICES_UPDATED ) )
-			updateInfo();
+	}
+
+	@Override
+	public void addActions(List<Pair<String, ActionListener>> actions) {
+		// TODO Auto-generated method stub
+		
 	}
 }

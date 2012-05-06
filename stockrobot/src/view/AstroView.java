@@ -35,6 +35,7 @@ public class AstroView extends JFrame implements IView {
 	private JPanel contentPane;
 	JButton btnSimulate = new JButton("Simulate");
 	JButton btnGraph = new JButton("Graph");
+	JButton btnStocks = new JButton("Stocks");
 	
 	WindowListener windowListener = new WindowCloseAdapter() {
 		@Override
@@ -76,9 +77,6 @@ public class AstroView extends JFrame implements IView {
 		
 		JButton btnPortfolio = new JButton("Portfolio");
 		btnPortfolio.setEnabled(false);
-		
-		JButton btnStocks = new JButton("Stocks");
-		btnStocks.setEnabled(false);
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -143,6 +141,8 @@ public class AstroView extends JFrame implements IView {
 				btnSimulate.addActionListener(action.getRight());
 			} else if (action.getLeft().contentEquals(AstroController.OPEN_GRAPHWINDOW)) {
 				btnGraph.addActionListener(action.getRight());
+			} else if (action.getLeft().contentEquals(AstroController.OPEN_STOCKTABLE)) {
+				btnStocks.addActionListener(action.getRight());
 			}
 		}
 	}

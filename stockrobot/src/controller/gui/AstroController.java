@@ -21,6 +21,7 @@ public class AstroController implements IController {
 	public static final String CLASSNAME = "Astro Controller";
 	public static final String OPEN_GRAPHWINDOW = "openGraphwindow";
 	public static final String START_SIMULATION = "startSimulation";
+	public static final String OPEN_STOCKTABLE = "stockTable";
 	
 	AstroModel model;
 	AstroView view = new AstroView();
@@ -28,6 +29,7 @@ public class AstroController implements IController {
 	
 	//Hardcoded sub controllers:
 	private IController graphController;
+	private IController stockInfoController;
 	
 	ActionListener startSim = new ActionListener() {
 		@Override
@@ -45,6 +47,17 @@ public class AstroController implements IController {
 		public void actionPerformed(ActionEvent e) {
 			for (IController c : subControllers) {
 				if (c.getName().contentEquals(GraphController.CLASS_NAME)) {
+					c.display(null);
+				}
+			}
+		}
+	};
+	
+	ActionListener openStockInfo = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (IController c : subControllers) {
+				if (c.getName().contentEquals(StockTableController.CLASS_NAME)) {
 					c.display(null);
 				}
 			}
@@ -98,17 +111,19 @@ public class AstroController implements IController {
 		List<Pair<String, ActionListener>> actions = new ArrayList<Pair<String,ActionListener>>();
 		actions.add(new Pair<String, ActionListener>(START_SIMULATION, startSim));
 		actions.add(new Pair<String, ActionListener>(OPEN_GRAPHWINDOW, openGraph));
+		actions.add(new Pair<String, ActionListener>(OPEN_STOCKTABLE, openStockInfo));
 		return actions;
 	}
 
 	@Override
 	public void addSubController(IController subController) {
-		this.subControllers.add(subController);
 		
+		this.subControllers.add(subController);
 	}
 
 	@Override
 	public String getName() {
+		
 		return CLASSNAME;
 	}
 
@@ -117,5 +132,8 @@ public class AstroController implements IController {
 		
 		graphController = new GraphController();
 		this.subControllers.add( graphController );
+		
+		stockInfoController = new StockTableController();
+		this.subControllers.add( stockInfoController );
 	}
 }
