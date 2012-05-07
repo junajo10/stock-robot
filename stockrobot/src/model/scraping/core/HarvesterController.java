@@ -69,6 +69,8 @@ public class HarvesterController {
 				if(view.simulateStocksChecked()){
 					if(model.startSimulation()){
 						log.start();
+						view.setStartInactive();
+						view.setStopActive();
 					}
 					else {
 						log.failStart();
@@ -77,6 +79,8 @@ public class HarvesterController {
 				else {
 					if(model.startParser()){
 						log.start();
+						view.setStartInactive();
+						view.setStopActive();
 					}
 					else {
 						log.failStart();
@@ -92,8 +96,15 @@ public class HarvesterController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			model.stopParser();
+			if(view.forceStopChecked()){
+				model.stopParser();
+			}
+			else {
+				model.forceStop();
+			}
 			log.stop();
+			view.setStopInactive();
+			view.setStartActive();
 		}
 	}
 	

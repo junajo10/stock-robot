@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Dialog.ModalExclusionType;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
+import javax.swing.JFormattedTextField;
 
 /**
  * View for Harvester.
@@ -67,16 +68,14 @@ public class HarvesterView extends JFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(chckbxSimulateStocks)
 						.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
 						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(lblPortNumber)
 									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)))
+									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)))
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
@@ -87,7 +86,8 @@ public class HarvesterView extends JFrame {
 						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addComponent(btnStatus, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE))
+						.addComponent(chckbxSimulateStocks))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -147,15 +147,18 @@ public class HarvesterView extends JFrame {
 	public boolean simulateStocksChecked(){
 		return chckbxSimulateStocks.isSelected();
 	}
+	
+	public boolean forceStopChecked(){
+		return chckbxForceStop.isSelected();
+	}
 
 	public void clearLog() {
 		logModel.clear();		
 	}
 	
 	public void setStartInactive() {btnStartParser.setEnabled(false);}
-	public void setStopInactive() {btnStartParser.setEnabled(false);}
+	public void setStopInactive() {btnStopParser.setEnabled(false);}
 	
 	public void setStartActive() {btnStartParser.setEnabled(true);}	
-	public void setStopActive() {btnStartParser.setEnabled(true);}	
-	
+	public void setStopActive() {btnStopParser.setEnabled(true);}	
 }
