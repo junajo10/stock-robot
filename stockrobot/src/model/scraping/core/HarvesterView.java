@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Dialog.ModalExclusionType;
 import javax.swing.JCheckBox;
-import java.awt.ScrollPane;
 import javax.swing.JScrollPane;
 
 /**
@@ -152,4 +151,11 @@ public class HarvesterView extends JFrame {
 	public void clearLog() {
 		logModel.clear();		
 	}
+	
+	public void setStartInactive() {btnStartParser.setEnabled(false);}
+	public void setStopInactive() {btnStartParser.setEnabled(false);}
+	
+	public void setStartActive() {btnStartParser.setEnabled(true);}	
+	public void setStopActive() {btnStartParser.setEnabled(true);}	
+	
 }
