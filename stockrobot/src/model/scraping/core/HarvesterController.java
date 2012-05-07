@@ -24,6 +24,7 @@ public class HarvesterController {
 	    view.addbtnStartParserListener(new StartBtnListener());
 	    view.addbtnStopParserListener(new StopBtnListener());
 	    view.addbtnStatusListener(new StatusBtnListener());
+	    view.addbtnClearLogListener(new ClearLogBtnListener());
 	    
 	}
 	
@@ -33,7 +34,7 @@ public class HarvesterController {
 			
 		}
 		
-		public void printStatus(Boolean status){
+		public void printStatus(boolean status){
 			if(status){
 				view.addLogItem("Parser is up and running.");
 			}
@@ -109,7 +110,7 @@ public class HarvesterController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			model.stopParser();
+			view.clearLog();
 		}
 	}
     

@@ -85,7 +85,9 @@ public class Connector implements IConnector {
 			}
 		}
 		try {
-			recieve.close();
+			if(recieve!=null){
+				recieve.close();
+			}
 		} catch (IOException e1) {
 			
 		}

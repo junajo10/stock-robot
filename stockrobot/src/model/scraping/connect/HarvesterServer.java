@@ -60,7 +60,10 @@ public class HarvesterServer implements Runnable, IConnector{
 	
 	@Override
 	public void shutdown() {
-
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+		}
 	}
 
 	public int getConnected() {

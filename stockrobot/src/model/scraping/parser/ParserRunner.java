@@ -40,7 +40,7 @@ public class ParserRunner implements IParserRunner {
 	boolean skipScheduler = false;
 	
 	public ParserRunner(int port){
-		this.server = new HarvesterServer(port);
+		//this.server = new HarvesterServer(port);
 		parser = new AvanzaParser();
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
@@ -139,7 +139,9 @@ public class ParserRunner implements IParserRunner {
 		if(run){
 			run = false;
 			connector.shutdown();
-			while(connector.isRunning());
+			while(connector.isRunning()){
+				
+			}
 			return true;
 		}
 		else{

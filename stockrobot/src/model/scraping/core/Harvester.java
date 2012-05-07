@@ -82,17 +82,21 @@ public class Harvester {
 	 * Otherwise false.
 	 */
 	public boolean stopParser(){
-		
-		if(parserThread==null){
-			return false;
+		if(status()){
+				
+			if(parserThread==null){
+				return false;
+			}
+			else if(parserThread != null){
+				parserRunner.stopParser();
+				return true;
+			}
+			else{
+				return false;
+			}
+
 		}
-		else if(parserThread != null){
-			parserRunner.stopParser();
-			return true;
-		}
-		else{
-			return false;
-		}
+		return false;
 	}
 	
 	/**
