@@ -5,11 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
-import javax.swing.SwingUtilities;
 
 import view.PortfolioGui;
 import view.components.ItemCmbPortfolio;
-import viewfactory.ViewFactory;
 
 import model.portfolio.IPortfolio;
 
@@ -21,7 +19,6 @@ public class PortfolioController {
 	public PortfolioController(PortfolioGui view){
 		
 		gui = view;
-		
 	}
 	
 	public ActionListener getBalanceHistoryListener() {
@@ -77,30 +74,6 @@ public class PortfolioController {
 				System.out.println(portfolio);
 				gui.updateCash();
 			}
-			
-		}
-	}
-	
-	public ActionListener getShowStockListener() {
-		
-		return new ShowStockListener();
-	}
-	
-	/**
-	 * Listener for the button change algorithm in portfolio gui
-	 */
-	private class ShowStockListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			SwingUtilities.invokeLater(new Runnable() {
-			    public void run() {
-			    	//Used to be assigned to a local variable, removed it because the intention is just to launch a new JFrame subclass
-			    	ViewFactory.getStockInfoGUI();
-			    	//ViewFactory.getStockTableView();
-			    }
-			});
 		}
 	}
 }
