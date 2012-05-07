@@ -12,6 +12,8 @@ private Harvester harv;
 	 * <p>
 	 * Reads commands from the commandline.
 	 * <p>
+	 * This is an alternative version to the Harvester.
+	 * Which uses the console instead of a GUI.
 	 * @param args
 	 * @author Erik
 	 */

@@ -12,6 +12,9 @@ import model.robot.RobotHandler;
 
 /**
  * JUnit tests for RobotHandler-class.
+ * 
+ * Remove?!
+ * 
  * @author Erik
  *
  */
