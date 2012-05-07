@@ -23,12 +23,15 @@ public class Harvester {
 	}
 		
 	public boolean startSimulation() {
-		parserRunner = new SimulationRunner(serverPort);
-		parserThread = new Thread(parserRunner);
-		parserThread.start();
-		parserRunner.startParser();
-		
-		return true;
+		if(!status()){
+			parserRunner = new SimulationRunner(serverPort);
+			parserThread = new Thread(parserRunner);
+			parserThread.start();
+			parserRunner.startParser();
+			return true;
+		}
+		return false;
+
 	}
 
 	/**
@@ -38,11 +41,14 @@ public class Harvester {
 	 * Otherwise false.
 	 */
 	public boolean startParser(){
-		parserRunner = new ParserRunner(serverPort);
-		parserThread = new Thread(parserRunner);
-		parserThread.start();
-		parserRunner.startParser();
-		return true;
+		if(!status()){
+			parserRunner = new ParserRunner(serverPort);
+			parserThread = new Thread(parserRunner);
+			parserThread.start();
+			parserRunner.startParser();
+			return true;
+		}
+		return false;
 	}
 	
 	

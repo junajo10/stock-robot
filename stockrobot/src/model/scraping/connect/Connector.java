@@ -91,6 +91,18 @@ public class Connector implements IConnector {
 		}
 	}
 	
+	/**
+	 * Shutdowns the server.
+	 * <p>
+	 * Method used for testing.
+	 */
+	public boolean isRunning(){
+		if(recieve!=null){
+			return getConnected()!=0 && !recieve.isClosed();
+		}
+		return  getConnected()!=0;
+	}
+	
 	
 	private class AstroSender implements Runnable {
 

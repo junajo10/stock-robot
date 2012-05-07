@@ -66,6 +66,10 @@ public class HarvesterServer implements Runnable, IConnector{
 	public int getConnected() {
 		return clients.size();
 	}
+	@Override
+	public boolean isRunning() {
+		return getConnected()!=0;
+	}
 	
 
 }

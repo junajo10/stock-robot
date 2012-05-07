@@ -121,6 +121,7 @@ public class ParserRunner implements IParserRunner {
 		if(!close){
 			close = true;
 			connector.shutdown();
+			while(connector.isRunning());
 			return true;
 		}
 		else{
@@ -137,6 +138,8 @@ public class ParserRunner implements IParserRunner {
 	public boolean stopParser() {
 		if(run){
 			run = false;
+			connector.shutdown();
+			while(connector.isRunning());
 			return true;
 		}
 		else{
@@ -168,7 +171,7 @@ public class ParserRunner implements IParserRunner {
 	 */
 	@Override
 	public boolean status() {
-		if(run && !close){
+		if(run && !close && connector.isRunning()){
 			return true;
 		}
 		else {
