@@ -2,9 +2,8 @@ package controller.gui;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.util.List;
+import java.util.Map;
 
-import utils.global.Pair;
 import view.IView;
 
 public class MainController implements IController {
@@ -27,7 +26,7 @@ public class MainController implements IController {
 	}
 
 	@Override
-	public List<Pair<String, ActionListener>> getActionListeners() {
+	public Map<String, ActionListener> getActionListeners() {
 		// TODO Auto-generated method stub
 		return null;
 	}

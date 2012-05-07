@@ -2,7 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,7 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import utils.global.Pair;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -175,15 +174,9 @@ public class SimView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(List<Pair<String, ActionListener>> actions) {
-		for (Pair<String, ActionListener> action : actions) {
-			if (action.getLeft().contentEquals("ComboboxListener")) {
-				comboBox.addActionListener(action.getRight());
-			}
-			
-			else if (action.getLeft().contentEquals("Start Simulation")) {
-				btnSimulate.addActionListener(action.getRight());
-			}
-		}
+	public void addActions(Map<String, ActionListener> actions) {
+		
+		comboBox.addActionListener(actions.get("ComboboxListener"));
+		btnSimulate.addActionListener(actions.get("Start Simulation"));
 	}
 }

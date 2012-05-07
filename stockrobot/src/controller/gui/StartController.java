@@ -4,11 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.robot.StartModel;
 
-import utils.global.Pair;
 import view.StartView;
 
 public class StartController implements IController {
@@ -50,14 +51,14 @@ public class StartController implements IController {
 	}
 
 	@Override
-	public List<Pair<String, ActionListener>> getActionListeners() {
-		List<Pair<String, ActionListener>> actions = new ArrayList<Pair<String,ActionListener>>();
+	public Map<String, ActionListener> getActionListeners() {
+		Map<String, ActionListener> actions = new HashMap<String,ActionListener>();
 		
-		actions.add(new Pair<String, ActionListener>("Start Parser", null));
-		actions.add(new Pair<String, ActionListener>("Stop Parser", null));
+		actions.put("Start Parser", null);
+		actions.put("Stop Parser", null);
 		
-		actions.add(new Pair<String, ActionListener>("Start Astro", startAstroAction));
-		actions.add(new Pair<String, ActionListener>("Stop Astro", null));
+		actions.put("Start Astro", startAstroAction);
+		actions.put("Stop Astro", null);
 		
 		return actions;
 	}

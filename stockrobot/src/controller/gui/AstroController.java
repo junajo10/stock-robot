@@ -4,11 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.robot.AstroModel;
 
-import utils.global.Pair;
 import view.AstroView;
 
 /**
@@ -107,11 +108,11 @@ public class AstroController implements IController {
 	}
 
 	@Override
-	public List<Pair<String, ActionListener>> getActionListeners() {
-		List<Pair<String, ActionListener>> actions = new ArrayList<Pair<String,ActionListener>>();
-		actions.add(new Pair<String, ActionListener>(START_SIMULATION, startSim));
-		actions.add(new Pair<String, ActionListener>(OPEN_GRAPHWINDOW, openGraph));
-		actions.add(new Pair<String, ActionListener>(OPEN_STOCKTABLE, openStockInfo));
+	public Map<String, ActionListener> getActionListeners() {
+		Map<String, ActionListener> actions = new HashMap<String,ActionListener>();
+		actions.put(START_SIMULATION, startSim);
+		actions.put(OPEN_GRAPHWINDOW, openGraph);
+		actions.put(OPEN_STOCKTABLE, openStockInfo);
 		return actions;
 	}
 

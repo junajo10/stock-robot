@@ -2,10 +2,7 @@ package controller.gui;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
-import java.util.List;
-
-import utils.global.Pair;
-
+import java.util.Map;
 
 /**
  * Interface for controllers, this should help with our circular dependencies.
@@ -35,7 +32,7 @@ public interface IController extends PropertyChangeListener{
 	 * Returns the list of all actions this controller has.
 	 * @return A list of pairs where the left side is a string associated with the action
 	 */
-	public List<Pair<String, ActionListener>> getActionListeners();
+	public Map<String, ActionListener> getActionListeners();
 	
 	/**
 	 * Adds subControllers that can be started from this controller.

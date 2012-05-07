@@ -16,14 +16,13 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 
 import controller.gui.AstroController;
 
 import utils.WindowCloseAdapter;
-import utils.global.Pair;
 
 public class AstroView extends JFrame implements IView {
 
@@ -133,18 +132,11 @@ public class AstroView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(List<Pair<String, ActionListener>> actions) {
+	public void addActions(Map<String, ActionListener> actions) {
 		
-		for (Pair<String, ActionListener> action : actions) {
-			
-			if (action.getLeft().contentEquals(AstroController.START_SIMULATION)) {
-				btnSimulate.addActionListener(action.getRight());
-			} else if (action.getLeft().contentEquals(AstroController.OPEN_GRAPHWINDOW)) {
-				btnGraph.addActionListener(action.getRight());
-			} else if (action.getLeft().contentEquals(AstroController.OPEN_STOCKTABLE)) {
-				btnStocks.addActionListener(action.getRight());
-			}
-		}
+		btnSimulate.addActionListener(actions.get(AstroController.START_SIMULATION));
+		btnGraph.addActionListener(actions.get(AstroController.OPEN_GRAPHWINDOW));
+		btnStocks.addActionListener(actions.get(AstroController.OPEN_STOCKTABLE));
 	}
 	
 	@Override

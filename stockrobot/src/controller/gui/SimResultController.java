@@ -2,13 +2,11 @@ package controller.gui;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.util.List;
 import java.util.Map;
 
 import model.simulation.SimModel;
 import model.simulation.SimulationHandler;
 
-import utils.global.Pair;
 import view.SimResultView;
 
 public class SimResultController implements IController {
@@ -65,7 +63,7 @@ public class SimResultController implements IController {
 	}
 
 	@Override
-	public List<Pair<String, ActionListener>> getActionListeners() {
+	public Map<String, ActionListener> getActionListeners() {
 		// TODO Auto-generated method stub
 		return null;
 	}

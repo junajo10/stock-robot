@@ -7,7 +7,6 @@ import java.awt.event.WindowListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -20,7 +19,6 @@ import javax.swing.JProgressBar;
 
 import utils.WindowCloseAdapter;
 import utils.global.FinancialLongConverter;
-import utils.global.Pair;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
@@ -133,7 +131,7 @@ public class SimResultView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(List<Pair<String, ActionListener>> actions) {
+	public void addActions(Map<String, ActionListener> actions) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -3,6 +3,7 @@ package view.graph;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,7 +26,6 @@ import org.jfree.data.xy.XYDataset;
 
 import controller.gui.GraphController;
 
-import utils.global.Pair;
 import view.IView;
 
 /**
@@ -180,11 +180,8 @@ public class GraphView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(List<Pair<String, ActionListener>> actions) {
-		for (Pair<String, ActionListener> action : actions) {
-			if (action.getLeft().contentEquals(GraphController.BIND_GRAPH_VIEW)) {
-				addSomething.addActionListener(action.getRight());
-			}
-		}
+	public void addActions(Map<String, ActionListener> actions) {
+		
+		addSomething.addActionListener(actions.get(GraphController.BIND_GRAPH_VIEW));
 	}
 }

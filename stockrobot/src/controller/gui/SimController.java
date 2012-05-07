@@ -4,13 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComboBox;
 
 import model.simulation.SimModel;
 
-import utils.global.Pair;
 import view.SimView;
 
 public class SimController implements IController {
@@ -63,10 +64,10 @@ public class SimController implements IController {
 	}
 
 	@Override
-	public List<Pair<String, ActionListener>> getActionListeners() {
-		List<Pair<String, ActionListener>> actions = new ArrayList<Pair<String,ActionListener>>();
-		actions.add(new Pair<String, ActionListener>("Start Simulation", startSimulation));
-		actions.add(new Pair<String, ActionListener>("ComboboxListener", comboBoxListener));
+	public Map<String, ActionListener> getActionListeners() {
+		Map<String, ActionListener> actions = new HashMap<String,ActionListener>();
+		actions.put("Start Simulation", startSimulation);
+		actions.put("ComboboxListener", comboBoxListener);
 		return actions;
 	}
 

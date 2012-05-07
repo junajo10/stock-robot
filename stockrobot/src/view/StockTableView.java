@@ -3,6 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 
 //import javax.swing.JFrame;
 import javax.swing.JFrame;
@@ -146,7 +147,7 @@ public class StockTableView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(List<Pair<String, ActionListener>> actions) {
+	public void addActions(Map<String, ActionListener> actions) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -3,8 +3,9 @@ package controller.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
@@ -16,7 +17,6 @@ import org.jfree.data.time.TimeSeries;
 
 import utils.global.FinancialLongConverter;
 import utils.global.Log;
-import utils.global.Pair;
 import view.graph.GraphView;
 
 /**
@@ -36,14 +36,14 @@ public class GraphController implements IController {
 	
 	//Keep a reference of the view to be able to insert and read stuff from it
 	private GraphView _view;
-	private List<Pair<String, ActionListener>> retList;
+	private Map<String, ActionListener> retList;
 	
 	public GraphView getView() { return _view; }
 
 	public GraphController() {
 		
-		retList = new ArrayList<Pair<String,ActionListener>>();
-		retList.add( new Pair<String, ActionListener>( BIND_GRAPH_VIEW, bindGraphView() ) );
+		retList = new HashMap<String,ActionListener>();
+		retList.put(BIND_GRAPH_VIEW, bindGraphView());
 		
 		_view = new GraphView( WINDOW_TITLE );
 		_view.addActions(getActionListeners());
@@ -109,7 +109,7 @@ public class GraphController implements IController {
 	
 	
 	@Override
-	public List<Pair<String, ActionListener>> getActionListeners() {
+	public Map<String, ActionListener> getActionListeners() {
 		
 		return retList;
 	}

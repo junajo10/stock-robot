@@ -2,7 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 
 import model.robot.StartModel;
 
-import utils.global.Pair;
 
 public class StartView extends JFrame implements IView {
 	private static final long serialVersionUID = -8131015783822143236L;
@@ -149,11 +148,8 @@ public class StartView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(List<Pair<String, ActionListener>> actions) {
-		for (Pair<String, ActionListener> action : actions) {
-			if (action.getLeft().contentEquals("Start Astro"))
-				btnStartAstro.addActionListener(action.getRight());
-		}
+	public void addActions(Map<String, ActionListener> actions) {
 		
+		btnStartAstro.addActionListener(actions.get("Start Astro"));
 	}
 }
