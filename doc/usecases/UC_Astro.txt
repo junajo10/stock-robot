@@ -1,0 +1,25 @@
+Use Case: Astro
+Short description: This is the main platform for ASTRo from here the user can start UC_Portfolio, UC_Simulation, UC_StockInfo
+
+Priority: High
+
+Extends or Includes: UC_Portfolio, UC_Simulation
+
+Participating actors: User, Astro
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+The user clicks on a button
+
+										ASTRo lanches the UC assosiated with button.
+
+User closes ASTRo
+
+										ASTRo shutsdown.
+
+Alternate flow:
+
+Exceptional flow:
+

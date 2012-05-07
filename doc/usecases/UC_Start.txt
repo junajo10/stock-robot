@@ -1,0 +1,25 @@
+Use Case: Start
+Short description: This is the starting use case, the user is presented with a window containing a few buttons.
+
+Priority: High
+
+Extends or Includes: UC_Astro, UC_Parser
+
+Participating actors: User, Astro, Parser
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User selects a option
+
+                                        System gets a signal and lanches a new view.
+
+User closes window
+
+                                        Entire system is shutdown.
+
+
+Alternate flow:
+
+Exceptional flow:

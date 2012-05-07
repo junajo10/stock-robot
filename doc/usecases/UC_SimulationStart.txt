@@ -1,0 +1,25 @@
+Use Case: SimulationStart
+Short description: Simulation starts and progress is beeing reported.
+
+Priority: Low
+
+Extends or Includes: UC_Astro, UC_AlgorithmSettings, UC_SimulationStart
+
+Participating actors: User, Astro
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+										Simulation is started.
+										Results are feeded back to the user.
+
+User closes window
+
+										Simulation data is freed.
+
+
+Alternate flow:
+
+Exceptional flow:
+

@@ -1,16 +1,31 @@
-::::User::::							::::ASTRo::::
-__________________________________________________________________________________________
+Use Case: Simulation
+Short description: This is the simulation usecase, here the user gets presented with a simulation view.
+User selects an algorithm and sets algorithm settings.
 
-Starts ASTRo
+Priority: Low
 
-										Launches Portfolio Window
-										
-Presses "Simulation"
+Extends or Includes: UC_Astro, UC_AlgorithmSettings, UC_SimulationStart
 
-										Launches Simulation Window
-										
-User selects an algorithm and hits go
-										Simulation will run, when done displays a message of result.
-										And a piechart of investments
-										
-User closes window
+Participating actors: User, Astro
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User selects an algorithm
+
+                                        System overwrites the default algorithm
+
+User clicks on algorithm settings
+
+										Algorithm settings will start (see UC_AlgorithmSettings)
+
+User clicks "start" button
+
+										System lanches the Simulation (see UC_SimulationStart)
+
+
+Alternate flow:
+
+Exceptional flow:
+
