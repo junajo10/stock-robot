@@ -67,7 +67,7 @@ public class AstroController implements IController {
 	public AstroController() {
 		
 		//For now, just call this when the constructor is called. That way differentiating define from display
-		defineSubControllers();
+		//defineSubControllers();
 	}
 	
 	@Override
@@ -84,7 +84,7 @@ public class AstroController implements IController {
 
 	@Override
 	public void display(Object model) {
-		
+		defineSubControllers();
 		
 		if (this.model == null) {
 			this.model = new AstroModel();
@@ -135,5 +135,7 @@ public class AstroController implements IController {
 		
 		stockInfoController = new StockTableController();
 		this.subControllers.add( stockInfoController );
+		
+		subControllers.add(new SimController());
 	}
 }

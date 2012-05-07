@@ -45,6 +45,8 @@ public class SimController implements IController {
 
 	@Override
 	public void display(Object model) {
+		defineSubControllers();
+		
 		if (this.model == null)
 			this.model = new SimModel();
 		
@@ -80,8 +82,7 @@ public class SimController implements IController {
 
 	@Override
 	public void defineSubControllers() {
-		// TODO Auto-generated method stub
-		
+		subControllers.add(new SimResultController());
 	}
 
 }

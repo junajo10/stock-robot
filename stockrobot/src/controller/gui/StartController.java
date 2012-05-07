@@ -34,6 +34,8 @@ public class StartController implements IController {
 
 	@Override
 	public void display(Object model) {
+		defineSubControllers();
+		
 		this.model = (StartModel) model;
 		
 		view.addActions(getActionListeners());
@@ -73,8 +75,7 @@ public class StartController implements IController {
 
 	@Override
 	public void defineSubControllers() {
-		// TODO Auto-generated method stub
-		
+		subControllers.add(new AstroController());
 	}
 
 }
