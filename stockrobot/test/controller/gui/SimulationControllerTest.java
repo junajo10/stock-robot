@@ -1,5 +1,6 @@
 package controller.gui;
 
+/*
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
@@ -9,9 +10,8 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+*/
 import testhelpers.DatabaseCleaner;
-import view.SimulationView;
 
 /**
  * Test the simulation controller!
@@ -31,6 +31,7 @@ import view.SimulationView;
  */
 public class SimulationControllerTest extends DatabaseCleaner {
 	
+	/*
 	SimulationView view;
 	SimulationController toTest;
 	
@@ -48,9 +49,9 @@ public class SimulationControllerTest extends DatabaseCleaner {
 		toTest = null;
 	}
 	
-	/**
-	 * Test that the map isn't null. The handler is a vital class and should not be null in the controller
-	 */
+	//**
+	// * Test that the map isn't null. The handler is a vital class and should not be null in the controller
+	// * /
 	@Test
 	public void testHandler() {
 		
@@ -59,9 +60,9 @@ public class SimulationControllerTest extends DatabaseCleaner {
 		Assert.assertNotNull(map);
 	}
 	
-	/**
-	 * Simply looking to cover this method, looking to make it crash *evil grin*
-	 */
+	//**
+	// * Simply looking to cover this method, looking to make it crash *evil grin*
+	// * /
 	@Test
 	public void testGoButton() {
 		
@@ -75,7 +76,7 @@ public class SimulationControllerTest extends DatabaseCleaner {
 	
 	//TODO: How can we test the private methods in SimulationController?
 	//In normal cases you would NOT do it or set them to public when testing. But don't want to mess with this class internals right now.
-	/*
+	//
 	@Test
 	public void testCreateChart() {
 		
