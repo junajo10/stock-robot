@@ -2,6 +2,7 @@ package model.scraping.core;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -24,30 +25,37 @@ public class HarvesterView extends JFrame {
 	private JTextField textField;
 	private JButton btnStartParser;
 	private JButton btnStopParser;
-	private JButton btnNewButton;
+	private JButton btnClearLog;
 	private JList log;
 	private JCheckBox chckbxSimulateStocks;
+	private JButton btnStatus;
+	private DefaultListModel logModel;
 
 	public HarvesterView(Harvester model) {
+		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setTitle("ASTRo Harvester");
 		
 		btnStartParser = new JButton("Start Parser");
 		btnStopParser = new JButton("Stop Parser");
+		logModel = new DefaultListModel();
 		
 		log = new JList();
+		log.setModel(logModel);
 		
 		textField = new JTextField();
 		textField.setText("45000");
 		textField.setToolTipText("Assign Port number");
 		textField.setColumns(10);
 		
-		btnNewButton = new JButton("Clear Log");
+		btnClearLog = new JButton("Clear Log");
 		
 		JLabel lblPortNumber = new JLabel("Port Number:");
 		
 		chckbxSimulateStocks = new JCheckBox("Simulate Stocks");
 		chckbxSimulateStocks.setSelected(true);
+		
+		btnStatus = new JButton("Print Status");
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -56,7 +64,6 @@ public class HarvesterView extends JFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(chckbxSimulateStocks)
 						.addComponent(log, GroupLayout.PREFERRED_SIZE, 335, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(groupLayout.createSequentialGroup()
@@ -64,8 +71,12 @@ public class HarvesterView extends JFrame {
 									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE))
 								.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-							.addComponent(btnStopParser, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+							.addComponent(btnStopParser, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(btnStatus, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -84,7 +95,9 @@ public class HarvesterView extends JFrame {
 					.addGap(10)
 					.addComponent(log, GroupLayout.PREFERRED_SIZE, 238, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnStatus))
 					.addContainerGap())
 		);
 		getContentPane().setLayout(groupLayout);
@@ -99,12 +112,20 @@ public class HarvesterView extends JFrame {
 		btnStopParser.addActionListener(al);
 	}
 	
+	public void addbtnStatusListener(ActionListener al){
+		btnStatus.addActionListener(al);
+	}	
+	
+	public void addbtnClearLogListener(ActionListener al){
+		btnClearLog.addActionListener(al);
+	}
+	
 	public String getPortTextbox(){
 		return textField.getText();
 	}
 	
 	public void addLogItem(String text){
-		//Implement
+		logModel.addElement(text);
 	}
 	
 	public boolean simulateStocksChecked(){

@@ -1,5 +1,7 @@
 package model.scraping.core;
 
+import java.awt.Dimension;
+
 /**
  * Parser main program.
  * <p>
@@ -16,6 +18,7 @@ public class HarvesterMain {
         HarvesterView       view       = new HarvesterView(model);
         HarvesterController controller = new HarvesterController(model, view);
         
+        view.setSize(new Dimension(385, 430));
         view.setVisible(true);
     }
 

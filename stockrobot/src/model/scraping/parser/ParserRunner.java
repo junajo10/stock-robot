@@ -120,6 +120,7 @@ public class ParserRunner implements IParserRunner {
 	public boolean stopRunner() {
 		if(!close){
 			close = true;
+			connector.shutdown();
 			return true;
 		}
 		else{
