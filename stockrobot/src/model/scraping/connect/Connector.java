@@ -85,10 +85,24 @@ public class Connector implements IConnector {
 			}
 		}
 		try {
-			recieve.close();
+			if(recieve!=null){
+				recieve.close();
+			}
 		} catch (IOException e1) {
 			
 		}
+	}
+	
+	/**
+	 * Shutdowns the server.
+	 * <p>
+	 * Method used for testing.
+	 */
+	public boolean isRunning(){
+		if(recieve!=null){
+			return getConnected()!=0 && !recieve.isClosed();
+		}
+		return  getConnected()!=0;
 	}
 	
 	

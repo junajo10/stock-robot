@@ -76,7 +76,6 @@ public class RobotHandler {
 				aThread.start();
 			}
 		}
-		System.out.println("apa");
 	}
 	
 	/**

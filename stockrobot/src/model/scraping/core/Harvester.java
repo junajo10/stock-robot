@@ -1,128 +1,37 @@
 package model.scraping.core;
 
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 import model.scraping.parser.IParserRunner;
 import model.scraping.parser.ParserRunner;
 import model.scraping.parser.SimulationRunner;
 
-
+/**
+ * Harvester model.
+ * <p>
+ * Takes commands from a controller.
+ * <p>
+ * @param args
+ * @author Erik
+ */
 public class Harvester {
-	private static Thread parserThread;
-	private static IParserRunner parserRunner;
-	private static int serverPort = 12344;
-	/**
-	 * Main class for the Parsing part of the program.
-	 * <p>
-	 * Reads commands from the commandline.
-	 * <p>
-	 * @param args
-	 * @author Erik
-	 */
-	public static void main(String[] args) {
+	private Thread parserThread;
+	private IParserRunner parserRunner;
+	private int serverPort = 45000;
 
-		System.out.println("*** ASTRo Harvester started. ***");
-		System.out.println("*** Write help for help. ***");
-		Scanner in = new Scanner(System.in);
-		while(true){
-			System.out.print("ASTRo: ");
-			try {
-				String input = in.nextLine();
-				takeCommand(input);
-			} catch (NoSuchElementException e) {
-
-			}
-			
-		}
+	
+	public Harvester(int portNumber){
+		serverPort = portNumber;
 	}
-	
-	/**
-	 * Takes a command from the Harvester and executes it.
-	 * 
-	 * @param str command to the Harvester from the console.
-	 */
-	private static void takeCommand(String str){
-		if(str.equals("help")){
-			System.out.println("*** ASTRo commandline help ***");
-			System.out.println("Syntax: (command) => (explanation)");
-			System.out.println("status         => Prints status on the parse.");
-			System.out.println("stop           => Temporarly stop the parser thread.");	
-			System.out.println("force stop     => Forces the parser to stop parse. Warning! May corrupt database.");	
-			System.out.println("restart parser => Restarts the parser.");
-			System.out.println("port #         => Sets serverPort to # default is 12344.");		
-			System.out.println("exit => Exits the entire program.");		
-			System.out.println("*** END OF HELP ***");
-		}			
-		else if(str.equals("restart parser")){
-			startParser();
-			System.out.println("*** Parser started successfully. ***");	
-		}
-		else if(str.equals("status")){
-				System.out.println("*** STATUS ***");
-				if(status()){
-					System.out.println("*** Parser is up and running. ***");
-				}
-				else {
-					System.out.println("*** Parser not started or dead. ***");
-				}
-		}
-		else if (str.equals("simulation start")) {
-			System.out.println("Starting simulation");
-			startSimulation();
-		}
-		else if(str.equals("stop")){
-			System.out.println("*** STATUS ***");
-			if(stopParser()){
-				System.out.println("*** Parser thread stopped successfully. ***");
-			}
-			else{
-				System.out.println("*** Parser already stopped or not started.");
-			}
-		}
-		else if (str.startsWith("port")) {
-			String portNumber = str.substring(5);
-			System.out.println(portNumber);
-			try {
-				int port = Integer.parseInt(portNumber);
-				
-				System.out.println("Server port set to: " + port);
-				serverPort = port;
-			} catch (NumberFormatException e) {
-				System.out.println("Malformed portnumber");
-			}
-			
-		}
-		else if(str.equals("force stop")){
-			System.out.println("*** STATUS ***");
-			if(forceStop()){
-				System.out.println("*** Parser thread stopped successfully. ***");
-			}
-			else{
-				System.out.println("*** Parser already stopped or not started.");
-			}
-		}
-		else if(str.equals("start")){
-			startParser();
-			System.out.println("*** Parser started successfully. ***");	
-		}
-		else if(str.equals("exit")){
-			System.out.println("*** Exiting Harvester. ***");
-			System.exit(0);
-		}
-		else{
-			System.out.println("*** Unknown command, write help for help. ***");
-		}
-	}
-	
-	
-	private static boolean startSimulation() {
-		parserRunner = new SimulationRunner(serverPort);
-		parserThread = new Thread(parserRunner);
-		parserThread.start();
-		parserRunner.startParser();
 		
-		return true;
+	public boolean startSimulation() {
+		if(!status()){
+			parserRunner = new SimulationRunner(serverPort);
+			parserThread = new Thread(parserRunner);
+			parserThread.start();
+			parserRunner.startParser();
+			return true;
+		}
+		return false;
+
 	}
 
 	/**
@@ -131,12 +40,15 @@ public class Harvester {
 	 * <p>
 	 * Otherwise false.
 	 */
-	private static boolean startParser(){
-		parserRunner = new ParserRunner(serverPort);
-		parserThread = new Thread(parserRunner);
-		parserThread.start();
-		parserRunner.startParser();
-		return true;
+	public boolean startParser(){
+		if(!status()){
+			parserRunner = new ParserRunner(serverPort);
+			parserThread = new Thread(parserRunner);
+			parserThread.start();
+			parserRunner.startParser();
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -149,7 +61,7 @@ public class Harvester {
 	 * Otherwise false.
 	 */
 	@SuppressWarnings("deprecation")
-	private static boolean forceStop(){
+	public boolean forceStop(){
 		if(parserThread==null){
 			return false;
 		}
@@ -169,18 +81,22 @@ public class Harvester {
 	 * <p>
 	 * Otherwise false.
 	 */
-	private static boolean stopParser(){
-		
-		if(parserThread==null){
-			return false;
+	public boolean stopParser(){
+		if(status()){
+				
+			if(parserThread==null){
+				return false;
+			}
+			else if(parserThread != null){
+				parserRunner.stopParser();
+				return true;
+			}
+			else{
+				return false;
+			}
+
 		}
-		else if(parserThread != null){
-			parserRunner.stopParser();
-			return true;
-		}
-		else{
-			return false;
-		}
+		return false;
 	}
 	
 	/**
@@ -190,7 +106,7 @@ public class Harvester {
 	 * <p>
 	 * Otherwise false.
 	 */
-	private static boolean status(){
+	public boolean status(){
 		
 		if(parserThread==null){
 			return false;
@@ -201,6 +117,22 @@ public class Harvester {
 		else{
 			return false;
 		}
+	}
+	
+	/**
+	 * Sets the given port of the Connector.
+	 * <p>
+	 * Warning! A restart of the parser must be done in order
+	 * for the port change to take effect.
+	 * <p>
+	 * @param port number to use.
+	 */
+	public boolean setPort(int port) {
+		if(port>2000 && port<65536){
+			serverPort = port;
+			return true;
+		}
+		return false;
 	}
 	
 

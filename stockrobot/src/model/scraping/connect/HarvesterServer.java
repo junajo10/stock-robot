@@ -57,4 +57,22 @@ public class HarvesterServer implements Runnable, IConnector{
 	public static void main(String args[]) {
 		new HarvesterServer(12333);
 	}
+	
+	@Override
+	public void shutdown() {
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+		}
+	}
+
+	public int getConnected() {
+		return clients.size();
+	}
+	@Override
+	public boolean isRunning() {
+		return getConnected()!=0;
+	}
+	
+
 }
