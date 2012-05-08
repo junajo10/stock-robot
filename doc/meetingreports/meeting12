@@ -1,0 +1,34 @@
+Meeting Agenda
+Location: 3507
+Date: 2012-05-08
+Time: 12:10
+Facilitator: Daniel Malmqvist
+Note taker: Erik Ramqvist
+Participants: Erik Ramqvist, Mattias Markehed, Daniel Malmqvist, Kristian Sällberg
+
+1. Objectives (5 min)
+Next meeing:
+* Prepare ourselves for our presentations.
+* More working on the priority list.
+
+
+2. Reports (15 min)
+* Over 50% of total code have JUnit-tests, over 75% of the model.
+* Entanglement have been fixed.
+* A new MVC-model have been added.
+* New GUI for parser have been added.
+* SDD and RAD have been updated.
+
+3. Discussion items (35 min)
+* Daniel demostrated the new MVC-model and interface.
+
+
+4. Outcomes and assignments (5 min)
+* Kristian: Fix algorithms settings.
+* Mattias: Fix portfolio and wizard gui.
+* Erik: More functions to be added to parser gui. Fix server-client module.
+* Daniel: More efficient portfolio history.
+
+5. Wrap up
+* Everyone will work on more testing and add more use-cases!
+
