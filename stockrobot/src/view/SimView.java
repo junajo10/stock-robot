@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
 
@@ -183,5 +184,11 @@ public class SimView extends JFrame implements IView {
 		
 		comboBox.addActionListener((ActionListener) actions.get("ComboboxListener"));
 		btnSimulate.addActionListener((ActionListener) actions.get("Start Simulation"));
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 }

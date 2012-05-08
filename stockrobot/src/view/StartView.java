@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
 
@@ -156,5 +157,11 @@ public class StartView extends JFrame implements IView {
 	public void addActions(Map<String, EventListener> actions) {
 		
 		btnStartAstro.addActionListener((ActionListener) actions.get("Start Astro"));
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 }

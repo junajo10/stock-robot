@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,15 +12,16 @@ import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import java.awt.Component;
+import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
+import java.util.Observable;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListDataListener;
 
-import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 
 public class PortfolioView extends JFrame implements IView {
@@ -195,5 +194,11 @@ public class PortfolioView extends JFrame implements IView {
 
 			return selected;
 		}
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 }

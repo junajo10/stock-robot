@@ -3,12 +3,14 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.text.DecimalFormat;
 import java.util.EventListener;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Observable;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -195,5 +197,11 @@ public class SimResultView extends JFrame implements IView {
         return chart;
         
     }
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

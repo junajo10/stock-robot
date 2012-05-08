@@ -13,8 +13,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
+import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
+import java.util.Observable;
 
 import javax.swing.JButton;
 
@@ -133,4 +135,11 @@ public class AstroView extends JFrame implements IView {
 		
 		addWindowListener(windowListener);
 	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

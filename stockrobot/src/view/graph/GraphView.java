@@ -2,9 +2,11 @@ package view.graph;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -184,5 +186,11 @@ public class GraphView extends JFrame implements IView {
 	public void addActions(Map<String, EventListener> actions) {
 		
 		addSomething.addActionListener((ActionListener) actions.get(GraphController.BIND_GRAPH_VIEW));
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 }

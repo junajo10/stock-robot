@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
@@ -148,6 +149,12 @@ public class StockTableView extends JFrame implements IView {
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
 	}

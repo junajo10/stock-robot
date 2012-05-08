@@ -1,13 +1,15 @@
 package view;
 
+import java.beans.PropertyChangeListener;
 import java.util.EventListener;
 import java.util.Map;
+import java.util.Observer;
 
 /**
  * Interface all views should implement.
  * @author Daniel
  */
-public interface IView {
+public interface IView extends PropertyChangeListener {
 	/**
 	 * This method should be called from the controller.
 	 * 

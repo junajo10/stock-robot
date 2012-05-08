@@ -31,6 +31,7 @@ public class PortfolioController implements IController {
 		view = new PortfolioView();
 		if(model instanceof IPortfolioHandler){
 			view.display(model);
+			((IPortfolioHandler) model).addAddObserver(view);
 		}
 	}
 
