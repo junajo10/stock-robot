@@ -32,21 +32,19 @@ public class GraphController implements IController {
 	
 	public static final String WINDOW_TITLE = "Stock prices on a graph";
 	
-	
-	
 	//Keep a reference of the view to be able to insert and read stuff from it
-	private GraphView _view;
+	private GraphView view;
 	private Map<String, ActionListener> retList;
 	
-	public GraphView getView() { return _view; }
+	public GraphView getView() { return view; }
 
 	public GraphController() {
 		
 		retList = new HashMap<String,ActionListener>();
 		retList.put(BIND_GRAPH_VIEW, bindGraphView());
 		
-		_view = new GraphView( WINDOW_TITLE );
-		_view.addActions(getActionListeners());
+		view = new GraphView( WINDOW_TITLE );
+		view.addActions(getActionListeners());
 	}
 	
 	@Override
@@ -58,15 +56,13 @@ public class GraphController implements IController {
 	@Override
 	public void display(Object model) {
 		
-		
-		
-		_view.init();
+		view.init();
 	}
 
 	@Override
 	public void cleanup() {
 		
-		_view = null;
+		view = null;
 	}
 
 	public ActionListener bindGraphView() {
@@ -85,7 +81,7 @@ public class GraphController implements IController {
 				for( StockNames st : nameList ) {
 		
 					//If match
-					if( st.getName().equals( _view.getCurrentWantedStock() ) ) {
+					if( st.getName().equals( view.getCurrentWantedStock() ) ) {
 		
 						//Create new series
 						final TimeSeries series = new TimeSeries( st.getName() );
@@ -100,7 +96,7 @@ public class GraphController implements IController {
 						}
 		
 						//Insert serie to the view / model of the view
-						_view.insertSeries( series );
+						view.insertSeries( series );
 					}
 				}
 			}
@@ -131,7 +127,6 @@ public class GraphController implements IController {
 
 	@Override
 	public void defineSubControllers() {
-		
 		
 		//We have no sub controllers at this level
 	}

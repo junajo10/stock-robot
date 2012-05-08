@@ -20,15 +20,15 @@ public class StockTableController implements IController {
 
 	public static final String CLASS_NAME = "StockTableController";
 	
-	private IView _view;
+	private IView view;
 	private Map<String, ActionListener> retList;
 	
 	public StockTableController() {
 		
 		retList = new HashMap<String,ActionListener>();
 		
-		_view = new StockTableView();
-		_view.addActions( retList );
+		view = new StockTableView();
+		view.addActions( retList );
 	}
 	
 	@Override
@@ -40,7 +40,7 @@ public class StockTableController implements IController {
 	@Override
 	public void display(Object model) {
 		
-		((StockTableView)_view).init();
+		((StockTableView) view).init();
 	}
 
 	@Override
