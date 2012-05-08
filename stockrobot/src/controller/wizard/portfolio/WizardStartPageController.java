@@ -4,22 +4,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.util.EventListener;
+import java.util.Map;
+
+import controller.gui.IController;
 
 import model.wizard.WizardModel;
+import model.wizard.portfolio.PortfolioWizardModel;
 
 
 import view.wizard.WizardView;
 import view.wizard.portfolio.PortfolioPages;
 import view.wizard.portfolio.PortfolioStartPage;
 
-public class WizardStartPageController {
+public class WizardStartPageController implements IController {
 
 	private PortfolioStartPage page;
 	private WizardView wizard;
 	private WizardModel model;
 	
 	public WizardStartPageController(PortfolioStartPage page, WizardView wizard, WizardModel model) {
-		this.page = page;
 		this.wizard = wizard;
 		this.model = model;
 	}
@@ -90,4 +95,48 @@ public class WizardStartPageController {
 		}
 	}
 	//==============================================
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void display(Object model) {
+		
+		if(model instanceof PortfolioWizardModel){
+			
+		}
+	}
+
+	@Override
+	public void cleanup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<String, EventListener> getActionListeners() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addSubController(IController subController) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void defineSubControllers() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

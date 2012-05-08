@@ -1,79 +1,67 @@
 package controller.gui;
 
+import java.beans.PropertyChangeEvent;
+import java.util.EventListener;
+import java.util.Map;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import model.portfolio.IPortfolioHandler;
 
-import javax.swing.JComboBox;
-
-import view.PortfolioGui;
-import view.components.ItemCmbPortfolio;
-
-import model.portfolio.IPortfolio;
+import view.IView;
+import view.PortfolioView;
 
 
-public class PortfolioController {
+public class PortfolioController implements IController {
 
-	private PortfolioGui gui;
+	public static final String CLASS_NAME = "PortfolioController";
+	private IView view;
 	
-	public PortfolioController(PortfolioGui view){
+	public PortfolioController(){
 		
-		gui = view;
 	}
 	
-	public ActionListener getBalanceHistoryListener() {
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
 		
-		return new BalanceHistoryListener();
 	}
-	
-	/**
-	 * Listener for the button history in portfolio gui
-	 */
-	private class BalanceHistoryListener implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			System.out.println("Pressed history");
+	@Override
+	public void display(Object model) {
+		
+		view = new PortfolioView();
+		if(model instanceof IPortfolioHandler){
+			view.display(model);
 		}
 	}
-	
-	public ActionListener getChangeAlgorithmListener() {
+
+	@Override
+	public void cleanup() {
+		// TODO Auto-generated method stub
 		
-		return new ChangeAlgorithmListener();
 	}
-	
-	/**
-	 * Listener for the button change algorithm in portfolio gui
-	 */
-	private class ChangeAlgorithmListener implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			System.out.println("Pressed change");
-		}
+	@Override
+	public Map<String, EventListener> getActionListeners() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public ActionListener getChangePortfolioListener() {
+
+	@Override
+	public void addSubController(IController subController) {
+		// TODO Auto-generated method stub
 		
-		return new ChangePortfolioListener();
 	}
-	
-	/**
-	 * Listener for the button change algorithm in portfolio gui
-	 */
-	private class ChangePortfolioListener implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if ((ItemCmbPortfolio)((JComboBox)e.getSource()).getSelectedItem() != null) {
-
-				IPortfolio portfolio = ((ItemCmbPortfolio)((JComboBox)e.getSource()).getSelectedItem()).getPortfolio();
-				gui.setPortfolio(portfolio);
-				System.out.println(portfolio);
-				gui.updateCash();
-			}
-		}
+	@Override
+	public void defineSubControllers() {
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public String getName() {
+
+		return CLASS_NAME;
+	}
+
 }

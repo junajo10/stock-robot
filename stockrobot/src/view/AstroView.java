@@ -12,28 +12,28 @@ import javax.swing.JProgressBar;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.EventListener;
 import java.util.Map;
 
 import javax.swing.JButton;
 
-import controller.gui.AstroController;
-
-import utils.WindowCloseAdapter;
-
 public class AstroView extends JFrame implements IView {
 
 	private static final long serialVersionUID = 2371008027508651564L;
 
+	public static final String OPEN_GRAPHWINDOW = "openGraphwindow";
+	public static final String START_SIMULATION = "startSimulation";
+	public static final String OPEN_STOCKTABLE = "stockTable";	
+	public static final String WINDOW_CLOSE = "windowClose";
+	public static final String OPEN_PORTFOLIOVIEW = "PortfolioView";
+	
 	int i = 2133;
 	private JPanel contentPane;
 	JButton btnSimulate = new JButton("Simulate");
 	JButton btnGraph = new JButton("Graph");
 	JButton btnStocks = new JButton("Stocks");
+	JButton btnPortfolio = new JButton("Portfolio");
 	
 	WindowListener windowListener;
 	
@@ -67,9 +67,6 @@ public class AstroView extends JFrame implements IView {
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setForeground(Color.BLUE);
 		progressBar.setValue(50);
-		
-		JButton btnPortfolio = new JButton("Portfolio");
-		btnPortfolio.setEnabled(false);
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -128,10 +125,11 @@ public class AstroView extends JFrame implements IView {
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
 		
-		btnSimulate.addActionListener((ActionListener) actions.get(AstroController.START_SIMULATION));
-		btnGraph.addActionListener((ActionListener) actions.get(AstroController.OPEN_GRAPHWINDOW));
-		btnStocks.addActionListener((ActionListener) actions.get(AstroController.OPEN_STOCKTABLE));
-		windowListener = (WindowListener) actions.get(AstroController.WINDOW_CLOSE);
+		btnSimulate.addActionListener((ActionListener) actions.get(START_SIMULATION));
+		btnGraph.addActionListener((ActionListener) actions.get(OPEN_GRAPHWINDOW));
+		btnStocks.addActionListener((ActionListener) actions.get(OPEN_STOCKTABLE));
+		btnPortfolio.addActionListener((ActionListener) actions.get(OPEN_PORTFOLIOVIEW));
+		windowListener = (WindowListener) actions.get(WINDOW_CLOSE);
 		
 		addWindowListener(windowListener);
 	}

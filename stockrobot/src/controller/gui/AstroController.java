@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.portfolio.PortfolioHandler;
 import model.robot.AstroModel;
 
 import utils.WindowCloseAdapter;
@@ -23,10 +24,6 @@ import view.AstroView;
 public class AstroController implements IController {
 	
 	public static final String CLASSNAME = "Astro Controller";
-	public static final String OPEN_GRAPHWINDOW = "openGraphwindow";
-	public static final String START_SIMULATION = "startSimulation";
-	public static final String OPEN_STOCKTABLE = "stockTable";
-	public static final String WINDOW_CLOSE = "windowClose";
 	
 	AstroModel model;
 	AstroView view = new AstroView();
@@ -35,6 +32,7 @@ public class AstroController implements IController {
 	//Hardcoded sub controllers:
 	private IController graphController;
 	private IController stockInfoController;
+	private IController portfolioController;
 	
 	ActionListener startSim = new ActionListener() {
 		@Override
@@ -66,6 +64,19 @@ public class AstroController implements IController {
 					c.display(null);
 				}
 			}
+		}
+	};
+	
+	ActionListener openPortfolioView = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (IController c : subControllers) {
+				if (c.getName().contentEquals(PortfolioController.CLASS_NAME)) {
+					
+					c.display(PortfolioHandler.getInstance());
+				}
+			}
+			
 		}
 	};
 	
@@ -110,10 +121,11 @@ public class AstroController implements IController {
 	@Override
 	public Map<String, EventListener> getActionListeners() {
 		Map<String, EventListener> actions = new HashMap<String,EventListener>();
-		actions.put(START_SIMULATION, startSim);
-		actions.put(OPEN_GRAPHWINDOW, openGraph);
-		actions.put(OPEN_STOCKTABLE, openStockInfo);
-		actions.put(WINDOW_CLOSE, windowClose);
+		actions.put(AstroView.START_SIMULATION, startSim);
+		actions.put(AstroView.OPEN_GRAPHWINDOW, openGraph);
+		actions.put(AstroView.OPEN_STOCKTABLE, openStockInfo);
+		actions.put(AstroView.OPEN_PORTFOLIOVIEW, openPortfolioView);
+		actions.put(AstroView.WINDOW_CLOSE, windowClose);
 		return actions;
 	}
 
@@ -139,5 +151,8 @@ public class AstroController implements IController {
 		this.subControllers.add( stockInfoController );
 		
 		subControllers.add(new SimController());
+		
+		portfolioController = new PortfolioController();
+		this.subControllers.add( portfolioController );
 	}
 }

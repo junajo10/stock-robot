@@ -32,7 +32,6 @@ import utils.global.FinancialLongConverter;
 import view.components.GUIFactory;
 import view.components.IGUIFactory;
 import view.components.ItemCmbPortfolio;
-import viewfactory.ViewFactory;
 
 /**
  * @author Mattias Markehed
