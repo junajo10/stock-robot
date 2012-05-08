@@ -1,7 +1,7 @@
 package controller.gui;
 
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +21,11 @@ public class StockTableController implements IController {
 	public static final String CLASS_NAME = "StockTableController";
 	
 	private IView view;
-	private Map<String, ActionListener> retList;
+	private Map<String, EventListener> retList;
 	
 	public StockTableController() {
 		
-		retList = new HashMap<String,ActionListener>();
+		retList = new HashMap<String,EventListener>();
 		
 		view = new StockTableView();
 		view.addActions( retList );
@@ -50,7 +50,7 @@ public class StockTableController implements IController {
 	}
 
 	@Override
-	public Map<String, ActionListener> getActionListeners() {
+	public Map<String, EventListener> getActionListeners() {
 		
 		return retList;
 	}

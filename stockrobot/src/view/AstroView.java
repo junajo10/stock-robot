@@ -16,6 +16,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.EventListener;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -132,11 +133,11 @@ public class AstroView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(Map<String, ActionListener> actions) {
+	public void addActions(Map<String, EventListener> actions) {
 		
-		btnSimulate.addActionListener(actions.get(AstroController.START_SIMULATION));
-		btnGraph.addActionListener(actions.get(AstroController.OPEN_GRAPHWINDOW));
-		btnStocks.addActionListener(actions.get(AstroController.OPEN_STOCKTABLE));
+		btnSimulate.addActionListener((ActionListener) actions.get(AstroController.START_SIMULATION));
+		btnGraph.addActionListener((ActionListener) actions.get(AstroController.OPEN_GRAPHWINDOW));
+		btnStocks.addActionListener((ActionListener) actions.get(AstroController.OPEN_STOCKTABLE));
 	}
 	
 	@Override

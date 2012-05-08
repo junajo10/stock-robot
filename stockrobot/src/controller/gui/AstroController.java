@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,8 +109,8 @@ public class AstroController implements IController {
 	}
 
 	@Override
-	public Map<String, ActionListener> getActionListeners() {
-		Map<String, ActionListener> actions = new HashMap<String,ActionListener>();
+	public Map<String, EventListener> getActionListeners() {
+		Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		actions.put(START_SIMULATION, startSim);
 		actions.put(OPEN_GRAPHWINDOW, openGraph);
 		actions.put(OPEN_STOCKTABLE, openStockInfo);

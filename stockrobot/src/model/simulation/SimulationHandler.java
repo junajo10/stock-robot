@@ -211,6 +211,8 @@ public class SimulationHandler extends SimModel {
 		for (StockNames sn : jpaSimHelper.getAllStockNames()) {
 			jpaSimHelper.remove(sn);
 		}
+		
+		jpaSimHelper.getEntityManager().evictAll();
 	}
 	private void updateAlgorithm() {
 		portfolio.updateAlgorithm();

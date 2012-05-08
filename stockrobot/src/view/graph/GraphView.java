@@ -2,6 +2,7 @@ package view.graph;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 
@@ -180,8 +181,8 @@ public class GraphView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(Map<String, ActionListener> actions) {
+	public void addActions(Map<String, EventListener> actions) {
 		
-		addSomething.addActionListener(actions.get(GraphController.BIND_GRAPH_VIEW));
+		addSomething.addActionListener((ActionListener) actions.get(GraphController.BIND_GRAPH_VIEW));
 	}
 }

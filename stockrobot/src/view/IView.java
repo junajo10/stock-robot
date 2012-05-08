@@ -1,7 +1,6 @@
 package view;
 
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
+import java.util.EventListener;
 import java.util.Map;
 
 /**
@@ -26,17 +25,5 @@ public interface IView {
 	 * 
 	 * @param actions a list of ActionListeners for this view
 	 */
-	public void addActions(Map<String, ActionListener> actions);
-	
-	/**
-	 * Adds a listener to this view, the controller should listen to it for windowclose message etc 
-	 * @param listener
-	 */
-    public void addPropertyChangeListener(PropertyChangeListener listener);
-    
-    /**
-     * Removes a listener.
-     * @param listener
-     */
-    public void removePropertyChangeListener(PropertyChangeListener listener);
+	public void addActions(Map<String, EventListener> actions);
 }

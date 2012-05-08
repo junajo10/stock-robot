@@ -1,12 +1,12 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.text.DecimalFormat;
+import java.util.EventListener;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -131,7 +131,7 @@ public class SimResultView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(Map<String, ActionListener> actions) {
+	public void addActions(Map<String, EventListener> actions) {
 		// TODO Auto-generated method stub
 		
 	}

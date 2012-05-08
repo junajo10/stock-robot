@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
+import java.util.EventListener;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -174,9 +175,9 @@ public class SimView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(Map<String, ActionListener> actions) {
+	public void addActions(Map<String, EventListener> actions) {
 		
-		comboBox.addActionListener(actions.get("ComboboxListener"));
-		btnSimulate.addActionListener(actions.get("Start Simulation"));
+		comboBox.addActionListener((ActionListener) actions.get("ComboboxListener"));
+		btnSimulate.addActionListener((ActionListener) actions.get("Start Simulation"));
 	}
 }

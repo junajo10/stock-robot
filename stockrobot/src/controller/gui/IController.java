@@ -1,7 +1,7 @@
 package controller.gui;
 
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import java.util.EventListener;
 import java.util.Map;
 
 /**
@@ -32,7 +32,7 @@ public interface IController extends PropertyChangeListener{
 	 * Returns the list of all actions this controller has.
 	 * @return A list of pairs where the left side is a string associated with the action
 	 */
-	public Map<String, ActionListener> getActionListeners();
+	public Map<String, EventListener> getActionListeners();
 	
 	/**
 	 * Adds subControllers that can be started from this controller.

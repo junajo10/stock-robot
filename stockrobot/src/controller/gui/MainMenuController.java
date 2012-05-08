@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 
@@ -169,7 +170,7 @@ public class MainMenuController implements IController {
 	}
 
 	@Override
-	public Map<String, ActionListener> getActionListeners() {
+	public Map<String, EventListener> getActionListeners() {
 		
 		return null;
 	}

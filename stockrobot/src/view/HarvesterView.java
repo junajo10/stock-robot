@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import java.awt.Dialog.ModalExclusionType;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
-import javax.swing.JFormattedTextField;
 
 import model.scraping.core.Harvester;
 

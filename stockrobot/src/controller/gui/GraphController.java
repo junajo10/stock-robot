@@ -3,6 +3,7 @@ package controller.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,13 +35,13 @@ public class GraphController implements IController {
 	
 	//Keep a reference of the view to be able to insert and read stuff from it
 	private GraphView view;
-	private Map<String, ActionListener> retList;
+	private Map<String, EventListener> retList;
 	
 	public GraphView getView() { return view; }
 
 	public GraphController() {
 		
-		retList = new HashMap<String,ActionListener>();
+		retList = new HashMap<String,EventListener>();
 		retList.put(BIND_GRAPH_VIEW, bindGraphView());
 		
 		view = new GraphView( WINDOW_TITLE );
@@ -105,7 +106,7 @@ public class GraphController implements IController {
 	
 	
 	@Override
-	public Map<String, ActionListener> getActionListeners() {
+	public Map<String, EventListener> getActionListeners() {
 		
 		return retList;
 	}

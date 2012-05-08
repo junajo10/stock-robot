@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
+import java.util.EventListener;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -148,8 +149,8 @@ public class StartView extends JFrame implements IView {
 	}
 
 	@Override
-	public void addActions(Map<String, ActionListener> actions) {
+	public void addActions(Map<String, EventListener> actions) {
 		
-		btnStartAstro.addActionListener(actions.get("Start Astro"));
+		btnStartAstro.addActionListener((ActionListener) actions.get("Start Astro"));
 	}
 }
