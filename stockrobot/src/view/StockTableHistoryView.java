@@ -33,6 +33,10 @@ import model.robot.AlphaReceiver;
 import utils.global.FinancialLongConverter;
 import utils.global.Pair;
 
+/**
+ * 
+ * @author Daniel
+ */
 public class StockTableHistoryView extends JFrame {
 
 	private static final long serialVersionUID = -7366514125495992396L;

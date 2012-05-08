@@ -2,6 +2,8 @@ package controller.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.EventListener;
@@ -11,12 +13,12 @@ import java.util.Map;
 
 import model.robot.AstroModel;
 
+import utils.WindowCloseAdapter;
 import view.AstroView;
 
 /**
  * 
- * @author daniel
- *
+ * @author Daniel
  */
 public class AstroController implements IController {
 	
@@ -24,6 +26,7 @@ public class AstroController implements IController {
 	public static final String OPEN_GRAPHWINDOW = "openGraphwindow";
 	public static final String START_SIMULATION = "startSimulation";
 	public static final String OPEN_STOCKTABLE = "stockTable";
+	public static final String WINDOW_CLOSE = "windowClose";
 	
 	AstroModel model;
 	AstroView view = new AstroView();
@@ -66,21 +69,19 @@ public class AstroController implements IController {
 		}
 	};
 	
+	WindowListener windowClose = new WindowCloseAdapter() {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			cleanup();
+		}
+	};
+	
 	public AstroController() {
-		
-		//For now, just call this when the constructor is called. That way differentiating define from display
-		//defineSubControllers();
+
 	}
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		
-		if (evt.getPropertyName().contentEquals("Window Close")) {
-			System.out.println("AstroController: view closing, calling cleanup");
-			
-			cleanup();
-		}
-		
 		
 	}
 
@@ -93,8 +94,6 @@ public class AstroController implements IController {
 		}
 		
 		view.addActions(getActionListeners());
-		
-		view.addPropertyChangeListener(this);
 		
 		view.display(this.model);
 	}
@@ -114,6 +113,7 @@ public class AstroController implements IController {
 		actions.put(START_SIMULATION, startSim);
 		actions.put(OPEN_GRAPHWINDOW, openGraph);
 		actions.put(OPEN_STOCKTABLE, openStockInfo);
+		actions.put(WINDOW_CLOSE, windowClose);
 		return actions;
 	}
 

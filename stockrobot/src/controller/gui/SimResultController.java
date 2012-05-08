@@ -9,6 +9,10 @@ import model.simulation.SimulationHandler;
 
 import view.SimResultView;
 
+/**
+ * 
+ * @author Daniel
+ */
 public class SimResultController implements IController {
 	SimResultView view;
 	SimulationHandler model;

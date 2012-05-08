@@ -29,20 +29,13 @@ public class AstroView extends JFrame implements IView {
 
 	private static final long serialVersionUID = 2371008027508651564L;
 
-	PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-	
 	int i = 2133;
 	private JPanel contentPane;
 	JButton btnSimulate = new JButton("Simulate");
 	JButton btnGraph = new JButton("Graph");
 	JButton btnStocks = new JButton("Stocks");
 	
-	WindowListener windowListener = new WindowCloseAdapter() {
-		@Override
-		public void windowClosing(WindowEvent e) {
-			pcs.firePropertyChange("Window Close", false, true);
-		}
-	};
+	WindowListener windowListener;
 	
 	/**
 	 * Launch the application.
@@ -124,7 +117,7 @@ public class AstroView extends JFrame implements IView {
 	@Override
 	public void display(Object model) {
 		setVisible(true);
-		addWindowListener(windowListener);
+		
 	}
 
 	@Override
@@ -138,15 +131,8 @@ public class AstroView extends JFrame implements IView {
 		btnSimulate.addActionListener((ActionListener) actions.get(AstroController.START_SIMULATION));
 		btnGraph.addActionListener((ActionListener) actions.get(AstroController.OPEN_GRAPHWINDOW));
 		btnStocks.addActionListener((ActionListener) actions.get(AstroController.OPEN_STOCKTABLE));
+		windowListener = (WindowListener) actions.get(AstroController.WINDOW_CLOSE);
+		
+		addWindowListener(windowListener);
 	}
-	
-	@Override
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		pcs.addPropertyChangeListener(listener);
-	}
-    
-    
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-    	pcs.removePropertyChangeListener(listener);
-    }
 }

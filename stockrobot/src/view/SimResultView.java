@@ -31,6 +31,10 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
 
+/**
+ * 
+ * @author Daniel
+ */
 public class SimResultView extends JFrame implements IView {
 
 	private static final long serialVersionUID = -5877884096041331653L;

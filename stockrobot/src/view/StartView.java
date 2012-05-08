@@ -19,6 +19,10 @@ import javax.swing.JLabel;
 import model.robot.StartModel;
 
 
+/**
+ * 
+ * @author Daniel
+ */
 public class StartView extends JFrame implements IView {
 	private static final long serialVersionUID = -8131015783822143236L;
 	private JPanel contentPane;

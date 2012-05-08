@@ -24,6 +24,10 @@ import javax.swing.JTextField;
 import model.simulation.SimModel;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ * @author Daniel
+ */
 public class SimView extends JFrame implements IView {
 
 	private static final long serialVersionUID = -4933445365240811334L;

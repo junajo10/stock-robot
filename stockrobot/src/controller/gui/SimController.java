@@ -15,6 +15,10 @@ import model.simulation.SimModel;
 
 import view.SimView;
 
+/**
+ * 
+ * @author Daniel
+ */
 public class SimController implements IController {
 	SimView view = new SimView();
 	SimModel model;
