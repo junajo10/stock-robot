@@ -2,7 +2,6 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -15,7 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Dialog.ModalExclusionType;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeSupport;
 import java.util.EventListener;
 import java.util.Map;
 
@@ -169,7 +167,10 @@ public class HarvesterView extends JFrame implements IView{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		String input = evt.getPropertyName();
+		
+		//TODO: Do something here?
+		//Incommented this because it doesn't do anything (remove this uncommenting when you continute programming here)
+		//String input = evt.getPropertyName();
 	}
 
 	@Override
