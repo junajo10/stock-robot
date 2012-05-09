@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Users/kristian/Documents/school/DIT211/stock-robot/stockrobot/jar/hsqldb.jar"/>
+	<classpathentry kind="lib" path="/Users/kristian/Documents/school/DIT211/stock-robot/stockrobot/jar/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="/Users/kristian/Documents/school/DIT211/stock-robot/stockrobot/jar/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="/Users/kristian/Documents/school/DIT211/stock-robot/stockrobot/jar/joda-time-2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/kristian/Documents/school/DIT211/stock-robot/stockrobot/jar/mysql-connector-java-5.1.18-bin.jar"/>
+	<classpathentry kind="lib" path="/Users/kristian/Documents/school/DIT211/stock-robot/stockrobot/jar/openjpa-all-2.2.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stockrobot"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
