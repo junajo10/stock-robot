@@ -4,9 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.Map;
 
-import view.HarvesterView;
+import view.HarvesterViewMVC;
 
 import model.scraping.core.Harvester;
 
@@ -18,14 +19,18 @@ import model.scraping.core.Harvester;
 public class HarvesterControllerMVC implements IController {
 	
 	private Harvester model;
-	private HarvesterView view;
+	private HarvesterViewMVC view;
 	private Logger log;
 
+	
+	
 	private class StartBtnListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("apa");
 			try {
+				
 				int port = Integer.parseInt(view.getPortTextbox());
 				model.setPort(port);
 				System.out.println("*** Server port set to: " + port);
@@ -61,6 +66,7 @@ public class HarvesterControllerMVC implements IController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("apa");
 			if(view.forceStopChecked()){
 				model.stopParser();
 			}
@@ -77,6 +83,7 @@ public class HarvesterControllerMVC implements IController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("apa");
 			log.printStatus(model.status());
 		}
 	}
@@ -91,15 +98,9 @@ public class HarvesterControllerMVC implements IController {
 	}
 
 	public HarvesterControllerMVC() {
-		this.model = model;
-		this.view = view;
 		this.log = new Logger();
-		
-	    view.addbtnStartParserListener(new StartBtnListener());
-	    view.addbtnStopParserListener(new StopBtnListener());
-	    view.addbtnStatusListener(new StatusBtnListener());
-	    view.addbtnClearLogListener(new ClearLogBtnListener());
-	    
+		this.view = new HarvesterViewMVC();
+		this.model = new Harvester(45000);
 	}
 	
 	private class Logger {
@@ -116,7 +117,6 @@ public class HarvesterControllerMVC implements IController {
 				view.addLogItem("Parser closed,crashed or shutting down.");
 			}
 		}
-		
 		public void start(){
 			view.addLogItem("Parser started at 08:56.");
 		}		
@@ -135,50 +135,50 @@ public class HarvesterControllerMVC implements IController {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
 	public void display(Object model) {
-		// TODO Auto-generated method stub
-		
+		view.addActions(getActionListeners());
+		view.display(this.model);
 	}
 
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, EventListener> actions = new HashMap<String,EventListener>();
+		actions.put(HarvesterViewMVC.START_PARSER, new StartBtnListener());
+		actions.put(HarvesterViewMVC.STOP_PARSER, new StopBtnListener());
+		actions.put(HarvesterViewMVC.PRINT_STATUS, new StatusBtnListener());
+		actions.put(HarvesterViewMVC.CLEAR_LOG, new ClearLogBtnListener());
+
+		return actions;
 	}
 
 
 	@Override
 	public void addSubController(IController subController) {
-		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
 	public void defineSubControllers() {
-		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Harvester Controller";
 	}
     
 

@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
 
@@ -166,6 +167,7 @@ public class HarvesterViewMVC extends JFrame implements IView{
 
 	@Override
 	public void display(Object model) {
+		this.setSize(new Dimension(385, 430));
 		this.setVisible(true);
 	}
 
