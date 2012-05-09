@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -106,34 +108,44 @@ public class HarvesterControllerMVC implements IController {
 	}
 	
 	private class Logger {
-		
+		long maxItems = 0;
 		public Logger(){
 			
 		}
 		
 		public void printStatus(boolean status){
 			if(status){
-				view.addLogItem("Parser is up and running.");
+				addToList("Parser is up and running.");
 			}
 			else {
-				view.addLogItem("Parser closed,crashed or shutting down.");
+				addToList("Parser closed,crashed or shutting down.");
 			}
 		}
 		public void start(){
-			view.addLogItem("Parser started at 08:56.");
+			addToList("Parser started at 08:56.");
 		}		
 		
 		public void parsingLoop(long timeElapsed){
-			view.addLogItem("Parsing loop finished in " + timeElapsed + " ms. ");
+			addToList("Parsing loop finished in " + timeElapsed + " ms. "+ maxItems++);
 		}		
 		
 		public void stop(){
-			view.addLogItem("Parser stopped at 08:59.");
+			addToList("Parser stopped at 08:59.");
 		}
 
 		public void failStart() {
-			view.addLogItem("Parser failed to start. Already started or crashed.");
+			addToList("Parser failed to start. Already started or crashed.");
 		}
+
+		public void blossom() {
+		}
+		
+		private void addToList(String input){
+			Date date= new java.util.Date();
+			String time = new Timestamp(date.getTime()) + "";
+			view.addLogItem("[" + time.substring(11, 19) + "] - " + input);
+		}
+		
 	}
 
 
@@ -141,7 +153,7 @@ public class HarvesterControllerMVC implements IController {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		System.out.println("apa");
+		log.blossom();
 		if(event.getPropertyName().equals("Parsing done.")){
 			log.parsingLoop((Long) event.getNewValue());
 		}
@@ -157,7 +169,7 @@ public class HarvesterControllerMVC implements IController {
 
 	@Override
 	public void cleanup() {
-
+		
 	}
 
 
