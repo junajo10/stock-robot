@@ -84,6 +84,7 @@ public class SimulationRunner implements IParserRunner {
 	 */
 	public boolean stopRunner() {
 		if(!close){
+			server.shutdown();
 			close = true;
 			return true;
 		}
@@ -100,6 +101,7 @@ public class SimulationRunner implements IParserRunner {
 	 */
 	public boolean stopParser() {
 		if(run){
+			server.shutdown();
 			run = false;
 			return true;
 		}
