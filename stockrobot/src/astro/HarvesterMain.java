@@ -20,8 +20,7 @@ import model.scraping.core.Harvester;
  */
 public class HarvesterMain {
 	
-    @SuppressWarnings("unused")
-	public static void main(String[] args) {
+    public static void main(String[] args) {
     	
         HarvesterController controller = new HarvesterController();
         controller.display(null);
