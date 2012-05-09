@@ -17,6 +17,7 @@ import utils.global.Log.TAG;
 public class HarvesterServer implements Runnable, IConnector{
 	ServerSocket serverSocket;
 	List<Socket> clients = new ArrayList<Socket>();
+	boolean run  = true;
 	
 	public HarvesterServer(int port) {
 		try {
@@ -31,7 +32,7 @@ public class HarvesterServer implements Runnable, IConnector{
 	}
 	@Override
 	public void run() {
-		while (true) {
+		while (run) {
 			try {
 				clients.add(serverSocket.accept());
 				Log.instance().log(TAG.NORMAL, "A new client has connected.");
@@ -61,6 +62,7 @@ public class HarvesterServer implements Runnable, IConnector{
 	@Override
 	public void shutdown() {
 		try {
+			run = false;
 			serverSocket.close();
 		} catch (IOException e) {
 		}
@@ -71,7 +73,7 @@ public class HarvesterServer implements Runnable, IConnector{
 	}
 	@Override
 	public boolean isRunning() {
-		return getConnected()!=0;
+		return getConnected()!=0 && !serverSocket.isClosed();
 	}
 	
 
