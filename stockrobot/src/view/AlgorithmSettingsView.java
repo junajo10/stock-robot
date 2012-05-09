@@ -1,28 +1,40 @@
 package view;
 
+import java.beans.PropertyChangeEvent;
+import java.util.EventListener;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import viewfactory.ViewFactory;
-
-public class AlgorithmSettingsView extends JFrame {
+public class AlgorithmSettingsView extends JFrame implements IView {
 
 	private static final long serialVersionUID = 1L;
 
-	
 	private String		algorithmName;
 	private JPanel 		container;
 	
 	public AlgorithmSettingsView( String algorithmName ) {
 		
 		this.algorithmName = algorithmName;
-		
-		init();
 	}
 	
-	public void init() {
+	public void addSetting( String desc, double init, double min, double max ) {
+		
+		//JPanel panel = ViewFactory.getSettingsPanel( desc, init, min, max );
+		JButton panel = new JButton("hey");
+		container.add( panel );
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent arg0) {
+		
+		
+	}
+
+	@Override
+	public void display(Object model) {
 		
 		//Main container for the algorithm settings window
 		container = new JPanel();
@@ -42,21 +54,17 @@ public class AlgorithmSettingsView extends JFrame {
 		//Settings for the window
 		setTitle( "Algorithm settings for " + algorithmName );
 		setSize( 320,500 );
-		setVisible( true );
-	}
-	
-	public void addSetting( String desc, double init, double min, double max ) {
-		
-		JPanel panel = ViewFactory.getSettingsPanel( desc, init, min, max );
-		container.add( panel );
-	}
-	
-	public static void main( String[] args ) {
-		
-		System.out.println( "Test components!" );
-		
-		new AlgorithmSettingsView( "Testalgorithm!" );
 	}
 
-	
+	@Override
+	public void cleanup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addActions(Map<String, EventListener> actions) {
+		// TODO Auto-generated method stub
+		
+	}
 }

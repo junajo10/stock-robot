@@ -16,26 +16,27 @@ import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
-import java.util.Observable;
 
 import javax.swing.JButton;
 
 public class AstroView extends JFrame implements IView {
 
-	private static final long serialVersionUID = 2371008027508651564L;
+	private static final long serialVersionUID 			= 2371008027508651564L;
 
-	public static final String OPEN_GRAPHWINDOW = "openGraphwindow";
-	public static final String START_SIMULATION = "startSimulation";
-	public static final String OPEN_STOCKTABLE = "stockTable";	
-	public static final String WINDOW_CLOSE = "windowClose";
-	public static final String OPEN_PORTFOLIOVIEW = "PortfolioView";
+	public static final String OPEN_GRAPHWINDOW 		= "openGraphwindow";
+	public static final String START_SIMULATION 		= "startSimulation";
+	public static final String OPEN_STOCKTABLE			= "stockTable";	
+	public static final String WINDOW_CLOSE 			= "windowClose";
+	public static final String OPEN_PORTFOLIOVIEW 		= "PortfolioView";
+	public static final String OPEN_ALGORTIHM_SETTINGS 	= "algorithmSettings";
 	
 	int i = 2133;
 	private JPanel contentPane;
-	JButton btnSimulate = new JButton("Simulate");
-	JButton btnGraph = new JButton("Graph");
-	JButton btnStocks = new JButton("Stocks");
-	JButton btnPortfolio = new JButton("Portfolio");
+	JButton btnSimulate 								= new JButton("Simulate");
+	JButton btnGraph 									= new JButton("Graph");
+	JButton btnStocks 									= new JButton("Stocks");
+	JButton btnPortfolio 								= new JButton("Portfolio");
+	JButton btnAlgorithmSettings 						= new JButton("Algorithm Settings");
 	
 	WindowListener windowListener;
 	
@@ -59,7 +60,7 @@ public class AstroView extends JFrame implements IView {
 	 * Create the frame.
 	 */
 	public AstroView() {
-		setBounds(100, 100, 254, 223);
+		setBounds(100, 100, 254, 253);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -90,7 +91,11 @@ public class AstroView extends JFrame implements IView {
 							.addComponent(btnSimulate))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnGraph)))
+							.addComponent(btnGraph))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnAlgorithmSettings))
+						)
 					.addContainerGap(95, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -106,7 +111,11 @@ public class AstroView extends JFrame implements IView {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnSimulate)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnGraph))
+							.addComponent(btnGraph)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnAlgorithmSettings)
+							)
+							
 						.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(19, Short.MAX_VALUE))
 		);
@@ -131,6 +140,7 @@ public class AstroView extends JFrame implements IView {
 		btnGraph.addActionListener((ActionListener) actions.get(OPEN_GRAPHWINDOW));
 		btnStocks.addActionListener((ActionListener) actions.get(OPEN_STOCKTABLE));
 		btnPortfolio.addActionListener((ActionListener) actions.get(OPEN_PORTFOLIOVIEW));
+		btnAlgorithmSettings.addActionListener((ActionListener) actions.get(OPEN_ALGORTIHM_SETTINGS));
 		windowListener = (WindowListener) actions.get(WINDOW_CLOSE);
 		
 		addWindowListener(windowListener);
