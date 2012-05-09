@@ -18,16 +18,15 @@ public class StartController implements IController {
 	StartModel model;
 	List<IController> subControllers = new ArrayList<IController>();
 	
-	HarvesterController harvester;
+	IController harvester;
+	IController astroController;
+	
+	public static String name = "StartController";
 	
 	ActionListener startAstroAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (IController c : subControllers) {
-				if (c.getName().contentEquals("Astro Controller")) {
-					c.display(null);
-				}
-			}
+			astroController.display(null);
 		}
 	};
 	ActionListener startHavester = new ActionListener() {
@@ -77,15 +76,17 @@ public class StartController implements IController {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public void defineSubControllers() {
-		harvester = new HarvesterController();
-		subControllers.add(new AstroController());
-		subControllers.add(harvester);
+		if (harvester == null)
+			harvester = new HarvesterController();
+		
+		if (astroController == null)
+			astroController = new AstroController();
+
 	}
 
 }
