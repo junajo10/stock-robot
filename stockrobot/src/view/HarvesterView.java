@@ -12,6 +12,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.ListModel;
+
 import java.awt.Dialog.ModalExclusionType;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
@@ -33,6 +35,7 @@ public class HarvesterView extends JFrame implements IView{
 	private JButton btnStartParser;
 	private JButton btnStopParser;
 	private JButton btnClearLog;
+	private JButton btnExportLog;
 	private JList log;
 	private JCheckBox chckbxSimulateStocks;
 	private JButton btnStatus;
@@ -45,6 +48,7 @@ public class HarvesterView extends JFrame implements IView{
 	public static final String STOP_PARSER = "stopParser";
 	public static final String PRINT_STATUS = "printStatus";	
 	public static final String CLEAR_LOG = "clearLog";
+	public static final String EXPORT_LOG = "exportLog";
 
 	public HarvesterView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,7 +76,7 @@ public class HarvesterView extends JFrame implements IView{
 		
 		chckbxForceStop = new JCheckBox("Force Stop");
 		
-		JButton btnExportLog = new JButton("Export Log to txt");
+		btnExportLog = new JButton("Export Log to txt");
 		
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -190,5 +194,12 @@ public class HarvesterView extends JFrame implements IView{
 			btnStopParser.addActionListener((ActionListener) actions.get(STOP_PARSER));
 			btnStatus.addActionListener((ActionListener) actions.get(PRINT_STATUS));
 			btnClearLog.addActionListener((ActionListener) actions.get(CLEAR_LOG));
+			btnExportLog.addActionListener((ActionListener) actions.get(EXPORT_LOG));
+	}
+
+
+
+	public ListModel getLogModel() {
+		return logModel;
 	}	
 }

@@ -4,11 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.ListModel;
+
 
 import view.HarvesterView;
 
@@ -87,7 +95,13 @@ public class HarvesterController implements IController {
 		}
 	}
 
-	
+	private class ExportLogBtnListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			log.exportLog();
+		}
+	}
 	private class ClearLogBtnListener implements ActionListener{
 
 		@Override
@@ -146,7 +160,26 @@ public class HarvesterController implements IController {
 			view.addLogItem("[" + time.substring(11, 19) + "] - " + input);
 		}
 		
+		public void exportLog(){
+			ListModel model = view.getLogModel();
+			PrintStream out = null;
+			try {
+				String date = new Timestamp(new java.util.Date().getTime()) + "";
+				String fileName = "Log_harvester_"+date.substring(0, 10)+".txt";
+				out = new PrintStream(new FileOutputStream(fileName));
+		        int len = model.getSize(); 
+		        for(int i = 0; i < len; i++) { 
+		        	out.println(model.getElementAt(i).toString()); 
+		        } 
+				addToList(fileName+" exported to home-directory.");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}  finally {
+				out.close();
+			}
+        } 
 	}
+		
 
 
 
@@ -179,6 +212,7 @@ public class HarvesterController implements IController {
 		actions.put(HarvesterView.STOP_PARSER, new StopBtnListener());
 		actions.put(HarvesterView.PRINT_STATUS, new StatusBtnListener());
 		actions.put(HarvesterView.CLEAR_LOG, new ClearLogBtnListener());
+		actions.put(HarvesterView.EXPORT_LOG, new ExportLogBtnListener());
 
 		return actions;
 	}
