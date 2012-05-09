@@ -1,0 +1,42 @@
+PROJEKTKURS LP4 2012
+	+ Introföreläsning
+		* 
+		
+		Förstudie ->
+			OO Modell
+				-> Preliminär OO mod
+			
+		Möten ->
+			* 1 h per vecka
+			
+			
+		Workshops ->
+			* GIT
+				+ -> .gitignore
+				
+			* #3 -> Dependency Injection
+			
+		RAD: -> Requirements & Analysis
+			* 
+			
+		SDD: -> System design Document
+			* 
+	
+Steg:
+		1: Seminarium -> Modell
+
+++++++++++++++++++++++++++++++++++++++++++++++		
+Håll agenda -> Resource allocation -> Följ upp
+
+Bok:
+	Domain Driven Design
+	
+++++++++++++++++++++++++++++++++++++++++++++++
+Gruppbetyg -> 
+	Kommer först, sedan individuella betyg
+		
+Presentation + Opponera mot andra grupper
+
+
+
+

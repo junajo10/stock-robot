@@ -1,0 +1,17 @@
+Input Från Adam:
+
+
+	Undvika tabellnamn
+	Criteria i JPA2
+	
+	Domänmodell:	
+		Ta bort parser
+		
+		
+	Inte köra egit för kommunikation med repo
+	
+	+++ "Premature optimization is the root of all evil."
+		
+	+++ "Testing-paketet ska ligga bredvid src"
+
+	Stan
