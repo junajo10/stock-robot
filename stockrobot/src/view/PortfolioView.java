@@ -39,6 +39,9 @@ public class PortfolioView extends JFrame implements IView {
 	private JLabel lblBalanceVar;
 	private JLabel lblTotalVar;
 	
+	private JButton btnSeeStock;
+	private JButton btnHistory;
+	
 	private IPortfolio selectedPortfolio;
 	
 	/**
@@ -85,10 +88,12 @@ public class PortfolioView extends JFrame implements IView {
 		);
 		pnlViewsHolder.setLayout(new BoxLayout(pnlViewsHolder, BoxLayout.X_AXIS));
 		
-		JButton btnSeeStock = new JButton("Stock");
+		btnSeeStock = new JButton("Stock");
+		btnSeeStock.setEnabled(false);
 		pnlViewsHolder.add(btnSeeStock);
 		
-		JButton btnHistory = new JButton("History");
+		btnHistory = new JButton("History");
+		btnHistory.setEnabled(false);
 		pnlViewsHolder.add(btnHistory);
 		pnlBalanceContainer.setLayout(new BoxLayout(pnlBalanceContainer, BoxLayout.Y_AXIS));
 		
@@ -146,7 +151,11 @@ public class PortfolioView extends JFrame implements IView {
 		
 		if(model instanceof IPortfolioHandler){
 			portfolios = (IPortfolioHandler) model;
-			cmbSelectPortfolio.setModel(new PortfoliosCmbModel(portfolios));
+			PortfoliosCmbModel cmbModel = new PortfoliosCmbModel(portfolios);
+			cmbSelectPortfolio.setModel(cmbModel);
+			if(cmbModel.getSize() > 0){
+				cmbSelectPortfolio.setSelectedIndex(1);
+			}
 			this.setVisible(true);
 		}
 	}
@@ -215,9 +224,9 @@ public class PortfolioView extends JFrame implements IView {
 	public void updateValues(){
 		
 		if(selectedPortfolio != null){
-			lblBalanceVar.setText(""+FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getUnusedAmount()));
-			lblStockValueVar.setText(""+FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth()));
-			lblTotalVar.setText(""+FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth()+selectedPortfolio.getUnusedAmount()));
+			lblBalanceVar.setText(FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getUnusedAmount()));
+			lblStockValueVar.setText(FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth()));
+			lblTotalVar.setText(FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth()+selectedPortfolio.getUnusedAmount()));
 		}
 	}
 	

@@ -1,6 +1,6 @@
 package controller.gui;
 
-
+/*
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,7 +28,7 @@ public class PortfolioController2 {
 	
 	/**
 	 * Listener for the button history in portfolio gui
-	 */
+	 
 	private class BalanceHistoryListener implements ActionListener{
 
 		@Override
@@ -45,7 +45,7 @@ public class PortfolioController2 {
 	
 	/**
 	 * Listener for the button change algorithm in portfolio gui
-	 */
+	 
 	private class ChangeAlgorithmListener implements ActionListener{
 
 		@Override
@@ -62,7 +62,7 @@ public class PortfolioController2 {
 	
 	/**
 	 * Listener for the button change algorithm in portfolio gui
-	 */
+	 
 	private class ChangePortfolioListener implements ActionListener{
 
 		@Override
@@ -77,3 +77,4 @@ public class PortfolioController2 {
 		}
 	}
 }
+*/

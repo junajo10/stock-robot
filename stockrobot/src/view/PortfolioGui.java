@@ -1,5 +1,5 @@
 package view;
-
+/*
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -32,7 +32,7 @@ import utils.global.FinancialLongConverter;
 import view.components.GUIFactory;
 import view.components.IGUIFactory;
 import view.components.ItemCmbPortfolio;
-
+*/
 /**
  * @author Mattias Markehed
  * mattias.markehed@gmail.com
@@ -42,8 +42,8 @@ import view.components.ItemCmbPortfolio;
  * PortfolioGui is the primary gui for the ASTRO application
  * this gui is used as a hub to start for all the other gui windows.
  */
-public class PortfolioGui extends JFrame implements PropertyChangeListener {
-
+//public class PortfolioGui extends JFrame implements PropertyChangeListener {
+/*
 	private static final long serialVersionUID = -8150305418187203103L;
 	private JPanel contentPane;
 	private JButton btn_BalanceHistory;
@@ -66,9 +66,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		new PortfolioGui(null);
 	}
 	
-	/**
-	 * Create the frame.
-	 */
+	
 	public PortfolioGui(IPortfolioHandler portfolioHandler) {
 		
 		this.portfolioHandler = portfolioHandler;
@@ -198,7 +196,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	 * Adds a listener that listens for presses on button button
 	 * 
 	 * @param listener
-	 */
+	 
 	public void addStockListener(ActionListener listener){
 		btn_ShowStock.addActionListener(listener);
 	}
@@ -207,7 +205,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	 * Adds a listener that listens for presses on button Balance History
 	 * 
 	 * @param listener
-	 */
+	 
 	public void addBalanceHistoryListener(ActionListener listener){
 		btn_BalanceHistory.addActionListener(listener);
 	}
@@ -216,7 +214,7 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 	 * Adds a listener that listens for presses on button change algorithm
 	 * 
 	 * @param listener
-	 */
+	 
 	public void addChangeAlgorithmListener(ActionListener listener){
 		btn_AlgorithmChange.addActionListener(listener);
 		
@@ -280,5 +278,5 @@ public class PortfolioGui extends JFrame implements PropertyChangeListener {
 		});
 	}
 	
-	
-}
+	*/
+//}
