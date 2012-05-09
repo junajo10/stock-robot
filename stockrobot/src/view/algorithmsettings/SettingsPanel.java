@@ -61,7 +61,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		ta = new TextField();
 		ta.setBounds(0, 0, 100, 30);
-		ta.setText( "" + _initValue );
+		ta.setText( "" + ((int)_initValue) );
 		ta.setSize( 100, 30 );
 		subContainer.add( ta );
 		

@@ -4,7 +4,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import controller.gui.GraphControllerTest;
-import controller.gui.MainMenuControllerTest;
 import controller.gui.SimulationControllerTest;
 import controller.wizard.WizardControllerTest;
 import database.jpa.JPATest;
@@ -44,7 +43,6 @@ import model.wizard.WizardPageModelTest;
 @Suite.SuiteClasses({
 	FinancialLongConverterTest.class,
 	PairTest.class,
-	MainMenuControllerTest.class,
 	SimulationControllerTest.class,
 	GraphControllerTest.class,
 	JPATest.class,

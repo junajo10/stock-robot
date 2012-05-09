@@ -33,6 +33,7 @@ public class AstroController implements IController {
 	private IController graphController;
 	private IController stockInfoController;
 	private IController portfolioController;
+	private IController algorithmSettingsController;
 	
 	ActionListener startSim = new ActionListener() {
 		@Override
@@ -77,7 +78,18 @@ public class AstroController implements IController {
 					c.display(PortfolioHandler.getInstance());
 				}
 			}
-			
+		}
+	};
+	
+	ActionListener openAlgorithmSettingsView = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (IController c : subControllers) {
+				if (c.getName().contentEquals(AlgorithmSettingsController.CLASS_NAME)) {
+					
+					c.display(null);
+				}
+			}
 		}
 	};
 	
@@ -126,6 +138,7 @@ public class AstroController implements IController {
 		actions.put(AstroView.OPEN_GRAPHWINDOW, openGraph);
 		actions.put(AstroView.OPEN_STOCKTABLE, openStockInfo);
 		actions.put(AstroView.OPEN_PORTFOLIOVIEW, openPortfolioView);
+		actions.put(AstroView.OPEN_ALGORTIHM_SETTINGS, openAlgorithmSettingsView);
 		actions.put(AstroView.WINDOW_CLOSE, windowClose);
 		return actions;
 	}
@@ -146,14 +159,17 @@ public class AstroController implements IController {
 	public void defineSubControllers() {
 		
 		graphController = new GraphController();
-		this.subControllers.add( graphController );
+		subControllers.add( graphController );
 		
 		stockInfoController = new StockTableController();
-		this.subControllers.add( stockInfoController );
+		subControllers.add( stockInfoController );
 		
 		subControllers.add(new SimController());
 		
 		portfolioController = new PortfolioController(model.getTrader());
-		this.subControllers.add( portfolioController );
+		subControllers.add( portfolioController );
+		
+		algorithmSettingsController = new AlgorithmSettingsController();
+		subControllers.add( algorithmSettingsController );
 	}
 }
