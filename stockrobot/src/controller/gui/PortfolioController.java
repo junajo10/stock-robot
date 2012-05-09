@@ -5,6 +5,7 @@ import java.util.EventListener;
 import java.util.Map;
 
 import model.portfolio.IPortfolioHandler;
+import model.trader.ITrader;
 
 import view.IView;
 import view.PortfolioView;
@@ -14,24 +15,23 @@ public class PortfolioController implements IController {
 
 	public static final String CLASS_NAME = "PortfolioController";
 	private IView view;
+	private ITrader trader;
 	
-	public PortfolioController(){
+	public PortfolioController(ITrader trader){
 		
-	}
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
+		this.trader = trader;
+		this.trader.addAddObserver(this);
 	}
 
 	@Override
 	public void display(Object model) {
 		
-		view = new PortfolioView();
-		if(model instanceof IPortfolioHandler){
-			view.display(model);
-			((IPortfolioHandler) model).addAddObserver(view);
+		if(view == null){
+			view = new PortfolioView(trader);
+			if(model instanceof IPortfolioHandler){
+				IPortfolioHandler handler = (IPortfolioHandler)model;
+				view.display(handler);
+			}
 		}
 	}
 
@@ -63,6 +63,12 @@ public class PortfolioController implements IController {
 	public String getName() {
 
 		return CLASS_NAME;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

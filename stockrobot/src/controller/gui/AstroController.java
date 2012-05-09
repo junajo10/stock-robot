@@ -73,6 +73,7 @@ public class AstroController implements IController {
 			for (IController c : subControllers) {
 				if (c.getName().contentEquals(PortfolioController.CLASS_NAME)) {
 					
+					
 					c.display(PortfolioHandler.getInstance());
 				}
 			}
@@ -98,7 +99,6 @@ public class AstroController implements IController {
 
 	@Override
 	public void display(Object model) {
-		defineSubControllers();
 		
 		if (this.model == null) {
 			this.model = new AstroModel();
@@ -107,6 +107,7 @@ public class AstroController implements IController {
 		view.addActions(getActionListeners());
 		
 		view.display(this.model);
+		defineSubControllers();
 	}
 
 	@Override
@@ -152,7 +153,7 @@ public class AstroController implements IController {
 		
 		subControllers.add(new SimController());
 		
-		portfolioController = new PortfolioController();
+		portfolioController = new PortfolioController(model.getTrader());
 		this.subControllers.add( portfolioController );
 	}
 }
