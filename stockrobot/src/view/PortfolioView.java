@@ -15,14 +15,17 @@ import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
-import java.util.Observable;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListDataListener;
 
+import utils.global.FinancialLongConverter;
+
+import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
+import model.trader.ITrader;
 
 public class PortfolioView extends JFrame implements IView {
 
@@ -30,11 +33,22 @@ public class PortfolioView extends JFrame implements IView {
 	private JPanel contentPane;
 	private IPortfolioHandler portfolios;
 	private JComboBox cmbSelectPortfolio;
-
+	private ITrader trader;
+	
+	private JLabel lblStockValueVar;
+	private JLabel lblBalanceVar;
+	private JLabel lblTotalVar;
+	
+	private IPortfolio selectedPortfolio;
+	
 	/**
 	 * Create the frame.
 	 */
-	public PortfolioView() {
+	public PortfolioView(ITrader trader) {
+		
+		this.trader = trader;
+		trader.addAddObserver(this);
+		
 		setResizable(false);
 		setTitle("Portfolio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,7 +103,7 @@ public class PortfolioView extends JFrame implements IView {
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		pnlBalance.add(horizontalStrut);
 		
-		JLabel lblBalanceVar = new JLabel("0");
+		lblBalanceVar = new JLabel("0");
 		pnlBalance.add(lblBalanceVar);
 		
 		JPanel pnlStockValue = new JPanel();
@@ -100,7 +114,7 @@ public class PortfolioView extends JFrame implements IView {
 		JLabel lblStockValue = new JLabel("Stock value:");
 		pnlStockValue.add(lblStockValue);
 		
-		JLabel lblStockValueVar = new JLabel("0");
+		lblStockValueVar = new JLabel("0");
 		pnlStockValue.add(lblStockValueVar);
 		
 		JPanel pnlTotal = new JPanel();
@@ -114,7 +128,7 @@ public class PortfolioView extends JFrame implements IView {
 		Component horizontalStrut_1 = Box.createHorizontalStrut(40);
 		pnlTotal.add(horizontalStrut_1);
 		
-		JLabel lblTotalVar = new JLabel("0");
+		lblTotalVar = new JLabel("0");
 		pnlTotal.add(lblTotalVar);
 		
 		JLabel lblSelectPortfolio = new JLabel("Portfolio");
@@ -139,8 +153,8 @@ public class PortfolioView extends JFrame implements IView {
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
 		
+		trader.removeObserver(this);
 	}
 
 	@Override
@@ -168,7 +182,9 @@ public class PortfolioView extends JFrame implements IView {
 		@Override
 		public Object getElementAt(int index) {
 
-			return portfolios.getPortfolios().get(index).getName();
+			selectedPortfolio = portfolios.getPortfolios().get(index);
+			updateValues();
+			return selectedPortfolio.getName();
 		}
 
 		@Override
@@ -196,9 +212,24 @@ public class PortfolioView extends JFrame implements IView {
 		}
 	}
 
+	public void updateValues(){
+		
+		if(selectedPortfolio != null){
+			lblBalanceVar.setText(""+FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getUnusedAmount()));
+			lblStockValueVar.setText(""+FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth()));
+			lblTotalVar.setText(""+FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth()+selectedPortfolio.getUnusedAmount()));
+		}
+	}
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
 		
+		if(evt.getPropertyName().equals(ITrader.BUY_STOCK)){
+			updateValues();
+		}else if(evt.getPropertyName().equals(ITrader.SELL_STOCK)){
+			updateValues();
+		}
 	}
+	
+	
 }

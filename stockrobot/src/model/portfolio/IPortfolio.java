@@ -9,10 +9,6 @@ import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 
-
-
-
-
 /**
  * @author Daniel
  *

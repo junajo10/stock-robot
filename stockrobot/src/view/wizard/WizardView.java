@@ -3,6 +3,7 @@ package view.wizard;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Panel;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -21,6 +22,7 @@ import javax.swing.SwingUtilities;
 import model.wizard.WizardModel;
 import utils.global.Log;
 import view.components.GUIFactory;
+import java.awt.Color;
 
 /**
  * @author Mattias Markehed
@@ -51,7 +53,6 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 
 	private Map<Integer,WizardPage<?>> pages;
 	
-	
 	/**
 	 * Create the frame.
 	 */
@@ -64,28 +65,27 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 		
 		this.setVisible(true);
 		
-		GUIFactory factory = new GUIFactory();
-
-		pnl_MainPane = factory.getMainContainer();
+		pnl_MainPane = new JPanel(); //factory.getMainContainer();
 		
 		pnl_MainPane.setLayout(new FlowLayout());
 		setContentPane(pnl_MainPane);
 		
 		
 		//============ CONTENT ============
-		pnl_Content = factory.getInvisibleContainer();
+		pnl_Content = new JPanel();
 		//================================
 		
 		//============ FOOTER ============
-		JPanel pnl_Footer = factory.getDefaultContainer(); 
+		JPanel pnl_Footer = new JPanel();
+		pnl_Footer.setBackground(Color.LIGHT_GRAY);
 		FlowLayout lou_Footer = new FlowLayout();
 		lou_Footer.setAlignment(FlowLayout.CENTER);
 		pnl_Footer.setLayout(lou_Footer);
 		
-		btn_Back 		= factory.getDefaultButton("Back");
-		btn_Next 		= factory.getDefaultButton("Next");
-		btn_Cancel 		= factory.getDefaultButton("Cancel");
-		btn_Finish		= factory.getDefaultButton("Finish");
+		btn_Back 		= new JButton("Back");
+		btn_Next 		= new JButton("Next");
+		btn_Cancel 		= new JButton("Cancel");
+		btn_Finish		= new JButton("Finish");
 		btn_Finish.setEnabled(false);
 		btn_Cancel.setEnabled(false);
 		btn_Next.setEnabled(false);
@@ -97,16 +97,17 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 		//================================
 		
 		//============ HEADER ============
-		JPanel pnl_Header = factory.getFstColoredContainer(); 
+		JPanel pnl_Header = new JPanel(); 
+		pnl_Header.setBackground(Color.LIGHT_GRAY);
 		FlowLayout lou_Header = new FlowLayout();
 		lou_Header.setAlignment(FlowLayout.LEFT);
 		pnl_Header.setLayout(lou_Header);
 		
-		JPanel pnl_Title = factory.getInvisibleContainer();
+		JPanel pnl_Title = new JPanel(); 
 		pnl_Title.setLayout(new BoxLayout(pnl_Title, BoxLayout.PAGE_AXIS));
-		lbl_Title = factory.getLightTitleLabel(model.getTitle());
+		lbl_Title = new JLabel(model.getTitle());
 		pnl_Title.add(lbl_Title);
-		lbl_Subtitle = factory.getLightSubtitleLabel(model.getSubtitle());
+		lbl_Subtitle = new JLabel(model.getSubtitle());
 		lbl_Subtitle.setVisible(false);
 		pnl_Title.add(lbl_Subtitle);
 		pnl_Header.add(pnl_Title);
