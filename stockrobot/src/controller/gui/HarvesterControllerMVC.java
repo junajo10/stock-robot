@@ -30,7 +30,6 @@ public class HarvesterControllerMVC implements IController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("apa");
 			try {
 				
 				int port = Integer.parseInt(view.getPortTextbox());
@@ -59,7 +58,7 @@ public class HarvesterControllerMVC implements IController {
 					}
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("*** Malformed portnumber");
+				log.failPortNumber(view.getPortTextbox());
 			}
 		}
 	}
@@ -68,7 +67,6 @@ public class HarvesterControllerMVC implements IController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("apa");
 			if(view.forceStopChecked()){
 				model.stopParser();
 			}
@@ -85,7 +83,6 @@ public class HarvesterControllerMVC implements IController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("apa");
 			log.printStatus(model.status());
 		}
 	}
@@ -108,17 +105,22 @@ public class HarvesterControllerMVC implements IController {
 	}
 	
 	private class Logger {
+		long totalLoops = 0;
 		long maxItems = 0;
 		public Logger(){
 			
 		}
 		
+		public void failPortNumber(String portTextbox) {
+			addToList(portTextbox + " is not a valid port-number. ");
+		}
+
 		public void printStatus(boolean status){
 			if(status){
-				addToList("Parser is up and running.");
+				addToList("Parser is up and running. Total parsing loops done:" + totalLoops);
 			}
 			else {
-				addToList("Parser closed,crashed or shutting down.");
+				addToList("Parser closed,crashed or shutting down. Total parsing loops done:" + totalLoops);
 			}
 		}
 		public void start(){
@@ -126,6 +128,7 @@ public class HarvesterControllerMVC implements IController {
 		}		
 		
 		public void parsingLoop(long timeElapsed){
+			totalLoops++;
 			addToList("Parsing loop finished in " + timeElapsed + " ms. "+ maxItems++);
 		}		
 		
@@ -135,9 +138,6 @@ public class HarvesterControllerMVC implements IController {
 
 		public void failStart() {
 			addToList("Parser failed to start. Already started or crashed.");
-		}
-
-		public void blossom() {
 		}
 		
 		private void addToList(String input){
@@ -153,7 +153,6 @@ public class HarvesterControllerMVC implements IController {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		log.blossom();
 		if(event.getPropertyName().equals("Parsing done.")){
 			log.parsingLoop((Long) event.getNewValue());
 		}
