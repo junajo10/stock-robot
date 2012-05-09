@@ -1,12 +1,6 @@
 package astro;
-
-import java.awt.Dimension;
-
-import view.HarvesterView;
-
 import controller.gui.HarvesterController;
 
-import model.scraping.core.Harvester;
 
 /**
  * Parser main program.
