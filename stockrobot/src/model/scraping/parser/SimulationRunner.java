@@ -66,7 +66,7 @@ public class SimulationRunner implements IParserRunner {
 			Long timeElapsed = System.currentTimeMillis() - timeBefore;
 			pcs.firePropertyChange("Parsing done.", null, timeElapsed);
 			try {
-				Thread.sleep(20);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

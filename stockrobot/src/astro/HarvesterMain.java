@@ -3,10 +3,8 @@ package astro;
 import java.awt.Dimension;
 
 import view.HarvesterView;
-import view.HarvesterViewMVC;
 
 import controller.gui.HarvesterController;
-import controller.gui.HarvesterControllerMVC;
 
 import model.scraping.core.Harvester;
 
@@ -21,21 +19,11 @@ import model.scraping.core.Harvester;
  *
  */
 public class HarvesterMain {
-	/*
-    @SuppressWarnings("unused")
-	public static void main(String[] args) {
-        
-    	Harvester      		model      = new Harvester(45000);
-        HarvesterView       view       = new HarvesterView(model);
-        HarvesterController controller = new HarvesterController(model, view);
-        
-        view.setSize(new Dimension(385, 430));
-        view.setVisible(true);
-    }*/
+	
     @SuppressWarnings("unused")
 	public static void main(String[] args) {
     	
-        HarvesterControllerMVC controller = new HarvesterControllerMVC();
+        HarvesterController controller = new HarvesterController();
         controller.display(null);
     }
 }

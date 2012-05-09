@@ -125,6 +125,7 @@ public class ParserRunner implements IParserRunner {
 			close = true;
 			connector.shutdown();
 			while(connector.isRunning());
+			connector = null;
 			return true;
 		}
 		else{
@@ -142,9 +143,11 @@ public class ParserRunner implements IParserRunner {
 		if(run){
 			run = false;
 			connector.shutdown();
+			connector = null;
 			while(connector.isRunning()){
 				
 			}
+			connector = null;
 			return true;
 		}
 		else{

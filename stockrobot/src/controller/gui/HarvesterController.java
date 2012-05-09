@@ -2,6 +2,13 @@ package controller.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.EventListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import view.HarvesterView;
 
@@ -12,59 +19,19 @@ import model.scraping.core.Harvester;
  * @author Erik
  *
  */
-public class HarvesterController {
+public class HarvesterController implements IController {
 	
 	private Harvester model;
 	private HarvesterView view;
-	private Logger log;
-
-
-
-	public HarvesterController(Harvester model, HarvesterView view) {
-		this.model = model;
-		this.view = view;
-		this.log = new Logger();
-		
-	    view.addbtnStartParserListener(new StartBtnListener());
-	    view.addbtnStopParserListener(new StopBtnListener());
-	    view.addbtnStatusListener(new StatusBtnListener());
-	    view.addbtnClearLogListener(new ClearLogBtnListener());
-	    
-	}
+	private Logger log;	
+	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	
-	private class Logger {
-		
-		public Logger(){
-			
-		}
-		
-		public void printStatus(boolean status){
-			if(status){
-				view.addLogItem("Parser is up and running.");
-			}
-			else {
-				view.addLogItem("Parser closed,crashed or shutting down.");
-			}
-		}
-		
-		public void start(){
-			view.addLogItem("Parser started at 08:56.");
-		}		
-		
-		public void stop(){
-			view.addLogItem("Parser stopped at 08:59.");
-		}
-
-		public void failStart() {
-			view.addLogItem("Parser failed to start. Already started or crashed.");
-		}
-	}
-
 	private class StartBtnListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			try {
+				
 				int port = Integer.parseInt(view.getPortTextbox());
 				model.setPort(port);
 				System.out.println("*** Server port set to: " + port);
@@ -91,7 +58,7 @@ public class HarvesterController {
 					}
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("*** Malformed portnumber");
+				log.failPortNumber(view.getPortTextbox());
 			}
 		}
 	}
@@ -127,6 +94,111 @@ public class HarvesterController {
 		public void actionPerformed(ActionEvent arg0) {
 			view.clearLog();
 		}
+	}
+
+	public HarvesterController() {
+		this.log = new Logger();
+		this.view = new HarvesterView();
+		this.model = new Harvester(45000);
+		model.setPropertyChangeSupport(pcs);
+		pcs.addPropertyChangeListener(this);
+	}
+	
+	private class Logger {
+		long totalLoops = 0;
+
+		public Logger(){
+			
+		}
+		
+		public void failPortNumber(String portTextbox) {
+			addToList(portTextbox + " is not a valid port-number. ");
+		}
+
+		public void printStatus(boolean status){
+			if(status){
+				addToList("Parser is up and running. Total parsing loops done:" + totalLoops);
+			}
+			else {
+				addToList("Parser closed,crashed or shutting down. Total parsing loops done:" + totalLoops);
+			}
+		}
+		public void start(){
+			addToList("Parser started at 08:56.");
+		}		
+		
+		public void parsingLoop(long timeElapsed){
+			totalLoops++;
+			addToList("Parsing loop finished in " + timeElapsed + " ms. ");
+		}		
+		
+		public void stop(){
+			addToList("Parser stopped at 08:59.");
+		}
+
+		public void failStart() {
+			addToList("Parser failed to start. Already started or crashed.");
+		}
+		
+		private void addToList(String input){
+			Date date= new java.util.Date();
+			String time = new Timestamp(date.getTime()) + "";
+			view.addLogItem("[" + time.substring(11, 19) + "] - " + input);
+		}
+		
+	}
+
+
+
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		if(event.getPropertyName().equals("Parsing done.")){
+			log.parsingLoop((Long) event.getNewValue());
+		}
+	}
+
+
+	@Override
+	public void display(Object model) {
+		view.addActions(getActionListeners());
+		view.display(this.model);
+	}
+
+
+	@Override
+	public void cleanup() {
+		
+	}
+
+
+	@Override
+	public Map<String, EventListener> getActionListeners() {
+		Map<String, EventListener> actions = new HashMap<String,EventListener>();
+		actions.put(HarvesterView.START_PARSER, new StartBtnListener());
+		actions.put(HarvesterView.STOP_PARSER, new StopBtnListener());
+		actions.put(HarvesterView.PRINT_STATUS, new StatusBtnListener());
+		actions.put(HarvesterView.CLEAR_LOG, new ClearLogBtnListener());
+
+		return actions;
+	}
+
+
+	@Override
+	public void addSubController(IController subController) {
+		
+	}
+
+
+	@Override
+	public void defineSubControllers() {
+		
+	}
+
+
+	@Override
+	public String getName() {
+		return "Harvester Controller";
 	}
     
 

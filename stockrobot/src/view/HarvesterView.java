@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -12,17 +14,21 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Dialog.ModalExclusionType;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
+import java.util.EventListener;
+import java.util.Map;
+
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
-
-import model.scraping.core.Harvester;
+	
 
 /**
  * View for Harvester.
  * @author Erik
  *
  */
-public class HarvesterView extends JFrame {
+public class HarvesterView extends JFrame implements IView{
 
 	private static final long serialVersionUID = 1614338829073701762L;
 	private JTextField textField;
@@ -36,7 +42,13 @@ public class HarvesterView extends JFrame {
 	private JCheckBox chckbxForceStop;
 	private JScrollPane scrollPane;
 
-	public HarvesterView(Harvester model) {
+	
+	public static final String START_PARSER = "startParser";
+	public static final String STOP_PARSER = "stopParser";
+	public static final String PRINT_STATUS = "printStatus";	
+	public static final String CLEAR_LOG = "clearLog";
+
+	public HarvesterView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
@@ -121,21 +133,7 @@ public class HarvesterView extends JFrame {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void addbtnStartParserListener(ActionListener al){
-		btnStartParser.addActionListener(al);
-	}
-	
-	public void addbtnStopParserListener(ActionListener al){
-		btnStopParser.addActionListener(al);
-	}
-	
-	public void addbtnStatusListener(ActionListener al){
-		btnStatus.addActionListener(al);
-	}	
-	
-	public void addbtnClearLogListener(ActionListener al){
-		btnClearLog.addActionListener(al);
-	}
+
 	
 	public String getPortTextbox(){
 		return textField.getText();
@@ -161,5 +159,29 @@ public class HarvesterView extends JFrame {
 	public void setStopInactive() {btnStopParser.setEnabled(false);}
 	
 	public void setStartActive() {btnStartParser.setEnabled(true);}	
-	public void setStopActive() {btnStopParser.setEnabled(true);}	
+	public void setStopActive() {btnStopParser.setEnabled(true);}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String input = evt.getPropertyName();
+	}
+
+	@Override
+	public void display(Object model) {
+		this.setSize(new Dimension(385, 430));
+		this.setVisible(true);
+	}
+
+	@Override
+	public void cleanup() {
+		
+	}
+
+	@Override
+	public void addActions(Map<String, EventListener> actions) {
+			btnStartParser.addActionListener((ActionListener) actions.get(START_PARSER));
+			btnStopParser.addActionListener((ActionListener) actions.get(STOP_PARSER));
+			btnStatus.addActionListener((ActionListener) actions.get(PRINT_STATUS));
+			btnClearLog.addActionListener((ActionListener) actions.get(CLEAR_LOG));
+	}	
 }
