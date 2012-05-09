@@ -18,6 +18,7 @@ public class StartController implements IController {
 	StartModel model;
 	List<IController> subControllers = new ArrayList<IController>();
 	
+	HarvesterController harvester;
 	
 	ActionListener startAstroAction = new ActionListener() {
 		@Override
@@ -29,7 +30,12 @@ public class StartController implements IController {
 			}
 		}
 	};
-	
+	ActionListener startHavester = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			harvester.display(null);
+		}
+	};
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 	}
@@ -55,7 +61,7 @@ public class StartController implements IController {
 	public Map<String, EventListener> getActionListeners() {
 		Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		
-		actions.put("Start Parser", null);
+		actions.put("Start Parser", startHavester);
 		actions.put("Stop Parser", null);
 		
 		actions.put("Start Astro", startAstroAction);
@@ -77,7 +83,9 @@ public class StartController implements IController {
 
 	@Override
 	public void defineSubControllers() {
+		harvester = new HarvesterController();
 		subControllers.add(new AstroController());
+		subControllers.add(harvester);
 	}
 
 }
