@@ -3,6 +3,7 @@ package controller.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +21,8 @@ public class HarvesterControllerMVC implements IController {
 	
 	private Harvester model;
 	private HarvesterViewMVC view;
-	private Logger log;
-
-	
+	private Logger log;	
+	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	
 	private class StartBtnListener implements ActionListener{
 
@@ -101,6 +101,8 @@ public class HarvesterControllerMVC implements IController {
 		this.log = new Logger();
 		this.view = new HarvesterViewMVC();
 		this.model = new Harvester(45000);
+		model.setPropertyChangeSupport(pcs);
+		pcs.addPropertyChangeListener(this);
 	}
 	
 	private class Logger {
@@ -121,6 +123,10 @@ public class HarvesterControllerMVC implements IController {
 			view.addLogItem("Parser started at 08:56.");
 		}		
 		
+		public void parsingLoop(long timeElapsed){
+			view.addLogItem("Parsing loop finished in " + timeElapsed + " ms. ");
+		}		
+		
 		public void stop(){
 			view.addLogItem("Parser stopped at 08:59.");
 		}
@@ -134,8 +140,11 @@ public class HarvesterControllerMVC implements IController {
 
 
 	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		
+	public void propertyChange(PropertyChangeEvent event) {
+		System.out.println("apa");
+		if(event.getPropertyName().equals("Parsing done.")){
+			log.parsingLoop((Long) event.getNewValue());
+		}
 	}
 
 

@@ -1,5 +1,6 @@
 package model.scraping.parser;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ public class SimulationRunner implements IParserRunner {
 	IJPAParser jpaHelper = JPAHelper.getInstance();
 	private List<StockNames> simulatedStocks = new ArrayList<StockNames>();
 	Random rand = new Random(System.currentTimeMillis());
+	private PropertyChangeSupport pcs;
 	
 	public SimulationRunner(int port){
 		this.server = new HarvesterServer(port);
@@ -54,19 +56,21 @@ public class SimulationRunner implements IParserRunner {
 		}
 		
 		while(!close) {
+			Long timeBefore = System.currentTimeMillis();
 			for (StockNames sn : simulatedStocks) {
 				StockPrices sp = new StockPrices(sn, rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), new Date(System.currentTimeMillis()));
 				jpaHelper.storeObjectIfPossible(sp);
 			}
 			
 			server.sendDataAvailable(10);
-			
+			Long timeElapsed = System.currentTimeMillis() - timeBefore;
+			pcs.firePropertyChange("Parsing done.", null, timeElapsed);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -134,6 +138,10 @@ public class SimulationRunner implements IParserRunner {
 		else {
 			return false;
 		}
+	}
+	@Override
+	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
+		this.pcs = pcs;
 	}
 	
 }

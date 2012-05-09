@@ -1,5 +1,6 @@
 package model.scraping.parser;
 
+import java.beans.PropertyChangeSupport;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class ParserRunner implements IParserRunner {
 	HarvesterServer server;
 	
 	boolean skipScheduler = false;
+	private PropertyChangeSupport pcs;
 	
 	public ParserRunner(int port){
 		//this.server = new HarvesterServer(port);
@@ -82,6 +84,7 @@ public class ParserRunner implements IParserRunner {
 					 * Reciever on robot not implemented yet, uncomment when. */
 					connector.sendDataAvailable(newRows);
 					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
+					pcs.firePropertyChange("Parsing done.", timeElapsed, null);
 					if(timeElapsed < 20000){
 						try {
 							Thread.sleep(20000-timeElapsed);
@@ -179,6 +182,11 @@ public class ParserRunner implements IParserRunner {
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
+		this.pcs = pcs;
 	}
 	
 }

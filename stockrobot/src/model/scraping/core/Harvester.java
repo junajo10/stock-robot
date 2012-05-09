@@ -1,5 +1,7 @@
 package model.scraping.core;
 
+import java.beans.PropertyChangeSupport;
+
 import model.scraping.parser.IParserRunner;
 import model.scraping.parser.ParserRunner;
 import model.scraping.parser.SimulationRunner;
@@ -16,6 +18,7 @@ public class Harvester {
 	private Thread parserThread;
 	private IParserRunner parserRunner;
 	private int serverPort = 45000;
+	private PropertyChangeSupport pcs;
 
 	
 	public Harvester(int portNumber){
@@ -25,6 +28,7 @@ public class Harvester {
 	public boolean startSimulation() {
 		if(!status()){
 			parserRunner = new SimulationRunner(serverPort);
+			parserRunner.setPropertyChangeSupport(pcs);
 			parserThread = new Thread(parserRunner);
 			parserThread.start();
 			parserRunner.startParser();
@@ -43,6 +47,7 @@ public class Harvester {
 	public boolean startParser(){
 		if(!status()){
 			parserRunner = new ParserRunner(serverPort);
+			parserRunner.setPropertyChangeSupport(pcs);
 			parserThread = new Thread(parserRunner);
 			parserThread.start();
 			parserRunner.startParser();
@@ -133,6 +138,14 @@ public class Harvester {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Sets the property change support.
+	 * @param pcs
+	 */
+	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
+		this.pcs = pcs;
 	}
 	
 

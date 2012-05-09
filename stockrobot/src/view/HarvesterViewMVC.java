@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Dialog.ModalExclusionType;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.EventListener;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class HarvesterViewMVC extends JFrame implements IView{
 	private DefaultListModel logModel;
 	private JCheckBox chckbxForceStop;
 	private JScrollPane scrollPane;
-	
+
 	
 	public static final String START_PARSER = "startParser";
 	public static final String STOP_PARSER = "stopParser";
