@@ -40,6 +40,7 @@ public class WizardStartPageController implements IController {
 	
 	public class FromNewListener implements ItemListener{
 
+		@SuppressWarnings("unused") //Suppressed this warning in preparation for the meeting tomorrow 
 		private NextCreateFromNewListener nextBtnListener; 
 		
 		public FromNewListener(){

@@ -3,7 +3,6 @@ package view.wizard;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Panel;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -21,7 +20,6 @@ import javax.swing.SwingUtilities;
 
 import model.wizard.WizardModel;
 import utils.global.Log;
-import view.components.GUIFactory;
 import java.awt.Color;
 
 /**

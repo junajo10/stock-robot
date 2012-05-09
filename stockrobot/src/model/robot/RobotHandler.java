@@ -119,6 +119,7 @@ public class RobotHandler {
 		 * 
 		 * @return >= 0 if finished : else < 0
 		 */
+		@SuppressWarnings("unused") //This is suppressed because this method is believed to be needed in the future
 		public long getRunTime(){
 			
 			long runTime = NON_VALID_TIME;

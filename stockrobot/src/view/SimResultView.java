@@ -10,7 +10,6 @@ import java.text.DecimalFormat;
 import java.util.EventListener;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Observable;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

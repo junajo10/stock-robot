@@ -6,7 +6,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
