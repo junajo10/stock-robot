@@ -177,14 +177,14 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 			public void run() {
 				WizardPage<?> page = pages.get(screen);
 				
-				Log.instance().log(Log.TAG.NORMAL, "loading screen");
+				Log.log(Log.TAG.NORMAL, "loading screen");
 				if(page != null){
 					pnl_Content.removeAll();
 					pnl_Content.add(page);
 					pnl_Content.validate();
 					pnl_Content.repaint();					
 					
-					Log.instance().log(Log.TAG.NORMAL, "Loading page " + screen);
+					Log.log(Log.TAG.NORMAL, "Loading page " + screen);
 				}
             }
         });

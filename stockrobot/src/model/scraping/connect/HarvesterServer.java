@@ -35,7 +35,7 @@ public class HarvesterServer implements Runnable, IConnector{
 		while (run) {
 			try {
 				clients.add(serverSocket.accept());
-				Log.instance().log(TAG.NORMAL, "A new client has connected.");
+				Log.log(TAG.NORMAL, "A new client has connected.");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -48,7 +48,7 @@ public class HarvesterServer implements Runnable, IConnector{
 			try {
 				clients.get(i).getOutputStream().write(newRows);
 			} catch (IOException e) {
-				Log.instance().log(TAG.NORMAL, "Removing nonresponsive client");
+				Log.log(TAG.NORMAL, "Removing nonresponsive client");
 				clients.remove(i);
 				i--;
 			}

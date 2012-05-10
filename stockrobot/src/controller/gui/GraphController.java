@@ -51,7 +51,7 @@ public class GraphController implements IController {
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {
 		
-		Log.instance().log(Log.TAG.VERY_VERBOSE, "GraphView: Property Change");
+		Log.log(Log.TAG.VERY_VERBOSE, "GraphView: Property Change");
 	}
 
 	@Override

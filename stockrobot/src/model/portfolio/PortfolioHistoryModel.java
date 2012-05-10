@@ -104,6 +104,7 @@ public class PortfolioHistoryModel {
 		sortHistory(history);
 		List<Pair<Date, Long>> valueOnGivenDate = new ArrayList<Pair<Date,Long>>();
 		
+		
 		if (history.size() > 0) {
 			
 			Map<Date, Long> lastBle = new HashMap<Date, Long>();
@@ -118,27 +119,6 @@ public class PortfolioHistoryModel {
 					lastBle.put(ph.getBuyDate(), -ph.getAmount()*ph.getStockPrice().getBuy());
 				}
 				
-			}
-			
-			
-			
-			Pair<Date, Long> lastBla = new Pair<Date, Long>(history.get(0).getBuyDate(), -(history.get(0).getAmount()*history.get(0).getStockPrice().getBuy()));
-			valueOnGivenDate.add(lastBla);
-			for (int i = 1; i < history.size(); i++) {
-				Date buyDate = history.get(i).getBuyDate();
-				Date soldDate = history.get(i).getSoldDate();
-				long amount = history.get(i).getAmount();
-				StockPrices sp = history.get(i).getStockPrice();
-				
-				if (lastBla.getLeft().getTime() < history.get(i).getBuyDate().getTime()) {
-					lastBla = new Pair<Date, Long>(buyDate, amount*sp.getBuy());
-					valueOnGivenDate.add(lastBla);
-				}
-				else {
-					long currentValue = lastBla.getRight();
-					currentValue -= amount*sp.getBuy();
-					lastBla = new Pair<Date, Long>(lastBla.getLeft(), currentValue);
-				}
 			}
 		}
 		

@@ -38,13 +38,13 @@ public class TestAlgorithm2 implements IAlgorithm{
 	private long sellSetting = 5;
 
 	public TestAlgorithm2() {
-		Log.instance().log(TAG.VERY_VERBOSE, "Inside TestAlgorithm2 constructor");
+		Log.log(TAG.VERY_VERBOSE, "Inside TestAlgorithm2 constructor");
 	}
 
 	@Override
 	public boolean update() {
 		
-		Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo2: UPDATE!" );
+		Log.log( Log.TAG.VERY_VERBOSE, "Algo2: UPDATE!" );
 		
 		if (portfolio.getUnusedAmount() < 1000000) {
 			return false;
@@ -78,7 +78,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 			}
 			//Buy!
 			if (buy) {
-				Log.instance().log( Log.TAG.VERY_VERBOSE, "Algo2: BUY!" );
+				Log.log( Log.TAG.VERY_VERBOSE, "Algo2: BUY!" );
 				//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
 				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 				if( firstStockBuyPrice != 0 ) {
@@ -133,11 +133,11 @@ public class TestAlgorithm2 implements IAlgorithm{
 	public boolean giveLongSettings(List<Pair<String, Long>> longSettings) {
 		for (Pair<String, Long> setting : longSettings) {
 			if (setting.getLeft().contentEquals("buy")) {
-				Log.instance().log(TAG.VERY_VERBOSE, "Buy set to: " + setting.getRight());
+				Log.log(TAG.VERY_VERBOSE, "Buy set to: " + setting.getRight());
 				this.buySetting = setting.getRight();
 			}
 			else if (setting.getLeft().contentEquals("sell")) {
-				Log.instance().log(TAG.VERY_VERBOSE, "Sell set to: " + setting.getRight());
+				Log.log(TAG.VERY_VERBOSE, "Sell set to: " + setting.getRight());
 				this.sellSetting = setting.getRight();
 			}
 			else 

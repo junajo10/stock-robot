@@ -38,13 +38,13 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		jpaHelper = JPAHelper.getInstance();
 		List<PortfolioEntity> portfolioTables = jpaHelper.getAllPortfolios();
 		
-		Log.instance().log(TAG.VERY_VERBOSE, "Starting to create portfolios");
+		Log.log(TAG.VERY_VERBOSE, "Starting to create portfolios");
 		for (PortfolioEntity pt : portfolioTables) {
 			IPortfolio p = createExistingPortfolio(pt);
 			listOfPortfolios.add(p);
-			Log.instance().log(TAG.VERY_VERBOSE, "Portfolio created: " + p.getName());
+			Log.log(TAG.VERY_VERBOSE, "Portfolio created: " + p.getName());
 		}
-		Log.instance().log(TAG.VERY_VERBOSE, "Done creating portfolios");
+		Log.log(TAG.VERY_VERBOSE, "Done creating portfolios");
 	}
 	
 	private IPortfolio createExistingPortfolio(PortfolioEntity pt) {
@@ -67,14 +67,14 @@ public final class PortfolioHandler implements IPortfolioHandler{
 				p.setAlgorithm(algorithm);
 				listOfPortfolios.add(p);
 				
-				Log.instance().log(TAG.VERY_VERBOSE, p.getName() + " algorithm set to: " + algorithm.getName());
+				Log.log(TAG.VERY_VERBOSE, p.getName() + " algorithm set to: " + algorithm.getName());
 			}
 			else {
-				Log.instance().log(TAG.ERROR, p.getName() + " couldent set algorithm to: " + pt.getAlgortihmSettings().getAlgorithmName() + " == null");
+				Log.log(TAG.ERROR, p.getName() + " couldent set algorithm to: " + pt.getAlgortihmSettings().getAlgorithmName() + " == null");
 			}
 		}
 		else {
-			Log.instance().log(TAG.VERY_VERBOSE, p.getName() + " dosent have a algorithm set yet.");
+			Log.log(TAG.VERY_VERBOSE, p.getName() + " dosent have a algorithm set yet.");
 		}
 		return p;
 	}

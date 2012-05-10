@@ -53,7 +53,7 @@ public final class PluginAlgortihmLoader {
 					Class<?> c = pluginLoader.loadClass(ny);
 					
 					if(c.getAnnotation(AlgorithmPlugin.class) != null) {
-						Log.instance().log(TAG.VERBOSE, "Found algorithm: " + ny);
+						Log.log(TAG.VERBOSE, "Found algorithm: " + ny);
 						algorithmMap.put(ny, c);
 					}
 				} catch (ClassNotFoundException e) {

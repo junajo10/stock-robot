@@ -56,7 +56,7 @@ public class RobotScheduler implements Runnable{
 
 		boolean result = false;
 		if(isRunning){
-			Log.instance().log(Log.TAG.NORMAL , "RobotScheduler Stoped!" );
+			Log.log(Log.TAG.NORMAL , "RobotScheduler Stoped!" );
 			isRunning = pause = false;	
 			result = true;
 		}
@@ -76,7 +76,7 @@ public class RobotScheduler implements Runnable{
 		}
 		boolean result = false;
 		if(!pause && isRunning){
-			Log.instance().log(Log.TAG.VERBOSE , "RobotScheduler pause!" );
+			Log.log(Log.TAG.VERBOSE , "RobotScheduler pause!" );
 			result = pause = true;
 		}
 
@@ -91,14 +91,14 @@ public class RobotScheduler implements Runnable{
 	 */
 	public synchronized boolean unpause(){
 		if (pause) {
-			Log.instance().log(Log.TAG.VERY_VERBOSE ,"Wakeing RobotScheduler" );
+			Log.log(Log.TAG.VERY_VERBOSE ,"Wakeing RobotScheduler" );
 			synchronized (this) {
 				pause = false;
 			}
 		}
 		boolean result = false;
 		if(pause && isRunning){
-			Log.instance().log(Log.TAG.VERBOSE , "RobotScheduler unpause!" );
+			Log.log(Log.TAG.VERBOSE , "RobotScheduler unpause!" );
 			pause = false;
 			result = true;
 		}
@@ -135,13 +135,13 @@ public class RobotScheduler implements Runnable{
 	@Override
 	public void run() {
 		isRunning = true;
-		Log.instance().log(Log.TAG.VERY_VERBOSE , "RobotScheduler!" );
+		Log.log(Log.TAG.VERY_VERBOSE , "RobotScheduler!" );
 		while(isRunning){
 
 			while (pause) {
 				synchronized (this) {
 					try {
-						Log.instance().log(Log.TAG.VERY_VERBOSE ,"Putting RobotScheduler to sleep" );
+						Log.log(Log.TAG.VERY_VERBOSE ,"Putting RobotScheduler to sleep" );
 						wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -150,7 +150,7 @@ public class RobotScheduler implements Runnable{
 			}
 
 			if (usingServer) {
-				Log.instance().log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN using client server!" + JPAHelper.getInstance().getAllStockPrices().size() + " stockPrices");
+				Log.log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN using client server!" + JPAHelper.getInstance().getAllStockPrices().size() + " stockPrices");
 				runAlgorithms();
 
 				IJPAHelper jpaHelper = JPAHelper.getInstance();
@@ -165,7 +165,7 @@ public class RobotScheduler implements Runnable{
 				}
 			}
 			else {
-				Log.instance().log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN!" );
+				Log.log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN!" );
 				
 				
 				runAlgorithms();
