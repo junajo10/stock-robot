@@ -47,8 +47,9 @@ public class PortfolioView extends JFrame implements IView {
 	/**
 	 * Create the frame.
 	 */
-	public PortfolioView(ITrader trader) {
+	public PortfolioView(ITrader trader, IPortfolioHandler portfolios) {
 		
+		this.portfolios = portfolios; 
 		this.trader = trader;
 		trader.addAddObserver(this);
 		
@@ -144,20 +145,18 @@ public class PortfolioView extends JFrame implements IView {
 		pnlSelectPortfolio.add(lblSelectPortfolio);
 		pnlSelectPortfolio.add(cmbSelectPortfolio);
 		contentPane.setLayout(gl_contentPane);
+		
+		PortfoliosCmbModel cmbModel = new PortfoliosCmbModel(portfolios);
+		cmbSelectPortfolio.setModel(cmbModel);
+		if(cmbModel.getSize() > 0){
+			cmbSelectPortfolio.setSelectedIndex(1);
+		}
 	}
 
 	@Override
 	public void display(Object model) {
 		
-		if(model instanceof IPortfolioHandler){
-			portfolios = (IPortfolioHandler) model;
-			PortfoliosCmbModel cmbModel = new PortfoliosCmbModel(portfolios);
-			cmbSelectPortfolio.setModel(cmbModel);
-			if(cmbModel.getSize() > 0){
-				cmbSelectPortfolio.setSelectedIndex(1);
-			}
-			this.setVisible(true);
-		}
+		this.setVisible(true);
 	}
 
 	@Override

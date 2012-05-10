@@ -16,28 +16,26 @@ public class PortfolioController implements IController {
 	public static final String CLASS_NAME = "PortfolioController";
 	private IView view;
 	private ITrader trader;
+	private IPortfolioHandler portfolios; 
 	
-	public PortfolioController(ITrader trader){
+	public PortfolioController(ITrader trader, IPortfolioHandler portfolios){
 		
 		this.trader = trader;
 		this.trader.addAddObserver(this);
+		this.portfolios = portfolios;
 	}
 
 	@Override
 	public void display(Object model) {
 		
-		if(view == null){
-			view = new PortfolioView(trader);
-			if(model instanceof IPortfolioHandler){
-				IPortfolioHandler handler = (IPortfolioHandler)model;
-				view.display(handler);
-			}
-		}
+		view = new PortfolioView(trader, portfolios);
+		IPortfolioHandler handler = (IPortfolioHandler)model;
+		view.display(handler);
 	}
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
