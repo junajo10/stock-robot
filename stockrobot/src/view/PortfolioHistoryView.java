@@ -211,7 +211,6 @@ public class PortfolioHistoryView extends JFrame implements IView {
             StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
             new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")
         );
-        renderer.setToolTipGenerator(g);
         return chart;
     }
 	@Override

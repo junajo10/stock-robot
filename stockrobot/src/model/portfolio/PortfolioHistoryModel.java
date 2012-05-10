@@ -2,13 +2,17 @@ package model.portfolio;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -27,6 +31,7 @@ import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
+import model.database.jpa.tables.PortfolioInvestment;
 import model.database.jpa.tables.StockPrices;
 
 public class PortfolioHistoryModel {
@@ -73,7 +78,7 @@ public class PortfolioHistoryModel {
 
 			rows[i][6] = new DateTime(sp.getTime()).toString(fmt);
 			if (history.get(i).getSoldDate() != null) {
-				StockPrices soldStockPrice = jpaHelper.getPricesForStockPeriod(sp.getStockName(), history.get(i).getSoldDate(), history.get(i).getSoldDate()).get(0);
+				StockPrices soldStockPrice = history.get(i).getSoldStockPrice();
 
 				rows[i][5] = df.format((double)(history.get(i).getAmount()*soldStockPrice.getSell())/(history.get(i).getAmount()*sp.getBuy()));
 				rows[i][7] = new DateTime(history.get(i).getSoldDate()).toString(fmt);
@@ -106,44 +111,60 @@ public class PortfolioHistoryModel {
 		
 		
 		if (history.size() > 0) {
-			
-			Map<Date, Long> lastBle = new HashMap<Date, Long>();
-			
+			SortedMap<Date, Long> sortedMap = new TreeMap<Date, Long>();
+
+			// Add all purchases
 			for (PortfolioHistory ph : history) {
-				
-				if (lastBle.containsKey(ph.getBuyDate())) {
-					Long current = lastBle.get(ph.getBuyDate());
-					lastBle.put(ph.getBuyDate(), current -= ph.getAmount()*ph.getStockPrice().getBuy());
+				if (sortedMap.containsKey(ph.getBuyDate())) {
+					Long current = sortedMap.get(ph.getBuyDate());
+					sortedMap.put(ph.getBuyDate(), current -= ph.getAmount()*ph.getStockPrice().getBuy());
 				}
 				else {
-					lastBle.put(ph.getBuyDate(), -ph.getAmount()*ph.getStockPrice().getBuy());
+					sortedMap.put(ph.getBuyDate(), -ph.getAmount()*ph.getStockPrice().getBuy());
 				}
-				
 			}
+			// Add all sells
+			for (PortfolioHistory ph : history) {
+				if (ph.getSoldDate() != null) {
+					SortedMap<Date, Long> apa = sortedMap.tailMap(ph.getSoldDate());
+					Collection<Long> bepa = apa.values();
+					
+					for (Long l : bepa) {
+						l += ph.getSoldStockPrice().getSell()*ph.getAmount();
+					}
+				}
+			}
+			for (PortfolioInvestment pi : selectedPortfolio.getInvestments()) {
+				SortedMap<Date, Long> apa = sortedMap.tailMap(pi.getDate());
+				Collection<Long> bepa = apa.values();
+				
+				for (Long l : bepa) {
+					if (pi.didInvest())
+						l += pi.getAmount();
+					else
+						l -= pi.getAmount();
+				}
+			}
+			
+			DateTime dt = new DateTime(0);
+			long currentValue = 0;
+			for (Entry<Date, Long> apa : sortedMap.entrySet()) {
+				DateTime dta = new DateTime(apa.getKey());
+				if (dta.getDayOfYear() == dt.getDayOfYear()) {
+					currentValue += apa.getValue();
+				}
+				else {
+					dt = new DateTime(apa.getKey());
+					t1.add(new Day(apa.getKey()), currentValue);
+				}
+			}
+			try {
+				t1.add(new Day(dt.toDate()), currentValue);
+			} catch (Exception e) {
+			}
+			
 		}
 		
-		t1.add(new Day(2, MonthConstants.JANUARY, 2001), new Double(1.5788));
-		t1.add(new Day(3, MonthConstants.JANUARY, 2001), new Double(1.5913));
-		t1.add(new Day(4, MonthConstants.JANUARY, 2001), new Double(1.5807));
-		t1.add(new Day(5, MonthConstants.JANUARY, 2001), new Double(1.5711));
-		t1.add(new Day(8, MonthConstants.JANUARY, 2001), new Double(1.5778));
-		t1.add(new Day(9, MonthConstants.JANUARY, 2001), new Double(1.5851));
-		t1.add(new Day(10, MonthConstants.JANUARY, 2001), new Double(1.5846));
-		t1.add(new Day(11, MonthConstants.JANUARY, 2001), new Double(1.5727));
-		t1.add(new Day(12, MonthConstants.JANUARY, 2001), new Double(1.5585));
-		t1.add(new Day(15, MonthConstants.JANUARY, 2001), new Double(1.5694));
-		t1.add(new Day(16, MonthConstants.JANUARY, 2001), new Double(1.5629));
-		t1.add(new Day(17, MonthConstants.JANUARY, 2001), new Double(1.5831));
-		t1.add(new Day(18, MonthConstants.JANUARY, 2001), new Double(1.5624));
-		t1.add(new Day(19, MonthConstants.JANUARY, 2001), new Double(1.5694));
-		t1.add(new Day(22, MonthConstants.JANUARY, 2001), new Double(1.5615));
-		t1.add(new Day(23, MonthConstants.JANUARY, 2001), new Double(1.5656));
-		t1.add(new Day(24, MonthConstants.JANUARY, 2001), new Double(1.5795));
-		t1.add(new Day(25, MonthConstants.JANUARY, 2001), new Double(1.5852));
-		t1.add(new Day(26, MonthConstants.JANUARY, 2001), new Double(1.5797));
-		t1.add(new Day(29, MonthConstants.JANUARY, 2001), new Double(1.5862));
-		t1.add(new Day(30, MonthConstants.JANUARY, 2001), new Double(1.5803));
-
 		return t1;
 	}
 

@@ -79,7 +79,8 @@ public final class TraderSimulator implements ITrader{
 		Log.log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
 		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
-		ph.setSoldDate(latest.getTime());
+		ph.setStockSoldPrice(latest);
+		ph.setSoldDate(new Date(System.currentTimeMillis()));
 		jpaHelper.updateObject(portfolio);
 		
 		return true;
