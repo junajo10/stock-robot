@@ -4,8 +4,9 @@ package view.wizard;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.util.EventListener;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -20,7 +21,10 @@ import javax.swing.SwingUtilities;
 
 import model.wizard.WizardModel;
 import utils.global.Log;
+import view.IView;
+
 import java.awt.Color;
+import java.awt.Font;
 
 /**
  * @author Mattias Markehed
@@ -30,32 +34,40 @@ import java.awt.Color;
  * Description:
  * WizardGui is used create wizard of different kinds.
  */
-public class WizardView extends JFrame implements PropertyChangeListener {
+public class WizardView extends JFrame implements IView {
 
 	private static final long serialVersionUID = 2315845664426240653L;
 	
 	public static final int SCREEN_PORTFOLIO_INFO 	= 0;
 	
-	private JLabel lbl_Title;
-	private JLabel lbl_Subtitle;
+	private JLabel lblTitle;
+	private JLabel lblSubtitle;
 	
 	private JPanel pnl_MainPane;
 	private JPanel pnl_Content;
 	
-	protected JButton btn_Cancel;
-	protected JButton btn_Back;
-	protected JButton btn_Next;
-	protected JButton btn_Finish;
+	protected JButton btnCancel;
+	protected JButton btnBack;
+	protected JButton btnNext;
+	protected JButton btnFinish;
+	
+	public static final String WINDOW_CLOSE 				= "windowClose";
+	public static final String GO_NEXT					= "goNext";	
+	public static final String GO_BACK 					= "goBack";
+	public static final String GO_CANCEL 					= "goCancel";
+	public static final String GO_FINISH					= "goFinish";	
 	
 	private WizardModel model;
+	
+	private WindowListener windowListener;
 
-	private Map<Integer,WizardPage<?>> pages;
+	private Map<Integer,WizardPage> pages;
 	
 	/**
 	 * Create the frame.
 	 */
 	public WizardView(WizardModel model) {
-		pages = new HashMap<Integer,WizardPage<?>>();
+		pages = new HashMap<Integer,WizardPage>();
 		this.model = model;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
@@ -80,18 +92,18 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 		lou_Footer.setAlignment(FlowLayout.CENTER);
 		pnl_Footer.setLayout(lou_Footer);
 		
-		btn_Back 		= new JButton("Back");
-		btn_Next 		= new JButton("Next");
-		btn_Cancel 		= new JButton("Cancel");
-		btn_Finish		= new JButton("Finish");
-		btn_Finish.setEnabled(false);
-		btn_Cancel.setEnabled(false);
-		btn_Next.setEnabled(false);
-		btn_Back.setEnabled(false);
-		pnl_Footer.add(btn_Back);
-		pnl_Footer.add(btn_Next);
-		pnl_Footer.add(btn_Cancel);
-		pnl_Footer.add(btn_Finish);
+		btnBack 		= new JButton("Back");
+		btnNext 		= new JButton("Next");
+		btnCancel 		= new JButton("Cancel");
+		btnFinish		= new JButton("Finish");
+		btnFinish.setEnabled(false);
+		btnCancel.setEnabled(false);
+		btnNext.setEnabled(false);
+		btnBack.setEnabled(false);
+		pnl_Footer.add(btnBack);
+		pnl_Footer.add(btnNext);
+		pnl_Footer.add(btnCancel);
+		pnl_Footer.add(btnFinish);
 		//================================
 		
 		//============ HEADER ============
@@ -101,14 +113,16 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 		lou_Header.setAlignment(FlowLayout.LEFT);
 		pnl_Header.setLayout(lou_Header);
 		
-		JPanel pnl_Title = new JPanel(); 
-		pnl_Title.setLayout(new BoxLayout(pnl_Title, BoxLayout.PAGE_AXIS));
-		lbl_Title = new JLabel(model.getTitle());
-		pnl_Title.add(lbl_Title);
-		lbl_Subtitle = new JLabel(model.getSubtitle());
-		lbl_Subtitle.setVisible(false);
-		pnl_Title.add(lbl_Subtitle);
-		pnl_Header.add(pnl_Title);
+		JPanel pnlTitle = new JPanel(); 
+		pnlTitle.setBackground(null);
+		pnlTitle.setLayout(new BoxLayout(pnlTitle, BoxLayout.PAGE_AXIS));
+		lblTitle = new JLabel("Wizard");
+		lblTitle.setFont(new Font("Dialog", Font.BOLD, 16));
+		pnlTitle.add(lblTitle);
+		lblSubtitle = new JLabel("Subtitle");
+		lblSubtitle.setVisible(false);
+		pnlTitle.add(lblSubtitle);
+		pnl_Header.add(pnlTitle);
 		//================================
 		
 		//============ MAIN LAYOUT ============
@@ -144,7 +158,7 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	 * @param title
 	 */
 	public void setTitle(String title) {		
-		lbl_Title.setText(title);
+		lblTitle.setText(title);
 		this.validate();
 	}
 	
@@ -157,11 +171,11 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 	public void setSubtitle(String subtitle){
 		
 		
-		if(!lbl_Subtitle.isVisible()){
-			lbl_Subtitle.setVisible(true);
+		if(!lblSubtitle.isVisible()){
+			lblSubtitle.setVisible(true);
 		}
 		
-		lbl_Subtitle.setText(subtitle);
+		lblSubtitle.setText(subtitle);
 	}
 	
 	/**
@@ -175,108 +189,108 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			public void run() {
-				WizardPage<?> page = pages.get(screen);
+				WizardPage page = pages.get(screen);
 				
-				Log.instance().log(Log.TAG.NORMAL, "loading screen");
+				Log.log(Log.TAG.NORMAL, "loading screen");
 				if(page != null){
 					pnl_Content.removeAll();
 					pnl_Content.add(page);
 					pnl_Content.validate();
 					pnl_Content.repaint();					
 					
-					Log.instance().log(Log.TAG.NORMAL, "Loading page " + screen);
+					Log.log(Log.TAG.NORMAL, "Loading page " + screen);
 				}
             }
         });
 	}
 	 
-	public synchronized void registerPage(int screen, WizardPage<?> page){
+	public synchronized void registerPage(int screen, WizardPage page){
 		
 		pages.put(screen, page);
 	}
 	
 	//== Cancel listeners ==
 	public void setCancelListener(ActionListener listener){
-		setListener(btn_Cancel, listener);
+		setListener(btnCancel, listener);
 	}
 	
 	public void addCancelListener(ActionListener listener){
-		addListener(btn_Cancel, listener);
+		addListener(btnCancel, listener);
 	}
 	
 	public void removeCancelListener(ActionListener listener){
-		removeListener(btn_Cancel,listener);
+		removeListener(btnCancel,listener);
 	}
 	
 	public void removeCancelListeners(){
-		removeListeners(btn_Cancel);
+		removeListeners(btnCancel);
 	}
 	
 	public void setEnableCancel(boolean enable){
-		disableButton(btn_Cancel,enable);
+		disableButton(btnCancel,enable);
 	}
 	
 	//== Finish listeners ==
 	public void setFinishListener(ActionListener listener){
-		setListener(btn_Finish, listener);
+		setListener(btnFinish, listener);
 	}
 	
 	public void addFinishListener(ActionListener listener){
-		addListener(btn_Finish, listener);
+		addListener(btnFinish, listener);
 	}
 	
 	public void removeFinishListener(ActionListener listener){
-		removeListener(btn_Finish,listener);
+		removeListener(btnFinish,listener);
 	}
 
 	public void removeFinishListeners(){
-		removeListeners(btn_Finish);
+		removeListeners(btnFinish);
 	}
 	
 	public void setEnableFinish(boolean enable){
-		disableButton(btn_Finish,enable);
+		disableButton(btnFinish,enable);
 	}
 	
 	//== Next listeners ==
 	public void setNextListener(ActionListener listener){
-		setListener(btn_Next, listener);
+		setListener(btnNext, listener);
 	}
 	
 	public void addNextListener(ActionListener listener){
-		addListener(btn_Next, listener);
+		addListener(btnNext, listener);
 	}
 	
 	public void removeNextListener(ActionListener listener){
-		removeListener(btn_Next,listener);
+		removeListener(btnNext,listener);
 	}
 
 	public void removeNextListeners(){
-		removeListeners(btn_Next);
+		removeListeners(btnNext);
 	}
 	
 	public void setEnableNext(boolean enable){
-		disableButton(btn_Next,enable);
+		disableButton(btnNext,enable);
 	}
 	
 	//== Back listeners ==
 	public void setBackListener(ActionListener listener){
-		setListener(btn_Back, listener);
+		setListener(btnBack, listener);
 	}
 	
 	public void addBackListener(ActionListener listener){
-		addListener(btn_Back, listener);
+		addListener(btnBack, listener);
 	}
 
 	public void removeBackListener(ActionListener listener){
-		removeListener(btn_Back,listener);
+		removeListener(btnBack,listener);
 	}
 	
 	public void removeBackListeners(){
-		removeListeners(btn_Back);
+		removeListeners(btnBack);
 	}
 	
 	public void setEnableBack(boolean enable){
-		disableButton(btn_Back,enable);
+		disableButton(btnBack,enable);
 	}
 	
 	//== listeners ==
@@ -346,5 +360,38 @@ public class WizardView extends JFrame implements PropertyChangeListener {
 			setEnableFinish(model.isAllowedFinish());
 		}
 		
+	}
+
+	@Override
+	public void display(Object model) {
+		
+		setVisible(true);
+	}
+
+	@Override
+	public void cleanup() {
+		
+		model.removeObserver(this);
+	}
+
+	@Override
+	public void addActions(Map<String, EventListener> actions) {
+		
+		if(actions.get(GO_BACK) instanceof ActionListener) {
+			btnBack.addActionListener((ActionListener) actions.get(GO_BACK));
+		}
+		if(actions.get(GO_NEXT) instanceof ActionListener) {
+			btnNext.addActionListener((ActionListener) actions.get(GO_NEXT));
+		}
+		if(actions.get(GO_CANCEL) instanceof ActionListener) {
+			btnCancel.addActionListener((ActionListener) actions.get(GO_CANCEL));
+		}
+		if(actions.get(GO_NEXT) instanceof ActionListener) {
+			btnFinish.addActionListener((ActionListener) actions.get(GO_FINISH));
+		}
+		if(actions.get(WINDOW_CLOSE) instanceof WindowListener) {
+			windowListener = (WindowListener) actions.get(WINDOW_CLOSE);
+			addWindowListener(windowListener);
+		}
 	}
 }

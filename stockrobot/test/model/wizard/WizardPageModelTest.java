@@ -17,12 +17,6 @@ public class WizardPageModelTest {
 		}
 		
 		@Override
-		public WizardPageModel copyModel() {
-			
-			return null;
-		}
-		
-		@Override
 		public boolean canFinish() {
 			
 			return false;

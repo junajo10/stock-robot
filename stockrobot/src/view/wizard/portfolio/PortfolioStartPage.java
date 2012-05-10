@@ -2,9 +2,12 @@ package view.wizard.portfolio;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
+import java.util.EventListener;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -18,20 +21,26 @@ import javax.swing.SwingUtilities;
 
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
+import model.portfolio.wizard.ItemCmbPortfolio;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
-import view.components.GUIFactory;
-import view.components.IGUIFactory;
-import view.components.ItemCmbPortfolio;
 import view.wizard.WizardPage;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
+public class PortfolioStartPage extends WizardPage {
 
 	private JRadioButton rbtn_ClonePortfolio; 
 	private JRadioButton rbtn_NewPortfolio;
 	private JPanel pnl_PortfolioToClone;
 	private JComboBox cmb_ClonePortfolioList;
 	private IPortfolioHandler portfolioHandler;
+	private ButtonGroup buttonGroup;
+	
+	public static final String CREATE_FROM_NEW 	= "createFromNew";
+	public static final String CREATE_FROM_CLONE 	= "createFromClone";
+	public static final String CREATE_FROM_LISTENER 	= "createFromListener";
 	
 	private DefaultComboBoxModel cmb_hld_ClonePortfolioList = new DefaultComboBoxModel();
 	
@@ -46,28 +55,29 @@ public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
 
 	public void init() {
 				
-		IGUIFactory factory = new GUIFactory();
 		
 		//============ INITIAL ============
 		//pnl_PortfolioInfo = factory.getInvisibleContainer();
 		this.setAlignmentX(Component.LEFT_ALIGNMENT);
 		BoxLayout lou_PortfolioInfo = new BoxLayout(this, BoxLayout.PAGE_AXIS);
 		this.setLayout(lou_PortfolioInfo);
-		this.setPreferredSize(null);
+		this.setPreferredSize(new Dimension(353, 137));
 		
-		JPanel pnl_PortfolioName = factory.getInvisibleContainer();
+		JPanel pnlContent = new JPanel();
+		add(pnlContent);
+		
+		JPanel pnl_PortfolioName = new JPanel();
 		pnl_PortfolioName.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		JLabel lbl_PortfolioName = factory.getDefaultLabel("Portfolio Name:");
+		JLabel lbl_PortfolioName = new JLabel("Portfolio Name:");
 		pnl_PortfolioName.add(lbl_PortfolioName);
 		JTextField txt_PortfolioName = new JTextField();
 		txt_PortfolioName.setColumns(20);
 		txt_PortfolioName.setPreferredSize(new Dimension(2000,20));
 		pnl_PortfolioName.add(txt_PortfolioName);
-		this.add(pnl_PortfolioName);
 		
 		//============ PORTFOLIO FROM ============
-		JPanel pnl_PortfolioFrom = factory.getInvisibleContainer();
+		JPanel pnl_PortfolioFrom = new JPanel();
 		pnl_PortfolioFrom.setPreferredSize(new Dimension(300,200));
 		BoxLayout lou_PortfolioFrom = new BoxLayout(pnl_PortfolioFrom, BoxLayout.PAGE_AXIS);
 		pnl_PortfolioFrom.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -87,29 +97,44 @@ public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
 		rbtn_ClonePortfolio.setText("Clone existing portfolio");
 		rbtn_ClonePortfolio.setAlignmentX(Component.LEFT_ALIGNMENT);
 		pnl_PortfolioFrom.add(rbtn_ClonePortfolio);
-		
-		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup = new ButtonGroup();
 		buttonGroup.add(rbtn_NewPortfolio);
 		buttonGroup.add(rbtn_ClonePortfolio);
+		GroupLayout gl_pnlContent = new GroupLayout(pnlContent);
+		gl_pnlContent.setHorizontalGroup(
+			gl_pnlContent.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlContent.createSequentialGroup()
+					.addGroup(gl_pnlContent.createParallelGroup(Alignment.TRAILING)
+						.addComponent(pnl_PortfolioFrom, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(pnl_PortfolioName, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(310))
+		);
+		gl_pnlContent.setVerticalGroup(
+			gl_pnlContent.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlContent.createSequentialGroup()
+					.addComponent(pnl_PortfolioName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnl_PortfolioFrom, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+					.addGap(150))
+		);
 		
 		
-		pnl_PortfolioToClone = factory.getInvisibleContainer();
+		pnl_PortfolioToClone = new JPanel();
+		pnl_PortfolioFrom.add(pnl_PortfolioToClone);
 		pnl_PortfolioToClone.setEnabled(false);
 		pnl_PortfolioToClone.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pnl_PortfolioToClone.setBorder(factory.getDefaultBorder());
-		JLabel lbl_ClonePortfolio = factory.getDefaultLabel("Portfolio to clone:");
+		//pnl_PortfolioToClone.setBorder(factory.getDefaultBorder());
+		JLabel lbl_ClonePortfolio = new JLabel("Portfolio to clone:");
 		pnl_PortfolioToClone.add(lbl_ClonePortfolio);
 		
 		cmb_ClonePortfolioList = new JComboBox();
-		DefaultComboBoxModel cmb_hld_ClonePortfolioList = new DefaultComboBoxModel();
 		cmb_ClonePortfolioList.setModel(cmb_hld_ClonePortfolioList);
 		pnl_PortfolioToClone.add(cmb_ClonePortfolioList);
 		cmb_ClonePortfolioList.setPreferredSize(new Dimension(200,20));
 		cmb_ClonePortfolioList.setEnabled(false);
-		cmb_ClonePortfolioList.setModel(cmb_hld_ClonePortfolioList);
-		pnl_PortfolioFrom.add(pnl_PortfolioToClone);
-				
-		this.add(pnl_PortfolioFrom);
+		pnlContent.setLayout(gl_pnlContent);
+		
+		//DefaultComboBoxModel cmb_hld_ClonePortfolioList = new DefaultComboBoxModel();
 		//========================================
 	}
 	
@@ -150,5 +175,24 @@ public class PortfolioStartPage extends WizardPage<PortfolioWizardModel> {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+	}
+
+	@Override
+	public void display(Object model) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addActions(Map<String, EventListener> actions) {
+
+		if(actions.get(CREATE_FROM_NEW) instanceof ItemListener){
+			
+			rbtn_NewPortfolio.addItemListener((ItemListener)actions.get(CREATE_FROM_NEW));
+		}
+		if(actions.get(CREATE_FROM_CLONE) instanceof ItemListener){
+			
+			rbtn_ClonePortfolio.addItemListener((ItemListener)actions.get(CREATE_FROM_CLONE));
+		}
 	}
 }

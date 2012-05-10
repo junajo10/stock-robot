@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import java.awt.Component;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
@@ -30,6 +31,9 @@ import model.trader.ITrader;
 public class PortfolioView extends JFrame implements IView {
 
 	private static final long serialVersionUID = -1857650100977127973L;
+	public static final String WINDOW_CLOSE 				= "windowClose";
+	public static final String CREATE_PORTFOLIO			= "createPortfolio";	
+	
 	private JPanel contentPane;
 	private IPortfolioHandler portfolios;
 	private JComboBox cmbSelectPortfolio;
@@ -41,8 +45,11 @@ public class PortfolioView extends JFrame implements IView {
 	
 	private JButton btnSeeStock;
 	private JButton btnHistory;
+	private JButton btnNewPortfolio;
 	
 	private IPortfolio selectedPortfolio;
+	
+	
 	
 	/**
 	 * Create the frame.
@@ -56,7 +63,7 @@ public class PortfolioView extends JFrame implements IView {
 		setResizable(false);
 		setTitle("Portfolio");
 		
-		setBounds(100, 100, 284, 158);
+		setBounds(100, 100, 328, 158);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		
@@ -96,6 +103,9 @@ public class PortfolioView extends JFrame implements IView {
 		btnHistory = new JButton("History");
 		btnHistory.setEnabled(false);
 		pnlViewsHolder.add(btnHistory);
+		
+		btnNewPortfolio = new JButton("New Portfolio");
+		pnlViewsHolder.add(btnNewPortfolio);
 		pnlBalanceContainer.setLayout(new BoxLayout(pnlBalanceContainer, BoxLayout.Y_AXIS));
 		
 		JPanel pnlBalance = new JPanel();
@@ -167,8 +177,10 @@ public class PortfolioView extends JFrame implements IView {
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
-		// TODO Auto-generated method stub
-		
+
+		if(actions.get(CREATE_PORTFOLIO) instanceof ActionListener){
+			btnNewPortfolio.addActionListener((ActionListener) actions.get(CREATE_PORTFOLIO));
+		}
 	}
 	
 	private class PortfoliosCmbModel implements ComboBoxModel {
@@ -238,6 +250,4 @@ public class PortfolioView extends JFrame implements IView {
 			updateValues();
 		}
 	}
-	
-	
 }

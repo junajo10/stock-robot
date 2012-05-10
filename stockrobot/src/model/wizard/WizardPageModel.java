@@ -16,9 +16,7 @@ public abstract class WizardPageModel implements IObservable {
 		this.wizardModel = wizardModel;
 		observers = new PropertyChangeSupport(this);
 	}
-	
-	public abstract WizardPageModel copyModel();
-	
+		
 	public void addAddObserver(PropertyChangeListener listener){
 		observers.addPropertyChangeListener(listener);
 	}

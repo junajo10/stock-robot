@@ -10,14 +10,6 @@ public class PortfolioWizardModel extends WizardPageModel{
 	}
 
 	@Override
-	public WizardPageModel copyModel() {
-		
-		PortfolioWizardModel newModel = new PortfolioWizardModel(wizardModel);
-		
-		return newModel;
-	}
-
-	@Override
 	public boolean canFinish() {
 		// TODO Auto-generated method stub
 		return false;

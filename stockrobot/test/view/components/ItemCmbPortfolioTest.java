@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.portfolio.Portfolio;
+import model.portfolio.wizard.ItemCmbPortfolio;
 
 import org.junit.After;
 import org.junit.Before;

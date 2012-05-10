@@ -1,7 +1,10 @@
 package controller.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.Map;
 
 import model.portfolio.IPortfolioHandler;
@@ -18,18 +21,33 @@ public class PortfolioController implements IController {
 	private ITrader trader;
 	private IPortfolioHandler portfolios; 
 	
+	private Map<String, EventListener> actions;
+	
 	public PortfolioController(ITrader trader, IPortfolioHandler portfolios){
 		
 		this.trader = trader;
 		this.trader.addAddObserver(this);
 		this.portfolios = portfolios;
+		
+		actions = new HashMap<String, EventListener>();
+		actions.put(PortfolioView.CREATE_PORTFOLIO, createPortfolioListener);
 	}
-
+	
+	ActionListener createPortfolioListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			WizardFactory.buildPortfolioWizard();
+		}
+	};
+	
 	@Override
 	public void display(Object model) {
 		
 		view = new PortfolioView(trader, portfolios);
-		IPortfolioHandler handler = (IPortfolioHandler)model;
+		IPortfolioHandler handler = (IPortfolioHandler) model;
+		view.addActions(actions);
 		view.display(handler);
 	}
 
@@ -41,8 +59,8 @@ public class PortfolioController implements IController {
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return actions;
 	}
 
 	@Override

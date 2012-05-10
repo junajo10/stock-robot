@@ -2,7 +2,9 @@ package view.wizard.portfolio;
 
 import java.awt.Component;
 import java.awt.event.ItemListener;
+import java.util.EventListener;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -19,7 +21,7 @@ import view.components.GUIFactory;
 import view.components.IGUIFactory;
 import view.wizard.WizardPage;
 
-public class PortfolioFromNewPage extends WizardPage<PortfolioWizardModel> {
+public class PortfolioFromNewPage extends WizardPage {
 
 	private static final long serialVersionUID = 20596476598729363L;
 	private JComboBox cmb_algorithms;
@@ -68,6 +70,18 @@ public class PortfolioFromNewPage extends WizardPage<PortfolioWizardModel> {
 		for(ItemListener l : cmb_algorithms.getItemListeners()){
 			cmb_algorithms.removeItemListener(l);
 		}
+	}
+
+	@Override
+	public void display(Object model) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addActions(Map<String, EventListener> actions) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

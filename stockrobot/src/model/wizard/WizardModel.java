@@ -24,7 +24,7 @@ public class WizardModel implements IObservable {
 	public static String EVT_PAGE_CURRENT_CHANGE 	= "evtPageCurrentChange";
 	public static String EVT_PAGE_BACK_CHANGE 		= "evtPageBackChange";
 	public static String EVT_PAGE_NEXT_CHANGE 		= "evtPageNextChange";
-	public static String EVT_CAN_FINISH_CHANGE 		= "evtCanFinishChange";
+	public static String EVT_CAN_FINISH_CHANGE 	= "evtCanFinishChange";
 	
 	private String title;
 	private String subtitle;
@@ -56,7 +56,6 @@ public class WizardModel implements IObservable {
         String oldSubtitle = WizardModel.this.subtitle;
         WizardModel.this.subtitle = subtitle;
         observers.firePropertyChange(EVT_SUBTITLE_CHANGE, oldSubtitle, subtitle);
-		
 	}
 	
 	public String getSubtitle() {

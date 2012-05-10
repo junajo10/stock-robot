@@ -1,4 +1,4 @@
-package view.components;
+package model.portfolio.wizard;
 
 import model.portfolio.IPortfolio;
 

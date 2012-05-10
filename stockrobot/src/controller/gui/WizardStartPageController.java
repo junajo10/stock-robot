@@ -1,4 +1,4 @@
-package controller.wizard.portfolio;
+package controller.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,46 +6,59 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.Map;
 
-import controller.gui.IController;
+import javax.swing.SwingUtilities;
 
+
+import model.portfolio.PortfolioHandler;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
 
-import view.wizard.WizardView;
+import view.wizard.WizardPage;
 import view.wizard.portfolio.PortfolioPages;
 import view.wizard.portfolio.PortfolioStartPage;
 
-public class WizardStartPageController implements IController {
+public class WizardStartPageController extends WizardPageController {
 
 	private PortfolioStartPage page;
-	private WizardView wizard;
 	private WizardModel model;
+	private PortfolioWizardModel pageModel;
+	private Map<String, EventListener> actions;
 	
-	public WizardStartPageController(PortfolioStartPage page, WizardView wizard, WizardModel model) {
-		this.wizard = wizard;
+	public WizardStartPageController(final WizardModel model, final PortfolioWizardModel pageModel) {
+		
 		this.model = model;
+		this.pageModel = pageModel; 
+		
+		page = new PortfolioStartPage(model, pageModel, PortfolioHandler.getInstance());
+		actions = new HashMap<String, EventListener>();
+		actions.put(PortfolioStartPage.CREATE_FROM_NEW, getFromNewListener());
+		actions.put(PortfolioStartPage.CREATE_FROM_CLONE, getFromCloneListener());
+		page.addActions(actions);
+			
+		
+	}
+	
+	public WizardPage getView(){
+		return page;
 	}
 	
 	//======= Create portfolio from scratch ========
 	public ItemListener getFromNewListener(){
 		
 		ItemListener listener = new FromNewListener();
-		
-		
+			
 		return listener;
 	}
 	
 	public class FromNewListener implements ItemListener{
 
-		@SuppressWarnings("unused") //Suppressed this warning in preparation for the meeting tomorrow 
-		private NextCreateFromNewListener nextBtnListener; 
-		
+
 		public FromNewListener(){
 			
-			nextBtnListener = new NextCreateFromNewListener();
 		}
 		
 		@Override
@@ -64,7 +77,8 @@ public class WizardStartPageController implements IController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			wizard.loadScreen(PortfolioPages.PAGE_CREATE_FROM_NEW);
+			model.setNextPage(PortfolioPages.PAGE_CREATE_FROM_NEW);
+			model.goNextPage();
 		}
 	}
 	
@@ -106,9 +120,6 @@ public class WizardStartPageController implements IController {
 	@Override
 	public void display(Object model) {
 		
-		if(model instanceof PortfolioWizardModel){
-			
-		}
 	}
 
 	@Override
@@ -125,7 +136,7 @@ public class WizardStartPageController implements IController {
 
 	@Override
 	public void addSubController(IController subController) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

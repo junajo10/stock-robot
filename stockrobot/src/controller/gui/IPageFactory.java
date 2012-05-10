@@ -1,9 +1,9 @@
-package viewfactory.wizard;
+package controller.gui;
 
 import view.wizard.WizardPage;
 import model.wizard.WizardPageModel;
 
 public interface IPageFactory<T extends WizardPageModel> {
 
-	public WizardPage<T> build(T model);
+	public WizardPage build(T model);
 }

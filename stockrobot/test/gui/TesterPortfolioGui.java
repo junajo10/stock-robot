@@ -8,15 +8,15 @@ import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.Portfolio;
-import viewfactory.wizard.portfolio.PortfolioWizardFactory;
 
 public class TesterPortfolioGui {
 
 	public static void main(String[] args) {
 			
+		//TODO make tests
 		TestPortfolioHandler pHandler = new TestPortfolioHandler(null);
 		
-		PortfolioWizardFactory.buildPortfolioWizard(pHandler);
+		//PortfolioWizardFactory.buildPortfolioWizard(pHandler);
 	}
 }
 
