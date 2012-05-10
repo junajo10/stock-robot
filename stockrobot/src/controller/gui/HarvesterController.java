@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -161,17 +162,16 @@ public class HarvesterController implements IController {
 		}
 		
 		public void exportLog(){
+			File logTxtFile = view.openChooseDirectory();
 			ListModel model = view.getLogModel();
 			PrintStream out = null;
 			try {
-				String date = new Timestamp(new java.util.Date().getTime()) + "";
-				String fileName = "Log_harvester_"+date.substring(0, 10)+".txt";
-				out = new PrintStream(new FileOutputStream(fileName));
+				out = new PrintStream(new FileOutputStream(logTxtFile));
 		        int len = model.getSize(); 
 		        for(int i = 0; i < len; i++) { 
 		        	out.println(model.getElementAt(i).toString()); 
 		        } 
-				addToList(fileName+" exported to home-directory.");
+				addToList(logTxtFile.getName()+" exported to home-directory.");
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}  finally {

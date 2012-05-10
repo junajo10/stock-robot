@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -16,11 +17,13 @@ import javax.swing.ListModel;
 
 import java.awt.Dialog.ModalExclusionType;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.util.EventListener;
 import java.util.Map;
 
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
+
 	
 
 /**
@@ -201,5 +204,17 @@ public class HarvesterView extends JFrame implements IView{
 
 	public ListModel getLogModel() {
 		return logModel;
+	}
+
+
+
+	public File openChooseDirectory() {
+		 JFileChooser fc = new JFileChooser();
+         int returnVal = fc.showSaveDialog(this);
+         if (returnVal == JFileChooser.APPROVE_OPTION) {
+        	 File file = fc.getSelectedFile();
+        	 return file;
+         }
+         return null;
 	}	
 }
