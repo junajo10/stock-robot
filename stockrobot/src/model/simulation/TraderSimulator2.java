@@ -47,9 +47,9 @@ public class TraderSimulator2 implements ITrader{
 
 		portfolio.bougthFor(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio), jpaHelper);
 
-		portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
+		portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), amount, portfolio));
 		jpaHelper.updateObject(portfolio);
-		Log.instance().log(TAG.VERBOSE, "Simulator: Buying " + amount + " of " + s.getStockName().getName() + " for: " + FinancialLongConverter.toDouble(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio)));
+		Log.log(TAG.VERBOSE, "Simulator: Buying " + amount + " of " + s.getStockName().getName() + " for: " + FinancialLongConverter.toDouble(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio)));
 		return true;
 	}
 
@@ -72,7 +72,7 @@ public class TraderSimulator2 implements ITrader{
 				}
 			}
 		}
-		Log.instance().log(TAG.VERY_VERBOSE, "SellStock in traderSimulator2: Couldent find stock: " + s);
+		Log.log(TAG.VERY_VERBOSE, "SellStock in traderSimulator2: Couldent find stock: " + s);
 		return false;
 	}
 
@@ -83,10 +83,10 @@ public class TraderSimulator2 implements ITrader{
 	@Override
 	public boolean sellStock(PortfolioHistory ph, PortfolioEntity portfolio) {
 		if (ph.getSoldDate() != null) {
-			Log.instance().log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
+			Log.log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
 			return false;
 		}
-		Log.instance().log(TAG.VERBOSE, "Simulator: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
+		Log.log(TAG.VERBOSE, "Simulator: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
 		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
 		ph.setSoldDate(latest.getTime());

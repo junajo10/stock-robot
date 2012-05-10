@@ -103,9 +103,9 @@ public class MainBasicJPATest extends DatabaseCleaner {
 		PortfolioEntity p = jpaHelper.getAllPortfolios().get(0);
 		
 		if (r.nextBoolean())
-			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()), null, 10, p));
+			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()), 10, p));
 		else
-			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()-10000), new Date(System.currentTimeMillis()), 10, p));
+			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()-10000), 10, p));
 		jpaHelper.updateObject(p);
 		
 		List<StockPrices> prices = jpaHelper.getAllStockPrices();
@@ -147,7 +147,7 @@ public class MainBasicJPATest extends DatabaseCleaner {
 		
 		jpaHelper.storeObject(stock);
 		
-		p.addPortfolioHistory(new PortfolioHistory(stock, new Date(123), new Date(25231434), 77, p));
+		p.addPortfolioHistory(new PortfolioHistory(stock, new Date(123), 77, p));
 		
 		PortfolioHistory pHistory = p.getSpecificPortfolioHistory(stock, 77);
 		

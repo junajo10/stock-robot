@@ -10,6 +10,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.EventListener;
 import java.util.Map;
 
@@ -22,6 +24,15 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ScrollPaneConstants;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
+
 /**
  * 
  * @author Daniel
@@ -32,6 +43,7 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	private JPanel contentPane;
 	
 	JPanel panel_1 = new JPanel();
+	JPanel panelChart = new JPanel();
 	private JTable table = new JTable();
 	private PortfolioHistoryModel model;
 	
@@ -53,12 +65,12 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	private void createFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Portfolio History");
-		setBounds(100, 100, 1018, 394);
+		setBounds(100, 100, 1015, 601);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JPanel panel_3 = new JPanel();
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -67,20 +79,21 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(panelChart, GroupLayout.DEFAULT_SIZE, 1003, Short.MAX_VALUE)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
-				.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane)
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 262, Short.MAX_VALUE))
-					.addGap(9)
-					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelChart, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE))
 		);
 		
 		
@@ -118,8 +131,6 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		);
 		panel_1.setLayout(gl_panel_1);
 		
-		JLabel lblGraphPPengafrndring = new JLabel("Graph på pengaförändring");
-		panel_3.add(lblGraphPPengafrndring);
 		contentPane.setLayout(gl_contentPane);		
 		
 		setVisible(true);
@@ -133,6 +144,23 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		
 		if (portfolioModel != null) {
 			table.setModel(model.getTable());
+			
+			
+			
+			
+			
+			final XYDataset dataset = createDataset();
+	        final JFreeChart chart = createChart(dataset);
+			
+			TimeSeries timeSeries = model.getTimeSeries();
+			final ChartPanel chartPanel = new ChartPanel(chart);
+			
+			chartPanel.setPreferredSize(new java.awt.Dimension(900, 200));
+			
+			panelChart.add(chartPanel);
+			
+			
+			
 		}
 		else {
 			table.setModel(new DefaultTableModel(
@@ -149,16 +177,43 @@ public class PortfolioHistoryView extends JFrame implements IView {
 					}
 				));
 		}
-		/*
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setPreferredWidth(100);
-		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+
 		
-		table.getColumnModel().getColumn(5).setPreferredWidth(300);
-		table.getColumnModel().getColumn(6).setPreferredWidth(300);
-		*/
+		
 		createFrame();
 	}
+	
+    private XYDataset createDataset() {
+        final TimeSeries eur = model.getTimeSeries();
+        
+        
+        /*final TimeSeries mav = MovingAverage.createMovingAverage(
+            eur, "30 day moving average", 2, 2
+        );
+        */
+        final TimeSeriesCollection dataset = new TimeSeriesCollection();
+        dataset.addSeries(eur);
+        //dataset.addSeries(mav);
+        return dataset;
+    }
+    private JFreeChart createChart(final XYDataset dataset) {
+        final JFreeChart chart = ChartFactory.createTimeSeriesChart(
+            null, 
+            "Date", 
+            "Value",
+            dataset, 
+            true, 
+            true, 
+            false
+        );
+        final XYItemRenderer renderer = chart.getXYPlot().getRenderer();
+        final StandardXYToolTipGenerator g = new StandardXYToolTipGenerator(
+            StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
+            new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")
+        );
+        renderer.setToolTipGenerator(g);
+        return chart;
+    }
 	@Override
 	public void display(Object model) {
 		// TODO Auto-generated method stub
