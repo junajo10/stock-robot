@@ -1,0 +1,5 @@
+INTRO (5 min)
+DEMO av applikationen (5 min)
+BAKGRUND (5 min)
+HARVESTER (5 min)
+MAIN (10 min)
