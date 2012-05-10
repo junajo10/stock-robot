@@ -1,0 +1,31 @@
+Use Case: Portfolio
+Short description: This is the portfolio usecase, here the user gets presented information about the portfolios that exists. 
+
+Priority: Medium
+
+Extends or Includes: UC_PortfolioHistory, UC_PortfolioStock
+
+Participating actors: User, Astro
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User selects an portfolio
+
+                                        Information is displayed about portfolio
+
+User clicks the close button in the view. 
+Alternativly clicks history see(UC_PortfolioHistory) 
+or click stock see(UC_PortfolioStock)
+alternate flow. 
+
+										          View shuts down
+
+
+Alternate flow:
+History se UC_PortfolioHistory
+Stock se UC_PortfolioStock
+
+Exceptional flow:
+
