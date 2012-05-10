@@ -43,9 +43,9 @@ import utils.global.Pair;
 public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algorithms{
 	@Test
 	public void testRobotSchedulerClient() {
-		Log.instance().setFilter(Log.TAG.DEBUG, true);
-		Log.instance().setFilter(Log.TAG.VERY_VERBOSE, true);
-		Log.instance().log(Log.TAG.NORMAL, "Starting pauseUnpauseTest");
+		Log.setFilter(Log.TAG.DEBUG, true);
+		Log.setFilter(Log.TAG.VERY_VERBOSE, true);
+		Log.log(Log.TAG.NORMAL, "Starting pauseUnpauseTest");
 		
 		Random rand = new Random(System.currentTimeMillis());
 		int port = rand.nextInt(5000) + 1025;
@@ -61,11 +61,11 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 			e.printStackTrace();
 		}
 		
-		Log.instance().log(Log.TAG.NORMAL, "Creating RobotScheduler");
+		Log.log(Log.TAG.NORMAL, "Creating RobotScheduler");
 		TestPortfolioHandler pHandler = new TestPortfolioHandler(null);
 		RobotScheduler schedueler = new RobotScheduler(pHandler, "127.0.0.1", port);
 		
-		Log.instance().log(Log.TAG.NORMAL, "Starting RobotScheduler");
+		Log.log(Log.TAG.NORMAL, "Starting RobotScheduler");
 		Thread tSched = new Thread(schedueler);
 		
 		tSched.start();
@@ -86,9 +86,9 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 	
 	@Test
 	public void pauseUnpauseTest() {
-		Log.instance().setFilter(Log.TAG.DEBUG, true);
-		Log.instance().setFilter(Log.TAG.VERY_VERBOSE, true);
-		Log.instance().log(Log.TAG.NORMAL, "Starting pauseUnpauseTest");
+		Log.setFilter(Log.TAG.DEBUG, true);
+		Log.setFilter(Log.TAG.VERY_VERBOSE, true);
+		Log.log(Log.TAG.NORMAL, "Starting pauseUnpauseTest");
 		
 		TestPortfolioHandler pHandler = new TestPortfolioHandler(null);
 		RobotScheduler schedueler = new RobotScheduler(pHandler);
@@ -108,10 +108,10 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 	@Test
 	public void emptyRunTest() {
 				
-		Log.instance().setFilter(Log.TAG.DEBUG, true);
-		Log.instance().setFilter(Log.TAG.VERY_VERBOSE, true);
+		Log.setFilter(Log.TAG.DEBUG, true);
+		Log.setFilter(Log.TAG.VERY_VERBOSE, true);
 		
-		Log.instance().log(Log.TAG.NORMAL, "Starting emptyRunTest");
+		Log.log(Log.TAG.NORMAL, "Starting emptyRunTest");
 		
 		TestPortfolioHandler pHandler = new TestPortfolioHandler(null);
 		RobotScheduler schedueler = new RobotScheduler(pHandler);
@@ -144,10 +144,10 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 	@Test
 	public void singleRunTest() {
 				
-		Log.instance().setFilter(Log.TAG.DEBUG, true);
-		Log.instance().setFilter(Log.TAG.VERY_VERBOSE, true);
+		Log.setFilter(Log.TAG.DEBUG, true);
+		Log.setFilter(Log.TAG.VERY_VERBOSE, true);
 		
-		Log.instance().log(Log.TAG.NORMAL, "Starting singleRunTest");
+		Log.log(Log.TAG.NORMAL, "Starting singleRunTest");
 		
 		JUnitAlgorithm algorithm = new JUnitAlgorithm(RobotScheduler.MILLI_SECOND);
 		IPortfolio testPortfolio = new TestPortfolio("test1",algorithm);
@@ -187,10 +187,10 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 	@Test
 	public void multipleRunTest() {
 				
-		Log.instance().setFilter(Log.TAG.DEBUG, true);
-		Log.instance().setFilter(Log.TAG.VERY_VERBOSE, true);
+		Log.setFilter(Log.TAG.DEBUG, true);
+		Log.setFilter(Log.TAG.VERY_VERBOSE, true);
 		
-		Log.instance().log(Log.TAG.NORMAL, "Starting singleRunTest");
+		Log.log(Log.TAG.NORMAL, "Starting singleRunTest");
 		
 		JUnitAlgorithm algorithm = new JUnitAlgorithm(RobotScheduler.MILLI_SECOND);
 		IPortfolio testPortfolio = new TestPortfolio("test1",algorithm);

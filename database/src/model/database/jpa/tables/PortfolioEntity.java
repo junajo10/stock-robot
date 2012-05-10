@@ -208,6 +208,9 @@ public class PortfolioEntity {
 		}
 		return result;
 	}
+	public Set<PortfolioInvestment> getInvestments() {
+		return investments;
+	}
 	public AlgorithmSettings getAlgortihmSettings() {
 		return algorithmSettings;
 	}

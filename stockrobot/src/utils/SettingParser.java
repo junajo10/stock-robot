@@ -41,11 +41,11 @@ public class SettingParser {
 					writer.flush();
 					writer.close();
 				} catch (IOException e) {
-					Log.instance().log(TAG.ERROR, "Couldent write to file configuration.xml");
+					Log.log(TAG.ERROR, "Couldent write to file configuration.xml");
 				}
 			}
 			else {
-				Log.instance().log(TAG.ERROR, "Cant find bin/model/algorithms");
+				Log.log(TAG.ERROR, "Cant find bin/model/algorithms");
 			}
 		}
 		

@@ -46,7 +46,7 @@ public class RobotHandler {
 	 */
 	public void runAlgorithms(){
 		
-		Log.instance().log(Log.TAG.VERY_VERBOSE, "Running algorithms");
+		Log.log(Log.TAG.VERY_VERBOSE, "Running algorithms");
 		
 		List<AlgorithmThread> stillRunning = new LinkedList<AlgorithmThread>();
 		

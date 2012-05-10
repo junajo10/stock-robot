@@ -109,7 +109,7 @@ public class SimulationHandler extends SimModel {
 		long curr = 0;
 		long max = jpaHelper.getStockPricesReverseOrdered(howManyStocksBack).size();
 		
-		Log.instance().log(TAG.VERY_VERBOSE, max + " stocks will be tested.");
+		Log.log(TAG.VERY_VERBOSE, max + " stocks will be tested.");
 		
 		List<StockPrices> stockPrices = new ArrayList<StockPrices>();
 		for (StockPrices p : jpaHelper.getStockPricesReverseOrdered(howManyStocksBack)) {
@@ -145,13 +145,13 @@ public class SimulationHandler extends SimModel {
 				break;
 		}
 		setProgress(100);
-		Log.instance().log(TAG.VERBOSE, "Simulation before selling of stocks: Current balance: " + portfolio.getPortfolioTable().getBalance());
+		Log.log(TAG.VERBOSE, "Simulation before selling of stocks: Current balance: " + portfolio.getPortfolioTable().getBalance());
 		
 		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
 			if (ph.getSoldDate() == null) {
 				fillPie(ph.getStockPrice().getStockName().getName(), ph.getAmount(), ph.getStockPrice().getBuy());
 				
-				Log.instance().log(TAG.VERY_VERBOSE, "Simulation: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
+				Log.log(TAG.VERY_VERBOSE, "Simulation: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
 				robotSim.getTrader().sellStock(ph.getStockPrice(), ph.getAmount(), portfolio.getPortfolioTable());
 			}
 		}
@@ -160,7 +160,7 @@ public class SimulationHandler extends SimModel {
 		setWorth(portfolio.getCurrentWorth());
 		updatePieData();
 		
-		Log.instance().log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
+		Log.log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
 
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
 	}

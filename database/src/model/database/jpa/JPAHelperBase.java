@@ -302,7 +302,7 @@ class JPAHelperBase implements IJPAHelper {
 		for (PortfolioHistory ph : portfolioTable.getHistory()) {
 			if (ph.getSoldDate() != null) {
 				StockPrices old = ph.getStockPrice();
-				StockPrices ny = ph.getSoldStockPrice(em);
+				StockPrices ny = ph.getSoldStockPrice();
 
 				oldStocks.add(new Pair<StockPrices, StockPrices>(old, ny));
 			}

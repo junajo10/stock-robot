@@ -2,6 +2,7 @@ package model.trader;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Date;
 
 import utils.global.FinancialLongConverter;
 import utils.global.Log;
@@ -38,9 +39,9 @@ public final class TraderSimulator implements ITrader{
 		if (amount > 0 && amount * s.getSell() < portfolio.getBalance()) {
 			
 			portfolio.bougthFor( amount * s.getSell() );
-			Log.instance().log(Log.TAG.VERBOSE, "Buying " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getSell()));
+			Log.log(Log.TAG.VERBOSE, "Buying " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getSell()));
 			
-			portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), null, amount, portfolio));
+			portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), amount, portfolio));
 			jpaHelper.updateObject(portfolio);
 			
 			propertyChangeSuport.firePropertyChange(BUY_STOCK, null, portfolio);
@@ -56,10 +57,12 @@ public final class TraderSimulator implements ITrader{
 		PortfolioHistory ph = portfolio.getSpecificPortfolioHistory(s, amount);
 		
 		if (ph != null && ph.getSoldDate() == null) {
-			ph.setSoldDate(latest.getTime());
+			ph.setStockSoldPrice(latest);
+			ph.setSoldDate(new Date(System.currentTimeMillis()));
+			
 			jpaHelper.updateObject(ph);
 			
-			Log.instance().log(Log.TAG.VERBOSE, "Selling " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getBuy()));
+			Log.log(Log.TAG.VERBOSE, "Selling " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getBuy()));
 			
 			propertyChangeSuport.firePropertyChange(SELL_STOCK, null, portfolio);
 		} 
@@ -70,13 +73,14 @@ public final class TraderSimulator implements ITrader{
 	@Override
 	public boolean sellStock(PortfolioHistory ph, PortfolioEntity portfolio) {
 		if (ph.getSoldDate() != null) {
-			Log.instance().log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
+			Log.log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
 			return false;
 		}
-		Log.instance().log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
+		Log.log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
 		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
-		ph.setSoldDate(latest.getTime());
+		ph.setStockSoldPrice(latest);
+		ph.setSoldDate(new Date(System.currentTimeMillis()));
 		jpaHelper.updateObject(portfolio);
 		
 		return true;

@@ -33,7 +33,7 @@ public class JUnitAlgorithm implements IAlgorithm{
 		try {
 			Thread.sleep(freq);
 		} catch (InterruptedException e) {
-			Log.instance().log(Log.TAG.DEBUG, "TestAlgorithm got interupted");
+			Log.log(Log.TAG.DEBUG, "TestAlgorithm got interupted");
 		}
 		
 		return true;
