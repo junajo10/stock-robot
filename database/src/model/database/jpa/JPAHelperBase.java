@@ -402,4 +402,21 @@ class JPAHelperBase implements IJPAHelper {
 	public void close() {
 		em.close();
 	}
+	@Override
+	public StockPrices getLastStock(StockNames stockName, Date date) {
+		
+		
+		
+		@SuppressWarnings("unchecked")
+		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery(
+				"SELECT o FROM StockPrices o WHERE o.time <= :givenTime ORDER BY o.time DESC" )
+				.setParameter("givenTime", date);
+		
+		query.setMaxResults(1);
+		
+		if (query.getResultList().size() == 1)
+			return query.getResultList().get(0);
+		
+		return null;
+	}
 }

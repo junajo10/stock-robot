@@ -152,7 +152,6 @@ public class PortfolioHistoryView extends JFrame implements IView {
 			final XYDataset dataset = createDataset();
 	        final JFreeChart chart = createChart(dataset);
 			
-			TimeSeries timeSeries = model.getTimeSeries();
 			final ChartPanel chartPanel = new ChartPanel(chart);
 			
 			chartPanel.setPreferredSize(new java.awt.Dimension(900, 200));
@@ -184,16 +183,14 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	}
 	
     private XYDataset createDataset() {
-        final TimeSeries eur = model.getTimeSeries();
+    	Map<String, TimeSeries> apa =  model.getTimeSeries();
+        final TimeSeries portfolioBalance = apa.get("Portfolio Balance");
+        final TimeSeries portfolioWorth = apa.get("Worth");
         
         
-        /*final TimeSeries mav = MovingAverage.createMovingAverage(
-            eur, "30 day moving average", 2, 2
-        );
-        */
         final TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(eur);
-        //dataset.addSeries(mav);
+        dataset.addSeries(portfolioBalance);
+        dataset.addSeries(portfolioWorth);
         return dataset;
     }
     private JFreeChart createChart(final XYDataset dataset) {

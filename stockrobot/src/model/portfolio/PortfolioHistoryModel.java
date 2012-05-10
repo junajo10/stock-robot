@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -53,8 +54,6 @@ public class PortfolioHistoryModel {
 		history.addAll(selectedPortfolio.getHistory());
 		
 		sortHistory(history);
-		for (PortfolioHistory ph : history)
-			System.out.println(ph.getBuyDate() + " " + ph.getSoldDate());
 		
 		String[] tableColumnNames = {"Name","Market","Amount","Bought for","Sold for", "Profit %","BuyDate","SellDate"};
 		Object[][] rows = new Object[history.size()][tableColumnNames.length];
@@ -77,6 +76,7 @@ public class PortfolioHistoryModel {
 
 
 			rows[i][6] = new DateTime(sp.getTime()).toString(fmt);
+			
 			if (history.get(i).getSoldDate() != null) {
 				StockPrices soldStockPrice = history.get(i).getSoldStockPrice();
 
@@ -100,80 +100,121 @@ public class PortfolioHistoryModel {
 
 
 
-	public TimeSeries getTimeSeries() {
+	public Map<String, TimeSeries> getTimeSeries() {
 
+		Map<String, TimeSeries> allTimeSeries = new HashMap<String, TimeSeries>();
+		
 		List<PortfolioHistory> history = new ArrayList<PortfolioHistory>();
 		history.addAll(selectedPortfolio.getHistory());
-		TimeSeries t1 = new TimeSeries("EUR/GBP");
+		TimeSeries t1 = new TimeSeries("Balance");
 		
 		sortHistory(history);
-		List<Pair<Date, Long>> valueOnGivenDate = new ArrayList<Pair<Date,Long>>();
-		
 		
 		if (history.size() > 0) {
-			SortedMap<Date, Long> sortedMap = new TreeMap<Date, Long>();
+			SortedMap<Date, LongContainer> sortedMap = new TreeMap<Date, LongContainer>();
 
 			// Add all purchases
 			for (PortfolioHistory ph : history) {
 				if (sortedMap.containsKey(ph.getBuyDate())) {
-					Long current = sortedMap.get(ph.getBuyDate());
-					sortedMap.put(ph.getBuyDate(), current -= ph.getAmount()*ph.getStockPrice().getBuy());
+					LongContainer lc = sortedMap.get(ph.getBuyDate());
+					lc.setValue(lc.getValue() - ph.getAmount()*ph.getStockPrice().getBuy());
 				}
 				else {
-					sortedMap.put(ph.getBuyDate(), -ph.getAmount()*ph.getStockPrice().getBuy());
+					long value = ph.getStockPrice().getBuy() * ph.getAmount();
+					value = value - 2*value;
+					
+					sortedMap.put(ph.getBuyDate(), new LongContainer(value));
 				}
 			}
 			// Add all sells
 			for (PortfolioHistory ph : history) {
 				if (ph.getSoldDate() != null) {
-					SortedMap<Date, Long> apa = sortedMap.tailMap(ph.getSoldDate());
-					Collection<Long> bepa = apa.values();
+					SortedMap<Date, LongContainer> apa = sortedMap.tailMap(ph.getSoldDate());
 					
-					for (Long l : bepa) {
-						l += ph.getSoldStockPrice().getSell()*ph.getAmount();
+					Collection<LongContainer> bepa = apa.values();
+					
+					for (LongContainer l : bepa) {
+						l.setValue(l.getValue() + ph.getSoldStockPrice().getSell()*ph.getAmount());
 					}
 				}
 			}
+			
+			// Add all investments
+			// TODO: fix complexity
 			for (PortfolioInvestment pi : selectedPortfolio.getInvestments()) {
-				SortedMap<Date, Long> apa = sortedMap.tailMap(pi.getDate());
-				Collection<Long> bepa = apa.values();
+				SortedMap<Date, LongContainer> apa = sortedMap.tailMap(pi.getDate());
+				Collection<LongContainer> bepa = apa.values();
 				
-				for (Long l : bepa) {
-					if (pi.didInvest())
-						l += pi.getAmount();
+				for (LongContainer l : bepa) {
+					if (pi.didInvest()) {
+						l.setValue(l.getValue() + pi.getAmount());
+					}
 					else
-						l -= pi.getAmount();
+						l.setValue(l.getValue() - pi.getAmount());
 				}
 			}
 			
-			DateTime dt = new DateTime(0);
+			DateTime dtLast = new DateTime(0);
 			long currentValue = 0;
-			for (Entry<Date, Long> apa : sortedMap.entrySet()) {
-				DateTime dta = new DateTime(apa.getKey());
-				if (dta.getDayOfYear() == dt.getDayOfYear()) {
-					currentValue += apa.getValue();
+			
+			for (Entry<Date, LongContainer> apa : sortedMap.entrySet()) {
+				DateTime dtFromMap = new DateTime(apa.getKey());
+				if (dtFromMap.getDayOfYear() == dtLast.getDayOfYear()) {
+					currentValue += apa.getValue().getValue();
 				}
 				else {
-					dt = new DateTime(apa.getKey());
-					t1.add(new Day(apa.getKey()), currentValue);
+					dtLast = new DateTime(apa.getKey());
+					currentValue = apa.getValue().getValue();
+
+					t1.add(new Day(apa.getKey()), FinancialLongConverter.toDouble(currentValue));
+					
 				}
 			}
 			try {
-				t1.add(new Day(dt.toDate()), currentValue);
+				t1.add(new Day(dtLast.toDate()), currentValue);
 			} catch (Exception e) {
 			}
 			
+
+			TimeSeries worth = new TimeSeries("Worth");
+			
+			DateTime currDate = new DateTime(history.get(0).getBuyDate());
+			
+			while (currDate.isBeforeNow()) {
+				long currWorth = 0;
+				for (PortfolioHistory ph : history) {
+					if (ph.getSoldDate() == null) {
+						StockPrices sp = jpaHelper.getLastStock(ph.getStockPrice().getStockName(), currDate.toDate());
+						if (sp != null)
+							currWorth += ph.getAmount() * sp.getSell();
+					}
+				}
+				worth.add(new Day(currDate.toDate()), FinancialLongConverter.toDouble(currWorth));
+				currDate = currDate.plusDays(1);
+			}
+			
+			allTimeSeries.put("Worth", worth);
+			allTimeSeries.put("Portfolio Balance", t1);
 		}
 		
-		return t1;
+		return allTimeSeries;
 	}
-
 	public void sortHistory(List<PortfolioHistory> history) {
 		Collections.sort(history, new PortfolioHistoryComparator());
-		
-		
 	}
-
+	public class LongContainer {
+		private long value = -11;
+		
+		public LongContainer(long value) {
+			this.value = value;
+		}
+		public long getValue() {
+			return value;
+		}
+		public void setValue(long value) {
+			this.value = value;
+		}
+	}
 	class PortfolioHistoryComparator extends PortfolioHistory implements Comparator<PortfolioHistory> {
 		@Override
 		public int compare(PortfolioHistory o1, PortfolioHistory o2) {
@@ -196,5 +237,4 @@ public class PortfolioHistoryModel {
 		}
 		
 	}
-
 }
