@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.List;
@@ -28,6 +29,8 @@ import view.wizard.WizardPage;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import java.awt.FlowLayout;
 
 public class PortfolioStartPage extends WizardPage {
 
@@ -37,10 +40,13 @@ public class PortfolioStartPage extends WizardPage {
 	private JComboBox cmb_ClonePortfolioList;
 	private IPortfolioHandler portfolioHandler;
 	private ButtonGroup buttonGroup;
+	private JTextField txtPortfolioName;
+	private JLabel lblNameError;
 	
-	public static final String CREATE_FROM_NEW 	= "createFromNew";
-	public static final String CREATE_FROM_CLONE 	= "createFromClone";
+	public static final String CREATE_FROM_NEW 		= "createFromNew";
+	public static final String CREATE_FROM_CLONE 		= "createFromClone";
 	public static final String CREATE_FROM_LISTENER 	= "createFromListener";
+	public static final String NAME_INPUT_LISTENER 	= "nameInputListener";
 	
 	private DefaultComboBoxModel cmb_hld_ClonePortfolioList = new DefaultComboBoxModel();
 	
@@ -61,20 +67,22 @@ public class PortfolioStartPage extends WizardPage {
 		this.setAlignmentX(Component.LEFT_ALIGNMENT);
 		BoxLayout lou_PortfolioInfo = new BoxLayout(this, BoxLayout.PAGE_AXIS);
 		this.setLayout(lou_PortfolioInfo);
-		this.setPreferredSize(new Dimension(353, 137));
+		this.setPreferredSize(new Dimension(697, 137));
 		
 		JPanel pnlContent = new JPanel();
 		add(pnlContent);
 		
 		JPanel pnl_PortfolioName = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) pnl_PortfolioName.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		pnl_PortfolioName.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		JLabel lbl_PortfolioName = new JLabel("Portfolio Name:");
 		pnl_PortfolioName.add(lbl_PortfolioName);
-		JTextField txt_PortfolioName = new JTextField();
-		txt_PortfolioName.setColumns(20);
-		txt_PortfolioName.setPreferredSize(new Dimension(2000,20));
-		pnl_PortfolioName.add(txt_PortfolioName);
+		txtPortfolioName = new JTextField();
+		txtPortfolioName.setColumns(20);
+		txtPortfolioName.setPreferredSize(new Dimension(2000,20));
+		pnl_PortfolioName.add(txtPortfolioName);
 		
 		//============ PORTFOLIO FROM ============
 		JPanel pnl_PortfolioFrom = new JPanel();
@@ -104,10 +112,9 @@ public class PortfolioStartPage extends WizardPage {
 		gl_pnlContent.setHorizontalGroup(
 			gl_pnlContent.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnlContent.createSequentialGroup()
-					.addGroup(gl_pnlContent.createParallelGroup(Alignment.TRAILING)
-						.addComponent(pnl_PortfolioFrom, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(pnl_PortfolioName, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(310))
+					.addComponent(pnl_PortfolioFrom, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+					.addGap(232))
+				.addComponent(pnl_PortfolioName, GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
 		);
 		gl_pnlContent.setVerticalGroup(
 			gl_pnlContent.createParallelGroup(Alignment.LEADING)
@@ -118,8 +125,15 @@ public class PortfolioStartPage extends WizardPage {
 					.addGap(150))
 		);
 		
+		lblNameError = new JLabel("Error");
+		lblNameError.setVisible(false);
+		lblNameError.setForeground(new Color(255, 0, 0));
+		pnl_PortfolioName.add(lblNameError);
+		
 		
 		pnl_PortfolioToClone = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) pnl_PortfolioToClone.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
 		pnl_PortfolioFrom.add(pnl_PortfolioToClone);
 		pnl_PortfolioToClone.setEnabled(false);
 		pnl_PortfolioToClone.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -172,7 +186,15 @@ public class PortfolioStartPage extends WizardPage {
 		cmb_ClonePortfolioList.setEnabled(enabled);
 		
 	}
+	
+	public void setPortfolioName(String name){
+		txtPortfolioName.setText(name);
+	}
 
+	public String getPortfolioName(){
+		return txtPortfolioName.getText();
+	}
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 	}
@@ -181,6 +203,16 @@ public class PortfolioStartPage extends WizardPage {
 	public void display(Object model) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void showNameError(String error){
+		
+		if(error == null){
+			lblNameError.setVisible(false);
+		}else{
+			lblNameError.setText(error);
+			lblNameError.setVisible(true);
+		}
 	}
 
 	@Override
@@ -193,6 +225,10 @@ public class PortfolioStartPage extends WizardPage {
 		if(actions.get(CREATE_FROM_CLONE) instanceof ItemListener){
 			
 			rbtn_ClonePortfolio.addItemListener((ItemListener)actions.get(CREATE_FROM_CLONE));
+		}
+		if(actions.get(NAME_INPUT_LISTENER) instanceof KeyListener){
+		
+			txtPortfolioName.addKeyListener((KeyListener) actions.get(NAME_INPUT_LISTENER));
 		}
 	}
 }

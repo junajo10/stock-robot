@@ -75,14 +75,14 @@ public class WizardView extends JFrame implements IView {
 		
 		this.setVisible(true);
 		
-		pnl_MainPane = new JPanel(); //factory.getMainContainer();
-		
-		pnl_MainPane.setLayout(new FlowLayout());
+		pnl_MainPane = new JPanel();
 		setContentPane(pnl_MainPane);
 		
 		
 		//============ CONTENT ============
 		pnl_Content = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) pnl_Content.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
 		//================================
 		
 		//============ FOOTER ============
@@ -123,6 +123,21 @@ public class WizardView extends JFrame implements IView {
 		lblSubtitle.setVisible(false);
 		pnlTitle.add(lblSubtitle);
 		pnl_Header.add(pnlTitle);
+		GroupLayout gl_pnl_MainPane = new GroupLayout(pnl_MainPane);
+		gl_pnl_MainPane.setHorizontalGroup(
+			gl_pnl_MainPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(pnl_Header, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+				.addComponent(pnl_Content, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+				.addComponent(pnl_Footer, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+		);
+		gl_pnl_MainPane.setVerticalGroup(
+			gl_pnl_MainPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnl_MainPane.createSequentialGroup()
+					.addComponent(pnl_Header, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(pnl_Content, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
+					.addComponent(pnl_Footer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		);
+		pnl_MainPane.setLayout(gl_pnl_MainPane);
 		//================================
 		
 		//============ MAIN LAYOUT ============

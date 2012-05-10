@@ -63,7 +63,7 @@ public class PortfolioView extends JFrame implements IView {
 		setResizable(false);
 		setTitle("Portfolio");
 		
-		setBounds(100, 100, 328, 158);
+		setBounds(100, 100, 318, 185);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		

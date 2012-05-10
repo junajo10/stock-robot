@@ -79,6 +79,11 @@ public class WizardModel implements IObservable {
 		observers.firePropertyChange(EVT_PAGE_NEXT_CHANGE, null, nextPage);
 	}
 	
+	public boolean haveNext(){
+		
+		return nextPage != null;
+	}
+	
 	public void removeNextPage(){
 		Integer oldNextPage = nextPage;
 		nextPage = null;
@@ -118,6 +123,11 @@ public class WizardModel implements IObservable {
 		}
 		
 		return prevPage;
+	}
+	
+	public boolean haveback(){
+		
+		return getBackPage() != null;
 	}
 	
 	public Integer goBackPage(){
