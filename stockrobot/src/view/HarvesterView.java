@@ -51,7 +51,7 @@ public class HarvesterView extends JFrame implements IView{
 	public static final String EXPORT_LOG = "exportLog";
 
 	public HarvesterView() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setTitle("ASTRo Harvester");
