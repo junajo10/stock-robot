@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class Log {
 
-	private static Log log = null;
+	private static Log log = new Log();
 	
 	public static enum TAG{
 		NORMAL,
@@ -30,10 +30,10 @@ public class Log {
 		initialize();
 	}
 	
-	public void log(TAG tag, String message){
+	public static void log(TAG tag, String message){
 	
-		if(filter.get(tag)){
-			System.out.print("[" + shortenerMap.get(tag) + "] " );
+		if(log.filter.get(tag)){
+			System.out.print("[" + log.shortenerMap.get(tag) + "] " );
 			System.out.print(message);
 			System.out.println();
 		}
@@ -61,24 +61,20 @@ public class Log {
 	 * @param tag the tag to be effected
 	 * @param shouldPrint true if it should be printed else false
 	 */
-	public void setFilter(Log.TAG tag, boolean shouldPrint){
+	public static void setFilter(Log.TAG tag, boolean shouldPrint){
 		
 		if(tag == TAG.VERY_VERBOSE&& shouldPrint){
-			filter.put(TAG.VERBOSE, true);
-			filter.put(TAG.VERY_VERBOSE, true);
+			log.filter.put(TAG.VERBOSE, true);
+			log.filter.put(TAG.VERY_VERBOSE, true);
 		}else if(tag == TAG.VERBOSE&& !shouldPrint){
-			filter.put(TAG.VERBOSE, false);
-			filter.put(TAG.VERY_VERBOSE, false);
+			log.filter.put(TAG.VERBOSE, false);
+			log.filter.put(TAG.VERY_VERBOSE, false);
 		}else{
-			filter.put(tag, shouldPrint);
+			log.filter.put(tag, shouldPrint);
 		}
 	}
 	
-	public synchronized static Log instance(){
-		
-		if(log == null){
-			log = new Log();
-		}
+	public static Log instance(){
 		
 		return log;
 	}
