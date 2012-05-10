@@ -26,7 +26,7 @@ public class Log {
 	private HashMap<TAG, Boolean> filter;
 	private HashMap<TAG, String> shortenerMap;
 	
-	public Log() {
+	private Log() {
 		initialize();
 	}
 	
@@ -74,6 +74,7 @@ public class Log {
 		}
 	}
 	
+	@Deprecated
 	public static Log instance(){
 		
 		return log;
