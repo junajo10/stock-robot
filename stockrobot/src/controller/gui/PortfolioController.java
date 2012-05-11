@@ -10,6 +10,7 @@ import java.util.Map;
 import model.portfolio.IPortfolioHandler;
 import model.trader.ITrader;
 
+import utils.global.Log;
 import view.IView;
 import view.PortfolioView;
 
@@ -48,7 +49,7 @@ public class PortfolioController implements IController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			
+			Log.log(Log.TAG.DEBUG, ( (PortfolioView) view).getSelectedItem().toString() );
 		}
 	};
 	

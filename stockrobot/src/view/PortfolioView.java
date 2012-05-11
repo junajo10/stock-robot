@@ -52,7 +52,7 @@ public class PortfolioView extends JFrame implements IView {
 	
 	private IPortfolio selectedPortfolio;
 	
-	
+	private PortfoliosCmbModel cmbModel;
 	
 	/**
 	 * Create the frame.
@@ -159,7 +159,7 @@ public class PortfolioView extends JFrame implements IView {
 		pnlSelectPortfolio.add(cmbSelectPortfolio);
 		contentPane.setLayout(gl_contentPane);
 		
-		PortfoliosCmbModel cmbModel = new PortfoliosCmbModel(portfolios);
+		cmbModel = new PortfoliosCmbModel(portfolios);
 		cmbSelectPortfolio.setModel(cmbModel);
 		
 		btnManageAlgortihmSettings = new JButton("Algortihm Settings");
@@ -184,7 +184,20 @@ public class PortfolioView extends JFrame implements IView {
 		
 		trader.removeObserver(this);
 	}
-
+	
+	/**
+	 * 
+	 * Added this window to be able to read the current selected value from the controller
+	 * 
+	 * TOOD: Maybe create a better way to read the selected value?
+	 * 
+	 * @return
+	 */
+	public Object getSelectedItem() {
+		
+		return cmbModel.getSelectedItem();
+	}
+	
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
 
