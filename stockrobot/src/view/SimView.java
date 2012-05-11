@@ -40,6 +40,9 @@ public class SimView extends JFrame implements IView {
 	private SimModel model;
 	private JTextField textFieldStartAmount;
 	
+	public static final String COMBOBOX = "ComboboxListener";
+	public static final String STARTSIMULATION = "Start Simulation";
+	
 	/**
 	 * Launch the application.
 	 */
@@ -181,8 +184,8 @@ public class SimView extends JFrame implements IView {
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
 		
-		comboBox.addActionListener((ActionListener) actions.get("ComboboxListener"));
-		btnSimulate.addActionListener((ActionListener) actions.get("Start Simulation"));
+		comboBox.addActionListener((ActionListener) actions.get(COMBOBOX));
+		btnSimulate.addActionListener((ActionListener) actions.get(STARTSIMULATION));
 	}
 
 	@Override

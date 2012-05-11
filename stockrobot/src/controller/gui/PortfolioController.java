@@ -26,7 +26,7 @@ public class PortfolioController implements IController {
 	private Map<String, EventListener> actions;
 	private PortfolioHistoryController historyController = new PortfolioHistoryController();
 	
-	
+	//TODO: Implement a real model for this, so we can access selectedPortfolio without casts. 
 	public PortfolioController(ITrader trader, IPortfolioHandler portfolios){
 		
 		this.trader = trader;

@@ -37,6 +37,10 @@ public class StartView extends JFrame implements IView {
 	private JComboBox comboBox = new JComboBox();
 	private StartModel model;
 	
+	public final static String STARTASTRO = "Start Astro";
+	public final static String STARTPARSER = "Start Parser";
+	public final static String LOGLEVEL = "Combobox";
+		
 	
 	/**
 	 * Launch the application.
@@ -140,11 +144,11 @@ public class StartView extends JFrame implements IView {
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
 		
-		btnStartAstro.addActionListener((ActionListener) actions.get("Start Astro"));
+		btnStartAstro.addActionListener((ActionListener) actions.get(STARTASTRO));
 		
-		btnStartParser.addActionListener((ActionListener) actions.get("Start Parser"));
+		btnStartParser.addActionListener((ActionListener) actions.get(STARTPARSER));
 		
-		comboBox.addActionListener((ActionListener) actions.get("Combobox"));
+		comboBox.addActionListener((ActionListener) actions.get(LOGLEVEL));
 	}
 
 	@Override

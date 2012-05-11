@@ -48,6 +48,10 @@ public class SimulationHandler extends SimModel {
 	private int updatePieAt = 0;
 	private int nextPieStep = 25;
 	
+	public static final String RESULTCLOSE = "Sim Result Close";
+	public static final String NEWPIEDATA = "newPieData";
+	public static final String PORTFOLIOWORTH = "Portfolio Worth";
+	public static final String PROGRESSUPDATE = "Progress";
 	
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
@@ -170,7 +174,7 @@ public class SimulationHandler extends SimModel {
 		}
 	}
 	private void setWorth(long currentWorth) {
-		firePropertyChange("Portfolio Worth", getInitialValue(), currentWorth);
+		firePropertyChange(PORTFOLIOWORTH, getInitialValue(), currentWorth);
 	}
 	private void fillPie(String name, long amount, long buy) {
 		if (latestPieData.containsKey(name)) {
@@ -179,7 +183,7 @@ public class SimulationHandler extends SimModel {
 		else
 			latestPieData.put(name, amount*buy);
 		
-		firePropertyChange("newPieData", null, latestPieData);
+		firePropertyChange(NEWPIEDATA, null, latestPieData);
 	}
 	public Map<String, Long> getLatestPieData() {
 		return latestPieData;
@@ -191,7 +195,7 @@ public class SimulationHandler extends SimModel {
 			updatePieAt = i+nextPieStep;
 		}
 		
-		firePropertyChange("Progress", progress, i);
+		firePropertyChange(PROGRESSUPDATE, progress, i);
 		progress = i;
 	}
 	public void clearTestDatabase() {

@@ -64,15 +64,14 @@ public class SimController implements IController {
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
-		
+		view.cleanup();
 	}
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
 		Map<String, EventListener> actions = new HashMap<String,EventListener>();
-		actions.put("Start Simulation", startSimulation);
-		actions.put("ComboboxListener", comboBoxListener);
+		actions.put(SimView.STARTSIMULATION, startSimulation);
+		actions.put(SimView.COMBOBOX, comboBoxListener);
 		return actions;
 	}
 

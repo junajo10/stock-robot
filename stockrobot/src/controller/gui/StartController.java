@@ -72,13 +72,13 @@ public class StartController implements IController {
 	public Map<String, EventListener> getActionListeners() {
 		Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		
-		actions.put("Start Parser", startHavester);
+		actions.put(StartView.STARTPARSER, startHavester);
 		actions.put("Stop Parser", null);
 		
-		actions.put("Start Astro", startAstroAction);
+		actions.put(StartView.STARTASTRO, startAstroAction);
 		actions.put("Stop Astro", null);
 		
-		actions.put("Combobox", comboBox);
+		actions.put(StartView.LOGLEVEL, comboBox);
 		return actions;
 	}
 

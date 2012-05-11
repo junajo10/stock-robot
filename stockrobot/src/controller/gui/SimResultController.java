@@ -10,7 +10,7 @@ import model.simulation.SimulationHandler;
 import view.SimResultView;
 
 /**
- * 
+ * Controller for simulation result
  * @author Daniel
  */
 public class SimResultController implements IController {
@@ -20,19 +20,19 @@ public class SimResultController implements IController {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().contentEquals("Sim Result Close")) {
+		if (evt.getPropertyName().contentEquals(SimulationHandler.RESULTCLOSE)) {
 			cleanup();
 		}
-		else if (evt.getPropertyName().contains("newPieData")){
+		else if (evt.getPropertyName().contains(SimulationHandler.NEWPIEDATA)){
 			view.setPieView((Map<String, Long>)evt.getNewValue());
 		}
-		else if (evt.getPropertyName().contains("Portfolio Worth")){
+		else if (evt.getPropertyName().contains(SimulationHandler.PORTFOLIOWORTH)){
 			long oldValue = (Long) evt.getOldValue();
 			long newValue = (Long) evt.getNewValue();
 			double diff = (double)newValue/(double)oldValue;
 			view.setWorth(diff);
 		}
-		else if (evt.getPropertyName().contains("Progress")){
+		else if (evt.getPropertyName().contains(SimulationHandler.PROGRESSUPDATE)){
 			view.setProgress((Integer)evt.getNewValue());
 		}
 	}

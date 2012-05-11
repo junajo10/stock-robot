@@ -24,6 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 
+import model.simulation.SimulationHandler;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -33,21 +35,22 @@ import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
 
 /**
- * 
+ * The View for simulation results.
  * @author Daniel
  */
 public class SimResultView extends JFrame implements IView {
-
 	private static final long serialVersionUID = -5877884096041331653L;
 	private JPanel contentPane;
-	JProgressBar progressBar = new JProgressBar();
-	PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-	JPanel panel = new JPanel();
+
 	
-	WindowListener windowListener = new WindowCloseAdapter() {
+	private JProgressBar progressBar = new JProgressBar();
+	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private JPanel panel = new JPanel();
+	
+	private WindowListener windowListener = new WindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
-			pcs.firePropertyChange("Sim Result Close", false, true);
+			pcs.firePropertyChange(SimulationHandler.RESULTCLOSE, false, true);
 		}
 	};
 	private final JLabel lblPortfolioWorth = new JLabel("Portfolio worth:");

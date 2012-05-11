@@ -69,7 +69,6 @@ public class WizardView extends JFrame implements IView {
 	public WizardView(WizardModel model) {
 		pages = new HashMap<Integer,WizardPage>();
 		this.model = model;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		setMinimumSize(new Dimension(600,400));
 		

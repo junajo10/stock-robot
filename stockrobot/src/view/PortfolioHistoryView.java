@@ -44,7 +44,6 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	private JTextArea txtrStats = new JTextArea();
 
 	private void createFrame() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Portfolio History");
 		setBounds(100, 100, 1015, 601);
 		contentPane = new JPanel();
