@@ -6,6 +6,7 @@ import java.util.Map;
 
 import view.PortfolioHistoryView;
 
+import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.PortfolioHistoryModel;
 
@@ -21,9 +22,12 @@ public class PortfolioHistoryController implements IController{
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
-		
 	}
 
+	public static void main(String args[]) {
+		PortfolioHistoryController phc = new PortfolioHistoryController();
+		phc.display(JPAHelper.getInstance().getAllPortfolios().get(0));
+	}
 	@Override
 	public void display(Object model) {
 		portfolioModel = new PortfolioHistoryModel((PortfolioEntity)model);

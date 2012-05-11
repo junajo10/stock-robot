@@ -46,22 +46,8 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	private JPanel panelChart = new JPanel();
 	private JTable table = new JTable();
 	private PortfolioHistoryModel portfolioModel;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PortfolioHistoryView frame = new PortfolioHistoryView(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextArea txtrStats = new JTextArea();
+
 	private void createFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Portfolio History");
@@ -69,8 +55,6 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -104,29 +88,23 @@ public class PortfolioHistoryView extends JFrame implements IView {
 			}
 		));
 		
-		
-		
 		table.setFillsViewportHeight(true);
 		table.setRowSelectionAllowed(false);
 		
 		scrollPane.setViewportView(table);
 		
-		JTextArea txtrStats = new JTextArea();
 		txtrStats.setEditable(false);
-		txtrStats.setRows(40);
-		txtrStats.setText("Stats\nFavorite Stock:\nBla:\nBle:");
+		txtrStats.setText("Generating statistics");
 		
 		JLabel lblStatistics = new JLabel("Statistics:");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblStatistics))
-						.addComponent(txtrStats, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(102, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(lblStatistics)
+					.addContainerGap(133, Short.MAX_VALUE))
+				.addComponent(txtrStats, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -134,12 +112,13 @@ public class PortfolioHistoryView extends JFrame implements IView {
 					.addGap(4)
 					.addComponent(lblStatistics)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(txtrStats, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(155, Short.MAX_VALUE))
+					.addComponent(txtrStats, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
 		
 		contentPane.setLayout(gl_contentPane);		
+		
+		panelChart.add(new JLabel("Generating graph data"));
 		
 		setVisible(true);
 	}
@@ -152,25 +131,8 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		
 		if (portfolioModel != null) {
 			table.setModel(portfolioModel.getTable());
-			
+		}
 
-		}
-		else {
-			table.setModel(new DefaultTableModel(
-					new Object[][] {
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-					},
-					new String[] {
-							"Name","Market","Bought for","Sold for", "Profit %","BuyDate","SellDate"
-					}
-				));
-		}
-		
 		createFrame();
 	}
     private JFreeChart createChart(final XYDataset dataset) {
@@ -213,6 +175,7 @@ public class PortfolioHistoryView extends JFrame implements IView {
 			table.setModel((TableModel) evt.getNewValue());
 		}
 		else if (evt.getPropertyName().contentEquals("Time Series")) {
+			System.out.println("apapapa");
 	    	@SuppressWarnings("unchecked")
 			Map<String, TimeSeries> apa =  (Map<String, TimeSeries>) evt.getNewValue();
 	        final TimeSeries portfolioBalance = apa.get("Portfolio Balance");
@@ -231,8 +194,15 @@ public class PortfolioHistoryView extends JFrame implements IView {
 			
 			chartPanel.setPreferredSize(new java.awt.Dimension(900, 200));
 			
+			panelChart.removeAll();
 			panelChart.add(chartPanel);
+			panelChart.validate();
 		}
+		else if (evt.getPropertyName().contentEquals(PortfolioHistoryModel.STATISTICSUPDATED)) {
+			txtrStats.setText(evt.getNewValue().toString());
+		}
+		else
+			System.out.println(evt.getPropertyName() + "apapapa");
 		
 	}
 }
