@@ -31,6 +31,7 @@ public class PortfolioController implements IController {
 		
 		actions = new HashMap<String, EventListener>();
 		actions.put(PortfolioView.CREATE_PORTFOLIO, createPortfolioListener);
+		actions.put(PortfolioView.MANAGE_ALGORITHMS, manageAlgorithmSettingsListener);
 	}
 	
 	ActionListener createPortfolioListener = new ActionListener() {
@@ -39,6 +40,15 @@ public class PortfolioController implements IController {
 		public void actionPerformed(ActionEvent e) {
 			
 			WizardFactory.buildPortfolioWizard();
+		}
+	};
+	
+	ActionListener manageAlgorithmSettingsListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			
 		}
 	};
 	

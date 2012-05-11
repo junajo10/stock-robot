@@ -27,12 +27,14 @@ import utils.global.FinancialLongConverter;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.trader.ITrader;
+import java.awt.event.ActionEvent;
 
 public class PortfolioView extends JFrame implements IView {
 
 	private static final long serialVersionUID = -1857650100977127973L;
 	public static final String WINDOW_CLOSE 				= "windowClose";
 	public static final String CREATE_PORTFOLIO			= "createPortfolio";	
+	public static final String MANAGE_ALGORITHMS		= "manageAlgorithms";
 	
 	private JPanel contentPane;
 	private IPortfolioHandler portfolios;
@@ -46,6 +48,7 @@ public class PortfolioView extends JFrame implements IView {
 	private JButton btnSeeStock;
 	private JButton btnHistory;
 	private JButton btnNewPortfolio;
+	private JButton btnManageAlgortihmSettings;
 	
 	private IPortfolio selectedPortfolio;
 	
@@ -78,21 +81,21 @@ public class PortfolioView extends JFrame implements IView {
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(pnlSelectPortfolio, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-						.addComponent(pnlBalanceContainer, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-						.addComponent(pnlViewsHolder, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(pnlSelectPortfolio, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+						.addComponent(pnlBalanceContainer, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+						.addComponent(pnlViewsHolder, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(pnlSelectPortfolio, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+					.addComponent(pnlSelectPortfolio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(pnlBalanceContainer, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(pnlViewsHolder, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(112, Short.MAX_VALUE))
+					.addContainerGap(11, Short.MAX_VALUE))
 		);
 		pnlViewsHolder.setLayout(new BoxLayout(pnlViewsHolder, BoxLayout.X_AXIS));
 		
@@ -158,6 +161,13 @@ public class PortfolioView extends JFrame implements IView {
 		
 		PortfoliosCmbModel cmbModel = new PortfoliosCmbModel(portfolios);
 		cmbSelectPortfolio.setModel(cmbModel);
+		
+		btnManageAlgortihmSettings = new JButton("Algortihm Settings");
+		btnManageAlgortihmSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		pnlSelectPortfolio.add(btnManageAlgortihmSettings);
 		if(cmbModel.getSize() > 0){
 			cmbSelectPortfolio.setSelectedIndex(1);
 		}
@@ -178,8 +188,13 @@ public class PortfolioView extends JFrame implements IView {
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
 
-		if(actions.get(CREATE_PORTFOLIO) instanceof ActionListener){
+		if(actions.get(CREATE_PORTFOLIO) instanceof ActionListener) {
 			btnNewPortfolio.addActionListener((ActionListener) actions.get(CREATE_PORTFOLIO));
+		}
+		
+		//Connect the algorthm settings button to it's corresponding ActionListener
+		if(actions.get(MANAGE_ALGORITHMS) instanceof ActionListener) {
+			btnManageAlgortihmSettings.addActionListener( (ActionListener) actions.get(MANAGE_ALGORITHMS) );
 		}
 	}
 	
