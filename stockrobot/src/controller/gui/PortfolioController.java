@@ -7,6 +7,7 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.trader.ITrader;
 
@@ -23,6 +24,8 @@ public class PortfolioController implements IController {
 	private IPortfolioHandler portfolios; 
 	
 	private Map<String, EventListener> actions;
+	private PortfolioHistoryController historyController = new PortfolioHistoryController();
+	
 	
 	public PortfolioController(ITrader trader, IPortfolioHandler portfolios){
 		
@@ -33,6 +36,7 @@ public class PortfolioController implements IController {
 		actions = new HashMap<String, EventListener>();
 		actions.put(PortfolioView.CREATE_PORTFOLIO, createPortfolioListener);
 		actions.put(PortfolioView.MANAGE_ALGORITHMS, manageAlgorithmSettingsListener);
+		actions.put(PortfolioView.HISTORY, portfolioHistoryListener);
 	}
 	
 	ActionListener createPortfolioListener = new ActionListener() {
@@ -52,7 +56,16 @@ public class PortfolioController implements IController {
 			Log.log(Log.TAG.DEBUG, ( (PortfolioView) view).getSelectedItem().toString() );
 		}
 	};
-	
+	ActionListener portfolioHistoryListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			IPortfolio portfolio = (((PortfolioView) view).getSelectedPortfolio());
+			
+			if (portfolio != null)
+				historyController.display(portfolio.getPortfolioTable());
+		}
+	};
 	@Override
 	public void display(Object model) {
 		

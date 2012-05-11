@@ -35,7 +35,7 @@ public class PortfolioView extends JFrame implements IView {
 	public static final String WINDOW_CLOSE 				= "windowClose";
 	public static final String CREATE_PORTFOLIO			= "createPortfolio";	
 	public static final String MANAGE_ALGORITHMS		= "manageAlgorithms";
-	
+	public static final String HISTORY					= "History";
 	private JPanel contentPane;
 	private IPortfolioHandler portfolios;
 	private JComboBox cmbSelectPortfolio;
@@ -104,7 +104,6 @@ public class PortfolioView extends JFrame implements IView {
 		pnlViewsHolder.add(btnSeeStock);
 		
 		btnHistory = new JButton("History");
-		btnHistory.setEnabled(false);
 		pnlViewsHolder.add(btnHistory);
 		
 		btnNewPortfolio = new JButton("New Portfolio");
@@ -209,6 +208,10 @@ public class PortfolioView extends JFrame implements IView {
 		if(actions.get(MANAGE_ALGORITHMS) instanceof ActionListener) {
 			btnManageAlgortihmSettings.addActionListener( (ActionListener) actions.get(MANAGE_ALGORITHMS) );
 		}
+		//Connect the history button to it's corresponding ActionListener
+		if(actions.get(HISTORY) instanceof ActionListener) {
+			btnHistory.addActionListener( (ActionListener) actions.get(HISTORY) );
+		}
 	}
 	
 	private class PortfoliosCmbModel implements ComboBoxModel {
@@ -277,5 +280,9 @@ public class PortfolioView extends JFrame implements IView {
 		}else if(evt.getPropertyName().equals(ITrader.SELL_STOCK)){
 			updateValues();
 		}
+	}
+	
+	public IPortfolio getSelectedPortfolio() {
+		return selectedPortfolio;
 	}
 }
