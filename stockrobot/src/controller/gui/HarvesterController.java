@@ -163,20 +163,22 @@ public class HarvesterController implements IController {
 		
 		public void exportLog(){
 			File logTxtFile = view.openChooseDirectory();
-			ListModel model = view.getLogModel();
-			PrintStream out = null;
-			try {
-				out = new PrintStream(new FileOutputStream(logTxtFile));
-		        int len = model.getSize(); 
-		        for(int i = 0; i < len; i++) { 
-		        	out.println(model.getElementAt(i).toString()); 
-		        } 
-				addToList(logTxtFile.getName()+" exported to home-directory.");
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}  finally {
-				if (out != null)
-					out.close();
+			if (logTxtFile != null) {
+				ListModel model = view.getLogModel();
+				PrintStream out = null;
+				try {
+					out = new PrintStream(new FileOutputStream(logTxtFile));
+			        int len = model.getSize(); 
+			        for(int i = 0; i < len; i++) { 
+			        	out.println(model.getElementAt(i).toString()); 
+			        } 
+					addToList(logTxtFile.getName()+" exported to home-directory.");
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}  finally {
+					if (out != null)
+						out.close();
+				}
 			}
         } 
 	}
