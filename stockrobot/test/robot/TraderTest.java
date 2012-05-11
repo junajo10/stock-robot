@@ -1,6 +1,8 @@
 package robot;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -9,6 +11,7 @@ import org.junit.Test;
 import testhelpers.DatabaseCleaner;
 
 import model.database.jpa.tables.PortfolioEntity;
+import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.trader.TraderSimulator;
@@ -51,9 +54,11 @@ public class TraderTest extends DatabaseCleaner{
 		jpaHelper.storeObject(stock);
 		Assert.assertTrue(trader.buyStock(stock, 1, portfolio));
 		
+		List<PortfolioHistory> portfolioHistory = new ArrayList<PortfolioHistory>();
+		portfolioHistory.addAll(portfolio.getHistory());
 		
-		Assert.assertTrue(trader.sellStock(stock, 1, portfolio));
+		Assert.assertTrue(trader.sellStock(portfolioHistory.get(0), portfolio));
 		
-		Assert.assertFalse(trader.sellStock(stock, 1, portfolio));
+		Assert.assertFalse(trader.sellStock(portfolioHistory.get(0), portfolio));
 	}
 }

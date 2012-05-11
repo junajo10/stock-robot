@@ -28,6 +28,10 @@ public final class TraderSimulator implements ITrader{
 	private TraderSimulator() {
 		
 	}
+	/**
+	 * Gets an instance of TraderSimulator, if it dosent exist it will be created. 
+	 * @return an instance of TraderSimulator
+	 */
 	public static TraderSimulator getInstance() {
 		if (instance == null) {
 			instance = new TraderSimulator();
@@ -48,27 +52,6 @@ public final class TraderSimulator implements ITrader{
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public boolean sellStock(StockPrices s, long amount, PortfolioEntity portfolio) {
-		StockPrices latest = jpaHelper.getLatestStockPrice(s);
-		portfolio.soldFor( latest.getBuy()*amount );
-		PortfolioHistory ph = portfolio.getSpecificPortfolioHistory(s, amount);
-		
-		if (ph != null && ph.getSoldDate() == null) {
-			ph.setStockSoldPrice(latest);
-			ph.setSoldDate(new Date(System.currentTimeMillis()));
-			
-			jpaHelper.updateObject(ph);
-			
-			Log.log(Log.TAG.VERBOSE, "Selling " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getBuy()));
-			
-			propertyChangeSuport.firePropertyChange(SELL_STOCK, null, portfolio);
-		} 
-		else
-			return false;
-		return true;
 	}
 	@Override
 	public boolean sellStock(PortfolioHistory ph, PortfolioEntity portfolio) {

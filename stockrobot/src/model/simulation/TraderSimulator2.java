@@ -52,30 +52,6 @@ public class TraderSimulator2 implements ITrader{
 		Log.log(TAG.VERBOSE, "Simulator: Buying " + amount + " of " + s.getStockName().getName() + " for: " + FinancialLongConverter.toDouble(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio)));
 		return true;
 	}
-
-	@Override
-	public boolean sellStock(StockPrices s, long amount, PortfolioEntity portfolio) {
-		StockPrices latest = jpaHelper.getLatestStockPrice(s);
-
-
-		for (PortfolioHistory ph : portfolio.getHistory()) {
-			if (ph.getSoldDate() == null) {
-				if (ph.getStockPrice().getTime() == s.getTime()) {
-					if (ph.getStockPrice().getStockName().getName().contentEquals(s.getStockName().getName())) {
-						if (ph.getAmount() == amount) {
-							portfolio.soldFor(s.getBuy()*amount, jpaHelper);
-							ph.setSoldDate(latest.getTime());
-							jpaHelper.updateObject(portfolio);
-							return true;
-						}
-					}
-				}
-			}
-		}
-		Log.log(TAG.VERY_VERBOSE, "SellStock in traderSimulator2: Couldent find stock: " + s);
-		return false;
-	}
-
 	@Override
 	public long getCourtagePrice(StockPrices s, long amount, boolean buying, PortfolioEntity portfolio) {
 		return (long) (s.getSell()*amount*0.09);
@@ -90,6 +66,7 @@ public class TraderSimulator2 implements ITrader{
 		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
 		ph.setSoldDate(latest.getTime());
+		ph.setStockSoldPrice(latest);
 		jpaHelper.updateObject(portfolio);
 		
 		return true;

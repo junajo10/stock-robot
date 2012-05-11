@@ -1,6 +1,8 @@
 package portfolio;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -8,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.database.jpa.IJPAHelper;
+import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
@@ -58,7 +61,11 @@ public class PortfolioTest extends DatabaseCleaner implements IRobot_Algorithms{
 		Assert.assertNotSame(portfolio.getInvestedAmount(), portfolio.getUnusedAmount());
 		
 		Assert.assertTrue(portfolio.getHistoryStocks().size() == 0);
-		ts.sellStock(stock, 1, portfolio.getPortfolioTable());
+		
+		List<PortfolioHistory> portfolioHistory = new ArrayList<PortfolioHistory>();
+		portfolioHistory.addAll(portfolio.getPortfolioTable().getHistory());
+
+		ts.sellStock(portfolioHistory.get(0), portfolio.getPortfolioTable());
 		Assert.assertTrue(portfolio.getHistoryStocks().size() == 1);
 		
 	}

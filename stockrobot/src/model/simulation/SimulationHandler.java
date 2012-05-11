@@ -154,7 +154,7 @@ public class SimulationHandler extends SimModel {
 				fillPie(ph.getStockPrice().getStockName().getName(), ph.getAmount(), ph.getStockPrice().getBuy());
 				
 				Log.log(TAG.VERY_VERBOSE, "Simulation: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName());
-				robotSim.getTrader().sellStock(ph.getStockPrice(), ph.getAmount(), portfolio.getPortfolioTable());
+				robotSim.getTrader().sellStock(ph, portfolio.getPortfolioTable());
 			}
 		}
 
