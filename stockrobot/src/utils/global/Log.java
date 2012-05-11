@@ -69,9 +69,17 @@ public class Log {
 		}else if(tag == TAG.VERBOSE&& !shouldPrint){
 			log.filter.put(TAG.VERBOSE, false);
 			log.filter.put(TAG.VERY_VERBOSE, false);
-		}else{
-			log.filter.put(tag, shouldPrint);
+		}else if (tag == TAG.NORMAL && shouldPrint){
+			log.filter.put(TAG.VERBOSE, false);
+			log.filter.put(TAG.VERY_VERBOSE, false);
+		}else if (tag == TAG.DEBUG && shouldPrint){
+			log.filter.put(TAG.DEBUG, true);
+			log.filter.put(TAG.NORMAL, true);
+			log.filter.put(TAG.ERROR, true);
+		}else {
+			log.filter.put(tag, true);
 		}
+		
 	}
 	
 	@Deprecated

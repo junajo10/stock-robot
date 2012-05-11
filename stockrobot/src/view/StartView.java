@@ -17,6 +17,10 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 import model.robot.StartModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
+import utils.global.Log;
 
 
 /**
@@ -27,10 +31,10 @@ public class StartView extends JFrame implements IView {
 	private static final long serialVersionUID = -8131015783822143236L;
 	private JPanel contentPane;
 	private JTextField txtLocalhost;
-	JButton btnStartAstro = new JButton("Start ASTRo");
-	JButton btnStopAstro = new JButton("Stop ASTRo");
-	JButton btnStartParser = new JButton("Open Parser");
-	
+	private JButton btnStartAstro = new JButton("Start ASTRo");
+	private JButton btnStopAstro = new JButton("Stop ASTRo");
+	private JButton btnStartParser = new JButton("Open Parser");
+	private JComboBox comboBox = new JComboBox();
 	private StartModel model;
 	
 	
@@ -57,7 +61,7 @@ public class StartView extends JFrame implements IView {
 		setResizable(false);
 		setTitle("Stock Robot");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 371, 209);
+		setBounds(100, 100, 301, 244);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,24 +76,28 @@ public class StartView extends JFrame implements IView {
 		
 		
 		btnStopAstro.setEnabled(false);
+		
+		JLabel lblLogLevel = new JLabel("Log level:");
+		
+		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(btnStartAstro)
-									.addGap(12)
-									.addComponent(btnStopAstro))
-								.addComponent(btnStartParser)
-								.addComponent(lblParserServer))
-							.addContainerGap(102, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(txtLocalhost)
-							.addGap(99))))
+						.addComponent(btnStartParser)
+						.addComponent(lblParserServer)
+						.addComponent(txtLocalhost, 248, 248, 248)
+						.addComponent(lblLogLevel)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(comboBox, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+								.addComponent(btnStartAstro)
+								.addGap(12)
+								.addComponent(btnStopAstro))))
+					.addContainerGap(29, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -103,7 +111,11 @@ public class StartView extends JFrame implements IView {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnStartAstro)
 						.addComponent(btnStopAstro))
-					.addContainerGap(29, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(lblLogLevel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(13, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -114,9 +126,9 @@ public class StartView extends JFrame implements IView {
 		
 		txtLocalhost.setText(this.model.getParserServer());
 		
+		comboBox.setModel(new DefaultComboBoxModel(Log.TAG.values()));
+		
 		this.setVisible(true);
-		
-		
 	}
 
 	@Override
@@ -131,6 +143,8 @@ public class StartView extends JFrame implements IView {
 		btnStartAstro.addActionListener((ActionListener) actions.get("Start Astro"));
 		
 		btnStartParser.addActionListener((ActionListener) actions.get("Start Parser"));
+		
+		comboBox.addActionListener((ActionListener) actions.get("Combobox"));
 	}
 
 	@Override

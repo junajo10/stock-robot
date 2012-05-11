@@ -9,8 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JComboBox;
+
 import model.robot.StartModel;
 
+import utils.global.Log;
+import utils.global.Log.TAG;
 import view.StartView;
 
 public class StartController implements IController {
@@ -35,6 +39,14 @@ public class StartController implements IController {
 			harvester.display(null);
 		}
 	};
+	ActionListener comboBox = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			TAG selectedTag = (TAG)((JComboBox)e.getSource()).getSelectedItem();
+			Log.setFilter(selectedTag, true);
+		}
+	};
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 	}
@@ -66,6 +78,7 @@ public class StartController implements IController {
 		actions.put("Start Astro", startAstroAction);
 		actions.put("Stop Astro", null);
 		
+		actions.put("Combobox", comboBox);
 		return actions;
 	}
 
