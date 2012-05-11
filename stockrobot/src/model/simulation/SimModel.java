@@ -15,7 +15,7 @@ public class SimModel {
 		
 		if (algorithmLoader.getAlgorithmNames().size() > 0) 
 			algorithm = algorithmLoader.getAlgorithmNames().get(0);
-		setStocksBack(300);
+		stocksBack = 300;
 	}
 	
 	public String getAlgorithm() {

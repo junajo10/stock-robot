@@ -82,12 +82,6 @@ public class WizardFromNewPageController extends WizardPageController {
 	}
 
 	@Override
-	public void addSubController(IController subController) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void defineSubControllers() {
 		// TODO Auto-generated method stub
 		

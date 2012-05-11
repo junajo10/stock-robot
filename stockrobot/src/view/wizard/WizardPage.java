@@ -21,7 +21,7 @@ public abstract class WizardPage extends JPanel  implements IView  {
 		
 	}
 	
-	public void propertyChange(PropertyChangeEvent evt) {
+	public void propertyChange(PropertyChangeEvent evt) { //NOPMD
 		// TODO Auto-generated method stub
 		
 	}

@@ -14,7 +14,6 @@ import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
 
-import utils.global.Log;
 import view.wizard.WizardPage;
 import view.wizard.portfolio.PortfolioPages;
 import view.wizard.portfolio.PortfolioStartPage;
@@ -164,11 +163,6 @@ public class WizardStartPageController extends WizardPageController {
 		return null;
 	}
 
-	@Override
-	public void addSubController(IController subController) {
-		
-		
-	}
 
 	@Override
 	public void defineSubControllers() {

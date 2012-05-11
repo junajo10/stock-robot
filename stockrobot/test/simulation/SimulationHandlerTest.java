@@ -28,7 +28,7 @@ public class SimulationHandlerTest extends DatabaseCleaner {
 		jpaHelper.storeObject(sn);
 		
 		for (int i = 0; i < 100; i++) {
-			jpaHelper.storeObject(new StockPrices(sn, 10, 10, 10*i, 10*i, new Date(i*10000)));
+			jpaHelper.storeObject(new StockPrices(sn, 10, 10, 10*i, 10*i, new Date((long)i*(long)10000)));
 		}
 	}
 	@Test

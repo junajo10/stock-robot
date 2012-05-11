@@ -1,16 +1,9 @@
 package controller.gui;
 
 
-import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.SwingUtilities;
-
-
-import model.portfolio.IPortfolioHandler;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 import view.wizard.WizardPage;
-import view.wizard.portfolio.PortfolioFromNewPage;
 
 public class WizardFactory {
 	

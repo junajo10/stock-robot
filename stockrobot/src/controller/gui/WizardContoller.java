@@ -150,12 +150,6 @@ public class WizardContoller implements IController {
 	}
 
 	@Override
-	public void addSubController(IController subController) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void defineSubControllers() {
 		
 	}

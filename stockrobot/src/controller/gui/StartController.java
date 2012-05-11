@@ -70,11 +70,6 @@ public class StartController implements IController {
 	}
 
 	@Override
-	public void addSubController(IController subController) {
-		subControllers.add(subController);
-	}
-
-	@Override
 	public String getName() {
 		return name;
 	}

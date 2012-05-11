@@ -32,12 +32,6 @@ public class MainController implements IController {
 	}
 
 	@Override
-	public void addSubController(IController subController) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public String getName() {
 		return "MainMenu";
 	}

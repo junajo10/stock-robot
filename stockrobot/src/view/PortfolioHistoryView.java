@@ -43,8 +43,7 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	private static final long serialVersionUID = -7366514125495992396L;
 	private JPanel contentPane;
 	
-	JPanel panel_1 = new JPanel();
-	JPanel panelChart = new JPanel();
+	private JPanel panelChart = new JPanel();
 	private JTable table = new JTable();
 	private PortfolioHistoryModel portfolioModel;
 	
@@ -76,7 +75,7 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-				
+		JPanel panel_1 = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

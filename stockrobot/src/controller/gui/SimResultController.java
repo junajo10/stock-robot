@@ -27,14 +27,12 @@ public class SimResultController implements IController {
 			view.setPieView((Map<String, Long>)evt.getNewValue());
 		}
 		else if (evt.getPropertyName().contains("Portfolio Worth")){
-			System.out.println(evt.getPropertyName());
 			long oldValue = (Long) evt.getOldValue();
 			long newValue = (Long) evt.getNewValue();
 			double diff = (double)newValue/(double)oldValue;
 			view.setWorth(diff);
 		}
 		else if (evt.getPropertyName().contains("Progress")){
-			System.out.println(evt.getPropertyName());
 			view.setProgress((Integer)evt.getNewValue());
 		}
 	}
@@ -70,12 +68,6 @@ public class SimResultController implements IController {
 	public Map<String, EventListener> getActionListeners() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void addSubController(IController subController) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

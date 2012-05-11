@@ -34,11 +34,11 @@ public class SimView extends JFrame implements IView {
 	private static final long serialVersionUID = -4933445365240811334L;
 	private JPanel contentPane;
 	private JTextField textField;
-	JComboBox comboBox = new JComboBox();
-	JButton btnSimulate = new JButton("Simulate");
-	DefaultComboBoxModel algorithms;
-	SimModel model;
-	private JTextField textField_1;
+	private JComboBox comboBox = new JComboBox();
+	private JButton btnSimulate = new JButton("Simulate");
+	private DefaultComboBoxModel algorithms;
+	private SimModel model;
+	private JTextField textFieldStartAmount;
 	
 	/**
 	 * Launch the application.
@@ -79,7 +79,6 @@ public class SimView extends JFrame implements IView {
 			public void stateChanged(ChangeEvent e) {
 				
 				if (model != null) {
-					System.out.println("apapapapa" + slider.getValue());
 					model.setStocksBack(slider.getValue());
 					
 					textField.setText("" + slider.getValue());
@@ -98,10 +97,10 @@ public class SimView extends JFrame implements IView {
 		
 		JLabel lblAmountToStart = new JLabel("Amount to start with");
 		
-		textField_1 = new JTextField();
-		textField_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_1.setText("100000");
-		textField_1.setColumns(10);
+		textFieldStartAmount = new JTextField();
+		textFieldStartAmount.setHorizontalAlignment(SwingConstants.RIGHT);
+		textFieldStartAmount.setText("100000");
+		textFieldStartAmount.setColumns(10);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -125,7 +124,7 @@ public class SimView extends JFrame implements IView {
 							.addGap(229))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(textField_1, Alignment.LEADING)
+								.addComponent(textFieldStartAmount, Alignment.LEADING)
 								.addComponent(lblAmountToStart, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							.addContainerGap(356, Short.MAX_VALUE))))
 		);
@@ -148,7 +147,7 @@ public class SimView extends JFrame implements IView {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblAmountToStart)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(textFieldStartAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(98, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);

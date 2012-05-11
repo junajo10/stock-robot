@@ -17,8 +17,6 @@ import model.algorithms.loader.PluginAlgortihmLoader;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
-import view.components.GUIFactory;
-import view.components.IGUIFactory;
 import view.wizard.WizardPage;
 import java.awt.Dimension;
 

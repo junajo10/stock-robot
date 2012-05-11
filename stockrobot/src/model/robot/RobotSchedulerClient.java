@@ -22,12 +22,9 @@ public class RobotSchedulerClient extends Thread{
 		this.port = port;
 		
 		this.robotScheduler = robotScheduler;
-		System.out.println("försöker nu");
 		try {
 			socket = new Socket(host, port);
 			inputStream = socket.getInputStream();
-			
-			System.out.println("borde connectat nu");
 		} catch (UnknownHostException e) {
 			keepRunning = false;
 			e.printStackTrace();

@@ -142,11 +142,6 @@ public class AstroController implements IController {
 		return actions;
 	}
 
-	@Override
-	public void addSubController(IController subController) {
-		
-		this.subControllers.add(subController);
-	}
 
 	@Override
 	public String getName() {

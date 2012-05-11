@@ -1,9 +1,5 @@
 package controller.wizard;
 
-import java.awt.event.ActionListener;
-
-import junit.framework.Assert;
-
 import model.wizard.WizardModel;
 
 import org.junit.Test;

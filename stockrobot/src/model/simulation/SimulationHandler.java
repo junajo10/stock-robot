@@ -51,8 +51,6 @@ public class SimulationHandler extends SimModel {
 	
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
-		
-		clearTestDatabase();
 	}
 	private void initSimulation(String algorithmToSimulate, List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
 		PortfolioEntity portfolioEntity = new PortfolioEntity("Simulated Portfolio");
@@ -84,7 +82,7 @@ public class SimulationHandler extends SimModel {
 	 */
 	public double simulateAlgorithm(String algorithmToSimulate, int howManyStocksBack,
 			List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
-		
+		clearTestDatabase();
 		
 		latestPieData.clear();
 		
@@ -191,8 +189,6 @@ public class SimulationHandler extends SimModel {
 			
 			updatePieData();
 			updatePieAt = i+nextPieStep;
-			
-			System.out.println(i + " " + updatePieAt);
 		}
 		
 		firePropertyChange("Progress", progress, i);

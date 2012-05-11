@@ -77,11 +77,6 @@ public class SimController implements IController {
 	}
 
 	@Override
-	public void addSubController(IController subController) {
-		this.subControllers.add(subController);
-	}
-
-	@Override
 	public String getName() {
 		return "SimController";
 	}

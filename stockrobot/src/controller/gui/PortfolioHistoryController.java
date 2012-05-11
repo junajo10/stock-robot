@@ -14,7 +14,7 @@ import model.portfolio.PortfolioHistoryModel;
  * @author Daniel
  */
 public class PortfolioHistoryController implements IController{
-	private static final String name = "StockTableHistory";
+	private static final String NAME = "StockTableHistory";
 	private PortfolioHistoryModel portfolioModel;
 	private PortfolioHistoryView portfolioHistoryView;
 	
@@ -29,6 +29,8 @@ public class PortfolioHistoryController implements IController{
 		portfolioModel = new PortfolioHistoryModel((PortfolioEntity)model);
 		
 		portfolioHistoryView = new PortfolioHistoryView(portfolioModel);
+		
+		portfolioHistoryView.display(portfolioModel);
 	}
 
 	@Override
@@ -43,12 +45,6 @@ public class PortfolioHistoryController implements IController{
 	}
 
 	@Override
-	public void addSubController(IController subController) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void defineSubControllers() {
 		// TODO Auto-generated method stub
 		
@@ -56,7 +52,7 @@ public class PortfolioHistoryController implements IController{
 
 	@Override
 	public String getName() {
-		return name;
+		return NAME;
 	}
 
 }

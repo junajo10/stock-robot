@@ -35,12 +35,6 @@ public interface IController extends PropertyChangeListener{
 	public Map<String, EventListener> getActionListeners();
 	
 	/**
-	 * Adds subControllers that can be started from this controller.
-	 * @param subController
-	 */
-	public void addSubController(IController subController);
-	
-	/**
 	 * Lets the user define whatever subControllers are needed in this class.
 	 */
 	public void defineSubControllers();

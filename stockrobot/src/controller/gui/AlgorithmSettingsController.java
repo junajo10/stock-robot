@@ -50,12 +50,6 @@ public class AlgorithmSettingsController implements IController {
 	}
 
 	@Override
-	public void addSubController(IController subController) {
-		
-		
-	}
-
-	@Override
 	public void defineSubControllers() {
 		
 		

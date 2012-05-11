@@ -19,12 +19,12 @@ import utils.observer.IObservable;
  */
 public class WizardModel implements IObservable {
 
-	public static String EVT_TITLE_CHANGE 			= "evtTitleChange";
-	public static String EVT_SUBTITLE_CHANGE 		= "evtSubtitleChange";
-	public static String EVT_PAGE_CURRENT_CHANGE 	= "evtPageCurrentChange";
-	public static String EVT_PAGE_BACK_CHANGE 		= "evtPageBackChange";
-	public static String EVT_PAGE_NEXT_CHANGE 		= "evtPageNextChange";
-	public static String EVT_CAN_FINISH_CHANGE 	= "evtCanFinishChange";
+	public final static String EVT_TITLE_CHANGE 			= "evtTitleChange";
+	public final static String EVT_SUBTITLE_CHANGE 		= "evtSubtitleChange";
+	public final static String EVT_PAGE_CURRENT_CHANGE 	= "evtPageCurrentChange";
+	public final static String EVT_PAGE_BACK_CHANGE 		= "evtPageBackChange";
+	public final static String EVT_PAGE_NEXT_CHANGE 		= "evtPageNextChange";
+	public final static String EVT_CAN_FINISH_CHANGE 	= "evtCanFinishChange";
 	
 	private String title;
 	private String subtitle;

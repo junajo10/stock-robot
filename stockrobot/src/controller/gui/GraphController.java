@@ -110,13 +110,7 @@ public class GraphController implements IController {
 		
 		return retList;
 	}
-	
-	@Override
-	public void addSubController(IController subController) {
 		
-		//For now, do nothing here since this view does not have sub views
-	}
-	
 	/**
 	 * Get Class Name
 	 */

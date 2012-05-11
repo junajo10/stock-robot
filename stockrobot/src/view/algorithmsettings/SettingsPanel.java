@@ -25,21 +25,21 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	 */
 	private static final long serialVersionUID = -5023291097157808280L;
 	
-	private double _minValue;
-	private double _maxValue;
-	private double _initValue;
-	private String _desc;
+	private double minValue;
+	private double maxValue;
+	private double initValue;
+	private String desc;
 	
 	private TextField 	ta;
 	
 	public SettingsPanel( String desc, double initValue, double minValue, double maxValue ) {
 		
-		_desc = desc;
-		_minValue = minValue;
-		_maxValue = maxValue;
-		_initValue = initValue;
+		this.desc = desc;
+		this.minValue = minValue;
+		this.maxValue = maxValue;
+		this.initValue = initValue;
 		
-		init();
+		init(); //NOPMD
 	}
 	
 	public void init() {
@@ -53,7 +53,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		//Instantiate a header text saying
 		JLabel header = fact.getDefaultLabel("Something");
-		header.setText( _desc );
+		header.setText( desc );
 		container.add( header );
 		
 		JPanel subContainer = fact.getInvisibleContainer();
@@ -61,11 +61,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		ta = new TextField();
 		ta.setBounds(0, 0, 100, 30);
-		ta.setText( "" + ((int)_initValue) );
+		ta.setText( "" + ((int)initValue) );
 		ta.setSize( 100, 30 );
 		subContainer.add( ta );
 		
-		JSlider fromDate = new JSlider( JSlider.HORIZONTAL, (int) Math.round( _minValue ), (int) Math.round( _maxValue ), (int) Math.round( _initValue ) );
+		JSlider fromDate = new JSlider( JSlider.HORIZONTAL, (int) Math.round( minValue ), (int) Math.round( maxValue ), (int) Math.round( initValue ) );
 		fromDate.addChangeListener(this);
 		subContainer.add( fromDate );
 	}
