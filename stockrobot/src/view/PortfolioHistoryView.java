@@ -22,6 +22,7 @@ import model.portfolio.PortfolioHistoryModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.ScrollPaneConstants;
 
 import org.jfree.chart.ChartFactory;
@@ -45,7 +46,7 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	JPanel panel_1 = new JPanel();
 	JPanel panelChart = new JPanel();
 	private JTable table = new JTable();
-	private PortfolioHistoryModel model;
+	private PortfolioHistoryModel portfolioModel;
 	
 	/**
 	 * Launch the application.
@@ -95,6 +96,14 @@ public class PortfolioHistoryView extends JFrame implements IView {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panelChart, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE))
 		);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null},
+			},
+			new String[] {
+				"Generating data"
+			}
+		));
 		
 		
 		
@@ -140,26 +149,12 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	 * Create the frame.
 	 */
 	public PortfolioHistoryView(PortfolioHistoryModel portfolioModel) {
-		this.model = portfolioModel;
+		this.portfolioModel = portfolioModel;
 		
 		if (portfolioModel != null) {
-			table.setModel(model.getTable());
+			table.setModel(portfolioModel.getTable());
 			
-			
-			
-			
-			
-			final XYDataset dataset = createDataset();
-	        final JFreeChart chart = createChart(dataset);
-			
-			final ChartPanel chartPanel = new ChartPanel(chart);
-			
-			chartPanel.setPreferredSize(new java.awt.Dimension(900, 200));
-			
-			panelChart.add(chartPanel);
-			
-			
-			
+
 		}
 		else {
 			table.setModel(new DefaultTableModel(
@@ -176,23 +171,9 @@ public class PortfolioHistoryView extends JFrame implements IView {
 					}
 				));
 		}
-
-		
 		
 		createFrame();
 	}
-	
-    private XYDataset createDataset() {
-    	Map<String, TimeSeries> apa =  model.getTimeSeries();
-        final TimeSeries portfolioBalance = apa.get("Portfolio Balance");
-        final TimeSeries portfolioWorth = apa.get("Worth");
-        
-        
-        final TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(portfolioBalance);
-        dataset.addSeries(portfolioWorth);
-        return dataset;
-    }
     private JFreeChart createChart(final XYDataset dataset) {
         final JFreeChart chart = ChartFactory.createTimeSeriesChart(
             null, 
@@ -212,8 +193,10 @@ public class PortfolioHistoryView extends JFrame implements IView {
     }
 	@Override
 	public void display(Object model) {
-		// TODO Auto-generated method stub
+		this.portfolioModel = (PortfolioHistoryModel) model;
 		
+		portfolioModel.addPropertyChangeListener(this);
+		portfolioModel.startGeneratingPortfolioDate();
 	}
 	@Override
 	public void cleanup() {
@@ -227,7 +210,30 @@ public class PortfolioHistoryView extends JFrame implements IView {
 	}
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
+		if (evt.getPropertyName().contentEquals("Table Generated")) {
+			table.setModel((TableModel) evt.getNewValue());
+		}
+		else if (evt.getPropertyName().contentEquals("Time Series")) {
+	    	@SuppressWarnings("unchecked")
+			Map<String, TimeSeries> apa =  (Map<String, TimeSeries>) evt.getNewValue();
+	        final TimeSeries portfolioBalance = apa.get("Portfolio Balance");
+	        final TimeSeries portfolioWorth = apa.get("Worth");
+	        
+	        
+	        final TimeSeriesCollection timeSeriesDataset = new TimeSeriesCollection();
+	        timeSeriesDataset.addSeries(portfolioBalance);
+	        timeSeriesDataset.addSeries(portfolioWorth);
+			
+	        XYDataset dataset = timeSeriesDataset;
+			
+	        final JFreeChart chart = createChart(dataset);
+			
+			final ChartPanel chartPanel = new ChartPanel(chart);
+			
+			chartPanel.setPreferredSize(new java.awt.Dimension(900, 200));
+			
+			panelChart.add(chartPanel);
+		}
 		
 	}
 }

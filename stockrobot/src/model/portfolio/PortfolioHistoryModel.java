@@ -1,5 +1,7 @@
 package model.portfolio;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,18 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.PriorityQueue;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import org.hsqldb.types.TimeData;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
-import org.jfree.date.MonthConstants;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -36,25 +34,45 @@ import model.database.jpa.tables.PortfolioInvestment;
 import model.database.jpa.tables.StockPrices;
 
 public class PortfolioHistoryModel {
-	IJPAHelper jpaHelper = JPAHelper.getInstance();
+	private IJPAHelper jpaHelper;
 
-	PortfolioEntity selectedPortfolio = jpaHelper.getAllPortfolios().get(0);
-
-	List<PortfolioHistory> history;
+	private PortfolioEntity selectedPortfolio;// = jpaHelper.getAllPortfolios().get(0);
+	private List<PortfolioHistory> history;
+	private Map<String, TimeSeries> allTimeSeries = new HashMap<String, TimeSeries>();
+	private Pair<Object[][], Object[]> tableDate;
+	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	
+	public PortfolioHistoryModel(PortfolioEntity model) {
+		this.selectedPortfolio = model;
+	}
+	public void startGeneratingPortfolioDate() {
+		if (jpaHelper == null)
+			jpaHelper = JPAHelper.getInstance();
+		
+		
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				loadHistory();
+				
+				generateTableData();
+				propertyChangeSupport.firePropertyChange("Table Generated", null, tableDate);
+				
+				generateTimeSeries();
+				propertyChangeSupport.firePropertyChange("Time Series", null, allTimeSeries);
+			}
+		});
+		
+		t.run();
+	}
 	public PortfolioEntity getSelectedPortfolio() {
 		return selectedPortfolio;
 	}
-
-	public Pair<Object[][], Object[]> getTableData() {
-		
-		
-		
-		
-		history = new ArrayList<PortfolioHistory>();
-		history.addAll(selectedPortfolio.getHistory());
-		
-		sortHistory(history);
-		
+	public void cleanup() {
+		allTimeSeries.clear();
+		this.history = null;
+	}
+	private void generateTableData() {
 		String[] tableColumnNames = {"Name","Market","Amount","Bought for","Sold for", "Profit %","BuyDate","SellDate"};
 		Object[][] rows = new Object[history.size()][tableColumnNames.length];
 
@@ -62,8 +80,6 @@ public class PortfolioHistoryModel {
 
 
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("yy/MM/ee hh:mm:ss");
-
-
 
 		for (int i = 0; i < history.size(); i++) {
 			StockPrices sp = history.get(i).getStockPrice();
@@ -86,29 +102,23 @@ public class PortfolioHistoryModel {
 			}
 		}
 
-		return new Pair<Object[][], Object[]>(rows, tableColumnNames);
+		tableDate = new Pair<Object[][], Object[]>(rows, tableColumnNames);
 	}
 
 	public TableModel getTable() {
-		return new DefaultTableModel(getTableData().getLeft(), getTableData().getRight());
+		if (tableDate != null)
+			return new DefaultTableModel(tableDate.getLeft(), tableDate.getRight());
+		
+		Object[][] v = {{"No data generated"}};
+		return new DefaultTableModel(v, v);
 	}
-
-
-
-
-
-
-
-
-	public Map<String, TimeSeries> getTimeSeries() {
-
-		Map<String, TimeSeries> allTimeSeries = new HashMap<String, TimeSeries>();
-		
-		List<PortfolioHistory> history = new ArrayList<PortfolioHistory>();
+	private void loadHistory() {
+		history = new ArrayList<PortfolioHistory>();
 		history.addAll(selectedPortfolio.getHistory());
-		TimeSeries t1 = new TimeSeries("Balance");
-		
 		sortHistory(history);
+	}
+	private void generateTimeSeries() {
+		TimeSeries t1 = new TimeSeries("Balance");
 		
 		if (history.size() > 0) {
 			SortedMap<Date, LongContainer> sortedMap = new TreeMap<Date, LongContainer>();
@@ -196,8 +206,6 @@ public class PortfolioHistoryModel {
 			allTimeSeries.put("Worth", worth);
 			allTimeSeries.put("Portfolio Balance", t1);
 		}
-		
-		return allTimeSeries;
 	}
 	public void sortHistory(List<PortfolioHistory> history) {
 		Collections.sort(history, new PortfolioHistoryComparator());
@@ -234,7 +242,13 @@ public class PortfolioHistoryModel {
 					return 1;
 			}
 			return 0;
-		}
-		
+		}	
 	}
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
 }

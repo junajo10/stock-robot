@@ -6,6 +6,7 @@ import java.util.Map;
 
 import view.PortfolioHistoryView;
 
+import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.PortfolioHistoryModel;
 
 /**
@@ -14,12 +15,8 @@ import model.portfolio.PortfolioHistoryModel;
  */
 public class PortfolioHistoryController implements IController{
 	private static final String name = "StockTableHistory";
-	
-	
-	public static void main(String args[]) {
-		PortfolioHistoryController sthc = new PortfolioHistoryController();
-		sthc.display(null);
-	}
+	private PortfolioHistoryModel portfolioModel;
+	private PortfolioHistoryView portfolioHistoryView;
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -29,9 +26,9 @@ public class PortfolioHistoryController implements IController{
 
 	@Override
 	public void display(Object model) {
-		PortfolioHistoryModel portfolioModel = new PortfolioHistoryModel();
+		portfolioModel = new PortfolioHistoryModel((PortfolioEntity)model);
 		
-		new PortfolioHistoryView(portfolioModel);
+		portfolioHistoryView = new PortfolioHistoryView(portfolioModel);
 	}
 
 	@Override
