@@ -53,7 +53,6 @@ public class AlphaReceiver implements IObservable {
 	}
 	
 	public void startRunner() {
-		
-		callEvery60Sec.run();
+		callEvery60Sec.start();
 	}
 }

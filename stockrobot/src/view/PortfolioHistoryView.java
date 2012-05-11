@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JFrame;
@@ -10,8 +9,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.EventListener;
 import java.util.Map;
 
@@ -28,8 +25,6 @@ import javax.swing.ScrollPaneConstants;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
@@ -144,11 +139,6 @@ public class PortfolioHistoryView extends JFrame implements IView {
             true, 
             true, 
             false
-        );
-        final XYItemRenderer renderer = chart.getXYPlot().getRenderer();
-        final StandardXYToolTipGenerator g = new StandardXYToolTipGenerator(
-            StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
-            new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")
         );
         return chart;
     }

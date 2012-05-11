@@ -175,7 +175,8 @@ public class HarvesterController implements IController {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}  finally {
-				out.close();
+				if (out != null)
+					out.close();
 			}
         } 
 	}
