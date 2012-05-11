@@ -35,7 +35,7 @@ public class PortfolioFromNewPage extends WizardPage {
 		this.setAlignmentX(Component.LEFT_ALIGNMENT);
 		BoxLayout lou_PortfolioInfo = new BoxLayout(this, BoxLayout.PAGE_AXIS);
 		this.setLayout(lou_PortfolioInfo);
-		this.setPreferredSize(new Dimension(270, 74));
+		this.setPreferredSize(new Dimension(287, 81));
 		
 		JPanel pnl_balance = new JPanel();
 		JLabel lbl_balance = new JLabel("Balance");

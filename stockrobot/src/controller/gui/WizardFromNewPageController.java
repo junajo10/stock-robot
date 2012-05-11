@@ -15,12 +15,14 @@ public class WizardFromNewPageController extends WizardPageController {
 
 	private PortfolioFromNewPage page;
 	private WizardModel model;
+	private PortfolioWizardModel pageModel;
 	
 	public WizardFromNewPageController(WizardModel model, PortfolioWizardModel pageModel) {		
 		
 		this.name = WizardFromNewPageController.class.getName();
 		this.page = new PortfolioFromNewPage(model, pageModel);
 		this.model = model;
+		this.pageModel = pageModel;
 		page.setAlgorithmListener(getAlgorithmListener());
 	}
 	
@@ -44,6 +46,17 @@ public class WizardFromNewPageController extends WizardPageController {
 	public PortfolioFromNewPage getPage() { return page; }
 	public WizardModel getWizardModel() { return model; }
 
+	public boolean canFinish(){
+		
+		boolean finish = false;
+		
+		if(pageModel.canFinish()){
+			finish = true;
+		}
+		
+		return finish;
+	}
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
