@@ -2,6 +2,7 @@ package model.robot;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -16,11 +17,11 @@ public class RobotSchedulerClient extends Thread{
 	private RobotScheduler robotScheduler;
 	private String host;
 	private int port;
-	
+
 	public RobotSchedulerClient(RobotScheduler robotScheduler, String host, int port) throws UnknownHostException {
 		this.host = host;
 		this.port = port;
-		
+
 		this.robotScheduler = robotScheduler;
 		try {
 			socket = new Socket(host, port);
@@ -40,27 +41,36 @@ public class RobotSchedulerClient extends Thread{
 	public void run() {
 		while(keepRunning) {
 			try {
+				System.out.println("apa");
 				// Blocking call:
 				inputStream.read();
-				
-				
+				System.out.println("bepa");
+
 				robotScheduler.doWork();
 			} catch (IOException e) {
-				e.printStackTrace();
-				
 				// Try to reconnect if fail it fails give up.
-				try {
-					socket.close();
-					socket = new Socket(host, port);
-					inputStream = socket.getInputStream();
+				if (socket != null) {
+					try {
+						socket.close();
+						socket = new Socket(host, port);
+						inputStream = socket.getInputStream();
+					}
+					catch (UnknownHostException e2) {
+						keepRunning = false;
+					} catch (IOException e2) {
+						keepRunning = false;
+					}
 				} 
-				catch (UnknownHostException e2) {
-					keepRunning = false;
-				} catch (IOException e2) {
-					keepRunning = false;
-				}
-				
 			}
 		}
+	}
+	public void cleanup() {
+		keepRunning = false;
+		socket = null;
+		try {
+			inputStream.close();
+		} catch (IOException e) {
+		} 
+
 	}
 }

@@ -113,15 +113,18 @@ public final class PortfolioHandler implements IPortfolioHandler{
 	}
 	
 	public void updateAlgorithms() {
-		StockPrices sp = jpaHelper.getLastStockPrice();
-		
-		if (sp != null) {
-			if (lastStockPost.getTime() < sp.getTime().getTime()) {
-				for (IPortfolio p : listOfPortfolios) {
-					p.updateAlgorithm();
+		synchronized (this) {
+			StockPrices sp = jpaHelper.getLastStockPrice();
+			
+			if (sp != null) {
+				if (lastStockPost.getTime() < sp.getTime().getTime()) {
+					System.out.println(lastStockPost.getTime() + " " + sp.getTime().getTime());
+					for (IPortfolio p : listOfPortfolios) {
+						p.updateAlgorithm();
+					}
 				}
+				this.lastStockPost = sp.getTime();
 			}
-			this.lastStockPost = sp.getTime();
 		}
 	}
 	

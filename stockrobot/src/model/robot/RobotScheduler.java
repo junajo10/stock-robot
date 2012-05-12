@@ -3,6 +3,7 @@ package model.robot;
 import java.net.UnknownHostException;
 
 import utils.global.Log;
+import utils.global.Log.TAG;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.portfolio.IPortfolio;
@@ -27,6 +28,9 @@ public class RobotScheduler implements Runnable{
 
 	private boolean isRunning = false;
 	private volatile boolean pause = false;
+	private boolean isStoped = false;
+	
+	public static boolean stopThis = false;
 	
 	@SuppressWarnings("unused")
 	private long freq = 0;
@@ -61,8 +65,9 @@ public class RobotScheduler implements Runnable{
 			Log.log(Log.TAG.NORMAL , "RobotScheduler Stoped!" );
 			isRunning = pause = false;	
 			result = true;
+
 		}
-		return result;
+		return isStoped;
 	}
 
 	/**
@@ -138,7 +143,7 @@ public class RobotScheduler implements Runnable{
 	public void run() {
 		isRunning = true;
 		Log.log(Log.TAG.VERY_VERBOSE , "RobotScheduler!" );
-		while(isRunning){
+		while(!stopThis){
 
 			while (pause) {
 				synchronized (this) {
@@ -181,6 +186,7 @@ public class RobotScheduler implements Runnable{
 
 			}
 		}
+		isStoped = true;
 	}
 	
 	public void runAlgorithms() {
@@ -192,8 +198,15 @@ public class RobotScheduler implements Runnable{
 	 * This method is only called by {@link RobotSchedulerClient}
 	 */
 	public void doWork() {
+		
 		synchronized (this) {
+			System.out.println("cepa");
 			notify();
+		}
+	}
+	public void cleanup() {
+		if (client != null) {
+			client.cleanup();
 		}
 	}
 }

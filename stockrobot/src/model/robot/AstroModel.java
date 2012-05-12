@@ -54,7 +54,7 @@ public class AstroModel implements IRobot_Algorithms{
 	 */
 	public AstroModel(String host, int port) throws UnknownHostException {
 		jpaHelper = JPAHelper.getInstance();
-
+		
 		//TODO: Removed when portfolioWizard works, this is just added to create a default portfolio with some money
 		synchronized (this) {
 			if (jpaHelper.getAllPortfolios().size() == 0) {
@@ -80,7 +80,12 @@ public class AstroModel implements IRobot_Algorithms{
 	}
 	
 	public void cleanup() {
-		jpaHelper.close();
+		robotScheduler.stopThis = true;
+		robotScheduler.doWork();
+		robotScheduler.cleanup();
+		
+		robotScheduler = null;
+		portfolioHandler = null;
 	}
 
 	public void startScheduler() {
