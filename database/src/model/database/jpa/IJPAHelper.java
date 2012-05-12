@@ -102,4 +102,6 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	public void close();
 	
 	StockPrices getLastStock(StockNames stockName, Date date);
+	
+	StockPrices getLastStockPrice();
 }

@@ -419,4 +419,17 @@ class JPAHelperBase implements IJPAHelper {
 		
 		return null;
 	}
+	@Override
+	public StockPrices getLastStockPrice() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery(
+				"SELECT o FROM StockPrices o ORDER BY o.time DESC" );
+		
+		query.setMaxResults(1);
+		
+		if (query.getResultList().size() == 1)
+			return query.getResultList().get(0);
+		
+		return null;
+	}
 }
