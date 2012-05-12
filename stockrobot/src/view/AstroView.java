@@ -28,7 +28,6 @@ public class AstroView extends JFrame implements IView {
 	public static final String OPEN_STOCKTABLE			= "stockTable";	
 	public static final String WINDOW_CLOSE 			= "windowClose";
 	public static final String OPEN_PORTFOLIOVIEW 		= "PortfolioView";
-	public static final String OPEN_ALGORTIHM_SETTINGS 	= "algorithmSettings";
 	
 	int i = 2133;
 	private JPanel contentPane;
@@ -36,7 +35,6 @@ public class AstroView extends JFrame implements IView {
 	JButton btnGraph 									= new JButton("Graph");
 	JButton btnStocks 									= new JButton("Stocks");
 	JButton btnPortfolio 								= new JButton("Portfolio");
-	JButton btnAlgorithmSettings 						= new JButton("Algorithm Settings");
 	
 	WindowListener windowListener;
 	
@@ -92,9 +90,6 @@ public class AstroView extends JFrame implements IView {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(btnGraph))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnAlgorithmSettings))
 						)
 					.addContainerGap(95, Short.MAX_VALUE))
 		);
@@ -112,8 +107,6 @@ public class AstroView extends JFrame implements IView {
 							.addComponent(btnSimulate)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnGraph)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnAlgorithmSettings)
 							)
 							
 						.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -140,7 +133,6 @@ public class AstroView extends JFrame implements IView {
 		btnGraph.addActionListener((ActionListener) actions.get(OPEN_GRAPHWINDOW));
 		btnStocks.addActionListener((ActionListener) actions.get(OPEN_STOCKTABLE));
 		btnPortfolio.addActionListener((ActionListener) actions.get(OPEN_PORTFOLIOVIEW));
-		btnAlgorithmSettings.addActionListener((ActionListener) actions.get(OPEN_ALGORTIHM_SETTINGS));
 		windowListener = (WindowListener) actions.get(WINDOW_CLOSE);
 		
 		addWindowListener(windowListener);

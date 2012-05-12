@@ -35,7 +35,6 @@ public class AstroController implements IController {
 	private IController graphController;
 	private IController stockInfoController;
 	private IController portfolioController;
-	private IController algorithmSettingsController;
 	
 	ActionListener startSim = new ActionListener() {
 		@Override
@@ -153,7 +152,6 @@ public class AstroController implements IController {
 		actions.put(AstroView.OPEN_GRAPHWINDOW, openGraph);
 		actions.put(AstroView.OPEN_STOCKTABLE, openStockInfo);
 		actions.put(AstroView.OPEN_PORTFOLIOVIEW, openPortfolioView);
-		actions.put(AstroView.OPEN_ALGORTIHM_SETTINGS, openAlgorithmSettingsView);
 		actions.put(AstroView.WINDOW_CLOSE, windowClose);
 		return actions;
 	}
@@ -178,8 +176,5 @@ public class AstroController implements IController {
 		
 		portfolioController = new PortfolioController(model.getTrader(), PortfolioHandler.getInstance());
 		subControllers.add( portfolioController );
-		
-		algorithmSettingsController = new AlgorithmSettingsController();
-		subControllers.add( algorithmSettingsController );
 	}
 }

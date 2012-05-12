@@ -5,6 +5,8 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.portfolio.IAlgorithm;
+
 import view.AlgorithmSettingsView;
 
 public class AlgorithmSettingsController implements IController {
@@ -13,9 +15,13 @@ public class AlgorithmSettingsController implements IController {
 	
 	private Map<String,EventListener> actionListeners;
 	
-	AlgorithmSettingsView view;
+	private AlgorithmSettingsView view;
 	
-	public AlgorithmSettingsController() {
+	private IAlgorithm algo;
+	
+	public AlgorithmSettingsController( IAlgorithm algo ) {
+		
+		this.algo = algo;
 		
 		actionListeners = new HashMap<String, EventListener>();
 		
