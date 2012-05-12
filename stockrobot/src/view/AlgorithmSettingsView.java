@@ -1,14 +1,22 @@
 package view;
 
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import view.algorithmsettings.SettingsPanel;
+
+import model.database.jpa.tables.AlgorithmSettingDouble;
+import model.database.jpa.tables.AlgorithmSettingLong;
+
+import utils.global.Log;
+import view.algorithmsettings.SettingsPanelDouble;
+import view.algorithmsettings.SettingsPanelLong;
 
 /**
  * View that could be used for modifying an algortihm's settings
@@ -24,9 +32,13 @@ import view.algorithmsettings.SettingsPanel;
 public class AlgorithmSettingsView extends JFrame implements IView {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	public static final String SAVE_DOWN = "savedDown";
+	
 	private String		algorithmName;
 	private JPanel 		container;
+	
+	private JButton		saveBtn;
 	
 	public AlgorithmSettingsView( String algorithmName ) {
 		
@@ -36,21 +48,55 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		container = new JPanel();
 		add( container );
 		
-		//Add some settings, a loop just for now
-		for( int i = 0; i < 6; i ++ ) {
-			
-			addSetting( "Setting" + i, Math.round( 20 + (i * 2) ), 0, 99);
-		}
-		
 		//Add save button
-		JButton saveBtn = new JButton();
+		saveBtn = new JButton();
 		saveBtn.setText( "Save settings" );
 		container.add( saveBtn );
 	}
 	
-	public void addSetting( String desc, double init, double min, double max ) {
+	/**
+	 * Populate this view with all settings that are of type Double
+	 * 
+	 * @param settings Set of settings
+	 */
+	public void populateDoubleSettings( Set<AlgorithmSettingDouble> settings ) {
 		
-		SettingsPanel panel = new SettingsPanel( desc, init, min, max );
+		AlgorithmSettingDouble[] arg = settings.toArray( new AlgorithmSettingDouble[0] );
+		
+		for( AlgorithmSettingDouble setting : arg ) {
+			
+			Log.log(Log.TAG.DEBUG, "populateDoubleSettings::settings.iterator().hasNext()" );
+			
+			addSetting( setting, setting.getName(), setting.getValue(), setting.getMinValue(), setting.getMaxValue() );
+		}
+	}
+	
+	/**
+	 * Populate this view with all settings that are of type Long
+	 * 
+	 * @param settings Set of settings
+	 */
+	public void populateLongSettings( Set<AlgorithmSettingLong> settings ) {
+		
+		AlgorithmSettingLong[] arg = settings.toArray( new AlgorithmSettingLong[0] );
+		
+		for( AlgorithmSettingLong setting : arg ) {
+			
+			Log.log(Log.TAG.DEBUG, "populateLongSettings::settings.iterator().hasNext()" );
+			
+			addSetting( setting, setting.getName(), setting.getValue(), setting.getMinValue(), setting.getMaxValue() );
+		}
+	}
+	
+	public void addSetting( AlgorithmSettingDouble set, String desc, double init, double min, double max ) {
+		
+		SettingsPanelDouble panel = new SettingsPanelDouble( set, desc, init, min, max );
+		container.add(panel);
+	}
+	
+	public void addSetting( AlgorithmSettingLong set, String desc, long init, long min, long max ) {
+		
+		SettingsPanelLong panel = new SettingsPanelLong( set, desc, init, min, max );
 		container.add(panel);
 	}
 
@@ -78,5 +124,6 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
 		
+		saveBtn.addActionListener( (ActionListener) actions.get( SAVE_DOWN ) );
 	}
 }

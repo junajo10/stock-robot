@@ -12,7 +12,6 @@ import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.trader.ITrader;
 
-import utils.global.Log;
 import view.IView;
 import view.PortfolioView;
 
@@ -60,8 +59,8 @@ public class PortfolioController implements IController {
 				
 				IAlgorithm algo = portfolio.getAlgorithm();
 				
-				System.out.println(  );
-				Log.log(Log.TAG.DEBUG, ( (PortfolioView) view).getSelectedItem().toString() );
+				AlgorithmSettingsController algoSettings = new AlgorithmSettingsController( algo, portfolio );
+				algoSettings.display( new Object() );
 			}
 		}
 	};

@@ -10,6 +10,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import model.database.jpa.tables.AlgorithmSettingDouble;
+
 import view.components.GUIFactory;
 
 /**
@@ -18,7 +20,7 @@ import view.components.GUIFactory;
  * @author kristian
  *
  */
-public class SettingsPanel extends JPanel implements ChangeListener {
+public class SettingsPanelDouble extends JPanel implements ChangeListener {
 	
 	/**
 	 * Serial Version!
@@ -32,8 +34,13 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	
 	private TextField 	ta;
 	
-	public SettingsPanel( String desc, double initValue, double minValue, double maxValue ) {
-		
+	private int doubleMultiplier = 100;
+	
+	private AlgorithmSettingDouble model;
+	
+	public SettingsPanelDouble( AlgorithmSettingDouble model, String desc, double initValue, double minValue, double maxValue ) {
+	
+		this.model = model;
 		this.desc = desc;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
@@ -53,7 +60,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		//Instantiate a header text saying
 		JLabel header = fact.getDefaultLabel("Something");
-		header.setText( desc );
+		header.setText( desc + "::Double" );
 		container.add( header );
 		
 		JPanel subContainer = fact.getInvisibleContainer();
@@ -61,11 +68,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		ta = new TextField();
 		ta.setBounds(0, 0, 100, 30);
-		ta.setText( "" + ((int)initValue) );
+		ta.setText( "" + initValue );
 		ta.setSize( 100, 30 );
 		subContainer.add( ta );
 		
-		JSlider fromDate = new JSlider( JSlider.HORIZONTAL, (int) Math.round( minValue ), (int) Math.round( maxValue ), (int) Math.round( initValue ) );
+		JSlider fromDate = new JSlider( JSlider.HORIZONTAL, (int)Math.round( minValue * doubleMultiplier ), (int)Math.round( doubleMultiplier * maxValue ), (int)Math.round( doubleMultiplier * initValue ) );
 		fromDate.addChangeListener(this);
 		subContainer.add( fromDate );
 	}
@@ -76,7 +83,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public void stateChanged( ChangeEvent e ) {
 		
 		JSlider source = (JSlider) e.getSource();
-		ta.setText("" + source.getValue());
-		
+		ta.setText("" + (source.getValue() / doubleMultiplier) );
+		model.setValue((source.getValue() / doubleMultiplier) );
 	}
 }
