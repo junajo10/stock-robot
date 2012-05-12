@@ -200,7 +200,6 @@ public class RobotScheduler implements Runnable{
 	public void doWork() {
 		
 		synchronized (this) {
-			System.out.println("cepa");
 			notify();
 		}
 	}

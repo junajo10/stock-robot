@@ -41,10 +41,8 @@ public class RobotSchedulerClient extends Thread{
 	public void run() {
 		while(keepRunning) {
 			try {
-				System.out.println("apa");
 				// Blocking call:
 				inputStream.read();
-				System.out.println("bepa");
 
 				robotScheduler.doWork();
 			} catch (IOException e) {

@@ -168,7 +168,7 @@ public class PortfolioView extends JFrame implements IView {
 		});
 		pnlSelectPortfolio.add(btnManageAlgortihmSettings);
 		if(cmbModel.getSize() > 0){
-			cmbSelectPortfolio.setSelectedIndex(1);
+			cmbSelectPortfolio.setSelectedIndex(0);
 		}
 	}
 
