@@ -81,4 +81,7 @@ public class StockPrices {
 	public String toString() {
 		return stockName.getName() + " | Buy: " + buy + " | Sell: " + sell + " | Market: " + stockName.getMarket() + " | Time: " + time;
 	}
+	public boolean isSimulated() {
+		return stockName.isSimulated();
+	}
 }

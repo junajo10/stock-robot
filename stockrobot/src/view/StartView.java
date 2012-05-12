@@ -154,6 +154,9 @@ public class StartView extends JFrame implements IView {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public String getParserLocation() {
+		return txtLocalhost.getText();
 	}
 }

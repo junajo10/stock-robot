@@ -26,7 +26,7 @@ public class TraderTest extends DatabaseCleaner{
 	
 	@Test
 	public void testBuying() {
-		StockNames sn = new StockNames("TestStock", "Market");
+		StockNames sn = new StockNames("TestStock", "Market", true);
 		jpaHelper.storeObject(sn);
 		
 		PortfolioEntity portfolio = new PortfolioEntity("Portfolio");
@@ -42,7 +42,7 @@ public class TraderTest extends DatabaseCleaner{
 	}
 	@Test
 	public void testSelling() {
-		StockNames sn = new StockNames("TestStock2", "Market");
+		StockNames sn = new StockNames("TestStock2", "Market", true);
 		jpaHelper.storeObject(sn);
 		
 		PortfolioEntity portfolio = new PortfolioEntity("Portfolio2");

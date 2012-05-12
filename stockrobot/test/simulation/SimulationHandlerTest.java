@@ -26,7 +26,7 @@ public class SimulationHandlerTest {
 	@Before
 	public void before() {
 		cleanDatabase();
-		StockNames sn = new StockNames("Test stock", "Market");
+		StockNames sn = new StockNames("Test stock", "Market", true);
 		
 		jpaHelper.storeObject(sn);
 		

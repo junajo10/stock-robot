@@ -15,6 +15,8 @@ import model.portfolio.PortfolioHandler;
 import model.robot.AstroModel;
 
 import utils.WindowCloseAdapter;
+import utils.global.Log;
+import utils.global.Log.TAG;
 import view.AstroView;
 
 /**
@@ -109,7 +111,21 @@ public class AstroController implements IController {
 	}
 
 	@Override
-	public void display(Object model) {
+	public void display(Object parserServer) {
+		String server[] = parserServer.toString().split(":");
+		String host = "";
+		int port = 0;
+		
+		if (server.length == 2) {
+			host = server[0];
+			
+			try {
+				port = Integer.parseInt(server[1]);
+			} catch (NumberFormatException e) {
+				Log.log(TAG.ERROR, "Couldent parse port to server");
+			}
+		}
+		
 		
 		if (this.model == null) {
 			this.model = new AstroModel();

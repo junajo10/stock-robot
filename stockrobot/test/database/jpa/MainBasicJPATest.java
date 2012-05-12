@@ -56,35 +56,35 @@ public class MainBasicJPATest extends DatabaseCleaner {
 		List<StockNames> stockNames = jpaHelper.getAllStockNames();
 		
 		if (stockNames.size() == 0) {
-			StockNames stockName = new StockNames("Stock1", "MarketA");
+			StockNames stockName = new StockNames("Stock1", "MarketA", true);
 			jpaHelper.storeObject(stockName);
 			
-			stockName = new StockNames("Stock2", "MarketB");
+			stockName = new StockNames("Stock2", "MarketB", true);
 			jpaHelper.storeObject(stockName);
 			
 			
-			stockName = new StockNames("Stock3", "MarketB");
+			stockName = new StockNames("Stock3", "MarketB", true);
 			jpaHelper.storeObject(stockName);
 			
-			stockName = new StockNames("Stock4", "MarketA");
+			stockName = new StockNames("Stock4", "MarketA", true);
 			jpaHelper.storeObject(stockName);
 			
-			stockName = new StockNames("Stock5", "MarketB");
+			stockName = new StockNames("Stock5", "MarketB", true);
 			jpaHelper.storeObject(stockName);
 			
-			stockName = new StockNames("Stock6", "MarketB");
+			stockName = new StockNames("Stock6", "MarketB", true);
 			jpaHelper.storeObject(stockName);
 			
-			stockName = new StockNames("Stock7", "MarketB");
+			stockName = new StockNames("Stock7", "MarketB", true);
 			jpaHelper.storeObject(stockName);
 			
-			stockName = new StockNames("Stock8", "MarketB");
+			stockName = new StockNames("Stock8", "MarketB", true);
 			jpaHelper.storeObject(stockName);
 			
-			stockName = new StockNames("Stock9", "MarketB");
+			stockName = new StockNames("Stock9", "MarketB", true);
 			jpaHelper.storeObject(stockName);
 			
-			stockName = new StockNames("Stock10", "MarketB");
+			stockName = new StockNames("Stock10", "MarketB", true);
 			jpaHelper.storeObject(stockName);
 			
 			stockNames = jpaHelper.getAllStockNames(); 

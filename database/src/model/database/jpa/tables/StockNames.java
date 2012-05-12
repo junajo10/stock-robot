@@ -34,6 +34,9 @@ public class StockNames {
 	@OneToMany(targetEntity=StockPrices.class, mappedBy="stockName", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<StockPrices> stockPrices;
 	
+	@Column
+	private boolean simulatedStock;
+	
 	public StockNames() {
 		
 	}
@@ -41,10 +44,12 @@ public class StockNames {
 	 * Main constructor for an entity of StockNames
 	 * @param name the name of this stock
 	 * @param market the market this stock belongs to
+	 * @param simulatedStock Set to true if this stock is simulated
 	 */
-	public StockNames(String name, String market) {
+	public StockNames(String name, String market, boolean simulatedStock) {
 		this.name = name;
 		this.market = market;
+		this.simulatedStock = true;
 	}
 	/**
 	 * Will return the id representing this entity
@@ -92,5 +97,8 @@ public class StockNames {
 			stockPrices = new ArrayList<StockPrices>();
 		stockPrices.add(stockPrice);
 		
+	}
+	public boolean isSimulated() {
+		return simulatedStock;
 	}
 }

@@ -61,7 +61,7 @@ public class PairTest {
 	public static Collection<Object[]> data() {
 
 		//Creating some dummy data
-		StockNames stName = new StockNames( "ABB", "LargeCap" );
+		StockNames stName = new StockNames( "ABB", "LargeCap", true );
 		StockPrices prices = new StockPrices( stName, 3434343, (long)24242492, (long)244424242, (long)224229292, new Date(10101001));
 		StockPrices pricesAnotherInstance = new StockPrices( stName, 3434343, (long)24242492, (long)244424242, (long)224229292, new Date(10101001)); //Same content as above
 		

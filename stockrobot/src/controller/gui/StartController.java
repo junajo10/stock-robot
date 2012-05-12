@@ -30,7 +30,7 @@ public class StartController implements IController {
 	ActionListener startAstroAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			astroController.display(null);
+			astroController.display(view.getParserLocation());
 		}
 	};
 	ActionListener startHavester = new ActionListener() {

@@ -102,7 +102,7 @@ public class SimulationHandler extends SimModel {
 		Map<String, StockNames> nameStockNameMap = new HashMap<String, StockNames>();
 		
 		for (StockNames ns : jpaHelper.getAllStockNames()) {
-			StockNames n = new StockNames(ns.getName(), ns.getMarket());
+			StockNames n = new StockNames(ns.getName(), ns.getMarket(), true);
 			jpaSimHelper.storeObject(n);
 			nameStockNameMap.put(n.getName(), n);
 		}

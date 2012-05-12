@@ -58,7 +58,7 @@ public class JPAInserter implements IInserter {
 			if (s.getBuy() != 0 && s.getSell() != 0) {
 				if (!latestMap.containsKey(s.getName())) {
 					//StockName doesn't exist.
-					newStockNames.push(new StockNames(s.getName(), s.getMarket()));
+					newStockNames.push(new StockNames(s.getName(), s.getMarket(), false));
 					StockPrices sp = new StockPrices(newStockNames.peek(), s.getVolume(), s.getLastClose(), s.getBuy(), s.getSell(), s.getDate());
 					newStocks.add(sp);
 					newStockPrices++;

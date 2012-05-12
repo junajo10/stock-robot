@@ -24,14 +24,14 @@ public class JPATest extends DatabaseCleaner {
 	
 	@Test(expected=Exception.class)
 	public void testDuplicateEntry() {
-		StockPrices sp = new StockPrices(new StockNames("Stock1", "marketA"), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
+		StockPrices sp = new StockPrices(new StockNames("Stock1", "marketA", true), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
 		jpaHelper.storeObject(sp);
-		sp = new StockPrices(new StockNames("Stock1", "marketA"), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
+		sp = new StockPrices(new StockNames("Stock1", "marketA", true), 100, 100, 100, 100, new Date(System.currentTimeMillis()));
 		jpaHelper.storeObject(sp);
 	}
 	@Test
 	public void testDuplicateSafeEntry() {
-		StockNames stockName = new StockNames("Stock2" + rand.nextFloat(), "marketB");
+		StockNames stockName = new StockNames("Stock2" + rand.nextFloat(), "marketB", true);
 		StockPrices sp = new StockPrices(stockName, 100, 100, 100, 100, new Date(123231));
 		System.out.println(sp);
 		jpaHelper.storeObjectIfPossible(stockName);

@@ -36,7 +36,7 @@ public class PortfolioTest extends DatabaseCleaner implements IRobot_Algorithms{
 	
 	@Test
 	public void testPortfolio() {
-		StockNames sn = new StockNames("StockA", "MarketA");
+		StockNames sn = new StockNames("StockA", "MarketA", true);
 		jpaHelper.storeObject(sn);
 		
 		StockPrices stock = new StockPrices(sn, 1, 1, 1, 1, new Date(1231233));
