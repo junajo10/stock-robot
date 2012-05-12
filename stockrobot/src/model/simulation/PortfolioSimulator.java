@@ -34,10 +34,19 @@ public class PortfolioSimulator implements IPortfolio {
 		this.portfolioTable = portfolioTable;
 		this.jpaHelper = jpaHelper;
 	}
+	
+	@Override
 	public boolean setAlgorithm(IAlgorithm algorithm) {
 		this.algorithm = algorithm;
 		return false;
 	}
+	
+	@Override
+	public IAlgorithm getAlgorithm() {
+		
+		return this.algorithm;
+	}
+	
 	@Override
 	public List<StockNames> getAvalibleStocks() {
 		return jpaHelper.getStockNames(portfolioTable);

@@ -64,6 +64,12 @@ public class Portfolio implements IPortfolio {
 		this.algorithm = algorithm;
 		return true;
 	}
+	
+	@Override
+	public IAlgorithm getAlgorithm() {	
+		return this.algorithm;
+	}
+	
 	@Override
 	public long getInvestedAmount() {
 		return jpaHelper.getTotalInvestedAmount(portfolioTable);

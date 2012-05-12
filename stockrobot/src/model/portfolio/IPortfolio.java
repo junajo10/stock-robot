@@ -42,6 +42,12 @@ public interface IPortfolio {
 	boolean setAlgorithm(IAlgorithm algorithm);
 	
 	/**
+	 * Returns whatever was set by setAlgorithm
+	 * @return the current algorithm that was sent in by setAlgorithm
+	 */
+	IAlgorithm getAlgorithm();
+	
+	/**
 	 * Will look up how much money has been put in to a portfolio
 	 * @return Total invested amount
 	 */
