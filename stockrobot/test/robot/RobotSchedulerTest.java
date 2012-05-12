@@ -349,6 +349,11 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 			// TODO Auto-generated method stub
 			return 0;
 		}
+
+		@Override
+		public IAlgorithm getAlgorithm() {
+			return algorithm;
+		}
 	}
 	
 
