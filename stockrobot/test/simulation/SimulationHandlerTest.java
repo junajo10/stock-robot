@@ -2,6 +2,8 @@ package simulation;
 
 import java.util.Date;
 
+import junit.framework.Assert;
+
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
@@ -12,9 +14,8 @@ import model.simulation.SimulationHandler;
 import org.junit.Before;
 import org.junit.Test;
 
-import testhelpers.DatabaseCleaner;
-
 /**
+ * This will test the simulationHandler.
  * 
  * @author Daniel
  */
@@ -23,6 +24,10 @@ public class SimulationHandlerTest {
 	private static SimulationHandler simulationHandler = new SimulationHandler();
 	private static IJPAHelper jpaHelper = JPAHelper.getInstance();
 	
+	/**
+	 * Before each test we clean the main database.
+	 * And insert a couple of simulated stocks with increasing value => simulation will result in a positive outcome.
+	 */
 	@Before
 	public void before() {
 		cleanDatabase();
@@ -40,7 +45,7 @@ public class SimulationHandlerTest {
 	@Test
 	public void testAlgo1() {
 		simulationHandler.clearTestDatabase();
-		simulationHandler.simulateAlgorithm("TestAlgorithm1", 100, null, null);
+		Assert.assertTrue(simulationHandler.simulateAlgorithm("TestAlgorithm1", 100, null, null) > 0);
 		simulationHandler.clearTestDatabase();
 	}
 	/**
@@ -49,7 +54,7 @@ public class SimulationHandlerTest {
 	@Test
 	public void testAlgo2() {
 		simulationHandler.clearTestDatabase();
-		simulationHandler.simulateAlgorithm("TestAlgorithm2", 100, null, null);
+		Assert.assertTrue(simulationHandler.simulateAlgorithm("TestAlgorithm2", 100, null, null) > 0);
 		simulationHandler.clearTestDatabase();
 	}
 	

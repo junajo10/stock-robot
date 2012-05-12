@@ -17,7 +17,7 @@ public class RobotSchedulerClient extends Thread{
 	private String host;
 	private int port;
 	
-	public RobotSchedulerClient(RobotScheduler robotScheduler, String host, int port) {
+	public RobotSchedulerClient(RobotScheduler robotScheduler, String host, int port) throws UnknownHostException {
 		this.host = host;
 		this.port = port;
 		

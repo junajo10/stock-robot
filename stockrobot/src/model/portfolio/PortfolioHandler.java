@@ -41,10 +41,9 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		Log.log(TAG.VERY_VERBOSE, "Starting to create portfolios");
 		for (PortfolioEntity pt : portfolioTables) {
 			IPortfolio p = createExistingPortfolio(pt);
-			listOfPortfolios.add(p);
 			Log.log(TAG.VERY_VERBOSE, "Portfolio created: " + p.getName());
 		}
-		Log.log(TAG.VERY_VERBOSE, "Done creating portfolios");
+		Log.log(TAG.VERY_VERBOSE, "Done creating portfolios, number of portfolios: " + listOfPortfolios.size());
 	}
 	
 	private IPortfolio createExistingPortfolio(PortfolioEntity pt) {

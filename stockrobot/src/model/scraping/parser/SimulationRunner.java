@@ -10,7 +10,8 @@ import model.database.jpa.IJPAParser;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.scraping.connect.HarvesterServer;
+import model.scraping.connect.Connector;
+import model.scraping.connect.IConnector;
 import model.scraping.database.IInserter;
 import model.scraping.database.JPAInserter;
 import model.scraping.scheduler.IScheduler;
@@ -27,14 +28,14 @@ public class SimulationRunner implements IParserRunner {
 
 	IScheduler scheduler;
 	IInserter inserter;
-	HarvesterServer server;
+	IConnector connector;
 	IJPAParser jpaHelper = JPAHelper.getInstance();
 	private List<StockNames> simulatedStocks = new ArrayList<StockNames>();
 	Random rand = new Random(System.currentTimeMillis());
 	private PropertyChangeSupport pcs;
 	
 	public SimulationRunner(int port){
-		this.server = new HarvesterServer(port);
+		this.connector = new Connector(port);
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
 	}
@@ -62,7 +63,7 @@ public class SimulationRunner implements IParserRunner {
 				jpaHelper.storeObjectIfPossible(sp);
 			}
 			
-			server.sendDataAvailable(10);
+			connector.sendDataAvailable(10);
 			Long timeElapsed = System.currentTimeMillis() - timeBefore;
 			pcs.firePropertyChange("Parsing done.", null, timeElapsed);
 			try {
@@ -84,7 +85,7 @@ public class SimulationRunner implements IParserRunner {
 	 */
 	public boolean stopRunner() {
 		if(!close){
-			server.shutdown();
+			connector.shutdown();
 			close = true;
 			return true;
 		}
@@ -101,7 +102,7 @@ public class SimulationRunner implements IParserRunner {
 	 */
 	public boolean stopParser() {
 		if(run){
-			server.shutdown();
+			connector.shutdown();
 			run = false;
 			return true;
 		}

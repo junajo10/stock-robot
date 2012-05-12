@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 
 import java.beans.PropertyChangeListener;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,7 +64,12 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		
 		Log.log(Log.TAG.NORMAL, "Creating RobotScheduler");
 		TestPortfolioHandler pHandler = new TestPortfolioHandler(null);
-		RobotScheduler schedueler = new RobotScheduler(pHandler, "127.0.0.1", port);
+		RobotScheduler schedueler = null;
+		try {
+			schedueler = new RobotScheduler(pHandler, "127.0.0.1", port);
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
 		
 		Log.log(Log.TAG.NORMAL, "Starting RobotScheduler");
 		Thread tSched = new Thread(schedueler);

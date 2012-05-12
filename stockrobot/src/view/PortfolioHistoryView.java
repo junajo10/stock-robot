@@ -164,7 +164,6 @@ public class PortfolioHistoryView extends JFrame implements IView {
 			table.setModel((TableModel) evt.getNewValue());
 		}
 		else if (evt.getPropertyName().contentEquals("Time Series")) {
-			System.out.println("apapapa");
 	    	@SuppressWarnings("unchecked")
 			Map<String, TimeSeries> apa =  (Map<String, TimeSeries>) evt.getNewValue();
 	        final TimeSeries portfolioBalance = apa.get("Portfolio Balance");
@@ -190,8 +189,5 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		else if (evt.getPropertyName().contentEquals(PortfolioHistoryModel.STATISTICSUPDATED)) {
 			txtrStats.setText(evt.getNewValue().toString());
 		}
-		else
-			System.out.println(evt.getPropertyName() + "apapapa");
-		
 	}
 }

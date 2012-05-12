@@ -1,5 +1,7 @@
 package model.robot;
 
+import java.net.UnknownHostException;
+
 import utils.global.Log;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
@@ -39,7 +41,7 @@ public class RobotScheduler implements Runnable{
 		usingServer = false;
 		this.portfolioHandler = portfolioHandler;
 	}
-	public RobotScheduler(IPortfolioHandler portfolioHandler, String host, int port){
+	public RobotScheduler(IPortfolioHandler portfolioHandler, String host, int port) throws UnknownHostException {
 		//handler = new RobotHandler(portfolioHandler);
 		this.portfolioHandler = portfolioHandler;
 		usingServer = true;

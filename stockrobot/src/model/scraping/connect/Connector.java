@@ -37,15 +37,17 @@ public class Connector implements IConnector {
 		clients = new ConcurrentHashMap<Socket, Socket>();
 		AstroServer server = new AstroServer();
 		AstroSender sender = new AstroSender();
-		PingReciever pinger = new PingReciever();
+		
+		//Commented away pinger until this is added to RobotScheduler /Daniel
+		//PingReciever pinger = new PingReciever();
 		
 		Thread serverThread = new Thread(server);
 		Thread astroSender = new Thread(sender);
-		Thread pingerThread = new Thread(pinger);
+		//Thread pingerThread = new Thread(pinger);
 		
 		serverThread.start();
 		astroSender.start();
-		pingerThread.start();
+		//pingerThread.start();
 
 	}
 

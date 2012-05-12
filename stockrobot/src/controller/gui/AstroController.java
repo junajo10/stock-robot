@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -115,19 +116,32 @@ public class AstroController implements IController {
 		String host = "";
 		int port = 0;
 		
-		if (server.length == 2) {
-			host = server[0];
-			
+		if (server.length >= 2) {
+			host = parserServer.toString().substring(0, parserServer.toString().lastIndexOf(":"));
 			try {
-				port = Integer.parseInt(server[1]);
+				port = Integer.parseInt(server[server.length-1]);
+				if (port <= 0)
+					throw new NumberFormatException();
 			} catch (NumberFormatException e) {
 				Log.log(TAG.ERROR, "Couldent parse port to server");
 			}
+			Log.log(TAG.VERY_VERBOSE, "Parsed location field to: " + host + " as host at port number: " + port);
 		}
 		
 		
 		if (this.model == null) {
-			this.model = new AstroModel();
+			if (port > 0) {
+				try {
+					this.model = new AstroModel(host, port);
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else
+				this.model = new AstroModel();
+			
+			this.model.startScheduler();
 		}
 		
 		view.addActions(getActionListeners());

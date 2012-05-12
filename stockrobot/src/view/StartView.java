@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
@@ -21,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 import utils.global.Log;
+import javax.swing.JCheckBox;
 
 
 /**
@@ -40,6 +42,8 @@ public class StartView extends JFrame implements IView {
 	public final static String STARTASTRO = "Start Astro";
 	public final static String STARTPARSER = "Start Parser";
 	public final static String LOGLEVEL = "Combobox";
+	private final JCheckBox chckbxConnectToParser = new JCheckBox("Connect to parser");
+	private String oldLocalhostField = "";
 		
 	
 	/**
@@ -62,6 +66,7 @@ public class StartView extends JFrame implements IView {
 	 * Create the frame.
 	 */
 	public StartView() {
+		chckbxConnectToParser.setSelected(true);
 		setResizable(false);
 		setTitle("Stock Robot");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,8 +80,6 @@ public class StartView extends JFrame implements IView {
 		txtLocalhost = new JTextField();
 		txtLocalhost.setText("localhost:54551");
 		txtLocalhost.setColumns(10);
-		
-		JLabel lblParserServer = new JLabel("Parser server:");
 		
 		
 		btnStopAstro.setEnabled(false);
@@ -92,23 +95,23 @@ public class StartView extends JFrame implements IView {
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnStartParser)
-						.addComponent(lblParserServer)
 						.addComponent(txtLocalhost, 248, 248, 248)
 						.addComponent(lblLogLevel)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(comboBox, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createSequentialGroup()
 								.addComponent(btnStartAstro)
 								.addGap(12)
-								.addComponent(btnStopAstro))))
+								.addComponent(btnStopAstro)))
+						.addComponent(chckbxConnectToParser))
 					.addContainerGap(29, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(btnStartParser)
-					.addGap(32)
-					.addComponent(lblParserServer)
+					.addGap(28)
+					.addComponent(chckbxConnectToParser)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -122,6 +125,21 @@ public class StartView extends JFrame implements IView {
 					.addContainerGap(13, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
+		
+		chckbxConnectToParser.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (chckbxConnectToParser.isSelected()) {
+					txtLocalhost.setText(oldLocalhostField);
+					txtLocalhost.setEnabled(true);
+				}
+				else {
+					oldLocalhostField  = txtLocalhost.getText();
+					txtLocalhost.setText("");
+					txtLocalhost.setEnabled(false);
+				}
+			}
+		});
 	}
 
 	@Override
