@@ -228,20 +228,31 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 		TimeSeries worth = new TimeSeries("Worth");
 
 		DateTime currDate = new DateTime(history.get(0).getBuyDate());
+		int minutesUntilAlmostMidnight = 60*24 - currDate.getMinuteOfDay() - 1;
+		currDate = currDate.plusMinutes(minutesUntilAlmostMidnight);
 
-		while (currDate.isBeforeNow()) {
+		DateTime tomorrow = new DateTime(System.currentTimeMillis());
+		tomorrow.plusMinutes(60*24 - tomorrow.getMinuteOfDay());
+		
+		while (currDate.isBefore(tomorrow)) {
 			long currWorth = 0;
 			for (PortfolioHistory ph : history) {
-				if (ph.getSoldDate() == null) {
-					StockPrices sp = jpaHelper.getLastStock(ph.getStockPrice().getStockName(), currDate.toDate());
-					if (sp != null)
-						currWorth += ph.getAmount() * sp.getSell();
+				if (ph.getBuyDate().getTime() <= currDate.toDate().getTime()) {
+					if (ph.getSoldDate() == null) {
+						StockPrices sp = jpaHelper.getLastStock(ph.getStockPrice().getStockName(), currDate.toDate());
+						if (sp != null)
+							currWorth += ph.getAmount() * sp.getSell();
+					}
 				}
+				else
+					break; /* Since history is sorted on time we dont need to check more */
 			}
+			currDate = currDate.minusMinutes(currDate.getMinuteOfDay() - 1);
 			worth.add(new Day(currDate.toDate()), FinancialLongConverter.toDouble(currWorth));
 			currDate = currDate.plusDays(1);
 		}
 
+		
 		allTimeSeries.put("Worth", worth);
 		allTimeSeries.put("Portfolio Balance", getBalanceTimeSeries());
 	}
