@@ -4,7 +4,7 @@
 
 package model.database.jpa.tables;
 
-import javax.persistence.metamodel.SetAttribute;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 
 @javax.persistence.metamodel.StaticMetamodel
@@ -13,7 +13,7 @@ import javax.persistence.metamodel.SingularAttribute;
 (value="org.apache.openjpa.persistence.meta.AnnotationProcessor6",date="Thu May 03 20:24:15 CEST 2012")
 public class AlgorithmSettings_ {
     public static volatile SingularAttribute<AlgorithmSettings,String> algorithmName;
-    public static volatile SetAttribute<AlgorithmSettings,AlgorithmSettingDouble> doubleSettings;
+    public static volatile ListAttribute<AlgorithmSettings,AlgorithmSettingDouble> doubleSettings;
     public static volatile SingularAttribute<AlgorithmSettings,Boolean> initiated;
-    public static volatile SetAttribute<AlgorithmSettings,AlgorithmSettingLong> longSettings;
+    public static volatile ListAttribute<AlgorithmSettings,AlgorithmSettingLong> longSettings;
 }

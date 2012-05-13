@@ -1,8 +1,7 @@
 package model.algorithms;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import utils.global.Log;
 import utils.global.Pair;
@@ -110,14 +109,14 @@ public class TestAlgorithm2 implements IAlgorithm{
 	}
 	
 	@Override
-	public Set<AlgorithmSettingDouble> getDefaultDoubleSettings() {
-		Set<AlgorithmSettingDouble> doubleSettings = new HashSet<AlgorithmSettingDouble>();
+	public List<AlgorithmSettingDouble> getDefaultDoubleSettings() {
+		List<AlgorithmSettingDouble> doubleSettings = new ArrayList<AlgorithmSettingDouble>();
 		return doubleSettings;
 	}
 	
 	@Override
-	public Set<AlgorithmSettingLong> getDefaultLongSettings() {
-		Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
+	public List<AlgorithmSettingLong> getDefaultLongSettings() {
+		List<AlgorithmSettingLong> longSettings = new ArrayList<AlgorithmSettingLong>();
 		longSettings.add(new AlgorithmSettingLong("buy", 5, "Number of times a stock has to climb before buying", 1, 1, 100));
 		longSettings.add(new AlgorithmSettingLong("sell", 5, "Number of times a stock has to drop before selling", 2, 1, 100));
 		return longSettings;

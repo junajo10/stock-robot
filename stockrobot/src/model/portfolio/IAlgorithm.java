@@ -2,7 +2,6 @@ package model.portfolio;
 
 
 import java.util.List;
-import java.util.Set;
 
 import utils.global.Pair;
 
@@ -38,8 +37,8 @@ public interface IAlgorithm {
 	
 	
 	// Settings-------------------------------
-	Set<AlgorithmSettingDouble> getDefaultDoubleSettings();
-	Set<AlgorithmSettingLong> getDefaultLongSettings();
+	List<AlgorithmSettingDouble> getDefaultDoubleSettings();
+	List<AlgorithmSettingLong> getDefaultLongSettings();
 	
 	boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings);
 	boolean giveLongSettings(List<Pair<String, Long>> longSettings);

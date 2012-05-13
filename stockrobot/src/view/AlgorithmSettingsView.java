@@ -2,9 +2,11 @@ package view;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.EventListener;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -59,9 +61,11 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	 * 
 	 * @param settings Set of settings
 	 */
-	public void populateDoubleSettings( Set<AlgorithmSettingDouble> settings ) {
+	public void populateDoubleSettings( List<AlgorithmSettingDouble> settings ) {
 		
 		AlgorithmSettingDouble[] arg = settings.toArray( new AlgorithmSettingDouble[0] );
+		
+		Arrays.sort( arg, new CompareSettingsDouble() );
 		
 		for( AlgorithmSettingDouble setting : arg ) {
 			
@@ -76,9 +80,11 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	 * 
 	 * @param settings Set of settings
 	 */
-	public void populateLongSettings( Set<AlgorithmSettingLong> settings ) {
+	public void populateLongSettings( List<AlgorithmSettingLong> settings ) {
 		
 		AlgorithmSettingLong[] arg = settings.toArray( new AlgorithmSettingLong[0] );
+		
+		Arrays.sort( arg, new CompareSettingsLong() );
 		
 		for( AlgorithmSettingLong setting : arg ) {
 			
@@ -125,5 +131,23 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	public void addActions(Map<String, EventListener> actions) {
 		
 		saveBtn.addActionListener( (ActionListener) actions.get( SAVE_DOWN ) );
+	}
+	
+	static class CompareSettingsDouble implements Comparator<AlgorithmSettingDouble> {
+
+		@Override
+		public int compare(AlgorithmSettingDouble o1, AlgorithmSettingDouble o2) {
+			
+			return o1.getName().hashCode() > o2.getName().hashCode() ? -1 : 1;
+		}
+	}
+	
+	static class CompareSettingsLong implements Comparator<AlgorithmSettingLong> {
+
+		@Override
+		public int compare(AlgorithmSettingLong o1, AlgorithmSettingLong o2) {
+			
+			return o1.getName().hashCode() > o2.getName().hashCode() ? -1 : 1;
+		}
 	}
 }

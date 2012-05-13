@@ -1,7 +1,6 @@
 package robot;
 
 import java.util.List;
-import java.util.Set;
 
 import utils.global.Log;
 import utils.global.Pair;
@@ -56,13 +55,13 @@ public class JUnitAlgorithm implements IAlgorithm{
 	}
 
 	@Override
-	public Set<AlgorithmSettingDouble> getDefaultDoubleSettings() {
+	public List<AlgorithmSettingDouble> getDefaultDoubleSettings() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<AlgorithmSettingLong> getDefaultLongSettings() {
+	public List<AlgorithmSettingLong> getDefaultLongSettings() {
 		// TODO Auto-generated method stub
 		return null;
 	}
