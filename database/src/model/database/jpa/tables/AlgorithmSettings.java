@@ -2,9 +2,7 @@ package model.database.jpa.tables;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -29,11 +27,11 @@ public class AlgorithmSettings {
 	
 	@ElementCollection
     @CollectionTable(name = "longSettings")
-    private Set<AlgorithmSettingLong> longSettings = new HashSet<AlgorithmSettingLong>();
+    private List<AlgorithmSettingLong> longSettings = new ArrayList<AlgorithmSettingLong>();
 	
 	@ElementCollection
     @CollectionTable(name = "doubleSettings")
-    private Set<AlgorithmSettingDouble> doubleSettings = new HashSet<AlgorithmSettingDouble>();
+    private List<AlgorithmSettingDouble> doubleSettings = new ArrayList<AlgorithmSettingDouble>();
 		
 	public AlgorithmSettings() {
 		
@@ -48,7 +46,7 @@ public class AlgorithmSettings {
 	public boolean isInitiated() {
 		return initiated;
 	}
-	public void initiate(Set<AlgorithmSettingDouble> doubleSettings, Set<AlgorithmSettingLong> longSettings) {
+	public void initiate(List<AlgorithmSettingDouble> doubleSettings, List<AlgorithmSettingLong> longSettings) {
 		this.doubleSettings = doubleSettings;
 		this.longSettings = longSettings;
 		
@@ -74,14 +72,14 @@ public class AlgorithmSettings {
 	public void addLongSetting(AlgorithmSettingLong longSetting) {
 		longSettings.add(longSetting);
 	}
-	public Set<AlgorithmSettingLong> getLongSettings() {
+	public List<AlgorithmSettingLong> getLongSettings() {
 		return longSettings;
 	}
 	
 	public void addDoubleSetting(AlgorithmSettingDouble doubleSetting) {
 		doubleSettings.add(doubleSetting);
 	}
-	public Set<AlgorithmSettingDouble> getDoubleSettings() {
+	public List<AlgorithmSettingDouble> getDoubleSettings() {
 		return doubleSettings;
 	}
 }
