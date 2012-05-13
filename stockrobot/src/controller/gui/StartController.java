@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComboBox;
+import javax.swing.SwingUtilities;
 
 import model.robot.StartModel;
 
@@ -30,13 +31,24 @@ public class StartController implements IController {
 	ActionListener startAstroAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			astroController.display(view.getParserLocation());
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					astroController.display(view.getParserLocation());
+				}
+			});
+			
 		}
 	};
 	ActionListener startHavester = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			harvester.display(null);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					harvester.display(null);
+				}
+			});
 		}
 	};
 	ActionListener comboBox = new ActionListener() {

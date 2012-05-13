@@ -2,6 +2,7 @@ package model.robot;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -17,7 +18,7 @@ public class RobotSchedulerClient extends Thread{
 	private String host;
 	private int port;
 
-	public RobotSchedulerClient(RobotScheduler robotScheduler, String host, int port) throws UnknownHostException {
+	public RobotSchedulerClient(RobotScheduler robotScheduler, String host, int port) throws Exception {
 		this.host = host;
 		this.port = port;
 
@@ -25,6 +26,8 @@ public class RobotSchedulerClient extends Thread{
 		try {
 			socket = new Socket(host, port);
 			inputStream = socket.getInputStream();
+		} catch (ConnectException e) {
+			throw new Exception();
 		} catch (UnknownHostException e) {
 			keepRunning = false;
 			e.printStackTrace();
