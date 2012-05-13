@@ -1,10 +1,12 @@
 package model.robot;
 
 import java.net.UnknownHostException;
+import java.util.Date;
 
 import utils.global.Log;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 
@@ -20,7 +22,7 @@ public class RobotScheduler implements Runnable{
 
 	//private RobotHandler handler;	
 	IPortfolioHandler portfolioHandler;
-	
+
 	public static final long MILLI_SECOND = 1;
 	public static final long SECOND = 1000*MILLI_SECOND;
 	public static final long MINUTE = 60*SECOND;
@@ -28,14 +30,15 @@ public class RobotScheduler implements Runnable{
 	private boolean isRunning = false;
 	private volatile boolean pause = false;
 	private boolean isStoped = false;
-	
+
 	public static boolean stopThis = false;
-	
+
 	@SuppressWarnings("unused")
 	private long freq = 0;
 	private long pauseLength = SECOND;
 	private boolean usingServer = false;
 
+	private Date lastStockPriceDate = new Date(0);
 	RobotSchedulerClient client;
 
 	public RobotScheduler(IPortfolioHandler portfolioHandler){
@@ -157,7 +160,7 @@ public class RobotScheduler implements Runnable{
 
 				IJPAHelper jpaHelper = JPAHelper.getInstance();
 				jpaHelper.getEntityManager().evictAll();
-				
+
 				synchronized (this) {
 					try {
 						wait();
@@ -168,8 +171,8 @@ public class RobotScheduler implements Runnable{
 			}
 			else {
 				Log.log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN!" );
-				
-				
+
+
 				runAlgorithms();
 
 				try {
@@ -183,24 +186,30 @@ public class RobotScheduler implements Runnable{
 		}
 		isStoped = true;
 	}
-	
-	public void runAlgorithms() {
-		for (IPortfolio p : portfolioHandler.getPortfolios())
-			p.updateAlgorithm();
-	}
 
-	/**
-	 * This method is only called by {@link RobotSchedulerClient}
-	 */
-	public void doWork() {
-		
-		synchronized (this) {
-			notify();
+	public void runAlgorithms() {
+		StockPrices lastStock = JPAHelper.getInstance().getLastStockPrice();
+
+		if (lastStock != null && lastStock.getTime().getTime() > lastStockPriceDate.getTime()) {
+			for (IPortfolio p : portfolioHandler.getPortfolios()) {
+				p.updateAlgorithm();
+			}
+			lastStockPriceDate = lastStock.getTime();			
 		}
+}
+
+/**
+ * This method is only called by {@link RobotSchedulerClient}
+ */
+public void doWork() {
+
+	synchronized (this) {
+		notify();
 	}
-	public void cleanup() {
-		if (client != null) {
-			client.cleanup();
-		}
+}
+public void cleanup() {
+	if (client != null) {
+		client.cleanup();
 	}
+}
 }
