@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 	
 
@@ -136,6 +137,10 @@ public class HarvesterView extends JFrame implements IView{
 		log = new JList();
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
+		
+		JLabel lblNewLabel = new JLabel("Harvester Log");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		scrollPane.setColumnHeaderView(lblNewLabel);
 		getContentPane().setLayout(groupLayout);
 		// TODO Auto-generated constructor stub
 	}
