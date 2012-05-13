@@ -134,14 +134,14 @@ public class AstroController implements IController {
 				try {
 					this.model = new AstroModel(host, port);
 				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//TODO: Show message to user that connection couldent be established.
 				}
 			}
 			else
 				this.model = new AstroModel();
 			
-			this.model.startScheduler();
+			if (this.model != null)
+				this.model.startScheduler();
 		}
 		
 		view.addActions(getActionListeners());
