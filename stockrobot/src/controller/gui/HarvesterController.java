@@ -131,12 +131,15 @@ public class HarvesterController implements IController {
 
 		public void printStatus(boolean status){
 			if(status){
-				addToList("Parser is up and running. Total loops: " + totalLoops);
+				addToList("Parser is up and running. ");
+				addToList("Total parsing loops done: " + totalLoops);
+				addToList("Number of connected to server: " + connected);
 			}
 			else {
-				addToList("Parser closed,crashed or shutting down. Total loops: " + totalLoops);
+				addToList("Parser closed,crashed or shutting down.");
 			}
 		}
+		
 		public void start(){
 			addToList("Parser started at 08:56.");
 		}		
