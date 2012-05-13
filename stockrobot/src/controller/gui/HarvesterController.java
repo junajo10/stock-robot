@@ -43,8 +43,6 @@ public class HarvesterController implements IController {
 				
 				int port = Integer.parseInt(view.getPortTextbox());
 				model.setPort(port);
-				System.out.println("*** Server port set to: " + port);
-
 				
 				if(view.simulateStocksChecked()){
 					if(model.startSimulation()){

@@ -8,6 +8,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import utils.global.Log;
+import utils.global.Log.TAG;
+
 /**
  * Class for receiving notifications that there's new stock data.
  * <p>
@@ -129,7 +132,7 @@ public class AstroReciever {
 							e.printStackTrace();
 						}
 						if(!latestStocks.equals("")){
-							System.out.println("New data is available from database.");
+							Log.log(TAG.NORMAL, "New data is available from database.");
 							newData = true;
 						} 
 						else {
@@ -148,7 +151,7 @@ public class AstroReciever {
 				serverSocket.setKeepAlive(true);
 				inFromServer = new InputStreamReader(serverSocket.getInputStream());
 				fromServer = new BufferedReader(inFromServer);
-				System.out.println("Connnected");
+				Log.log(TAG.NORMAL, "Connected to server: "+SERVER_ADRESS);
 				isConnected = true;
 			} catch (IOException e) {
 				try {
@@ -156,7 +159,7 @@ public class AstroReciever {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				System.err.println("Error: Cant connect to host, reconnecting...");
+				Log.log(TAG.ERROR, "Cant connect to host, reconnecting...");
 				isConnected = false;
 				connect();
 			}
@@ -184,8 +187,7 @@ public class AstroReciever {
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
-						//TODO: Maybe remove print.
-						System.err.println("Disconnected from server.");
+						Log.log(TAG.ERROR, "Disconnected from server.");
 						isConnected = false;
 					}
 				}

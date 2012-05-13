@@ -58,7 +58,6 @@ public class Connector implements IConnector {
 	 */
 	@Override
 	public void sendDataAvailable(int newRows) {
-		System.out.println("Sending new data to clients.");
 		sendNewData = true;
 	}
 	
@@ -180,9 +179,7 @@ public class Connector implements IConnector {
 		}
 		
 		private void removeClientSocket(Socket s){
-			System.out.println("Client disconnected.");
 			clients.remove(s);
-
 		}
 	}
 	
@@ -196,8 +193,6 @@ public class Connector implements IConnector {
 					Socket clientSocket = recieve.accept();					
 					clientSocket.setKeepAlive(true);
 					clients.put(clientSocket, clientSocket);
-					System.out.println("Client connected, total clients: " + clients.size());
-					
 				}
 			} catch (IOException e) {
 			}
