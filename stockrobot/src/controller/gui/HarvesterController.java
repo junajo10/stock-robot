@@ -119,6 +119,7 @@ public class HarvesterController implements IController {
 	
 	private class Logger {
 		long totalLoops = 0;
+		int connected = 0;
 
 		public Logger(){
 			
@@ -151,6 +152,16 @@ public class HarvesterController implements IController {
 
 		public void failStart() {
 			addToList("Parser failed to start. Already started or crashed.");
+		}
+		
+		public void connected(String hostname) {
+			connected++;
+			addToList(hostname + " has connected to Harvester.");
+		}
+		
+		public void disconnected(String hostname) {
+			connected--;
+			addToList(hostname + " has disconnected from Harvester.");
 		}
 		
 		private void addToList(String input){
