@@ -168,7 +168,6 @@ class JPAHelperBase implements IJPAHelper {
 		if (query.getResultList().size() == 1)
 			return query.getResultList().get(0);
 		
-		System.out.println("ASDFASDFASDF");
 		return null;
 	}
 	@Override
@@ -397,10 +396,6 @@ class JPAHelperBase implements IJPAHelper {
 			"AND s1.time = s2.mTime;", StockPrices.class);
 		
 		return query.getResultList();
-	}
-	@Override
-	public void close() {
-		em.close();
 	}
 	@Override
 	public StockPrices getLastStock(StockNames stockName, Date date) {

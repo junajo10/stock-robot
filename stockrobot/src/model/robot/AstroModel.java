@@ -80,7 +80,7 @@ public class AstroModel implements IRobot_Algorithms{
 	}
 	
 	public void cleanup() {
-		robotScheduler.stopThis = true;
+		RobotScheduler.stopThis = true;
 		robotScheduler.doWork();
 		robotScheduler.cleanup();
 		

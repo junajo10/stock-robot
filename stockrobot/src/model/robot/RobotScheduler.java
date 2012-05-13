@@ -3,7 +3,6 @@ package model.robot;
 import java.net.UnknownHostException;
 
 import utils.global.Log;
-import utils.global.Log.TAG;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.portfolio.IPortfolio;
@@ -59,13 +58,9 @@ public class RobotScheduler implements Runnable{
 	 * @return true if stopped else false if already stopped
 	 */
 	public synchronized boolean stop(){
-
-		boolean result = false;
 		if(isRunning){
 			Log.log(Log.TAG.NORMAL , "RobotScheduler Stoped!" );
 			isRunning = pause = false;	
-			result = true;
-
 		}
 		return isStoped;
 	}

@@ -46,6 +46,17 @@ public interface IJPAParser {
 	 */
 	public boolean updateObject(Object o);
 	
+	/**
+	 * Store 1 object in the database.
+	 * @param o Object to be stored
+	 * @return True if it went ok
+	 */
 	public boolean storeObject(Object o);
+	
+	/**
+	 * Stores an object in the database, if for some reason this wont work it will just rollback.
+	 * @param o Object to store
+	 * @return Returns true if store was done, false if database couldent store this
+	 */
 	public boolean storeObjectIfPossible(Object o);
 }

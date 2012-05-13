@@ -18,12 +18,6 @@ import model.database.jpa.tables.StockPrices;
  * @author Daniel
  */
 public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
-	public void stopJPASystem();
-	/**
-	 * Returns a list of all the algorithms.
-	 * @return a list of all the algorithms.
-	 */
-	//public List<AlgorithmEntity> getAllAlgorithms();
 	/**
 	 * Will give back all portfolios in the JPA system.
 	 * @return A list with PortfolioTables
@@ -52,6 +46,12 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @return True if it went ok
 	 */
 	public boolean storeObject(Object o);
+	
+	/**
+	 * Stores an object in the database, if for some reason this wont work it will just rollback.
+	 * @param o Object to store
+	 * @return Returns true if store was done, false if database couldent store this
+	 */
 	public boolean storeObjectIfPossible(Object o);
 	/**
 	 * Stores a list of objects to the database
@@ -82,26 +82,48 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 
 
 	/**
-	 * Gives the AlgorithmTable for a given portfolio
-	 * @param portfolioTable The portfolioTable to get the AlgorithmTable from
-	 * @return An algorithmTable
+	 * Gets the entitymanager.
+	 * @return OpenJPAEntityManager
 	 */
-	//public AlgorithmEntity getAlgorithmTable(PortfolioEntity portfolioTable);
-
-
 	public OpenJPAEntityManager getEntityManager();
 	
-	
+	/**
+	 * Gets the last stockprice for all stockNames
+	 * @return A list of stockPrices
+	 */
 	public List<StockPrices> getLatestStockPrices();
 	
+	/**
+	 * Gets a list of PortfolioHistory assosiated with a given PortfolioEntity
+	 * @param portfolioTable The portfolio table we wish to get history from
+	 * @return Returns a list of portfolioHistorys.
+	 */
 	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable);
 	
+	/**
+	 * Gets a stockPrice from the database.
+	 * @param st The stockName to search for
+	 * @param date The date to search for
+	 * @return Returns a StockPrice, if none is found returns null
+	 */
+	public StockPrices getPricesForStock( StockNames st, Date date );
 	
-	StockPrices getPricesForStock( StockNames st, Date date );
+	/**
+	 * Stops the JPA system
+	 */
+	public void stopJPASystem();
 	
-	public void close();
+	/**
+	 * Gets the last StockPrice up to a given date.
+	 * @param stockName The stockName to search for
+	 * @param date The maximum date this StockPrice can have
+	 * @return A stockPrice, if none is found null is returned
+	 */
+	public StockPrices getLastStock(StockNames stockName, Date date);
 	
-	StockPrices getLastStock(StockNames stockName, Date date);
-	
-	StockPrices getLastStockPrice();
+	/**
+	 * Gets the stockPrice with the maximum date
+	 * @return A stockPrice
+	 */
+	public StockPrices getLastStockPrice();
 }
