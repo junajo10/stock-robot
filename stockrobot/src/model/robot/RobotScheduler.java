@@ -47,7 +47,7 @@ public class RobotScheduler implements Runnable{
 		usingServer = false;
 		this.portfolioHandler = portfolioHandler;
 	}
-	public RobotScheduler(IPortfolioHandler portfolioHandler, String host, int port) throws UnknownHostException {
+	public RobotScheduler(IPortfolioHandler portfolioHandler, String host, int port) throws Exception {
 		//handler = new RobotHandler(portfolioHandler);
 		this.portfolioHandler = portfolioHandler;
 		usingServer = true;

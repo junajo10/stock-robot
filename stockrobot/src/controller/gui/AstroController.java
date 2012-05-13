@@ -5,12 +5,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import model.portfolio.PortfolioHandler;
 import model.robot.AstroModel;
@@ -33,6 +35,7 @@ public class AstroController implements IController {
 	List<IController> subControllers = new ArrayList<IController>();
 	
 	//Hardcoded sub controllers:
+	private IController simController;
 	private IController graphController;
 	private IController stockInfoController;
 	private IController portfolioController;
@@ -40,67 +43,58 @@ public class AstroController implements IController {
 	ActionListener startSim = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (IController c : subControllers) {
-				if (c.getName().contentEquals("SimController")) {
-					c.display(null);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					simController.display(null);
 				}
-			}
+			});
 		}
 	};
 	
 	ActionListener openGraph = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (IController c : subControllers) {
-				if (c.getName().contentEquals(GraphController.CLASS_NAME)) {
-					c.display(null);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					graphController.display(null);
 				}
-			}
+			});
 		}
 	};
 	
 	ActionListener openStockInfo = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (IController c : subControllers) {
-				if (c.getName().contentEquals(StockTableController.CLASS_NAME)) {
-					c.display(null);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					stockInfoController.display(null);
 				}
-			}
+			});
 		}
 	};
 	
 	ActionListener openPortfolioView = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (IController c : subControllers) {
-				if (c.getName().equals(PortfolioController.CLASS_NAME)) {
-					
-					c.display(null);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					portfolioController.display(null);
 				}
-			}
+			});
 		}
 	};
-	
-	ActionListener openAlgorithmSettingsView = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			for (IController c : subControllers) {
-				if (c.getName().contentEquals(AlgorithmSettingsController.CLASS_NAME)) {
-					
-					c.display(null);
-				}
-			}
-		}
-	};
-	
+		
 	WindowListener windowClose = new WindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			cleanup();
 		}
 	};
-	
+
 	public AstroController() {
 
 	}
@@ -133,8 +127,10 @@ public class AstroController implements IController {
 			if (port > 0) {
 				try {
 					this.model = new AstroModel(host, port);
-				} catch (UnknownHostException e) {
+				} catch (Exception e) {
 					//TODO: Show message to user that connection couldent be established.
+					JOptionPane.showMessageDialog(null, "Couldent connect to parser server", "Error", JOptionPane.ERROR_MESSAGE);
+					cleanup();
 				}
 			}
 			else
@@ -143,11 +139,12 @@ public class AstroController implements IController {
 			if (this.model != null)
 				this.model.startScheduler();
 		}
-		
-		view.addActions(getActionListeners());
-		
-		view.display(this.model);
-		defineSubControllers();
+		if (this.model != null) {
+			defineSubControllers();
+			view.addActions(getActionListeners());
+			
+			view.display(this.model);
+		}
 	}
 
 	@Override
@@ -155,7 +152,9 @@ public class AstroController implements IController {
 		view.removePropertyChangeListener(this);
 		view.cleanup();
 		
-		model.cleanup();
+		if (model != null) {
+			model.cleanup();
+		}
 		model = null;
 	}
 
@@ -186,7 +185,8 @@ public class AstroController implements IController {
 		stockInfoController = new StockTableController();
 		subControllers.add( stockInfoController );
 		
-		subControllers.add(new SimController());
+		simController = new SimController();
+		subControllers.add(simController);
 		
 		portfolioController = new PortfolioController(model.getTrader(), PortfolioHandler.getInstance());
 		subControllers.add( portfolioController );

@@ -52,7 +52,7 @@ public class AstroModel implements IRobot_Algorithms{
 	 * @param port Port of the parser
 	 * @throws UnknownHostException If the parser cant be reached UnknownHostException will be thrown
 	 */
-	public AstroModel(String host, int port) throws UnknownHostException {
+	public AstroModel(String host, int port) throws Exception {
 		jpaHelper = JPAHelper.getInstance();
 		
 		//TODO: Removed when portfolioWizard works, this is just added to create a default portfolio with some money

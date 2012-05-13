@@ -67,7 +67,7 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		RobotScheduler schedueler = null;
 		try {
 			schedueler = new RobotScheduler(pHandler, "127.0.0.1", port);
-		} catch (UnknownHostException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		
