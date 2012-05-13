@@ -11,14 +11,13 @@ import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.trader.ITrader;
 
-import view.IView;
 import view.PortfolioView;
 
 
 public class PortfolioController implements IController {
 
 	public static final String CLASS_NAME = "PortfolioController";
-	private IView view;
+	private PortfolioView view;
 	private ITrader trader;
 	private IPortfolioHandler portfolios; 
 	
@@ -52,7 +51,7 @@ public class PortfolioController implements IController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			IPortfolio portfolio = (((PortfolioView) view).getSelectedPortfolio());
+			IPortfolio portfolio = (view.getSelectedPortfolio());
 			
 			if (portfolio != null) {
 				
@@ -65,7 +64,7 @@ public class PortfolioController implements IController {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			IPortfolio portfolio = (((PortfolioView) view).getSelectedPortfolio());
+			IPortfolio portfolio = (view.getSelectedPortfolio());
 			
 			if (portfolio != null)
 				historyController.display(portfolio.getPortfolioTable());

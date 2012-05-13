@@ -62,11 +62,9 @@ public class PortfolioView extends JFrame implements IView {
 		this.portfolios = portfolios; 
 		this.trader = trader;
 		trader.addAddObserver(this);
-		
-		setResizable(false);
 		setTitle("Portfolio");
 		
-		setBounds(100, 100, 318, 185);
+		setBounds(100, 100, 432, 185);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		
