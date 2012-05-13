@@ -7,7 +7,6 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.trader.ITrader;
@@ -57,9 +56,7 @@ public class PortfolioController implements IController {
 			
 			if (portfolio != null) {
 				
-				IAlgorithm algo = portfolio.getAlgorithm();
-				
-				AlgorithmSettingsController algoSettings = new AlgorithmSettingsController( algo, portfolio );
+				AlgorithmSettingsController algoSettings = new AlgorithmSettingsController( portfolio );
 				algoSettings.display( new Object() );
 			}
 		}
