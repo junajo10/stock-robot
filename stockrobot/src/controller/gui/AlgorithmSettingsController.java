@@ -6,9 +6,13 @@ import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.AlgorithmSettingDouble;
+import model.database.jpa.tables.AlgorithmSettingLong;
+import model.database.jpa.tables.AlgorithmSettings;
 import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 
@@ -26,13 +30,24 @@ public class AlgorithmSettingsController implements IController {
 	private IAlgorithm algo;
 	private IPortfolio portfolio;
 	
+	//TODO: Daniel said it should be possible to update algorithm settings by just updating the portfolio.getPorfolioTable
+	//		However that doesn't seem to work for me, so I use these variables in the mean time:
+//	private Set<AlgorithmSettingDouble> doubleSettings;
+//	private Set<AlgorithmSettingLong> longSettings;
+	
 	private ActionListener saveDown = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
 			IJPAHelper jpaHelper = JPAHelper.getInstance();
 			
-			jpaHelper.updateObject( portfolio );
+//			AlgorithmSettingLong[] settings = longSettings.toArray( new AlgorithmSettingLong[0] );
+			jpaHelper.updateObject( portfolio.getPortfolioTable() );
+			
+//			for( AlgorithmSettingLong setting : settings ) {
+				
+//				jpaHelper.updateObject( setting );
+//			}
 		}
 	};
 	
@@ -45,10 +60,9 @@ public class AlgorithmSettingsController implements IController {
 		actionListeners.put( AlgorithmSettingsView.SAVE_DOWN, saveDown );
 		
 		view = new AlgorithmSettingsView( "Dummy value." );
-		
 		view.addActions( getActionListeners() );
-		view.populateDoubleSettings( this.algo.getDefaultDoubleSettings() );
-		view.populateLongSettings( this.algo.getDefaultLongSettings() );
+		view.populateDoubleSettings( portfolio.getPortfolioTable().getAlgortihmSettings().getDoubleSettings() );
+		view.populateLongSettings( portfolio.getPortfolioTable().getAlgortihmSettings().getLongSettings() );
 	}
 	
 	
