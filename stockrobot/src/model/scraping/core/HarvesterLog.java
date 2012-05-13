@@ -8,6 +8,10 @@ import javax.swing.DefaultListModel;
 
 /**
  * Class for controlling the Log in the Harvester GUI.
+ * <p>
+ * Singleton design.
+ * Use call HarvesterLog.getinstance()
+ * 
  * @author Erik
  *
  */
