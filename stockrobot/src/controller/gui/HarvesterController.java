@@ -172,7 +172,7 @@ public class HarvesterController implements IController {
 			        for(int i = 0; i < len; i++) { 
 			        	out.println(model.getElementAt(i).toString()); 
 			        } 
-					addToList(logTxtFile.getName()+" exported to home-directory.");
+					addToList("Log exported to "+logTxtFile.getAbsolutePath());
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}  finally {
@@ -204,7 +204,7 @@ public class HarvesterController implements IController {
 
 	@Override
 	public void cleanup() {
-		
+	
 	}
 
 
