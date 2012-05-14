@@ -4,7 +4,6 @@ import utils.global.Log;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
-import model.wizard.WizardModel;
 import model.wizard.WizardPageModel;
 
 public class PortfolioWizardModel extends WizardPageModel{
@@ -85,7 +84,7 @@ public class PortfolioWizardModel extends WizardPageModel{
 		if(canFinish()){
 			IJPAHelper jpaHelper = JPAHelper.getInstance();
 			PortfolioEntity p = new PortfolioEntity(name);
-			p.setAlgorithm("algorithm");
+			p.setAlgorithm(algorithm);
 			p.invest(balance, true);
 			jpaHelper.storeObject(p);
 			
