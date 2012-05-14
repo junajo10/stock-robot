@@ -64,7 +64,7 @@ public class PortfolioView extends JFrame implements IView {
 		trader.addAddObserver(this);
 		setTitle("Portfolio");
 		
-		setBounds(100, 100, 432, 185);
+		setBounds(100, 100, 432, 196);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		

@@ -13,7 +13,7 @@ import model.portfolio.PortfolioHandler;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
-
+import utils.global.Log;
 import view.wizard.WizardPage;
 import view.wizard.portfolio.PortfolioPages;
 import view.wizard.portfolio.PortfolioStartPage;
@@ -24,8 +24,6 @@ public class WizardStartPageController extends WizardPageController {
 	private WizardModel model;
 	private PortfolioWizardModel pageModel;
 	private Map<String, EventListener> actions;
-	
-	private static final int MIN_SIZE_NAME = 5;
 	
 	private String createFromSelected = null;
 	
@@ -70,7 +68,7 @@ public class WizardStartPageController extends WizardPageController {
 				model.removeNextPage();
 				//createFromSelected = null;
 			}else if(e.getStateChange() == ItemEvent.SELECTED){
-				createFromSelected = page.CREATE_FROM_NEW;
+				createFromSelected = PortfolioStartPage.CREATE_FROM_NEW;
 				checkNext();
 			}
 		}	
@@ -91,7 +89,7 @@ public class WizardStartPageController extends WizardPageController {
 				//createFromSelected = null;
 			}else if(e.getStateChange() == ItemEvent.SELECTED){
 				page.setEnabledPanelClone(true);
-				createFromSelected = page.CREATE_FROM_CLONE;
+				createFromSelected = PortfolioStartPage.CREATE_FROM_CLONE;
 			}
 		}	
 	}
@@ -99,14 +97,14 @@ public class WizardStartPageController extends WizardPageController {
 	private boolean checkNext(){
 		
 		boolean canNext = false;
-		if(page.getPortfolioName().length() > MIN_SIZE_NAME){
-			page.showNameError(null);
-			if(createFromSelected != null && createFromSelected.equals(page.CREATE_FROM_NEW)){
+		if(pageModel.getProperties().get(PortfolioWizardModel.PROPERTY_NAME) == true){
+			page.setErrorName(false);
+			if(createFromSelected != null && createFromSelected.equals(PortfolioStartPage.CREATE_FROM_NEW)){
 				model.setNextPage(PortfolioPages.PAGE_CREATE_FROM_NEW);
 				canNext = true;
 			}
 		}else{
-			page.showNameError("Minimum 5 chars");
+			page.setErrorName(true);
 		}
 		
 		if(!canNext && model.haveNext()){
@@ -121,19 +119,16 @@ public class WizardStartPageController extends WizardPageController {
 		@Override
 		public void keyTyped(KeyEvent e) {
 
+			pageModel.setName(page.getPortfolioName());
 			checkNext();
 		}
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
 		}
 
 	}

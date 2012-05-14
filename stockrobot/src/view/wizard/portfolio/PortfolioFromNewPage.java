@@ -2,6 +2,7 @@ package view.wizard.portfolio;
 
 import java.awt.Component;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyListener;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,12 @@ import java.awt.Color;
 public class PortfolioFromNewPage extends WizardPage {
 
 	private static final long serialVersionUID = 20596476598729363L;
+	
+	public static final String BALANCE_INPUT_LISTENER 	= "balanceInputListener";
+	public static final String ALGORITHM_LISTENER 		= "algorithmInputListener";
+	
 	private JComboBox cmbAlgorithms;
-	private JLabel lblBalanceError;
+	private JLabel lblErrorBalance;
 	private JLabel lblErrorAlgorithm;
 	private JTextField txtBalance;
 	
@@ -50,10 +55,10 @@ public class PortfolioFromNewPage extends WizardPage {
 		pnl_balance.add(txtBalance);
 		this.add(pnl_balance);
 		
-		lblBalanceError = new JLabel("Error");
-		lblBalanceError.setVisible(false);
-		lblBalanceError.setForeground(Color.RED);
-		pnl_balance.add(lblBalanceError);
+		lblErrorBalance = new JLabel("Balance must be set ");
+		lblErrorBalance.setVisible(false);
+		lblErrorBalance.setForeground(Color.RED);
+		pnl_balance.add(lblErrorBalance);
 		
 		List<String> algorithms = PluginAlgortihmLoader.getInstance().getAlgorithmNames();
 		
@@ -61,13 +66,14 @@ public class PortfolioFromNewPage extends WizardPage {
 		FlowLayout flowLayout = (FlowLayout) pnlAlgorithm.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(pnlAlgorithm);
-		JLabel lblAlgorithmName = new JLabel("Algorithm Name:");
+		JLabel lblAlgorithmName = new JLabel("Algorithm:");
 		pnlAlgorithm.add(lblAlgorithmName);
 		cmbAlgorithms = new JComboBox(algorithms.toArray());
 		pnlAlgorithm.add(cmbAlgorithms);
 		
-		lblErrorAlgorithm = new JLabel("Error");
+		lblErrorAlgorithm = new JLabel("An algorithm must be set");
 		lblErrorAlgorithm.setForeground(Color.RED);
+		lblErrorAlgorithm.setVisible(false);
 		pnlAlgorithm.add(lblErrorAlgorithm);
 		//========================================
 		
@@ -88,6 +94,34 @@ public class PortfolioFromNewPage extends WizardPage {
 			cmbAlgorithms.removeItemListener(l);
 		}
 	}
+	
+	public long getBalance(){
+		
+		long balance = -1;
+		
+		try{ 
+			balance = Long.valueOf(txtBalance.getText());
+		}catch (NumberFormatException e) {
+			balance = -1;
+		}		
+		
+		return balance;
+	}
+	
+	public void setBalance(long balance){
+		
+		txtBalance.setText("" + balance);
+	}
+	
+	public void setErrorBalance(boolean error){
+		
+		lblErrorBalance.setVisible(error);
+	}
+	
+	public void setErrorAlgorithms(boolean error){
+		
+		lblErrorAlgorithm.setVisible(error);
+	}
 
 	@Override
 	public void display(Object model) {
@@ -97,8 +131,13 @@ public class PortfolioFromNewPage extends WizardPage {
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
-		// TODO Auto-generated method stub
 		
+		if(actions.get(BALANCE_INPUT_LISTENER) instanceof KeyListener) {
+			txtBalance.addKeyListener((KeyListener) actions.get(BALANCE_INPUT_LISTENER));
+		}
+		if(actions.get(BALANCE_INPUT_LISTENER) instanceof ItemListener){
+			cmbAlgorithms.addItemListener((ItemListener) actions.get(ALGORITHM_LISTENER));
+		}
 	}
 	
 	

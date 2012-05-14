@@ -124,7 +124,7 @@ public class PortfolioStartPage extends WizardPage {
 					.addGap(150))
 		);
 		
-		lblNameError = new JLabel("Error");
+		lblNameError = new JLabel("A portfolio name must be set");
 		lblNameError.setVisible(false);
 		lblNameError.setForeground(new Color(255, 0, 0));
 		pnl_PortfolioName.add(lblNameError);
@@ -187,6 +187,7 @@ public class PortfolioStartPage extends WizardPage {
 	}
 	
 	public void setPortfolioName(String name){
+		
 		txtPortfolioName.setText(name);
 	}
 
@@ -204,14 +205,9 @@ public class PortfolioStartPage extends WizardPage {
 		
 	}
 	
-	public void showNameError(String error){
+	public void setErrorName(boolean error){
 		
-		if(error == null){
-			lblNameError.setVisible(false);
-		}else{
-			lblNameError.setText(error);
-			lblNameError.setVisible(true);
-		}
+		lblNameError.setVisible(error);
 	}
 
 	@Override

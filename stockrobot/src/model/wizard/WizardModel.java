@@ -125,7 +125,7 @@ public class WizardModel implements IObservable {
 		return prevPage;
 	}
 	
-	public boolean haveback(){
+	public boolean haveBack(){
 		
 		return getBackPage() != null;
 	}
@@ -137,6 +137,7 @@ public class WizardModel implements IObservable {
 		if(historyPages.size() > 1){
 			Integer current = historyPages.pop();
 			prev = historyPages.peek();
+			nextPage = current;
 			observers.firePropertyChange(EVT_PAGE_CURRENT_CHANGE, current, prev);
 		}
 		

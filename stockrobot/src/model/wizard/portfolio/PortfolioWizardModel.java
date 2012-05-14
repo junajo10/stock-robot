@@ -11,24 +11,51 @@ public class PortfolioWizardModel extends WizardPageModel{
 	private String algorithm;
 	private long balance;
 	
+	private static final int MIN_SIZE_NAME = 5;
+	
+	public static final int PROPERTY_NAME = 1;
+	public static final int PROPERTY_ALGORITHM = 2;
 	
 	public PortfolioWizardModel(WizardModel wizardModel) {
 		super(wizardModel);
 		
 		portfolio = new PortfolioEntity();
+		properties.put(PROPERTY_NAME, false);
 	}
 	
 	public void setName(String name){
 		
-		this.name = name;
+		if(name.length() >= MIN_SIZE_NAME){
+			this.name = name;
+			properties.put(PROPERTY_NAME, true);
+		}else{
+			properties.put(PROPERTY_NAME, false);
+			//TODO fire error event
+		}
 	}
 	
 	public void setAlgorithm(String algorithm){
-		this.algorithm = algorithm;
+		
+		if(algorithm != null){
+			this.algorithm = algorithm;
+			properties.put(PROPERTY_ALGORITHM, true);
+		}else{
+			properties.put(PROPERTY_ALGORITHM, false);
+			//TODO fire error event
+		}
 	}
 	
-	public void addBalance(long amount){
-		balance = amount;
+	public void setBalance(long amount){
+		
+		if(amount >= 0){
+			balance = amount;
+		}else{
+			//TODO send error event
+		}
+	}
+	
+	public long getBalance(){
+		return balance;
 	}
 
 	@Override
@@ -50,7 +77,7 @@ public class PortfolioWizardModel extends WizardPageModel{
 	public void finish() {
 		
 		if(canFinish()){
-			
+			//TODO create new portfolio
 		}
 	}
 }
