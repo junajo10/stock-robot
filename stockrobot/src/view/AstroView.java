@@ -31,10 +31,10 @@ public class AstroView extends JFrame implements IView {
 	
 	int i = 2133;
 	private JPanel contentPane;
-	JButton btnSimulate 								= new JButton("Simulate");
-	JButton btnGraph 									= new JButton("Graph");
-	JButton btnStocks 									= new JButton("Stocks");
-	JButton btnPortfolio 								= new JButton("Portfolio");
+	JButton btnSimulate 								= new JButton("Simulate Algorithms");
+	JButton btnGraph 									= new JButton("Graph Window");
+	JButton btnStocks 									= new JButton("Show Stocks");
+	JButton btnPortfolio 								= new JButton("Open Portfolio");
 	
 	WindowListener windowListener;
 	
@@ -58,7 +58,9 @@ public class AstroView extends JFrame implements IView {
 	 * Create the frame.
 	 */
 	public AstroView() {
-		setBounds(100, 100, 254, 253);
+		setResizable(false);
+		setTitle("ASTRo Main");
+		setBounds(100, 100, 223, 207);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -78,39 +80,27 @@ public class AstroView extends JFrame implements IView {
 							.addComponent(lblAstroStatus)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnPortfolio))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnStocks))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnSimulate))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnGraph))
-						)
-					.addContainerGap(95, Short.MAX_VALUE))
+						.addComponent(btnPortfolio, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(btnStocks, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(btnSimulate, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(btnGraph, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+					.addGap(48))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblAstroStatus)
-							.addGap(28)
-							.addComponent(btnPortfolio)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnStocks)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnSimulate)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnGraph)
-							)
-							
+						.addComponent(lblAstroStatus)
 						.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(19, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnPortfolio)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnStocks)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnSimulate)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnGraph)
+					.addContainerGap(70, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
