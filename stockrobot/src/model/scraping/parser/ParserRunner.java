@@ -118,7 +118,8 @@ public class ParserRunner implements IParserRunner {
 				}
 				else {
 					try {
-						System.out.println("Sleep for: " + scheduler.timeUntilNextParse()/1000/60/60 + "hours and " + ((scheduler.timeUntilNextParse()/1000/60)%60) + "minutes");
+						String SleepTime = "Sleep for: " + scheduler.timeUntilNextParse()/1000/60/60 + "hours and " + ((scheduler.timeUntilNextParse()/1000/60)%60) + "minutes";
+						pcs.firePropertyChange("Text.", null, SleepTime);
 						Thread.sleep(scheduler.timeUntilNextParse());
 					} catch (InterruptedException e) {
 						e.printStackTrace();

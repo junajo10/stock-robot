@@ -74,13 +74,13 @@ public class HarvesterController implements IController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			log.stop();
 			if(!view.forceStopChecked()){
 				model.stopParser();
 			}
 			else {
 				model.forceStop();
 			}
-			log.stop();
 			view.setStopInactive();
 			view.setStartActive();
 		}

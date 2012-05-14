@@ -146,7 +146,6 @@ public class SimulationRunner implements IParserRunner {
 	 */
 	public boolean stopParser() {
 		if(run){
-			System.out.println("apa");
 			connector.shutdown();
 			while(connector.isRunning()){
 			}

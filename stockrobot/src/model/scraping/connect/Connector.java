@@ -81,7 +81,7 @@ public class Connector implements IConnector {
 	 * Method used for testing.
 	 */
 	public void shutdown(){
-		pcs.firePropertyChange("Server shutdown..", null, null);
+		pcs.firePropertyChange("Server shutdown.", null, null);
 		shouldRun = false;
 		Collection<Socket> clientCpy = clients.keySet();
 		for(Socket s : clientCpy){
