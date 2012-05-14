@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.scraping.connect.Connector;
-import model.scraping.connect.HarvesterServer;
 import model.scraping.connect.IConnector;
 import model.scraping.database.IInserter;
 import model.scraping.database.JPAInserter;
@@ -32,21 +31,22 @@ public class ParserRunner implements IParserRunner {
 	
 	boolean run = false;
 	boolean close = false;
+	private int PORT_NR;
+	
 	AvanzaParser parser;
 	IScheduler scheduler;
 	IInserter inserter;
 	IConnector connector;
-	HarvesterServer server;
 	
 	boolean skipScheduler = false;
 	private PropertyChangeSupport pcs;
 	
-	public ParserRunner(int port){
+	public ParserRunner(int PORT_NR){
+		this.PORT_NR = PORT_NR;
 		//this.server = new HarvesterServer(port);
 		parser = new AvanzaParser();
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
-		connector = new Connector(port);
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public class ParserRunner implements IParserRunner {
 			}
 			while(!run){
 				try {
-					Thread.sleep(30000);
+					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -166,10 +166,11 @@ public class ParserRunner implements IParserRunner {
 		if(run){
 			run = false;
 			connector.shutdown();
-			connector = null;
 			while(connector.isRunning()){
 				
 			}
+			connector = null;
+			pcs.firePropertyChange("Stopped successfull.", null, null);
 			connector = null;
 			return true;
 		}
@@ -186,6 +187,7 @@ public class ParserRunner implements IParserRunner {
 	public boolean startParser() {
 		if(!run){
 			run = true;
+			connector = new Connector(PORT_NR, pcs);
 			return true;
 		}
 		else{
@@ -213,7 +215,6 @@ public class ParserRunner implements IParserRunner {
 	@Override
 	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
 		this.pcs = pcs;
-		connector.setPropertyChangeSupport(pcs);
 	}
 	
 }

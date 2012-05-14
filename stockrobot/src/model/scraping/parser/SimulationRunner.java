@@ -25,6 +25,7 @@ public class SimulationRunner implements IParserRunner {
 
 	boolean run = false;
 	boolean close = false;
+	private int PORT_NR;
 
 	IScheduler scheduler;
 	IInserter inserter;
@@ -34,10 +35,11 @@ public class SimulationRunner implements IParserRunner {
 	Random rand = new Random(System.currentTimeMillis());
 	private PropertyChangeSupport pcs;
 	
-	public SimulationRunner(int port){
-		this.connector = new Connector(port);
+	
+	public SimulationRunner(int PORT_NR){
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
+		this.PORT_NR = PORT_NR;
 	}
 	@Override
 	public void run() {
@@ -115,6 +117,10 @@ public class SimulationRunner implements IParserRunner {
 	public boolean stopRunner() {
 		if(!close){
 			connector.shutdown();
+			while(connector.isRunning()){
+				
+			}
+			pcs.firePropertyChange("Stopped successfull.", null, null);
 			close = true;
 			return true;
 		}
@@ -132,6 +138,9 @@ public class SimulationRunner implements IParserRunner {
 	public boolean stopParser() {
 		if(run){
 			connector.shutdown();
+			while(connector.isRunning()){
+				
+			}
 			run = false;
 			return true;
 		}
@@ -147,6 +156,7 @@ public class SimulationRunner implements IParserRunner {
 	 */
 	public boolean startParser() {
 		if(!run){
+			connector = new Connector(PORT_NR, pcs);
 			run = true;
 			return true;
 		}

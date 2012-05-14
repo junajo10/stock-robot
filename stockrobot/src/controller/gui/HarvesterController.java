@@ -141,8 +141,12 @@ public class HarvesterController implements IController {
 		}
 		
 		public void start(){
-			addToList("Parser started at 08:56.");
+			addToList("Parser initializing.");
 		}		
+		
+		public void serverUp(){
+			addToList("Server is up and accepting connections.");
+		}	
 		
 		public void parsingLoop(long timeElapsed){
 			totalLoops++;
@@ -150,7 +154,15 @@ public class HarvesterController implements IController {
 		}		
 		
 		public void stop(){
-			addToList("Parser stopped at 08:59.");
+			addToList("Parser starting to shutdown.");
+		}
+		
+		public void finishStopped(){
+			addToList("Parser shutdown complete.");
+		}
+		
+		public void showDownServer(){
+			addToList("Shutting down server.");
 		}
 
 		public void failStart() {
@@ -223,6 +235,18 @@ public class HarvesterController implements IController {
 		
 		if(event.getPropertyName().equals("Text.")){
 			log.addText((String) event.getNewValue());
+		}
+		
+		if(event.getPropertyName().equals("Server shutdown.")){
+			log.showDownServer();
+		}
+		
+		if(event.getPropertyName().equals("Server up.")){
+			log.serverUp();
+		}
+		
+		if(event.getPropertyName().equals("Stopped successfull.")){
+			log.finishStopped();
 		}
 	}
 

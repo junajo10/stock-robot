@@ -36,7 +36,8 @@ public class Connector implements IConnector {
 	private Thread astroSender;
 	private Thread serverThread;
 	
-	public Connector(int PORT_NR) {
+	public Connector(int PORT_NR, PropertyChangeSupport pcs) {
+		this.pcs = pcs;
 		shouldRun = true;
 		this.PORT_NR = PORT_NR;
 		clients = new ConcurrentHashMap<Socket, Socket>();
@@ -80,8 +81,8 @@ public class Connector implements IConnector {
 	 * Method used for testing.
 	 */
 	public void shutdown(){
+		pcs.firePropertyChange("Server shutdown..", null, null);
 		shouldRun = false;
-		pcs.firePropertyChange("Text.", null, "Shutting down server.");
 		Collection<Socket> clientCpy = clients.keySet();
 		for(Socket s : clientCpy){
 			clients.remove(s);
@@ -109,7 +110,7 @@ public class Connector implements IConnector {
 		if(recieve != null){
 			return ( getConnected()!=0 || !recieve.isClosed() ) && serverThread.isAlive() && astroSender.isAlive();
 		}
-		return  getConnected()!=0;
+		return  getConnected()!=0 && serverThread.isAlive() && astroSender.isAlive();
 	}
 	
 	@Override
@@ -138,6 +139,7 @@ public class Connector implements IConnector {
 					} catch (Exception e) {
 						e.printStackTrace();
 						clients.remove(s);
+						pcs.firePropertyChange("Disconnected.", null, s.getInetAddress().toString());
 					}
 				}
 				if(sendNewData){
@@ -154,6 +156,7 @@ public class Connector implements IConnector {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private class PingReciever implements Runnable {
 		public void run() {
 			while (shouldRun) {
@@ -201,10 +204,12 @@ public class Connector implements IConnector {
 		public void run() {
 			try {
 				recieve = new ServerSocket(PORT_NR);
+				pcs.firePropertyChange("Server up.", null, null);
 				while (shouldRun) {
 					Socket clientSocket = recieve.accept();					
 					clientSocket.setKeepAlive(true);
 					clients.put(clientSocket, clientSocket);
+					pcs.firePropertyChange("Connected.", null, clientSocket.getInetAddress().toString());
 				}
 			} catch (IOException e) {
 			}
