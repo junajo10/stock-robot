@@ -213,6 +213,7 @@ public class ParserRunner implements IParserRunner {
 	@Override
 	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
 		this.pcs = pcs;
+		connector.setPropertyChangeSupport(pcs);
 	}
 	
 }

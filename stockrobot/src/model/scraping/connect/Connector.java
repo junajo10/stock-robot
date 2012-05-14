@@ -1,6 +1,7 @@
 package model.scraping.connect;
 
 
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,6 +31,10 @@ public class Connector implements IConnector {
 	boolean shouldRun;
 	
 	private ServerSocket recieve;
+	private PropertyChangeSupport pcs;
+	
+	private Thread astroSender;
+	private Thread serverThread;
 	
 	public Connector(int PORT_NR) {
 		shouldRun = true;
@@ -41,8 +46,8 @@ public class Connector implements IConnector {
 		//Commented away pinger until this is added to RobotScheduler /Daniel
 		//PingReciever pinger = new PingReciever();
 		
-		Thread serverThread = new Thread(server);
-		Thread astroSender = new Thread(sender);
+		serverThread= new Thread(server);
+		astroSender = new Thread(sender);
 		//Thread pingerThread = new Thread(pinger);
 		
 		serverThread.start();
@@ -76,6 +81,7 @@ public class Connector implements IConnector {
 	 */
 	public void shutdown(){
 		shouldRun = false;
+		pcs.firePropertyChange("Text.", null, "Shutting down server.");
 		Collection<Socket> clientCpy = clients.keySet();
 		for(Socket s : clientCpy){
 			clients.remove(s);
@@ -101,9 +107,14 @@ public class Connector implements IConnector {
 	 */
 	public boolean isRunning(){
 		if(recieve != null){
-			return getConnected()!=0 || !recieve.isClosed();
+			return ( getConnected()!=0 || !recieve.isClosed() ) && serverThread.isAlive() && astroSender.isAlive();
 		}
 		return  getConnected()!=0;
+	}
+	
+	@Override
+	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
+		this.pcs = pcs;
 	}
 	
 	
@@ -179,6 +190,7 @@ public class Connector implements IConnector {
 		}
 		
 		private void removeClientSocket(Socket s){
+			pcs.firePropertyChange("Disconnected.", null, s.getInetAddress().toString());
 			clients.remove(s);
 		}
 	}

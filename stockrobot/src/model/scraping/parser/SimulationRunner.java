@@ -41,6 +41,7 @@ public class SimulationRunner implements IParserRunner {
 	}
 	@Override
 	public void run() {
+		Long timeElapsed = null;
 		boolean alreadyExists = false;
 		
 		for (StockNames s : jpaHelper.getAllStockNames()) {
@@ -57,6 +58,9 @@ public class SimulationRunner implements IParserRunner {
 		}
 		
 		while(!close) {
+			if(timeElapsed==null){
+				pcs.firePropertyChange("Parsing Progress.", null, 0);
+			}
 			Long timeBefore = System.currentTimeMillis();
 			for (StockNames sn : simulatedStocks) {
 				StockPrices sp = new StockPrices(sn, rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), new Date(System.currentTimeMillis()));
@@ -64,10 +68,35 @@ public class SimulationRunner implements IParserRunner {
 			}
 			
 			connector.sendDataAvailable(10);
-			Long timeElapsed = System.currentTimeMillis() - timeBefore;
+			pcs.firePropertyChange("Parsing Progress.", null, 20000);
+			timeElapsed = System.currentTimeMillis() - timeBefore;
 			pcs.firePropertyChange("Parsing done.", null, timeElapsed);
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(100);
+				pcs.firePropertyChange("Parsing Progress.", null, 0);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			try {
+				Thread.sleep(400);
+				pcs.firePropertyChange("Parsing Progress.", null, 5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			try {
+				Thread.sleep(500);
+				pcs.firePropertyChange("Parsing Progress.", null, 10000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			try {
+				Thread.sleep(500);
+				pcs.firePropertyChange("Parsing Progress.", null, 15000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			try {
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

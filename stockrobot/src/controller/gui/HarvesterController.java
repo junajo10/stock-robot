@@ -206,7 +206,7 @@ public class HarvesterController implements IController {
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		if(event.getPropertyName().equals("Parsing done.")){
-			log.parsingLoop((Long) event.getOldValue());
+			log.parsingLoop((Long) event.getNewValue());
 		}
 		
 		if(event.getPropertyName().equals("Parsing Progress.")){
