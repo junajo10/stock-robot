@@ -9,9 +9,10 @@ public class WizardFactory {
 	
 	public static WizardContoller buildPortfolioWizard(){
 			
-	 	WizardContoller wizard = new WizardContoller();
+		PortfolioWizardModel pageModel = new PortfolioWizardModel();
+		
+	 	WizardContoller wizard = new WizardContoller(pageModel);
 		WizardModel wizardModel = wizard.getModel();
-		PortfolioWizardModel pageModel = new PortfolioWizardModel(wizardModel);
 		
 		WizardPage startPage = buildStartPage(wizardModel,pageModel);
     	wizard.getView().registerPage(1,startPage);

@@ -15,7 +15,6 @@ public abstract class WizardPageController implements IController {
 		
 	}
 
-
 	@Override
 	public String getName() {
 		return name;

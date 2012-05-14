@@ -1,5 +1,8 @@
 package model.wizard.portfolio;
 
+import utils.global.Log;
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.wizard.WizardModel;
 import model.wizard.WizardPageModel;
@@ -14,10 +17,11 @@ public class PortfolioWizardModel extends WizardPageModel{
 	private static final int MIN_SIZE_NAME = 5;
 	
 	public static final int PROPERTY_NAME = 1;
-	public static final int PROPERTY_ALGORITHM = 2;
+	public static final int PROPERTY_BALANCE = 2;
+	public static final int PROPERTY_ALGORITHM = 3;
 	
-	public PortfolioWizardModel(WizardModel wizardModel) {
-		super(wizardModel);
+	public PortfolioWizardModel() {
+		super();
 		
 		portfolio = new PortfolioEntity();
 		properties.put(PROPERTY_NAME, false);
@@ -49,7 +53,9 @@ public class PortfolioWizardModel extends WizardPageModel{
 		
 		if(amount >= 0){
 			balance = amount;
+			properties.put(PROPERTY_BALANCE, true);
 		}else{
+			properties.put(PROPERTY_BALANCE, false);
 			//TODO send error event
 		}
 	}
@@ -63,12 +69,9 @@ public class PortfolioWizardModel extends WizardPageModel{
 		
 		boolean finish = true;
 		
-		if(name == null)
-			finish = false;
-		else if(algorithm == null)
-			finish = false;
-		else if(balance < 0)
-			finish = false;
+		for(boolean v : properties.values()){
+			finish = finish && v;
+		}
 		
 		return finish;
 	}
@@ -77,7 +80,18 @@ public class PortfolioWizardModel extends WizardPageModel{
 	public void finish() {
 		
 		if(canFinish()){
-			//TODO create new portfolio
+			IJPAHelper jpaHelper = JPAHelper.getInstance();
+			PortfolioEntity p = new PortfolioEntity(name);
+			p.setAlgorithm("algorithm");
+			p.invest(balance, true);
+			jpaHelper.storeObject(p);
+			Log.log(Log.TAG.DEBUG, "Portfolio " + name + " created");
+			
+			Log.log(Log.TAG.DEBUG, "Existing portfolios");
+			for(PortfolioEntity pE : jpaHelper.getAllPortfolios()){
+				
+				Log.log(Log.TAG.DEBUG, pE.getName());
+			}
 		}
 	}
 }

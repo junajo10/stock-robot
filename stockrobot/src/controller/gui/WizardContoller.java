@@ -11,6 +11,7 @@ import java.util.Map;
 
 
 import model.wizard.WizardModel;
+import model.wizard.WizardPageModel;
 
 import utils.WindowCloseAdapter;
 import view.wizard.WizardView;
@@ -22,20 +23,23 @@ public class WizardContoller implements IController {
 	
 	private WizardModel model;
 	private WizardView view;
+	private WizardPageModel pageModel;
 	
 	private Map<String, EventListener> actions;
 	
-	public WizardContoller(){
+	public WizardContoller(WizardPageModel pageModel){
 		
 		model = new WizardModel();
 		view = new WizardView(model);
 		model.addAddObserver(view);
 		view.setEnableCancel(true);
+		this.pageModel = pageModel;
 		
 		actions = new HashMap<String,EventListener>();
 		actions.put(WizardView.GO_NEXT, getNextListener());
 		actions.put(WizardView.GO_BACK, getBackListener());
 		actions.put(WizardView.GO_CANCEL, getCancelListener());
+		actions.put(WizardView.GO_FINISH, getFinishListener());
 		actions.put(WizardView.WINDOW_CLOSE, windowClose);
 		view.addActions(actions);
 	}
@@ -111,6 +115,29 @@ public class WizardContoller implements IController {
 			}
 		}	
 	}
+	
+	public ActionListener getFinishListener(){
+		
+		ActionListener listener = new FinishPageListener();
+		
+		return listener;
+	}
+	
+	public class FinishPageListener implements ActionListener{
+		
+		public FinishPageListener() {
+			
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			if(pageModel != null){
+				pageModel.finish();
+				cleanup();
+			}
+		}	
+	}
 
 	WindowListener windowClose = new WindowCloseAdapter() {
 		@Override
@@ -139,7 +166,8 @@ public class WizardContoller implements IController {
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
+		view.setVisible(false);
+		view.dispose();
 		
 	}
 
