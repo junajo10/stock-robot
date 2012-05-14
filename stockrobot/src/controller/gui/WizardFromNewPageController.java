@@ -62,13 +62,7 @@ public class WizardFromNewPageController extends WizardPageController {
 		@Override
 		public void keyTyped(KeyEvent e) {
 						
-			if(page.getBalance() > 0){
-				pageModel.setBalance(page.getBalance());
-				page.setErrorBalance(false);
-			}
-			else{
-				page.setErrorBalance(true);
-			}
+			
 		}
 
 		@Override
@@ -79,8 +73,14 @@ public class WizardFromNewPageController extends WizardPageController {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			
+			if(page.getBalance() > 0){
+				pageModel.setBalance(page.getBalance());
+				page.setErrorBalance(false);
+			}
+			else{
+				page.setErrorBalance(true);
+			}
 		}
 	}
 	

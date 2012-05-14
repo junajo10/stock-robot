@@ -13,7 +13,6 @@ import model.portfolio.PortfolioHandler;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
-import utils.global.Log;
 import view.wizard.WizardPage;
 import view.wizard.portfolio.PortfolioPages;
 import view.wizard.portfolio.PortfolioStartPage;
@@ -119,8 +118,7 @@ public class WizardStartPageController extends WizardPageController {
 		@Override
 		public void keyTyped(KeyEvent e) {
 
-			pageModel.setName(page.getPortfolioName());
-			checkNext();
+			
 		}
 
 		@Override
@@ -129,6 +127,8 @@ public class WizardStartPageController extends WizardPageController {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
+			pageModel.setName(page.getPortfolioName());
+			checkNext();
 		}
 
 	}

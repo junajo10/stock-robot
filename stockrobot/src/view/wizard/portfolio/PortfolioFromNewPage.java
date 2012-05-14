@@ -136,7 +136,7 @@ public class PortfolioFromNewPage extends WizardPage {
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
-		
+				
 		if(actions.get(BALANCE_INPUT_LISTENER) instanceof KeyListener) {
 			txtBalance.addKeyListener((KeyListener) actions.get(BALANCE_INPUT_LISTENER));
 		}
