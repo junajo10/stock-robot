@@ -47,7 +47,7 @@ public class StartView extends JFrame implements IView {
 	public final static String STARTASTRO = "Start Astro";
 	public final static String STARTPARSER = "Start Parser";
 	public final static String LOGLEVEL = "Combobox";
-	private final JCheckBox chckbxConnectToParser = new JCheckBox("Connect to parser");
+	private final JCheckBox chckbxConnectToParser = new JCheckBox("Connect to Harvester Server");
 	private String oldLocalhostField = "";
 		
 	
