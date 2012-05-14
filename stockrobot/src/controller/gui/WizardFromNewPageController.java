@@ -11,7 +11,6 @@ import java.util.Map;
 
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
-import utils.global.Log;
 import view.wizard.WizardPage;
 import view.wizard.portfolio.PortfolioFromNewPage;
 
@@ -46,11 +45,11 @@ public class WizardFromNewPageController extends WizardPageController {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			
-			Log.log(Log.TAG.DEBUG, "Algorithm selcted");
-			
 			if(e.getStateChange() == ItemEvent.SELECTED){
 				model.setFinish(true);
 				page.setErrorAlgorithms(false);
+				
+				pageModel.setAlgorithm(page.getSelectedAlgorithm());
 			}else if(e.getStateChange() == ItemEvent.DESELECTED){
 				model.setFinish(false);
 				page.setErrorAlgorithms(true);
@@ -62,9 +61,7 @@ public class WizardFromNewPageController extends WizardPageController {
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			
-			Log.log(Log.TAG.DEBUG, "balance");
-			
+						
 			if(page.getBalance() > 0){
 				pageModel.setBalance(page.getBalance());
 				page.setErrorBalance(false);
@@ -89,23 +86,6 @@ public class WizardFromNewPageController extends WizardPageController {
 	
 	public PortfolioFromNewPage getPage() { return page; }
 	public WizardModel getWizardModel() { return model; }
-
-	public boolean canFinish(){
-		
-		boolean finish = false;
-		
-		if(pageModel.canFinish()){
-			
-			finish = true;
-		}else{
-			
-			//if(page.){
-				
-			//}
-		}
-		
-		return finish;
-	}
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {

@@ -32,6 +32,7 @@ public class PortfolioWizardModel extends WizardPageModel{
 		if(name.length() >= MIN_SIZE_NAME){
 			this.name = name;
 			properties.put(PROPERTY_NAME, true);
+			Log.log(Log.TAG.DEBUG, "[PageModel] Name set to " + name);
 		}else{
 			properties.put(PROPERTY_NAME, false);
 			//TODO fire error event
@@ -43,6 +44,7 @@ public class PortfolioWizardModel extends WizardPageModel{
 		if(algorithm != null){
 			this.algorithm = algorithm;
 			properties.put(PROPERTY_ALGORITHM, true);
+			Log.log(Log.TAG.DEBUG, "[PageModel] Algorithm set to " + algorithm);
 		}else{
 			properties.put(PROPERTY_ALGORITHM, false);
 			//TODO fire error event
@@ -54,6 +56,7 @@ public class PortfolioWizardModel extends WizardPageModel{
 		if(amount >= 0){
 			balance = amount;
 			properties.put(PROPERTY_BALANCE, true);
+			Log.log(Log.TAG.DEBUG, "[PageModel] Balance set to " + amount);
 		}else{
 			properties.put(PROPERTY_BALANCE, false);
 			//TODO send error event
@@ -85,13 +88,17 @@ public class PortfolioWizardModel extends WizardPageModel{
 			p.setAlgorithm("algorithm");
 			p.invest(balance, true);
 			jpaHelper.storeObject(p);
-			Log.log(Log.TAG.DEBUG, "Portfolio " + name + " created");
 			
-			Log.log(Log.TAG.DEBUG, "Existing portfolios");
+			Log.log(Log.TAG.DEBUG, "[PageModel] Portfolio Created \n" +
+					"name: " + name + "\n" +
+					"balance: " + balance + "\n" +
+					"algorithm: " + algorithm); 
+			
+			String existingPortfolios =  "Existing portfolios \n";
 			for(PortfolioEntity pE : jpaHelper.getAllPortfolios()){
-				
-				Log.log(Log.TAG.DEBUG, pE.getName());
+				existingPortfolios +=  pE.getName() + "\n";
 			}
+			Log.log(Log.TAG.DEBUG, existingPortfolios);
 		}
 	}
 }

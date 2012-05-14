@@ -24,7 +24,7 @@ public class WizardModel implements IObservable {
 	public final static String EVT_PAGE_CURRENT_CHANGE 	= "evtPageCurrentChange";
 	public final static String EVT_PAGE_BACK_CHANGE 		= "evtPageBackChange";
 	public final static String EVT_PAGE_NEXT_CHANGE 		= "evtPageNextChange";
-	public final static String EVT_CAN_FINISH_CHANGE 	= "evtCanFinishChange";
+	public final static String EVT_CAN_FINISH_CHANGE 		= "evtCanFinishChange";
 	
 	private String title;
 	private String subtitle;

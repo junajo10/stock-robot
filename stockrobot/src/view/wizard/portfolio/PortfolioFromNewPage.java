@@ -18,7 +18,6 @@ import model.algorithms.loader.PluginAlgortihmLoader;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
-import utils.global.Log;
 import view.wizard.WizardPage;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -117,6 +116,11 @@ public class PortfolioFromNewPage extends WizardPage {
 	public void setErrorBalance(boolean error){
 		
 		lblErrorBalance.setVisible(error);
+	}
+	
+	public String getSelectedAlgorithm(){
+		
+		return cmbAlgorithms.getSelectedItem().toString();
 	}
 	
 	public void setErrorAlgorithms(boolean error){
