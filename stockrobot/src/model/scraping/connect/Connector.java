@@ -108,9 +108,9 @@ public class Connector implements IConnector {
 	 */
 	public boolean isRunning(){
 		if(recieve != null){
-			return ( getConnected()!=0 || !recieve.isClosed() ) && serverThread.isAlive() && astroSender.isAlive();
+			return ( getConnected()!=0 || !recieve.isClosed() || serverThread.isAlive() || astroSender.isAlive() );
 		}
-		return  getConnected()!=0 && serverThread.isAlive() && astroSender.isAlive();
+		return  getConnected()!=0 || serverThread.isAlive() || astroSender.isAlive();
 	}
 	
 	@Override

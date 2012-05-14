@@ -74,7 +74,7 @@ public class HarvesterController implements IController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(view.forceStopChecked()){
+			if(!view.forceStopChecked()){
 				model.stopParser();
 			}
 			else {

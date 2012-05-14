@@ -60,47 +60,56 @@ public class SimulationRunner implements IParserRunner {
 		}
 		
 		while(!close) {
-			if(timeElapsed==null){
-				pcs.firePropertyChange("Parsing Progress.", null, 0);
+			while(run)	{
+				if(timeElapsed==null){
+					pcs.firePropertyChange("Parsing Progress.", null, 0);
+				}
+				Long timeBefore = System.currentTimeMillis();
+				for (StockNames sn : simulatedStocks) {
+					StockPrices sp = new StockPrices(sn, rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), new Date(System.currentTimeMillis()));
+					jpaHelper.storeObjectIfPossible(sp);
+				}
+				
+				connector.sendDataAvailable(10);
+				pcs.firePropertyChange("Parsing Progress.", null, 20000);
+				timeElapsed = System.currentTimeMillis() - timeBefore;
+				pcs.firePropertyChange("Parsing done.", null, timeElapsed);
+				try {
+					Thread.sleep(100);
+					pcs.firePropertyChange("Parsing Progress.", null, 0);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				try {
+					Thread.sleep(400);
+					pcs.firePropertyChange("Parsing Progress.", null, 5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				try {
+					Thread.sleep(500);
+					pcs.firePropertyChange("Parsing Progress.", null, 10000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				try {
+					Thread.sleep(500);
+					pcs.firePropertyChange("Parsing Progress.", null, 15000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-			Long timeBefore = System.currentTimeMillis();
-			for (StockNames sn : simulatedStocks) {
-				StockPrices sp = new StockPrices(sn, rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), rand.nextInt(100000000), new Date(System.currentTimeMillis()));
-				jpaHelper.storeObjectIfPossible(sp);
-			}
-			
-			connector.sendDataAvailable(10);
-			pcs.firePropertyChange("Parsing Progress.", null, 20000);
-			timeElapsed = System.currentTimeMillis() - timeBefore;
-			pcs.firePropertyChange("Parsing done.", null, timeElapsed);
-			try {
-				Thread.sleep(100);
-				pcs.firePropertyChange("Parsing Progress.", null, 0);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			try {
-				Thread.sleep(400);
-				pcs.firePropertyChange("Parsing Progress.", null, 5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			try {
-				Thread.sleep(500);
-				pcs.firePropertyChange("Parsing Progress.", null, 10000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			try {
-				Thread.sleep(500);
-				pcs.firePropertyChange("Parsing Progress.", null, 15000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			while(!run){
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 
 		}
@@ -137,11 +146,13 @@ public class SimulationRunner implements IParserRunner {
 	 */
 	public boolean stopParser() {
 		if(run){
+			System.out.println("apa");
 			connector.shutdown();
 			while(connector.isRunning()){
-				
 			}
+			pcs.firePropertyChange("Stopped successfull.", null, null);
 			run = false;
+			close = true;
 			return true;
 		}
 		else{
@@ -158,6 +169,7 @@ public class SimulationRunner implements IParserRunner {
 		if(!run){
 			connector = new Connector(PORT_NR, pcs);
 			run = true;
+			close = false;
 			return true;
 		}
 		else{
