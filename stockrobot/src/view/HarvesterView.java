@@ -193,18 +193,6 @@ public class HarvesterView extends JFrame implements IView{
 		parserBar.setStringPainted(true);  
 		
 		btnStopParser.setEnabled(true);
-		/*if(simulateStocksChecked()){
-			parserBar = new JProgressBar(0,2000 );
-			parserBar.setEnabled(true);
-			parserBar.setValue(0);
-			parserBar.setStringPainted(true);  
-		}
-		else {
-			parserBar = new JProgressBar(0,20000 );
-			parserBar.setEnabled(true);
-			parserBar.setValue(0);
-			parserBar.setStringPainted(true);  
-		}*/
 	}
 
 	@Override
@@ -242,7 +230,6 @@ public class HarvesterView extends JFrame implements IView{
 	}
 
 	public void setParserBarProgress(int progress){
-		System.out.print("Value set.");
 		parserBar.setValue(progress);
 	}
 

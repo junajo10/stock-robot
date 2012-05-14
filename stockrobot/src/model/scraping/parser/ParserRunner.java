@@ -61,7 +61,7 @@ public class ParserRunner implements IParserRunner {
 	public void run() {
 		Map<URL, String> avanzaStockMarkets = new HashMap<URL, String>();
 		Long timeElapsed = null;
-		int progress = 0;
+		int progress = 13000;
 		try {
 			avanzaStockMarkets.put(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=LargeCap.SE"), "LargeCap");
 			avanzaStockMarkets.put(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=MidCap.SE"), "MidCap");
@@ -75,8 +75,9 @@ public class ParserRunner implements IParserRunner {
 				//Should run right now?
 				if( scheduler.shouldRun() || skipScheduler ) {
 					if(timeElapsed!=null){
-						pcs.firePropertyChange("Parsing Progress.", null, 11000-timeElapsed.intValue());
-						progress = (int) (15000-timeElapsed);
+						progress = (int) (15000-timeElapsed.intValue());
+						pcs.firePropertyChange("Parsing Progress.", null,progress);
+
 					}
 					else {
 						pcs.firePropertyChange("Parsing Progress.", null, 5000);
@@ -86,7 +87,7 @@ public class ParserRunner implements IParserRunner {
 					
 					for(URL url : avanzaStockMarkets.keySet()){
 						stockList.addAll(parser.parse(url, avanzaStockMarkets.get(url)));
-						progress = progress + 1000;
+						progress = progress + 1500;
 						pcs.firePropertyChange("Parsing Progress.", null, progress);
 					}
 					int newRows = inserter.insertStockData(stockList);
