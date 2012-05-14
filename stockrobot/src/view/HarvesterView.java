@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.JProgressBar;
 
 	
 
@@ -46,6 +47,7 @@ public class HarvesterView extends JFrame implements IView{
 	private DefaultListModel logModel;
 	private JCheckBox chckbxForceStop;
 	private JScrollPane scrollPane;
+	private JProgressBar parserBar;
 
 	
 	public static final String START_PARSER = "startParser";
@@ -82,13 +84,17 @@ public class HarvesterView extends JFrame implements IView{
 		
 		btnExportLog = new JButton("Export Log");
 		
+		parserBar = new JProgressBar(0, 20000);
+		parserBar.setVisible(false);
+
+		
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 427, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -101,8 +107,9 @@ public class HarvesterView extends JFrame implements IView{
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(chckbxForceStop, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnStopParser, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+								.addComponent(btnStopParser, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+								.addComponent(parserBar, GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnStatus, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
@@ -123,10 +130,12 @@ public class HarvesterView extends JFrame implements IView{
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(chckbxForceStop))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxSimulateStocks)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(chckbxSimulateStocks)
+						.addComponent(parserBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 385, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnStatus, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
@@ -167,11 +176,36 @@ public class HarvesterView extends JFrame implements IView{
 		logModel.clear();		
 	}
 	
-	public void setStartInactive() {btnStartParser.setEnabled(false);}
+	public void setStartInactive() {
+		btnStartParser.setEnabled(false);
+
+	}
 	public void setStopInactive() {btnStopParser.setEnabled(false);}
 	
-	public void setStartActive() {btnStartParser.setEnabled(true);}	
-	public void setStopActive() {btnStopParser.setEnabled(true);}
+	public void setStartActive() {
+		btnStartParser.setEnabled(true);
+		parserBar.setVisible(false);
+	}	
+	public void setStopActive() {
+		parserBar.setVisible(true);
+		parserBar.setEnabled(true);
+		parserBar.setValue(0);
+		parserBar.setStringPainted(true);  
+		
+		btnStopParser.setEnabled(true);
+		/*if(simulateStocksChecked()){
+			parserBar = new JProgressBar(0,2000 );
+			parserBar.setEnabled(true);
+			parserBar.setValue(0);
+			parserBar.setStringPainted(true);  
+		}
+		else {
+			parserBar = new JProgressBar(0,20000 );
+			parserBar.setEnabled(true);
+			parserBar.setValue(0);
+			parserBar.setStringPainted(true);  
+		}*/
+	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -207,7 +241,10 @@ public class HarvesterView extends JFrame implements IView{
 		return logModel;
 	}
 
-
+	public void setParserBarProgress(int progress){
+		System.out.print("Value set.");
+		parserBar.setValue(progress);
+	}
 
 	public File openChooseDirectory() {
 		 JFileChooser fc = new JFileChooser();

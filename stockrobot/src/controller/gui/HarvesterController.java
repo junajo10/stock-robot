@@ -167,6 +167,10 @@ public class HarvesterController implements IController {
 			addToList(hostname + " has disconnected from Harvester.");
 		}
 		
+		public void addText(String text) {
+			addToList(text);
+		}
+		
 		private void addToList(String input){
 			Date date= new java.util.Date();
 			String time = new Timestamp(date.getTime()) + "";
@@ -202,7 +206,23 @@ public class HarvesterController implements IController {
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		if(event.getPropertyName().equals("Parsing done.")){
-			log.parsingLoop((Long) event.getNewValue());
+			log.parsingLoop((Long) event.getOldValue());
+		}
+		
+		if(event.getPropertyName().equals("Parsing Progress.")){
+			view.setParserBarProgress((Integer) event.getNewValue());
+		}
+		
+		if(event.getPropertyName().equals("Connected.")){
+			log.connected((String) event.getNewValue());
+		}
+		
+		if(event.getPropertyName().equals("Disconnected.")){
+			log.disconnected((String) event.getNewValue());
+		}
+		
+		if(event.getPropertyName().equals("Text.")){
+			log.addText((String) event.getNewValue());
 		}
 	}
 

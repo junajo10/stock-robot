@@ -60,6 +60,8 @@ public class ParserRunner implements IParserRunner {
 	@Override
 	public void run() {
 		Map<URL, String> avanzaStockMarkets = new HashMap<URL, String>();
+		Long timeElapsed = null;
+		int progress = 0;
 		try {
 			avanzaStockMarkets.put(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=LargeCap.SE"), "LargeCap");
 			avanzaStockMarkets.put(new URL("https://www.avanza.se/aza/aktieroptioner/kurslistor/kurslistor.jsp?cc=SE&lkey=MidCap.SE"), "MidCap");
@@ -72,22 +74,42 @@ public class ParserRunner implements IParserRunner {
 				
 				//Should run right now?
 				if( scheduler.shouldRun() || skipScheduler ) {
+					if(timeElapsed!=null){
+						pcs.firePropertyChange("Parsing Progress.", null, 11000-timeElapsed.intValue());
+						progress = (int) (15000-timeElapsed);
+					}
+					else {
+						pcs.firePropertyChange("Parsing Progress.", null, 5000);
+					}
 					ArrayList<ParserStock> stockList = new ArrayList<ParserStock>();
 					Long timeBefore = System.currentTimeMillis();
+					
 					for(URL url : avanzaStockMarkets.keySet()){
 						stockList.addAll(parser.parse(url, avanzaStockMarkets.get(url)));
+						progress = progress + 1000;
+						pcs.firePropertyChange("Parsing Progress.", null, progress);
 					}
 					int newRows = inserter.insertStockData(stockList);
 					
-					Long timeElapsed = System.currentTimeMillis() - timeBefore;
+					timeElapsed = System.currentTimeMillis() - timeBefore;
 					/* Send a message to the robot saying that new data is available.
 					 * Reciever on robot not implemented yet, uncomment when. */
 					connector.sendDataAvailable(newRows);
 					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
+					pcs.firePropertyChange("Parsing Progress.", null, 20000);
 					pcs.firePropertyChange("Parsing done.", timeElapsed, null);
 					if(timeElapsed < 20000){
 						try {
-							Thread.sleep(20000-timeElapsed);
+							Thread.sleep(500);
+							pcs.firePropertyChange("Parsing Progress.", null, 0);
+							Thread.sleep(500);
+							pcs.firePropertyChange("Parsing Progress.", null, 100);
+							Thread.sleep(4000);
+							pcs.firePropertyChange("Parsing Progress.", null, 5000);
+							Thread.sleep(1000);
+							pcs.firePropertyChange("Parsing Progress.", null, 6000);
+							Thread.sleep(15000-timeElapsed);
+							
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
