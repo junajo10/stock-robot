@@ -98,7 +98,7 @@ public class ParserRunner implements IParserRunner {
 					connector.sendDataAvailable(newRows);
 					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
 					pcs.firePropertyChange("Parsing Progress.", null, 20000);
-					pcs.firePropertyChange("Parsing done.", timeElapsed, null);
+					pcs.firePropertyChange("Parsing done.", null , timeElapsed);
 					if(timeElapsed < 20000){
 						try {
 							Thread.sleep(500);

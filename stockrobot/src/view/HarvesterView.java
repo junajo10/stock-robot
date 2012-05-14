@@ -85,7 +85,7 @@ public class HarvesterView extends JFrame implements IView{
 		btnExportLog = new JButton("Export Log");
 		
 		parserBar = new JProgressBar(0, 20000);
-		parserBar.setVisible(false);
+		parserBar.setToolTipText("Parsing progress.");
 
 		
 
@@ -190,7 +190,7 @@ public class HarvesterView extends JFrame implements IView{
 		parserBar.setVisible(true);
 		parserBar.setEnabled(true);
 		parserBar.setValue(0);
-		parserBar.setStringPainted(true);  
+		//parserBar.setStringPainted(true);  
 		
 		btnStopParser.setEnabled(true);
 	}
