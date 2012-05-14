@@ -370,7 +370,8 @@ public class WizardView extends JFrame implements IView {
 			setEnableBack(model.getNextPage() != null);
 		}
 		else if(evt.getPropertyName() == (WizardModel.EVT_CAN_FINISH_CHANGE)){
-				
+			
+			Log.log(Log.TAG.DEBUG, "can now finish");
 			setEnableFinish(model.isAllowedFinish());
 		}
 		

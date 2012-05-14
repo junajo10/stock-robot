@@ -46,10 +46,14 @@ public class WizardFromNewPageController extends WizardPageController {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			
+			Log.log(Log.TAG.DEBUG, "Algorithm selcted");
+			
 			if(e.getStateChange() == ItemEvent.SELECTED){
 				model.setFinish(true);
+				page.setErrorAlgorithms(false);
 			}else if(e.getStateChange() == ItemEvent.DESELECTED){
 				model.setFinish(false);
+				page.setErrorAlgorithms(true);
 			}
 		}
 	}

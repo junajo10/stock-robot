@@ -18,6 +18,7 @@ import model.algorithms.loader.PluginAlgortihmLoader;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
+import utils.global.Log;
 import view.wizard.WizardPage;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -135,7 +136,7 @@ public class PortfolioFromNewPage extends WizardPage {
 		if(actions.get(BALANCE_INPUT_LISTENER) instanceof KeyListener) {
 			txtBalance.addKeyListener((KeyListener) actions.get(BALANCE_INPUT_LISTENER));
 		}
-		if(actions.get(BALANCE_INPUT_LISTENER) instanceof ItemListener){
+		if(actions.get(ALGORITHM_LISTENER) instanceof ItemListener){
 			cmbAlgorithms.addItemListener((ItemListener) actions.get(ALGORITHM_LISTENER));
 		}
 	}
