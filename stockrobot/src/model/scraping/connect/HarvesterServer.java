@@ -1,5 +1,6 @@
 package model.scraping.connect;
 
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -134,5 +135,11 @@ public class HarvesterServer implements Runnable, IConnector{
 		public void run() {
 
 		}
+	}
+
+	@Override
+	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
+		// TODO Auto-generated method stub
+		
 	}
 }
