@@ -64,6 +64,7 @@ public class HarvesterView extends JFrame implements IView{
 		
 		btnStartParser = new JButton("Start Parser");
 		btnStopParser = new JButton("Stop Parser");
+		btnStopParser.setEnabled(false);
 		logModel = new DefaultListModel();
 		scrollPane = new JScrollPane();
 		
@@ -86,6 +87,7 @@ public class HarvesterView extends JFrame implements IView{
 		
 		parserBar = new JProgressBar(0, 20000);
 		parserBar.setToolTipText("Parsing progress.");
+		parserBar.setVisible(false);
 
 		
 
@@ -147,6 +149,8 @@ public class HarvesterView extends JFrame implements IView{
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
 		
+
+		
 		JLabel lblNewLabel = new JLabel("Harvester Log");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(lblNewLabel);
@@ -162,6 +166,7 @@ public class HarvesterView extends JFrame implements IView{
 	
 	public void addLogItem(String text){
 		logModel.addElement(text);
+		log.ensureIndexIsVisible(logModel.size()-1); 
 	}
 	
 	public boolean simulateStocksChecked(){
