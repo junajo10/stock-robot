@@ -55,6 +55,7 @@ public class HarvesterView extends JFrame implements IView{
 	public static final String PRINT_STATUS = "printStatus";	
 	public static final String CLEAR_LOG = "clearLog";
 	public static final String EXPORT_LOG = "exportLog";
+	private JCheckBox chckbxAutoscrollLog;
 
 	public HarvesterView() {
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,15 +89,20 @@ public class HarvesterView extends JFrame implements IView{
 		parserBar = new JProgressBar(0, 20000);
 		parserBar.setToolTipText("Parsing progress.");
 		parserBar.setVisible(false);
+		
+		chckbxAutoscrollLog = new JCheckBox("Autoscroll Log");
+		chckbxAutoscrollLog.setSelected(true);
 
 		
-
+		/**
+		 * Windowbuilder generated code below.
+		 */
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 427, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -108,15 +114,16 @@ public class HarvesterView extends JFrame implements IView{
 								.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(parserBar, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
 								.addComponent(chckbxForceStop, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnStopParser, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-								.addComponent(parserBar, GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)))
+								.addComponent(btnStopParser, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnStatus, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
 							.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+						.addComponent(chckbxAutoscrollLog, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -134,9 +141,11 @@ public class HarvesterView extends JFrame implements IView{
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(chckbxSimulateStocks)
-						.addComponent(parserBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(parserBar, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 385, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(chckbxAutoscrollLog)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnStatus, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
@@ -144,6 +153,10 @@ public class HarvesterView extends JFrame implements IView{
 						.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
+		
+		/**
+		 * End windowbuilder code.
+		 */
 		
 		log = new JList();
 		scrollPane.setViewportView(log);
@@ -166,7 +179,9 @@ public class HarvesterView extends JFrame implements IView{
 	
 	public void addLogItem(String text){
 		logModel.addElement(text);
-		log.ensureIndexIsVisible(logModel.size()-1); 
+		if(chckbxAutoscrollLog.isSelected()){
+			log.ensureIndexIsVisible(logModel.size()-1);
+		}
 	}
 	
 	public boolean simulateStocksChecked(){
@@ -210,7 +225,7 @@ public class HarvesterView extends JFrame implements IView{
 
 	@Override
 	public void display(Object model) {
-		this.setSize(new Dimension(450, 575));
+		this.setSize(new Dimension(450, 588));
 		this.setVisible(true);
 	}
 
