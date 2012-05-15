@@ -21,12 +21,12 @@ public class ParserStock {
 	public ParserStock(String name){
 		this.name = name;
 	}
-		
+	/*
 	@Override
 	public boolean equals(Object o){
 		return name.equals((String) o);
 	}
-	
+	*/
 	@Override 
 	public String toString(){
 		return "Stock: " + name + " Buy: " + buy + " Sell: " + sell + " Volume: " + volume;

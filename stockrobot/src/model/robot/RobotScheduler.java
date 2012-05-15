@@ -1,6 +1,5 @@
 package model.robot;
 
-import java.net.UnknownHostException;
 import java.util.Date;
 
 import utils.global.Log;

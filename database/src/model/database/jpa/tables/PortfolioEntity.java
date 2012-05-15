@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 
 
@@ -174,21 +173,9 @@ public class PortfolioEntity {
 		balance -= amount;
 		JPAHelper.getInstance().updateObject(this);
 	}
-	/**
-	 * Helper method that the trader will use to remove money from the portfolio
-	 * @param amount amount to remove from the portfolio
-	 */
-	public void bougthFor(long amount, IJPAHelper jpaHelper) {
-		balance -= amount;
-		jpaHelper.updateObject(this);
-	}
 	public void soldFor(long amount) {
 		balance += amount;
 		JPAHelper.getInstance().updateObject(this);
-	}
-	public void soldFor(long amount, IJPAHelper jpaHelper) {
-		balance += amount;
-		jpaHelper.updateObject(this);
 	}
 	public PortfolioHistory getSpecificPortfolioHistory(StockPrices s, long amount) {
 		for (PortfolioHistory ph : history) {

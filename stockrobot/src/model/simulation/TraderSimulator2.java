@@ -45,7 +45,7 @@ public class TraderSimulator2 implements ITrader{
 			return false;
 		}
 
-		portfolio.bougthFor(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio), jpaHelper);
+		portfolio.bougthFor(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio));
 
 		portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), amount, portfolio));
 		jpaHelper.updateObject(portfolio);
@@ -64,7 +64,7 @@ public class TraderSimulator2 implements ITrader{
 		}
 		Log.log(TAG.VERBOSE, "Simulator: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
 		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
-		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount(), jpaHelper);
+		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount());
 		ph.setSoldDate(latest.getTime());
 		ph.setStockSoldPrice(latest);
 		jpaHelper.updateObject(portfolio);
