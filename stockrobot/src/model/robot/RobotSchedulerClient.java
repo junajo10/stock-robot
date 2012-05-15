@@ -73,4 +73,7 @@ public class RobotSchedulerClient extends Thread{
 		} 
 
 	}
+	public void stopClient() {
+		cleanup();
+	}
 }

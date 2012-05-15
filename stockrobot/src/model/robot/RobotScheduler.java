@@ -6,6 +6,7 @@ import java.util.Date;
 import utils.global.Log;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
@@ -31,8 +32,6 @@ public class RobotScheduler implements Runnable{
 	private volatile boolean pause = false;
 	private boolean isStoped = false;
 
-	public static boolean stopThis = false;
-
 	@SuppressWarnings("unused")
 	private long freq = 0;
 	private long pauseLength = SECOND;
@@ -51,7 +50,9 @@ public class RobotScheduler implements Runnable{
 		//handler = new RobotHandler(portfolioHandler);
 		this.portfolioHandler = portfolioHandler;
 		usingServer = true;
-
+		
+		cleanDatabaseCache();
+		
 		client = new RobotSchedulerClient(this, host, port);
 		client.start();
 	}
@@ -64,6 +65,9 @@ public class RobotScheduler implements Runnable{
 		if(isRunning){
 			Log.log(Log.TAG.NORMAL , "RobotScheduler Stoped!" );
 			isRunning = pause = false;	
+
+			if (usingServer)
+				client.stopClient();
 		}
 		return isStoped;
 	}
@@ -76,9 +80,6 @@ public class RobotScheduler implements Runnable{
 	 */
 	public synchronized boolean pause(){
 
-		synchronized (this) {
-			pause = true;
-		}
 		boolean result = false;
 		if(!pause && isRunning){
 			Log.log(Log.TAG.VERBOSE , "RobotScheduler pause!" );
@@ -114,7 +115,6 @@ public class RobotScheduler implements Runnable{
 	 * @return true if paused
 	 */
 	public boolean isPaused(){
-
 		return pause;
 	}
 
@@ -141,75 +141,51 @@ public class RobotScheduler implements Runnable{
 	public void run() {
 		isRunning = true;
 		Log.log(Log.TAG.VERY_VERBOSE , "RobotScheduler!" );
-		while(!stopThis){
+		while(isRunning && !usingServer) {
+			Log.log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN!" );
 
-			while (pause) {
-				synchronized (this) {
-					try {
-						Log.log(Log.TAG.VERY_VERBOSE ,"Putting RobotScheduler to sleep" );
-						wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
+			runAlgorithms();
 
-			if (usingServer) {
-				Log.log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN using client server!" + JPAHelper.getInstance().getAllStockPrices().size() + " stockPrices");
-				runAlgorithms();
-
-				IJPAHelper jpaHelper = JPAHelper.getInstance();
-				jpaHelper.getEntityManager().evictAll();
-
-				synchronized (this) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			else {
-				Log.log(Log.TAG.VERY_VERBOSE ,"RobotScheduler: RUN!" );
-
-
-				runAlgorithms();
-
-				try {
-					Thread.sleep(pauseLength);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+			try {
+				Thread.sleep(pauseLength);
+			} catch (InterruptedException e) {
 			}
 		}
 		isStoped = true;
 	}
 
 	public void runAlgorithms() {
-		StockPrices lastStock = JPAHelper.getInstance().getLastStockPrice();
+		if (isRunning) {
 
-		if (lastStock != null && lastStock.getTime().getTime() > lastStockPriceDate.getTime()) {
-			for (IPortfolio p : portfolioHandler.getPortfolios()) {
-				p.updateAlgorithm();
+			StockPrices lastStock = JPAHelper.getInstance().getLastStockPrice();
+
+			if (lastStock != null && lastStock.getTime().getTime() > lastStockPriceDate.getTime()) {
+				for (IPortfolio p : portfolioHandler.getPortfolios()) {
+					p.updateAlgorithm();
+				}
+				lastStockPriceDate = lastStock.getTime();			
 			}
-			lastStockPriceDate = lastStock.getTime();			
 		}
-}
-
-/**
- * This method is only called by {@link RobotSchedulerClient}
- */
-public void doWork() {
-
-	synchronized (this) {
-		notify();
 	}
-}
-public void cleanup() {
-	if (client != null) {
-		client.cleanup();
+
+	/**
+	 * This method is only called by {@link RobotSchedulerClient}
+	 */
+	public void doWork() {
+		cleanDatabaseCache();
+		
+		runAlgorithms();
 	}
-}
+	/**
+	 * Evicts all cached stocks in system.
+	 */
+	private void cleanDatabaseCache() {
+		IJPAHelper jpaHelper = JPAHelper.getInstance();
+		jpaHelper.getEntityManager().evictAll(StockPrices.class, StockNames.class);
+	}
+	public void cleanup() {
+		if (client != null) {
+			client.cleanup();
+		}
+	}
 }
