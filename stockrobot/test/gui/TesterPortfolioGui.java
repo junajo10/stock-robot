@@ -13,8 +13,8 @@ public class TesterPortfolioGui {
 
 	public static void main(String[] args) {
 			
-		//TODO make tests
-		TestPortfolioHandler pHandler = new TestPortfolioHandler(null);
+		//TODO Mattias: make tests
+		new TestPortfolioHandler(null);
 		
 		//PortfolioWizardFactory.buildPortfolioWizard(pHandler);
 	}
@@ -54,13 +54,12 @@ class TestPortfolioHandler implements IPortfolioHandler{
 	}
 	@Override
 	public List<String> getAlgorithmNames() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	@Override
 	public boolean setAlgorithm(IPortfolio p, String algorithmName) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 }
-

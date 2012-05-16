@@ -1,6 +1,5 @@
 package model.simulation;
 
-
 import java.util.List;
 
 import utils.global.FinancialLongConverter;
@@ -13,7 +12,6 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
-
 
 /**
  * @author Daniel
@@ -79,7 +77,7 @@ public class PortfolioSimulator implements IPortfolio {
 
 	@Override
 	public boolean setStocksToWatch(List<StockNames> stocks) {
-		// TODO Auto-generated method stub
+		// TODO Daniel: Do anything here?
 		return false;
 	}
 
@@ -108,18 +106,22 @@ public class PortfolioSimulator implements IPortfolio {
 	public boolean isStopSellingFlagSet() {
 		return portfolioTable.isStopSelling();
 	}
+	
 	@Override
 	public String getName() {
 		return portfolioTable.getName();
 	}
 	
+	@Override
 	public String toString() {
 		return "Name: " + getName() + "Algorithm: " + algorithm.getName() + " Balance: " + FinancialLongConverter.toStringTwoDecimalPoints(getUnusedAmount()) + "\n";
 	}
+	
 	@Override
 	public PortfolioEntity getPortfolioTable() {
 		return portfolioTable;
 	}
+	
 	@Override
 	public boolean updateAlgorithm() {
 		if (algorithm == null)
@@ -127,6 +129,7 @@ public class PortfolioSimulator implements IPortfolio {
 		algorithm.update();
 		return true;
 	}
+
 	@Override
 	public long getCurrentWorth() {
 		long currentWorth = getUnusedAmount();

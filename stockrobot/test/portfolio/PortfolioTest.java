@@ -75,8 +75,8 @@ public class PortfolioTest extends DatabaseCleaner implements IRobot_Algorithms{
 	}
 
 	@Override
-	public ITrader getTrader() {
-		// TODO Auto-generated method stub
+	public ITrader getTrader() { //NOPMD
+		
 		return null;
 	}
 }

@@ -31,6 +31,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
+/**
+ * 
+ * @author Mattias
+ *
+ */
 public class PortfolioStartPage extends WizardPage {
 
 	private JRadioButton rbtnClonePortfolio; 
@@ -59,7 +64,6 @@ public class PortfolioStartPage extends WizardPage {
 	}
 
 	public void init() {
-				
 		
 		//============ INITIAL ============
 		//pnl_PortfolioInfo = factory.getInvisibleContainer();
@@ -183,7 +187,6 @@ public class PortfolioStartPage extends WizardPage {
 	public void setEnabledPanelClone(boolean enabled){
 		
 		cmbClonePortfolioList.setEnabled(enabled);
-		
 	}
 	
 	public void setPortfolioName(String name){
@@ -200,10 +203,7 @@ public class PortfolioStartPage extends WizardPage {
 	}
 
 	@Override
-	public void display(Object model) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void display(Object model) {} //NOPMD
 	
 	public void setErrorName(boolean error){
 		
