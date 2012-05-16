@@ -105,4 +105,6 @@ public interface IPortfolio {
 	
 	long getCurrentWorth();
 
+	void updateSettings();
+
 }

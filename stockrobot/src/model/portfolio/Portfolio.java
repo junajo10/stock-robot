@@ -153,4 +153,11 @@ public class Portfolio implements IPortfolio {
 		
 		return currentWorth;
 	}
+	@Override
+	public void updateSettings() {
+		if (algorithm != null) {
+			algorithm.giveDoubleSettings(portfolioTable.getAlgortihmSettings().getCurrentDoubleSettings());
+			algorithm.giveLongSettings(portfolioTable.getAlgortihmSettings().getCurrentLongSettings());
+		}
+	}
 }
