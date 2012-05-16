@@ -2,7 +2,6 @@ package robot;
 
 import static org.junit.Assert.*;
 
-
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -29,8 +28,6 @@ import testhelpers.DatabaseCleaner;
 import utils.global.Log;
 import utils.global.Pair;
 
-
-
 /**
  * @author Mattias Markehed
  * mattias.markehed@gmail.com
@@ -50,14 +47,13 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		Random rand = new Random(System.currentTimeMillis());
 		int port = rand.nextInt(5000) + 1025;
 		
-		RobotScheduletServer testServer = new RobotScheduletServer(port);
+		RobotSchedulerServerTest testServer = new RobotSchedulerServerTest(port);
 		testServer.start();
-		
 		
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -74,12 +70,11 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		Thread tSched = new Thread(schedueler);
 		
 		tSched.start();
-//		Assert.assertTrue(testServer.sendSignal());		TODO: This line is probably using the old server, or the test server is not up n running here?
-		
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		
@@ -87,7 +82,6 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		
 		testServer.kill();
 	}
-	
 	
 	@Test
 	public void pauseUnpauseTest() {
@@ -127,11 +121,13 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		assertFalse(schedueler.pause());
 		assertFalse(schedueler.unpause());
 		tSched.start();
+		
 		try {
 			Thread.sleep(RobotScheduler.MILLI_SECOND*50);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		schedueler.stop();
 		try {
 			Thread.sleep(RobotScheduler.MILLI_SECOND*50);
@@ -183,12 +179,10 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		assertFalse(tSched.isAlive());
 	}
 	
-	
-	//TODO: Re-implement this test. For now I uncommented it because it doesn't work, and I don't have the time to figure out what's wrong /kristian
 	/**
 	 * Test the regular start, stop, pause and unpause for
 	 * scheduler running multiple algorithm.
-	 *
+	 */
 	@Test
 	public void multipleRunTest() {
 				
@@ -249,7 +243,6 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		}
 		assertFalse(tSched.isAlive());
 	}
-	*/
 	
 	/**
 	 * Scaled of portfolio 
@@ -388,31 +381,33 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		@Override
 		public void addAddObserver(PropertyChangeListener listener) {
 		}
+		
 		@Override
 		public void removeObserver(PropertyChangeListener listener) {
 		}
+		
 		@Override
-		public List<String> getAlgorithmNames() {
-			// TODO Auto-generated method stub
+		public List<String> getAlgorithmNames() { //NOPMD
+			// Not important in this test
 			return null;
 		}
+		
 		@Override
-		public boolean setAlgorithm(IPortfolio p, String algorithmName) {
-			// TODO Auto-generated method stub
+		public boolean setAlgorithm(IPortfolio p, String algorithmName) { //NOPMD
+			// Not important in this test
 			return false;
 		}
 	}
 
-
 	@Override
-	public IJPAHelper getJPAHelper() {
-		// TODO Auto-generated method stub
+	public IJPAHelper getJPAHelper() { //NOPMD
+		
 		return null;
 	}
 
 	@Override
-	public ITrader getTrader() {
-		// TODO Auto-generated method stub
+	public ITrader getTrader() { //NOPMD
+		
 		return null;
 	}
 }

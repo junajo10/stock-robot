@@ -95,14 +95,8 @@ public class AstroController implements IController {
 		}
 	};
 
-	public AstroController() {
-
-	}
-	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object parserServer) {
@@ -122,22 +116,25 @@ public class AstroController implements IController {
 			Log.log(TAG.VERY_VERBOSE, "Parsed location field to: " + host + " as host at port number: " + port);
 		}
 		
-		
 		if (this.model == null) {
 			if (port > 0) {
 				try {
 					this.model = new AstroModel(host, port);
 				} catch (Exception e) {
-					//TODO: Show message to user that connection couldent be established.
+					
 					JOptionPane.showMessageDialog(null, "Couldent connect to parser server", "Error", JOptionPane.ERROR_MESSAGE);
 					cleanup();
 				}
 			}
-			else
+			else {
+				
 				this.model = new AstroModel();
+			}
 			
-			if (this.model != null)
+			if (this.model != null) {
+				
 				this.model.startScheduler();
+			}
 		}
 		if (this.model != null) {
 			defineSubControllers();
@@ -168,7 +165,6 @@ public class AstroController implements IController {
 		actions.put(AstroView.WINDOW_CLOSE, windowClose);
 		return actions;
 	}
-
 
 	@Override
 	public String getName() {

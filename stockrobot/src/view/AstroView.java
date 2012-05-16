@@ -108,7 +108,6 @@ public class AstroView extends JFrame implements IView {
 	@Override
 	public void display(Object model) {
 		setVisible(true);
-
 	}
 
 	@Override
@@ -142,9 +141,5 @@ public class AstroView extends JFrame implements IView {
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-
-	}
-
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 }

@@ -19,7 +19,6 @@ import model.portfolio.IPortfolio;
 import model.portfolio.IRobot_Algorithms;
 import model.trader.ITrader;
 
-
 /**
  * A copy of TestAlgorithm
  * This is to really test that we can have several algorithms in the system.
@@ -67,6 +66,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 				}
 			}
 		}
+		
 		for (Pair<StockNames, List<StockPrices>> stockInfo: jpaHelper.getStockInfo((int)buySetting)) {
 			boolean buy = true;
 			long last = Long.MAX_VALUE;
@@ -88,9 +88,6 @@ public class TestAlgorithm2 implements IAlgorithm{
 				}
 			}
 		}
-
-
-
 
 		return true;
 	}
@@ -124,7 +121,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 	@Override
 	public boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings) {
-		// TODO Auto-generated method stub
+		// TODO Daniel: What's your idea here?
 		return false;
 	}
 
