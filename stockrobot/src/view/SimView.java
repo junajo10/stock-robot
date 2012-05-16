@@ -69,9 +69,6 @@ public class SimView extends JFrame implements IView {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		
-		
-		
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Apa", "Bepa"}));
 		
 		final JSlider slider = new JSlider();
@@ -96,8 +93,6 @@ public class SimView extends JFrame implements IView {
 		textField.setEditable(false);
 		textField.setText("300");
 		textField.setColumns(10);
-		
-		
 		
 		JLabel lblAmountToStart = new JLabel("Amount to start with");
 		
@@ -167,7 +162,6 @@ public class SimView extends JFrame implements IView {
 		}
 		comboBox.setModel(algorithms);
 		
-		
 		setVisible(true);
 	}
 
@@ -191,8 +185,5 @@ public class SimView extends JFrame implements IView {
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 }

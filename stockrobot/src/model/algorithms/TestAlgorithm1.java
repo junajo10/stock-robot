@@ -1,6 +1,5 @@
 package model.algorithms;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.portfolio.IRobot_Algorithms;
 import model.trader.ITrader;
-
 
 /**
  * A simple test algorithm based on a algorithm Kristian has come up with
@@ -47,8 +45,6 @@ public class TestAlgorithm1 implements IAlgorithm{
 		if (portfolio.getPortfolioTable().getBalance() < 1000000) {
 			return false;
 		}
-
-
 
 		for (PortfolioHistory ph : jpaHelper.getCurrentStocksHistory(portfolio.getPortfolioTable())) {
 			List<StockPrices> cs = jpaHelper.getNLatest(ph.getStockPrice(), (int)sellSetting);
@@ -129,7 +125,8 @@ public class TestAlgorithm1 implements IAlgorithm{
 
 	@Override
 	public boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings) {
-		// TODO Auto-generated method stub
+		
+		//TODO Daniel, any idea for what to do here?
 		return false;
 	}
 
