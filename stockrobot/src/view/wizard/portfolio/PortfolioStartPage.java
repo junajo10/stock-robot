@@ -33,10 +33,10 @@ import java.awt.FlowLayout;
 
 public class PortfolioStartPage extends WizardPage {
 
-	private JRadioButton rbtn_ClonePortfolio; 
-	private JRadioButton rbtn_NewPortfolio;
-	private JPanel pnl_PortfolioToClone;
-	private JComboBox cmb_ClonePortfolioList;
+	private JRadioButton rbtnClonePortfolio; 
+	private JRadioButton rbtnNewPortfolio;
+	private JPanel pnlPortfolioToClone;
+	private JComboBox cmbClonePortfolioList;
 	private IPortfolioHandler portfolioHandler;
 	private ButtonGroup buttonGroup;
 	private JTextField txtPortfolioName;
@@ -71,80 +71,80 @@ public class PortfolioStartPage extends WizardPage {
 		JPanel pnlContent = new JPanel();
 		add(pnlContent);
 		
-		JPanel pnl_PortfolioName = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) pnl_PortfolioName.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		pnl_PortfolioName.setAlignmentX(Component.LEFT_ALIGNMENT);
+		JPanel pnlPortfolioName = new JPanel();
+		FlowLayout fl_pnlPortfolioName = (FlowLayout) pnlPortfolioName.getLayout();
+		fl_pnlPortfolioName.setAlignment(FlowLayout.LEFT);
+		pnlPortfolioName.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		JLabel lbl_PortfolioName = new JLabel("Portfolio Name:");
-		pnl_PortfolioName.add(lbl_PortfolioName);
+		pnlPortfolioName.add(lbl_PortfolioName);
 		txtPortfolioName = new JTextField();
 		txtPortfolioName.setColumns(20);
 		txtPortfolioName.setPreferredSize(new Dimension(2000,20));
-		pnl_PortfolioName.add(txtPortfolioName);
+		pnlPortfolioName.add(txtPortfolioName);
 		
 		//============ PORTFOLIO FROM ============
-		JPanel pnl_PortfolioFrom = new JPanel();
-		pnl_PortfolioFrom.setPreferredSize(new Dimension(300,200));
-		BoxLayout lou_PortfolioFrom = new BoxLayout(pnl_PortfolioFrom, BoxLayout.PAGE_AXIS);
-		pnl_PortfolioFrom.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pnl_PortfolioFrom.setLayout(lou_PortfolioFrom);
+		JPanel pnlPortfolioFrom = new JPanel();
+		pnlPortfolioFrom.setPreferredSize(new Dimension(300,200));
+		BoxLayout bl_pnlPortfolioFrom = new BoxLayout(pnlPortfolioFrom, BoxLayout.PAGE_AXIS);
+		pnlPortfolioFrom.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pnlPortfolioFrom.setLayout(bl_pnlPortfolioFrom);
 		//pnl_PortfolioFrom.getLayout();
 					
 		// New portfolio
-		rbtn_NewPortfolio = new JRadioButton();
-		rbtn_NewPortfolio.setText("Create new portfolio");
-		rbtn_NewPortfolio.setAlignmentX(Component.LEFT_ALIGNMENT);
+		rbtnNewPortfolio = new JRadioButton();
+		rbtnNewPortfolio.setText("Create new portfolio");
+		rbtnNewPortfolio.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		pnl_PortfolioFrom.add(rbtn_NewPortfolio);
+		pnlPortfolioFrom.add(rbtnNewPortfolio);
 		
 		// Clone portfolio
-		rbtn_ClonePortfolio = new JRadioButton();
-		rbtn_ClonePortfolio.setEnabled(true);
-		rbtn_ClonePortfolio.setText("Clone existing portfolio");
-		rbtn_ClonePortfolio.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pnl_PortfolioFrom.add(rbtn_ClonePortfolio);
+		rbtnClonePortfolio = new JRadioButton();
+		rbtnClonePortfolio.setEnabled(true);
+		rbtnClonePortfolio.setText("Clone existing portfolio");
+		rbtnClonePortfolio.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pnlPortfolioFrom.add(rbtnClonePortfolio);
 		buttonGroup = new ButtonGroup();
-		buttonGroup.add(rbtn_NewPortfolio);
-		buttonGroup.add(rbtn_ClonePortfolio);
+		buttonGroup.add(rbtnNewPortfolio);
+		buttonGroup.add(rbtnClonePortfolio);
 		GroupLayout gl_pnlContent = new GroupLayout(pnlContent);
 		gl_pnlContent.setHorizontalGroup(
 			gl_pnlContent.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnlContent.createSequentialGroup()
-					.addComponent(pnl_PortfolioFrom, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+					.addComponent(pnlPortfolioFrom, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
 					.addGap(232))
-				.addComponent(pnl_PortfolioName, GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
+				.addComponent(pnlPortfolioName, GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
 		);
 		gl_pnlContent.setVerticalGroup(
 			gl_pnlContent.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnlContent.createSequentialGroup()
-					.addComponent(pnl_PortfolioName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(pnlPortfolioName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(pnl_PortfolioFrom, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+					.addComponent(pnlPortfolioFrom, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 					.addGap(150))
 		);
 		
 		lblNameError = new JLabel("A portfolio name must be set");
 		lblNameError.setVisible(false);
 		lblNameError.setForeground(new Color(255, 0, 0));
-		pnl_PortfolioName.add(lblNameError);
+		pnlPortfolioName.add(lblNameError);
 		
 		
-		pnl_PortfolioToClone = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) pnl_PortfolioToClone.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		pnl_PortfolioFrom.add(pnl_PortfolioToClone);
-		pnl_PortfolioToClone.setEnabled(false);
-		pnl_PortfolioToClone.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pnlPortfolioToClone = new JPanel();
+		FlowLayout fl_pnlPortfolioToClone = (FlowLayout) pnlPortfolioToClone.getLayout();
+		fl_pnlPortfolioToClone.setAlignment(FlowLayout.LEFT);
+		pnlPortfolioFrom.add(pnlPortfolioToClone);
+		pnlPortfolioToClone.setEnabled(false);
+		pnlPortfolioToClone.setAlignmentX(Component.LEFT_ALIGNMENT);
 		//pnl_PortfolioToClone.setBorder(factory.getDefaultBorder());
-		JLabel lbl_ClonePortfolio = new JLabel("Portfolio to clone:");
-		pnl_PortfolioToClone.add(lbl_ClonePortfolio);
+		JLabel lblClonePortfolio = new JLabel("Portfolio to clone:");
+		pnlPortfolioToClone.add(lblClonePortfolio);
 		
-		cmb_ClonePortfolioList = new JComboBox();
-		cmb_ClonePortfolioList.setModel(cmb_hld_ClonePortfolioList);
-		pnl_PortfolioToClone.add(cmb_ClonePortfolioList);
-		cmb_ClonePortfolioList.setPreferredSize(new Dimension(200,20));
-		cmb_ClonePortfolioList.setEnabled(false);
+		cmbClonePortfolioList = new JComboBox();
+		cmbClonePortfolioList.setModel(cmb_hld_ClonePortfolioList);
+		pnlPortfolioToClone.add(cmbClonePortfolioList);
+		cmbClonePortfolioList.setPreferredSize(new Dimension(200,20));
+		cmbClonePortfolioList.setEnabled(false);
 		pnlContent.setLayout(gl_pnlContent);
 		
 		//DefaultComboBoxModel cmb_hld_ClonePortfolioList = new DefaultComboBoxModel();
@@ -172,17 +172,17 @@ public class PortfolioStartPage extends WizardPage {
 	
 	public void setCreateFromNewListener(ItemListener listener){
 		
-		rbtn_NewPortfolio.addItemListener(listener); 
+		rbtnNewPortfolio.addItemListener(listener); 
 	}
 	
 	public void setCreateFromCloneListener(ItemListener listener){
 		
-		rbtn_ClonePortfolio.addItemListener(listener); 
+		rbtnClonePortfolio.addItemListener(listener); 
 	}
 	
 	public void setEnabledPanelClone(boolean enabled){
 		
-		cmb_ClonePortfolioList.setEnabled(enabled);
+		cmbClonePortfolioList.setEnabled(enabled);
 		
 	}
 	
@@ -215,11 +215,11 @@ public class PortfolioStartPage extends WizardPage {
 
 		if(actions.get(CREATE_FROM_NEW) instanceof ItemListener){
 			
-			rbtn_NewPortfolio.addItemListener((ItemListener)actions.get(CREATE_FROM_NEW));
+			rbtnNewPortfolio.addItemListener((ItemListener)actions.get(CREATE_FROM_NEW));
 		}
 		if(actions.get(CREATE_FROM_CLONE) instanceof ItemListener){
 			
-			rbtn_ClonePortfolio.addItemListener((ItemListener)actions.get(CREATE_FROM_CLONE));
+			rbtnClonePortfolio.addItemListener((ItemListener)actions.get(CREATE_FROM_CLONE));
 		}
 		if(actions.get(NAME_INPUT_LISTENER) instanceof KeyListener){
 		
