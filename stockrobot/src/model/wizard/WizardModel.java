@@ -143,7 +143,7 @@ public class WizardModel implements IObservable {
 		return prev;
 	}
 	
-	//TODO determine if it can finished
+	//TODO MATTIAS: determine if it can finished
 	public boolean isAllowedFinish(){
 		return canFinish;
 	}
