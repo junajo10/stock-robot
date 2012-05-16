@@ -79,7 +79,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 					
 					okToShutDown = true;
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}					
 			}
@@ -98,8 +98,6 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		runnercreated = false;
 		
 		runner.stopRunner();
-		
-		//runner = null; //TODO: Is it ok to set this to null? It dies when it finishes in a while loop
 	}
 	
 	@Test
