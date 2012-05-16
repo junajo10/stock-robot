@@ -1,6 +1,6 @@
 package model.database.jpa.tables;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import model.database.jpa.JPAHelper;
 
 
 
@@ -45,12 +44,12 @@ public class PortfolioEntity {
 	
 	@ElementCollection
     @CollectionTable(name = "history")
-    private Set<PortfolioHistory> history = new HashSet<PortfolioHistory>();
+    private List<PortfolioHistory> history = new ArrayList<PortfolioHistory>();
         
 
 	@ElementCollection
     @CollectionTable(name = "investments")
-    private Set<PortfolioInvestment> investments = new HashSet<PortfolioInvestment>();
+    private List<PortfolioInvestment> investments = new ArrayList<PortfolioInvestment>();
     
 		
 	@Embedded
@@ -117,7 +116,7 @@ public class PortfolioEntity {
 	 * Will return the history of this portfolio.
 	 * @return A collection of PortfolioHistory that are coupled with this portfolio
 	 */
-	public Set<PortfolioHistory> getHistory() {
+	public List<PortfolioHistory> getHistory() {
 		return history;
 	}
 	
@@ -171,11 +170,9 @@ public class PortfolioEntity {
 	 */
 	public void bougthFor(long amount) {
 		balance -= amount;
-		JPAHelper.getInstance().updateObject(this);
 	}
 	public void soldFor(long amount) {
 		balance += amount;
-		JPAHelper.getInstance().updateObject(this);
 	}
 	public PortfolioHistory getSpecificPortfolioHistory(StockPrices s, long amount) {
 		for (PortfolioHistory ph : history) {
@@ -195,7 +192,7 @@ public class PortfolioEntity {
 		}
 		return result;
 	}
-	public Set<PortfolioInvestment> getInvestments() {
+	public List<PortfolioInvestment> getInvestments() {
 		return investments;
 	}
 	public AlgorithmSettings getAlgortihmSettings() {

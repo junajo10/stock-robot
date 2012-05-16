@@ -142,7 +142,9 @@ public class Portfolio implements IPortfolio {
 	public long getCurrentWorth() {
 		long currentWorth = getUnusedAmount();
 		
-		for (PortfolioHistory ph : portfolioTable.getHistory()) {
+		for (int i = 0; i < portfolioTable.getHistory().size(); i++) {
+			PortfolioHistory ph = portfolioTable.getHistory().get(i);
+			
 			if (ph.getSoldDate() == null) {
 				StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 				currentWorth += latest.getSell()*ph.getAmount();
