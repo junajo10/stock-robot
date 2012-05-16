@@ -14,6 +14,9 @@ import view.SimResultView;
  * @author Daniel
  */
 public class SimResultController implements IController {
+	
+	private static final String CLASS_NAME = "SimResultController";
+	
 	SimResultView view;
 	SimulationHandler model;
 	
@@ -66,20 +69,16 @@ public class SimResultController implements IController {
 	}
 
 	@Override
-	public Map<String, EventListener> getActionListeners() {
-		// TODO Auto-generated method stub
+	public Map<String, EventListener> getActionListeners() { //NOPMD
+	
 		return null;
 	}
 
 	@Override
 	public String getName() {
-		return "SimulationController";
+		return CLASS_NAME;
 	}
 
 	@Override
-	public void defineSubControllers() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void defineSubControllers() {} //NOPMD
 }
