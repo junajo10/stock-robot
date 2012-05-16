@@ -18,7 +18,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JProgressBar;
 
-import utils.WindowCloseAdapter;
+import utils.AbstractWindowCloseAdapter;
 import utils.global.FinancialLongConverter;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -47,7 +47,7 @@ public class SimResultView extends JFrame implements IView {
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private JPanel panel = new JPanel();
 	
-	private WindowListener windowListener = new WindowCloseAdapter() {
+	private WindowListener windowListener = new AbstractWindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			pcs.firePropertyChange(SimulationHandler.RESULTCLOSE, false, true);

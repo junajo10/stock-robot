@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
 import model.portfolio.PortfolioHandler;
 import model.robot.AstroModel;
 
-import utils.WindowCloseAdapter;
+import utils.AbstractWindowCloseAdapter;
 import utils.global.Log;
 import utils.global.Log.TAG;
 import view.AstroView;
@@ -88,7 +88,7 @@ public class AstroController implements IController {
 		}
 	};
 		
-	WindowListener windowClose = new WindowCloseAdapter() {
+	WindowListener windowClose = new AbstractWindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			cleanup();

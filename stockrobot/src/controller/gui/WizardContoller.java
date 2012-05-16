@@ -13,7 +13,7 @@ import java.util.Map;
 import model.wizard.WizardModel;
 import model.wizard.WizardPageModel;
 
-import utils.WindowCloseAdapter;
+import utils.AbstractWindowCloseAdapter;
 import view.wizard.WizardView;
 
 
@@ -139,7 +139,7 @@ public class WizardContoller implements IController {
 		}	
 	}
 
-	WindowListener windowClose = new WindowCloseAdapter() {
+	WindowListener windowClose = new AbstractWindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			cleanup();
