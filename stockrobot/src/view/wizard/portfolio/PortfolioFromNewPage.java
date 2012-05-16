@@ -45,20 +45,20 @@ public class PortfolioFromNewPage extends WizardPage {
 		this.setLayout(lou_PortfolioInfo);
 		this.setPreferredSize(new Dimension(541, 81));
 		
-		JPanel pnl_balance = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) pnl_balance.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		JPanel pnlBalance = new JPanel();
+		FlowLayout fl_pnlBalance = (FlowLayout) pnlBalance.getLayout();
+		fl_pnlBalance.setAlignment(FlowLayout.LEFT);
 		JLabel lbl_balance = new JLabel("Balance");
-		pnl_balance.add(lbl_balance);
+		pnlBalance.add(lbl_balance);
 		txtBalance = new JTextField();
 		txtBalance.setColumns(15);
-		pnl_balance.add(txtBalance);
-		this.add(pnl_balance);
+		pnlBalance.add(txtBalance);
+		this.add(pnlBalance);
 		
 		lblErrorBalance = new JLabel("Balance must be set ");
 		lblErrorBalance.setVisible(false);
 		lblErrorBalance.setForeground(Color.RED);
-		pnl_balance.add(lblErrorBalance);
+		pnlBalance.add(lblErrorBalance);
 		
 		List<String> algorithms = PluginAlgortihmLoader.getInstance().getAlgorithmNames();
 		
