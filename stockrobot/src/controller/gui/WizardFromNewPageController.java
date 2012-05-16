@@ -16,6 +16,8 @@ import view.wizard.portfolio.PortfolioFromNewPage;
 
 public class WizardFromNewPageController extends WizardPageController {
 
+	private static final String CLASS_NAME = "WizardFromNewPageController";
+	
 	private PortfolioFromNewPage page;
 	private WizardModel model;
 	private PortfolioWizardModel pageModel;
@@ -60,16 +62,10 @@ public class WizardFromNewPageController extends WizardPageController {
 	class BalanceListener implements KeyListener{
 
 		@Override
-		public void keyTyped(KeyEvent e) {
-						
-			
-		}
+		public void keyTyped(KeyEvent e) {} //NOPMD
 
 		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void keyPressed(KeyEvent e) {} //NOPMD
 
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -87,40 +83,44 @@ public class WizardFromNewPageController extends WizardPageController {
 	public PortfolioFromNewPage getPage() { return page; }
 	public WizardModel getWizardModel() { return model; }
 	
+	/**
+	 * Property change target
+	 * 
+	 * Currently not handling anything
+	 */
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
-	public void display(Object model) {
-		// TODO Auto-generated method stub
+	public void display(Object model) { //NOPMD
 		
+		//TODO Mattias, display?
 	}
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
 		
+		page.cleanup();
 	}
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return actions;
 	}
 
+	/**
+	 * Define Subcontrollers
+	 * 
+	 * No sub controllers here yet
+	 */
 	@Override
-	public void defineSubControllers() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void defineSubControllers() {} //NOPMD
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return CLASS_NAME;
 	}
 
 	@Override

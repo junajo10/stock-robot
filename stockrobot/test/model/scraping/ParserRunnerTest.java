@@ -53,7 +53,6 @@ public class ParserRunnerTest {
 	@AfterClass
 	public static void tearDownTest() {
 		
-		
 		toTest.stopParser();
 		toTest.stopRunner();
 		
@@ -64,17 +63,15 @@ public class ParserRunnerTest {
 				
 				runnerCreated = false;
 				
-				
 				try {
 					th.join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
 		} );
 		closer.start();
-		
 	}
 	
 	/**
@@ -130,9 +127,6 @@ public class ParserRunnerTest {
 	public void testStopRunner() {
 		
 		boolean wasStopped = toTest.stopRunner();
-		
-		//System.out.println("wasStopped: " + wasStopped );
-		//System.out.println( "toTest.status(): " + toTest.status() );
 		
 		Assert.assertFalse( toTest.status() && !wasStopped );
 	}

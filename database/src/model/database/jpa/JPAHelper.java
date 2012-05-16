@@ -15,6 +15,7 @@ import org.apache.openjpa.persistence.OpenJPAPersistence;
  * It has methods for most of the things we want to accomplish.
  */
 public final class JPAHelper extends JPAHelperBase {
+	
 	private static JPAHelper instance = null;
 	
 	private static String TMPPERSISTENCE = "<persistence xmlns=\"http://java.sun.com/xml/ns/persistence\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\">\n" +
@@ -60,20 +61,20 @@ public final class JPAHelper extends JPAHelperBase {
 "</persistence-unit>\n" +
 "</persistence>"; 
 	
-	
-	
 	/**
 	 * Creates an instance of JPAHelper if it doesn't  already exist, and returns the instance of it.
 	 * @return An instance of JPAHelper
 	 */
 	public static IJPAHelper getInstance() {
 		synchronized (JPAHelperBase.class) {
-			if (instance == null)
-				instance = new JPAHelper(); 
+			if (instance == null) {	
+				instance = new JPAHelper();
+			}
 		}
 		
-		if (!instance.getEntityManager().isOpen())
+		if (!instance.getEntityManager().isOpen()) {
 			instance.initJPASystem();
+		}
 		
 		return instance;
 	}
@@ -97,9 +98,11 @@ public final class JPAHelper extends JPAHelperBase {
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
-		if (f.exists())
+		if (f.exists()) {
+			
 			System.out.println("exists");
-		else {
+		
+		} else {
 			System.out.println("dosent exist");
 			
 			try {
@@ -112,11 +115,9 @@ public final class JPAHelper extends JPAHelperBase {
 				fw.close();
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
-			
-			
 		}
 	}
 
