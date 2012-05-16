@@ -73,7 +73,7 @@ public class AstroRecieverTest {
 	
 	@Test 
 	public void sendNewData(){
-		server = new Connector(port);
+		server = new Connector(port,null);
 		client = new AstroReciever("localhost", port);
 		try {
 			Thread.sleep(300);
@@ -93,7 +93,7 @@ public class AstroRecieverTest {
 	
 	@Test
 	public void clientDisconnect() throws BindException{
-		server = new Connector(port);
+		server = new Connector(port,null);
 		client = new AstroReciever("localhost", port);
 		try {
 			Thread.sleep(1000);
@@ -112,7 +112,7 @@ public class AstroRecieverTest {
 	
 	@Test 
 	public void serverDisconnect(){
-		server = new Connector(port);
+		server = new Connector(port,null);
 		client = new AstroReciever("localhost", port);
 		server.sendDataAvailable(20);
 		try {

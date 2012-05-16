@@ -25,7 +25,7 @@ public class WizardFromNewPageControllerTest {
 	public void setupTest() {
 		
 		WizardModel model = new WizardModel();
-		PortfolioWizardModel portfolioWizardModel = new PortfolioWizardModel( model );
+		PortfolioWizardModel portfolioWizardModel = new PortfolioWizardModel( );
 		
 		PortfolioFromNewPage pFNP = new PortfolioFromNewPage( model, portfolioWizardModel );
 		
