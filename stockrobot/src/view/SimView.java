@@ -39,10 +39,11 @@ public class SimView extends JFrame implements IView {
 	private DefaultComboBoxModel algorithms;
 	private SimModel model;
 	private JTextField textFieldStartAmount;
+	private JButton btnConfigureAlgorithm = new JButton("Configure Algorithm");
 	
 	public static final String COMBOBOX = "ComboboxListener";
 	public static final String STARTSIMULATION = "Start Simulation";
-	
+	public static final String CONFIGUREALGORTIHM = "Configure Algorithm";
 	/**
 	 * Launch the application.
 	 */
@@ -96,7 +97,7 @@ public class SimView extends JFrame implements IView {
 		textField.setText("300");
 		textField.setColumns(10);
 		
-		JButton btnConfigureAlgorithm = new JButton("Configure Algorithm");
+		
 		
 		JLabel lblAmountToStart = new JLabel("Amount to start with");
 		
@@ -186,6 +187,7 @@ public class SimView extends JFrame implements IView {
 		
 		comboBox.addActionListener((ActionListener) actions.get(COMBOBOX));
 		btnSimulate.addActionListener((ActionListener) actions.get(STARTSIMULATION));
+		btnConfigureAlgorithm.addActionListener((ActionListener) actions.get(CONFIGUREALGORTIHM));
 	}
 
 	@Override

@@ -38,24 +38,25 @@ public class SimResultController implements IController {
 	}
 
 	@Override
-	public void display(Object model) {
-		SimModel oldModel = (SimModel) model;
+	public void display(Object simModel) {
+		SimModel oldModel = (SimModel) simModel;
 		
-		if (this.model == null) {
-			this.model = new SimulationHandler();
+		if (model == null) {
+			model = new SimulationHandler();
 		}
-		this.model.setAlgorithm(oldModel.getAlgorithm());
-		this.model.setStocksBack(oldModel.getStocksBack());
-		
+		model.setAlgorithm(oldModel.getAlgorithm());
+		model.setStocksBack(oldModel.getStocksBack());
+		model.setLongSettings(oldModel.getLongSettings());
+		model.setDoubleSettings(oldModel.getDoubleSettings());
 		
 		this.view = new SimResultView();
 		view.display(this.model);
 		
 		view.addPropertyChangeListener(this);
 		
-		this.model.addPropertyChangeListener(this);
+		model.addPropertyChangeListener(this);
 		
-		this.model.startSimulation();
+		model.startSimulation();
 	}
 
 	@Override

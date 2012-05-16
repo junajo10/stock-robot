@@ -20,9 +20,12 @@ import view.SimView;
  * @author Daniel
  */
 public class SimController implements IController {
-	SimView view = new SimView();
-	SimModel model;
-	List<IController> subControllers = new ArrayList<IController>();
+	private SimView view = new SimView();
+	private SimModel model;
+	
+	private List<IController> subControllers = new ArrayList<IController>();
+	
+	private SimulationAlgorithmSettingsController settingController;
 	
 	ActionListener startSimulation = new ActionListener() {
 		@Override
@@ -42,10 +45,17 @@ public class SimController implements IController {
 		}
 	};
 	
+	ActionListener configureAlgorithm = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			settingController = new SimulationAlgorithmSettingsController(model.getAlgorithm());
+			settingController.display(model);
+		}
+	};
+	
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -72,6 +82,7 @@ public class SimController implements IController {
 		Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		actions.put(SimView.STARTSIMULATION, startSimulation);
 		actions.put(SimView.COMBOBOX, comboBoxListener);
+		actions.put(SimView.CONFIGUREALGORTIHM, configureAlgorithm);
 		return actions;
 	}
 
@@ -82,7 +93,8 @@ public class SimController implements IController {
 
 	@Override
 	public void defineSubControllers() {
-		subControllers.add(new SimResultController());
+		if (subControllers.size() == 0)
+			subControllers.add(new SimResultController());
 	}
 
 }

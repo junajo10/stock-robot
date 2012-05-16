@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 
 import java.beans.PropertyChangeListener;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -346,13 +345,16 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 
 		@Override
 		public long getCurrentWorth() {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
 		@Override
 		public IAlgorithm getAlgorithm() {
 			return algorithm;
+		}
+
+		@Override
+		public void updateSettings() {
 		}
 	}
 	

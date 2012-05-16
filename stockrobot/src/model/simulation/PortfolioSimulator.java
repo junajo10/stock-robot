@@ -140,4 +140,12 @@ public class PortfolioSimulator implements IPortfolio {
 		
 		return currentWorth;
 	}
+
+	@Override
+	public void updateSettings() {
+		if (algorithm != null) {
+			algorithm.giveDoubleSettings(portfolioTable.getAlgortihmSettings().getCurrentDoubleSettings());
+			algorithm.giveLongSettings(portfolioTable.getAlgortihmSettings().getCurrentLongSettings());
+		}
+	}
 }
