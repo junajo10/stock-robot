@@ -13,7 +13,11 @@ import model.trader.ITrader;
 
 import view.PortfolioView;
 
-
+/**
+ * 
+ * @author Mattias
+ *
+ */
 public class PortfolioController implements IController {
 
 	public static final String CLASS_NAME = "PortfolioController";
@@ -24,7 +28,7 @@ public class PortfolioController implements IController {
 	private Map<String, EventListener> actions;
 	private PortfolioHistoryController historyController = new PortfolioHistoryController();
 	
-	//TODO: Implement a real model for this, so we can access selectedPortfolio without casts. 
+	//TODO MATTIAS: Implement a real model for this, so we can access selectedPortfolio without casts. 
 	public PortfolioController(ITrader trader, IPortfolioHandler portfolios){
 		
 		this.trader = trader;
@@ -60,6 +64,7 @@ public class PortfolioController implements IController {
 			}
 		}
 	};
+	
 	ActionListener portfolioHistoryListener = new ActionListener() {
 		
 		@Override
@@ -70,6 +75,7 @@ public class PortfolioController implements IController {
 				historyController.display(portfolio.getPortfolioTable());
 		}
 	};
+	
 	@Override
 	public void display(Object model) {
 		
@@ -80,10 +86,7 @@ public class PortfolioController implements IController {
 	}
 
 	@Override
-	public void cleanup() {
-		
-		
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
@@ -92,10 +95,7 @@ public class PortfolioController implements IController {
 	}
 
 	@Override
-	public void defineSubControllers() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void defineSubControllers() {} //NOPMD
 
 	@Override
 	public String getName() {
@@ -104,9 +104,5 @@ public class PortfolioController implements IController {
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void propertyChange(PropertyChangeEvent evt) {}
 }

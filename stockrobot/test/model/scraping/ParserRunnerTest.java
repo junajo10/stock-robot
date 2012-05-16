@@ -119,9 +119,8 @@ public class ParserRunnerTest {
 	/**
 	 * This is to test that the stopRunner method works as anticipated
 	 * 
-	 * TODO:
-	 * However, why is it not possible to assert with assertTrue here???
-	 *    It gives a nullpointer exception. But assertFalse is ok. WHY?
+	 * Why is it not possible to assert with assertTrue here???
+	 * It gives a nullpointer exception. But assertFalse is ok. WHY?
 	 */
 	@Test
 	public void testStopRunner() {

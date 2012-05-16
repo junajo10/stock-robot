@@ -1,6 +1,5 @@
 package model.portfolio;
 
-
 import java.util.List;
 
 import utils.global.FinancialLongConverter;
@@ -14,7 +13,6 @@ import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-
 
 /**
  * An object of this class will hold one portfolio.
@@ -87,7 +85,7 @@ public class Portfolio implements IPortfolio {
 
 	@Override
 	public boolean setStocksToWatch(List<StockNames> stocks) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

@@ -1,6 +1,5 @@
 package model.simulation;
 
-
 import java.beans.PropertyChangeListener;
 
 import utils.global.FinancialLongConverter;
@@ -13,12 +12,11 @@ import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockPrices;
 import model.trader.ITrader;
 
-
 /**
  * @author Daniel
  *
  */
-public class TraderSimulator2 implements ITrader{
+public class TraderSimulator2 implements ITrader {
 
 	private IJPAHelper jpaHelper;
 
@@ -26,21 +24,16 @@ public class TraderSimulator2 implements ITrader{
 		this.jpaHelper = jpaHelper;
 	}
 	@Override
-	public void addAddObserver(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
-
-	}
+	public void addAddObserver(PropertyChangeListener listener) {} //NOPMD
 
 	@Override
-	public void removeObserver(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
-
-	}
+	public void removeObserver(PropertyChangeListener listener) {} //NOPMD
 
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntity portfolio) {
-		if (amount <= 0)
+		if (amount <= 0) {	
 			return false;
+		}
 		if (amount > 0 && s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio) > portfolio.getBalance()) {
 			return false;
 		}

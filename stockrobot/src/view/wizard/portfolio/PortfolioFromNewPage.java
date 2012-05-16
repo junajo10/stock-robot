@@ -23,6 +23,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Color;
 
+/**
+ * 
+ * @author Mattias
+ *
+ */
 public class PortfolioFromNewPage extends WizardPage {
 
 	private static final long serialVersionUID = 20596476598729363L;
@@ -76,8 +81,6 @@ public class PortfolioFromNewPage extends WizardPage {
 		lblErrorAlgorithm.setVisible(false);
 		pnlAlgorithm.add(lblErrorAlgorithm);
 		//========================================
-		
-		
 	}
 	
 	public void addAlgorithmListener(ItemListener listener){
@@ -129,10 +132,7 @@ public class PortfolioFromNewPage extends WizardPage {
 	}
 
 	@Override
-	public void display(Object model) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void display(Object model) {} //NOPMD
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
@@ -144,6 +144,4 @@ public class PortfolioFromNewPage extends WizardPage {
 			cmbAlgorithms.addItemListener((ItemListener) actions.get(ALGORITHM_LISTENER));
 		}
 	}
-	
-	
 }

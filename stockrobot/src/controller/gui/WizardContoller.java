@@ -16,7 +16,11 @@ import model.wizard.WizardPageModel;
 import utils.AbstractWindowCloseAdapter;
 import view.wizard.WizardView;
 
-
+/**
+ * 
+ * @author Mattias
+ *
+ */
 public class WizardContoller implements IController {
 	
 	public static final String CLASS_NAME = "WizardContoller";
@@ -76,14 +80,12 @@ public class WizardContoller implements IController {
 	
 	public class BackPageListener implements ActionListener{
 		
-		public BackPageListener() {
-			
-		}
+		public BackPageListener() {} //NOPMD
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			if(model.getBackPage() != null){
+			if(model.getBackPage() != null) {
 				model.goBackPage();
 			}
 		}	
@@ -125,9 +127,7 @@ public class WizardContoller implements IController {
 	
 	public class FinishPageListener implements ActionListener{
 		
-		public FinishPageListener() {
-			
-		}
+		public FinishPageListener() {} //NOPMD
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -143,7 +143,6 @@ public class WizardContoller implements IController {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			cleanup();
-			
 		}
 	};
 	
@@ -153,10 +152,7 @@ public class WizardContoller implements IController {
 	}
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object model) {
@@ -168,7 +164,6 @@ public class WizardContoller implements IController {
 	public void cleanup() {
 		view.setVisible(false);
 		view.dispose();
-		
 	}
 
 	@Override
@@ -178,9 +173,7 @@ public class WizardContoller implements IController {
 	}
 
 	@Override
-	public void defineSubControllers() {
-		
-	}
+	public void defineSubControllers() {} //NOPMD
 
 	@Override
 	public String getName() {
