@@ -31,16 +31,16 @@ public class WizardFromNewPageController extends WizardPageController {
 		
 		actions = new HashMap<String, EventListener>();
 		actions.put(PortfolioFromNewPage.BALANCE_INPUT_LISTENER, new BalanceListener());
-		actions.put(PortfolioFromNewPage.ALGORITHM_LISTENER, new AlgorithmLitener());
+		actions.put(PortfolioFromNewPage.ALGORITHM_LISTENER, new AlgorithmListener());
 		
 		page.addActions(actions);
 	}
 	
 	public ItemListener getAlgorithmListener(){
-		return new AlgorithmLitener();
+		return new AlgorithmListener();
 	}
 	
-	class AlgorithmLitener implements ItemListener{
+	class AlgorithmListener implements ItemListener{
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
