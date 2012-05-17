@@ -20,7 +20,7 @@ public class SimulationAlgorithmSettingsController implements IController {
 
 	public static final String CLASS_NAME = "AlgorithmSettingsController";
 	private SimModel model;
-	
+	private String algorithmName;
 	private Map<String,EventListener> actionListeners;
 	
 	private AlgorithmSettingsView view;
@@ -39,9 +39,19 @@ public class SimulationAlgorithmSettingsController implements IController {
 			}
 		}
 	};
+
 	public SimulationAlgorithmSettingsController( String algorithmName ) {
+		this.algorithmName = algorithmName;
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 		
 		
+	}
+
+	@Override
+	public void display(Object model) {
 		actionListeners = new HashMap<String, EventListener>();
 		actionListeners.put( AlgorithmSettingsView.SAVE_DOWN, saveDown );
 		
@@ -54,16 +64,7 @@ public class SimulationAlgorithmSettingsController implements IController {
 		algortihmSettingsLong = algorithm.getDefaultLongSettings();
 		view.populateDoubleSettings(algortihmSettingsDouble);
 		view.populateLongSettings(algortihmSettingsLong);
-	}
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
 		
-		
-	}
-
-	@Override
-	public void display(Object model) {
 		this.model = (SimModel) model;
 
 		view.display(null);

@@ -18,31 +18,31 @@ import view.SimView;
  * @author Daniel
  */
 public class SimController implements IController {
-	private SimView view = new SimView();
+	private final SimView view = new SimView();
 	private SimModel model;
 	
 	
 	private SimulationAlgorithmSettingsController settingController;
 	private SimResultController simResultController;
 	
-	ActionListener startSimulation = new ActionListener() {
+	private final ActionListener startSimulation = new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(final ActionEvent event) {
 			if (simResultController != null) {
 				simResultController.display(model);
 			}
 		}
 	};
-	ActionListener comboBoxListener = new ActionListener() {
+	private final ActionListener comboBoxListener = new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			model.setAlgorithm((String)((JComboBox)e.getSource()).getSelectedItem());
+		public void actionPerformed(final ActionEvent event) {
+			model.setAlgorithm((String)((JComboBox)event.getSource()).getSelectedItem());
 		}
 	};
 	
-	ActionListener configureAlgorithm = new ActionListener() {
+	private final ActionListener configureAlgorithm = new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(final ActionEvent event) {
 			settingController = new SimulationAlgorithmSettingsController(model.getAlgorithm());
 			settingController.display(model);
 		}
@@ -56,11 +56,12 @@ public class SimController implements IController {
 	}
 
 	@Override
-	public void display(Object model) {
+	public void display(final Object model) {
 		defineSubControllers();
 		
-		if (this.model == null)
+		if (this.model == null) {
 			this.model = new SimModel();
+		}
 		
 		
 		view.addActions(getActionListeners());
@@ -75,7 +76,7 @@ public class SimController implements IController {
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
-		Map<String, EventListener> actions = new HashMap<String,EventListener>();
+		final Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		actions.put(SimView.STARTSIMULATION, startSimulation);
 		actions.put(SimView.COMBOBOX, comboBoxListener);
 		actions.put(SimView.CONFIGUREALGORTIHM, configureAlgorithm);

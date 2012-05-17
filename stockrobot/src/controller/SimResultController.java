@@ -17,12 +17,12 @@ public class SimResultController implements IController {
 	
 	private static final String CLASS_NAME = "SimResultController";
 	
-	SimResultView view;
-	SimulationHandler model;
+	private SimResultView view;
+	private SimulationHandler model;
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
+	public void propertyChange(final PropertyChangeEvent evt) {
 		if (evt.getPropertyName().contentEquals(SimulationHandler.RESULTCLOSE)) {
 			cleanup();
 		}
@@ -41,8 +41,8 @@ public class SimResultController implements IController {
 	}
 
 	@Override
-	public void display(Object simModel) {
-		SimModel oldModel = (SimModel) simModel;
+	public void display(final Object simModel) {
+		final SimModel oldModel = (SimModel) simModel;
 		
 		if (model == null) {
 			model = new SimulationHandler();

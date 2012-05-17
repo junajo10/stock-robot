@@ -9,8 +9,8 @@ import controller.StartController;
  * @author Daniel
  */
 public class Main {
-	public static void main(String args[]) {
-		IController startController = new StartController();
+	public static void main(final String args[]) {
+		final IController startController = new StartController();
 		startController.display(new StartModel());
 	}
 }

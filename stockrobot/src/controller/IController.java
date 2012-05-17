@@ -18,7 +18,7 @@ public interface IController extends PropertyChangeListener{
 	 * 
 	 * @param model The model for this controller, could also be null.
 	 */
-	public void display(Object model);
+	void display(Object model);
 	
 	/**
 	 * Should be called when the view closes.
@@ -26,22 +26,22 @@ public interface IController extends PropertyChangeListener{
 	 * Should also cascade to subControllers.
 	 * Should also tell parent controller that this window is closed
 	 */
-	public void cleanup();
+	void cleanup();
 	
 	/**
 	 * Returns the list of all actions this controller has.
 	 * @return A list of pairs where the left side is a string associated with the action
 	 */
-	public Map<String, EventListener> getActionListeners();
+	Map<String, EventListener> getActionListeners();
 	
 	/**
 	 * Lets the user define whatever subControllers are needed in this class.
 	 */
-	public void defineSubControllers();
+	void defineSubControllers();
 	
 	/**
 	 * The unique name for this controller, this can be used to sort out which subController should start.
 	 * @return
 	 */
-	public String getName();
+	String getName();
 }
