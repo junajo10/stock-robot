@@ -32,16 +32,6 @@ public class AstroModel implements IRobot_Algorithms{
 	public AstroModel() {
 		jpaHelper = JPAHelper.getInstance();
 
-		//TODO: Removed when portfolioWizard works, this is just added to create a default portfolio with some money
-		synchronized (this) {
-			if (jpaHelper.getAllPortfolios().size() == 0) {
-				PortfolioEntity p = new PortfolioEntity("APA");
-				p.setAlgorithm("TestAlgorithm1");
-				p.invest(1231213212, true);
-				jpaHelper.storeObject(p);
-			}
-		}
-		
 		portfolioHandler = PortfolioHandler.getInstance(this);
 		robotScheduler = new RobotScheduler(portfolioHandler);
 	}

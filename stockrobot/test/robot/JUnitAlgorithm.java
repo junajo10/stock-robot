@@ -14,8 +14,12 @@ import model.portfolio.IRobot_Algorithms;
 /**
  *
  * TODO: ALL!!! Is this class going to the trash can?
- *
- * @author ?
+ * 
+ * RobotSchedulerTest depends on it, this adds the number of updates an algorithm got
+ * But maybe a complte rewrite should be in order since, robothandler is going to be rewritten.
+ *  /Daniel
+ *  
+ * @author Mattias
  *
  */
 public class JUnitAlgorithm implements IAlgorithm {

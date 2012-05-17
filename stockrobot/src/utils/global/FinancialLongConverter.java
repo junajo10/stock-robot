@@ -102,4 +102,7 @@ public class FinancialLongConverter {
 		DecimalFormat df = new DecimalFormat("#.##");
 		return df.format(toDouble(input));
 	}
+	public static long toFinancialLong(long input) {
+		return (long) (input * Math.pow(10, DECIMALLENGTH));
+	}
 }
