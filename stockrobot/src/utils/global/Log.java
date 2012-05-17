@@ -11,7 +11,7 @@ import java.util.HashMap;
  * Log will be used take care of outprints to the terminal. Different filter values can be set
  * if the user only wants to see a specific type of messages
  */
-public class Log {
+public final class Log {
 
 	private static Log log = new Log();
 	

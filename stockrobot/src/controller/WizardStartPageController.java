@@ -39,6 +39,7 @@ public class WizardStartPageController extends WizardPageController {
 		this.pageModel = pageModel; 
 		
 		page = new PortfolioStartPage(model, pageModel, PortfolioHandler.getInstance());
+		page.init();
 		actions = new HashMap<String, EventListener>();
 		actions.put(PortfolioStartPage.CREATE_FROM_NEW, getFromNewListener());
 		actions.put(PortfolioStartPage.CREATE_FROM_CLONE, getFromCloneListener());

@@ -30,10 +30,10 @@ import model.scraping.core.Harvester;
  */
 public class HarvesterController implements IController {
 	
-	private Harvester model;
-	private HarvesterView view;
-	private Logger log;	
-	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private final Harvester model;
+	private final HarvesterView view;
+	private final Logger log;	
+	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	
 	private class StartBtnListener implements ActionListener{
 
@@ -121,10 +121,6 @@ public class HarvesterController implements IController {
 		long totalLoops = 0;
 		int connected = 0;
 
-		public Logger(){
-			
-		}
-		
 		public void failPortNumber(String portTextbox) {
 			addToList(portTextbox + " is not a valid port-number. ");
 		}
@@ -210,10 +206,6 @@ public class HarvesterController implements IController {
 			}
         } 
 	}
-		
-
-
-
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -250,19 +242,14 @@ public class HarvesterController implements IController {
 		}
 	}
 
-
 	@Override
 	public void display(Object model) {
 		view.addActions(getActionListeners());
 		view.display(this.model);
 	}
 
-
 	@Override
-	public void cleanup() {
-	
-	}
-
+	public void cleanup() {} //NOPMD
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
@@ -276,17 +263,11 @@ public class HarvesterController implements IController {
 		return actions;
 	}
 
-
 	@Override
-	public void defineSubControllers() {
-		
-	}
-
+	public void defineSubControllers() {} //NOPMD
 
 	@Override
 	public String getName() {
 		return "Harvester Controller";
 	}
-    
-
 }
