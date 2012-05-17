@@ -36,6 +36,7 @@ public class WizardStartPageController extends WizardPageController {
 		actions.put(PortfolioStartPage.CREATE_FROM_NEW, getFromNewListener());
 		actions.put(PortfolioStartPage.CREATE_FROM_CLONE, getFromCloneListener());
 		actions.put(PortfolioStartPage.NAME_INPUT_LISTENER, new PortfolioNameLitesner());
+		actions.put(PortfolioStartPage.CREATE_FROM_LISTENER, new CloneListener());
 		page.addActions(actions);
 			
 		
@@ -111,6 +112,20 @@ public class WizardStartPageController extends WizardPageController {
 		}
 		
 		return canNext;
+	}
+	
+	class CloneListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			
+			if(e.getStateChange() == ItemEvent.SELECTED){
+				model.setFinish(true);
+				
+			}else if(e.getStateChange() == ItemEvent.DESELECTED){
+				model.setFinish(false);
+			}
+		}
 	}
 		
 	public class PortfolioNameLitesner implements KeyListener{

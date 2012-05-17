@@ -225,5 +225,9 @@ public class PortfolioStartPage extends WizardPage {
 		
 			txtPortfolioName.addKeyListener((KeyListener) actions.get(NAME_INPUT_LISTENER));
 		}
+		if(actions.get(CREATE_FROM_LISTENER) instanceof ItemListener){
+			
+			cmbClonePortfolioList.addItemListener((ItemListener) actions.get(CREATE_FROM_LISTENER));
+		}
 	}
 }
