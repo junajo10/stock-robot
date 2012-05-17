@@ -33,6 +33,10 @@ public interface IPortfolio {
 	 */
 	List<Pair<StockPrices, StockPrices>> getHistoryStocks();
 	
+	/**
+	 * Starts this portfolios algorithm
+	 * @return returns false if something went wrong, like no algorithm set.
+	 */
 	boolean updateAlgorithm();
 	/**
 	 * Sets a new algorithm to a portfolio
@@ -101,8 +105,21 @@ public interface IPortfolio {
 	 */
 	boolean isStopSellingFlagSet();
 	
+	/**
+	 * @return Returns the portfolioEntity coupled with this portfolio
+	 */
 	PortfolioEntity getPortfolioTable();
 	
+	/**
+	 * Calculates the current worth this portfolio has.
+	 * Balance + for all stocks not sold: worth += this stocks latest value
+	 * @return The worth of this portfolio
+	 */
 	long getCurrentWorth();
+
+	/**
+	 * Updates the algorithm's settings
+	 */
+	void updateSettings();
 
 }

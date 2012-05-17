@@ -9,7 +9,7 @@ import javax.persistence.metamodel.SingularAttribute;
 @javax.persistence.metamodel.StaticMetamodel
 (value=model.database.jpa.tables.AlgorithmSettingDouble.class)
 @javax.annotation.Generated
-(value="org.apache.openjpa.persistence.meta.AnnotationProcessor6",date="Thu May 03 20:32:43 CEST 2012")
+(value="org.apache.openjpa.persistence.meta.AnnotationProcessor6",date="Wed May 16 20:21:34 CEST 2012")
 public class AlgorithmSettingDouble_ {
     public static volatile SingularAttribute<AlgorithmSettingDouble,Double> defaultValue;
     public static volatile SingularAttribute<AlgorithmSettingDouble,Double> maxValue;

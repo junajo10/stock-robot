@@ -8,7 +8,7 @@ import org.junit.Test;
 public class WizardPageModelTest {
 
 	WizardModel model = new WizardModel();
-	WizardPageModel toTest = new WizardPageModel(model) {
+	WizardPageModel toTest = new WizardPageModel() {
 		
 		@Override
 		public void finish() {

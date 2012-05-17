@@ -16,6 +16,8 @@ import utils.global.Log.TAG;
 import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.AlgorithmSettingDouble;
+import model.database.jpa.tables.AlgorithmSettingLong;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
@@ -47,6 +49,8 @@ public class SimulationHandler extends SimModel {
 	private Map<String, Long> latestPieData = new HashMap<String, Long>();
 	private int updatePieAt = 0;
 	private int nextPieStep = 25;
+	private List<AlgorithmSettingLong> algorithmLongSettings;
+	private List<AlgorithmSettingDouble> algorithmDoubleSettings;
 	
 	public static final String RESULTCLOSE = "Sim Result Close";
 	public static final String NEWPIEDATA = "newPieData";
@@ -73,10 +77,12 @@ public class SimulationHandler extends SimModel {
 		
 		portfolio.setAlgorithm(algorithm);
 		
-		if (longSettings != null)
+		if (longSettings != null) {
 			algorithm.giveLongSettings(longSettings);
-		if (doubleSettings != null)
+		}
+		if (doubleSettings != null) {
 			algorithm.giveDoubleSettings(doubleSettings);
+		}
 	}
 	/**
 	 * Tests a given algorithm with real data copied from the original database.
@@ -233,10 +239,39 @@ public class SimulationHandler extends SimModel {
 			
 			@Override
 			public void run() {
-				simulateAlgorithm(getAlgorithm(), getStocksBack(), null, null);
+				simulateAlgorithm(getAlgorithm(), getStocksBack(), currentLongSettings(), currentDoubleSettings());
+				
+				
 			}
 		});
+		
 		simulationThread.start();
+	}
+	
+	private List<Pair<String, Double>> currentDoubleSettings() {
+		List<Pair<String, Double>> doubleSettingsPair = new ArrayList<Pair<String,Double>>();
+		if (algorithmDoubleSettings != null) {
+			for (AlgorithmSettingDouble asd : algorithmDoubleSettings) {
+				doubleSettingsPair.add(new Pair<String, Double>(asd.getName(), asd.getValue()));
+			}
+		}
+		return doubleSettingsPair;
+	}
+	private List<Pair<String, Long>> currentLongSettings() {
+		List<Pair<String, Long>> longSettingsPair = new ArrayList<Pair<String,Long>>();
+		if (algorithmLongSettings != null) {
+			for (AlgorithmSettingLong asl : algorithmLongSettings) {
+				longSettingsPair.add(new Pair<String, Long>(asl.getName(), asl.getValue()));
+			}
+		}
+		return longSettingsPair;
+	}
+	public void setLongSettings(List<AlgorithmSettingLong> longSettings) {
+		this.algorithmLongSettings = longSettings;
+		
+	}
+	public void setDoubleSettings(List<AlgorithmSettingDouble> doubleSettings) {
+		this.algorithmDoubleSettings = doubleSettings;
 		
 	}
 }

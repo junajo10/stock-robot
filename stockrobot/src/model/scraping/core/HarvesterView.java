@@ -116,7 +116,6 @@ public class HarvesterView extends JFrame {
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
 		getContentPane().setLayout(groupLayout);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void addbtnStartParserListener(ActionListener al){

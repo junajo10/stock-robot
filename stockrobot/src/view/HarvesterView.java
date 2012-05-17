@@ -26,8 +26,6 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.JProgressBar;
 
-	
-
 /**
  * View for Harvester.
  * @author Erik
@@ -58,7 +56,7 @@ public class HarvesterView extends JFrame implements IView{
 	private JCheckBox chckbxAutoscrollLog;
 
 	public HarvesterView() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setTitle("ASTRo Harvester");
@@ -93,7 +91,6 @@ public class HarvesterView extends JFrame implements IView{
 		chckbxAutoscrollLog = new JCheckBox("Autoscroll Log");
 		chckbxAutoscrollLog.setSelected(true);
 
-		
 		/**
 		 * Windowbuilder generated code below.
 		 */
@@ -162,16 +159,11 @@ public class HarvesterView extends JFrame implements IView{
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
 		
-
-		
 		JLabel lblNewLabel = new JLabel("Harvester Log");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(lblNewLabel);
 		getContentPane().setLayout(groupLayout);
-		// TODO Auto-generated constructor stub
 	}
-	
-
 	
 	public String getPortTextbox(){
 		return textField.getText();
@@ -210,18 +202,12 @@ public class HarvesterView extends JFrame implements IView{
 		parserBar.setVisible(true);
 		parserBar.setEnabled(true);
 		parserBar.setValue(0);
-		//parserBar.setStringPainted(true);  
 		
 		btnStopParser.setEnabled(true);
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-		//TODO: Do something here?
-		//Incommented this because it doesn't do anything (remove this uncommenting when you continute programming here)
-		//String input = evt.getPropertyName();
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object model) {
@@ -230,20 +216,17 @@ public class HarvesterView extends JFrame implements IView{
 	}
 
 	@Override
-	public void cleanup() {
-		
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
-			btnStartParser.addActionListener((ActionListener) actions.get(START_PARSER));
-			btnStopParser.addActionListener((ActionListener) actions.get(STOP_PARSER));
-			btnStatus.addActionListener((ActionListener) actions.get(PRINT_STATUS));
-			btnClearLog.addActionListener((ActionListener) actions.get(CLEAR_LOG));
-			btnExportLog.addActionListener((ActionListener) actions.get(EXPORT_LOG));
+		
+		btnStartParser.addActionListener((ActionListener) actions.get(START_PARSER));
+		btnStopParser.addActionListener((ActionListener) actions.get(STOP_PARSER));
+		btnStatus.addActionListener((ActionListener) actions.get(PRINT_STATUS));
+		btnClearLog.addActionListener((ActionListener) actions.get(CLEAR_LOG));
+		btnExportLog.addActionListener((ActionListener) actions.get(EXPORT_LOG));
 	}
-
-
 
 	public ListModel getLogModel() {
 		return logModel;

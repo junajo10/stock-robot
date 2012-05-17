@@ -18,13 +18,6 @@ public class FinancialLongConverter {
 	
 	public static final int DECIMALLENGTH = 6;
 	
-	/*
-	public static void main( String[] args ) {
-		
-		System.out.println( Long.toString( fromFloat((float)3429.473286876) ) );
-		System.out.println( Long.toString( fromDouble((float)3429.473286876) ) );
-	}*/
-	
 	/**
 	 * Float -> Long
 	 * 
@@ -55,19 +48,18 @@ public class FinancialLongConverter {
 			limit = DECIMALLENGTH - decimals.length();
 		}
 		
-		//If we have only one decimal, increase the amount of zeros
-		//TODO: Do we have to check this?
-		//if( decimals.length() == 1 )
-		//	limit ++;
-		
-		for( int i = 0; i < limit; i ++ )
+		for( int i = 0; i < limit; i ++ ) {
+			
 			decimals += "0";
+		}
 		
 		return Long.parseLong( numbers + decimals );
 	}
 	
 	/**
 	 * Float -> Long
+	 * 
+	 * The conversion of E^X isn't the most elegant solution.
 	 * 
 	 * @param input
 	 * @return
@@ -80,7 +72,6 @@ public class FinancialLongConverter {
 		String decimals = "";
 		int limit = 0;
 		
-		//TODO: FIX THE E^X CONVERSION IN A MORE ELEGANT WAY!!
 		//If we have a large number, java's tostring will insert E^X to make it shorter, then add as many zero's as needed
 		if( dec.contains("E") ) {
 			
@@ -97,13 +88,10 @@ public class FinancialLongConverter {
 			limit = DECIMALLENGTH - decimals.length();
 		}
 		
-		//If we have only one decimal, increase the amount of zeros
-		//TODO: Do we have to check this?
-		//if( decimals.length() == 1 )
-		//	limit ++;
-		
-		for( int i = 0; i < limit; i ++ )
+		for( int i = 0; i < limit; i ++ ) {
+			
 			decimals += "0";
+		}
 		
 		return Long.parseLong( (numbers + decimals).replaceAll("\\.", "") );
 	}

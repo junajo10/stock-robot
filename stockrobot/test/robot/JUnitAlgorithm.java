@@ -11,9 +11,14 @@ import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.portfolio.IRobot_Algorithms;
 
-
-
-public class JUnitAlgorithm implements IAlgorithm{
+/**
+ *
+ * TODO: ALL!!! Is this class going to the trash can?
+ *
+ * @author ?
+ *
+ */
+public class JUnitAlgorithm implements IAlgorithm {
 
 	private volatile int updateVar = 0;
 	private long freq;
@@ -46,8 +51,8 @@ public class JUnitAlgorithm implements IAlgorithm{
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "";
 	}
 	
 	public int getUpdatedNrTimes(){
@@ -56,25 +61,25 @@ public class JUnitAlgorithm implements IAlgorithm{
 
 	@Override
 	public List<AlgorithmSettingDouble> getDefaultDoubleSettings() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<AlgorithmSettingLong> getDefaultLongSettings() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public boolean giveLongSettings(List<Pair<String, Long>> longSettings) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
@@ -88,4 +93,3 @@ public class JUnitAlgorithm implements IAlgorithm{
 		
 	}
 }
-

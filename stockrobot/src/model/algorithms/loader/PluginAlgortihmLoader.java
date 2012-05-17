@@ -1,6 +1,5 @@
 package model.algorithms.loader;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +12,6 @@ import utils.SettingParser;
 import utils.global.FileHelper;
 import utils.global.Log;
 import utils.global.Log.TAG;
-
-
 
 /**
  * This is the AlgortihmLoader.
@@ -37,6 +34,7 @@ public final class PluginAlgortihmLoader {
 	private PluginAlgortihmLoader() {
 		reloadAlgorithmClasses();
 	}
+	
 	public void reloadAlgorithmClasses() {
 		String pluginPath = SettingParser.getAlgorithmPath();
 		
@@ -57,12 +55,13 @@ public final class PluginAlgortihmLoader {
 						algorithmMap.put(ny, c);
 					}
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
 		}
 	}
+	
 	public IAlgorithm loadAlgorithm(String algorithmName) {
 		if (algorithmMap.containsKey(algorithmName)) {
 			Object plugin;
@@ -79,6 +78,7 @@ public final class PluginAlgortihmLoader {
 		}
 		return null;
 	}
+	
 	/**
 	 * Gets an instance of PluginAlgorithmLoader
 	 * @return an instance of PluginAlgorithmLoader

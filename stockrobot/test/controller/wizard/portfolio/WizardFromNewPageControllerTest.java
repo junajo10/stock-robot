@@ -15,8 +15,6 @@ import org.junit.Test;
 
 import controller.gui.WizardFromNewPageController;
 
-import view.wizard.portfolio.PortfolioFromNewPage;
-
 public class WizardFromNewPageControllerTest {
 
 	WizardFromNewPageController toTest;
@@ -25,12 +23,9 @@ public class WizardFromNewPageControllerTest {
 	public void setupTest() {
 		
 		WizardModel model = new WizardModel();
-		PortfolioWizardModel portfolioWizardModel = new PortfolioWizardModel( model );
+		PortfolioWizardModel portfolioWizardModel = new PortfolioWizardModel( );
 		
-		PortfolioFromNewPage pFNP = new PortfolioFromNewPage( model, portfolioWizardModel );
-		
-		//TODO fix test
-		//toTest = new WizardFromNewPageController( pFNP, model );
+		toTest = new WizardFromNewPageController( model, portfolioWizardModel );
 	}
 	
 	@After
@@ -57,22 +52,14 @@ public class WizardFromNewPageControllerTest {
 		ItemEvent fakeEvent = new ItemEvent(new ItemSelectable() {
 			
 			@Override
-			public void removeItemListener(ItemListener l) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void removeItemListener(ItemListener l) {} //NOPMD
 			
 			@Override
-			public Object[] getSelectedObjects() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+			public Object[] getSelectedObjects() {return null;} //NOPMD
 			
 			@Override
-			public void addItemListener(ItemListener l) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void addItemListener(ItemListener l) {} //NOPMD
+			
 		}, 0, new Object(), ItemEvent.SELECTED);
 		
 		listener.itemStateChanged(fakeEvent);
@@ -92,22 +79,14 @@ public class WizardFromNewPageControllerTest {
 		ItemEvent fakeEvent = new ItemEvent(new ItemSelectable() {
 			
 			@Override
-			public void removeItemListener(ItemListener l) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void removeItemListener(ItemListener l) {} //NOPMD
 			
 			@Override
-			public Object[] getSelectedObjects() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+			public Object[] getSelectedObjects() { return null; } //NOPMD
 			
 			@Override
-			public void addItemListener(ItemListener l) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void addItemListener(ItemListener l) {} //NOPMD
+			
 		}, 0, new Object(), ItemEvent.DESELECTED);
 		
 		listener.itemStateChanged(fakeEvent);

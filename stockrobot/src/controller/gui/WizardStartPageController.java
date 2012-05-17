@@ -17,8 +17,15 @@ import view.wizard.WizardPage;
 import view.wizard.portfolio.PortfolioPages;
 import view.wizard.portfolio.PortfolioStartPage;
 
+/**
+ * 
+ * @author Mattias
+ *
+ */
 public class WizardStartPageController extends WizardPageController {
 
+	private static final String CLASS_NAME = "WizardStartPageController";
+	
 	private PortfolioStartPage page;
 	private WizardModel model;
 	private PortfolioWizardModel pageModel;
@@ -38,8 +45,6 @@ public class WizardStartPageController extends WizardPageController {
 		actions.put(PortfolioStartPage.NAME_INPUT_LISTENER, new PortfolioNameLitesner());
 		actions.put(PortfolioStartPage.CREATE_FROM_LISTENER, new CloneListener());
 		page.addActions(actions);
-			
-		
 	}
 	
 	public WizardPage getView(){
@@ -47,27 +52,27 @@ public class WizardStartPageController extends WizardPageController {
 	}
 	
 	//======= Create portfolio from scratch ========
-	public ItemListener getFromNewListener(){
+	public ItemListener getFromNewListener() {
 		
 		ItemListener listener = new FromNewListener();
 			
 		return listener;
 	}
 	
-	public class FromNewListener implements ItemListener{
+	public class FromNewListener implements ItemListener {
 
 
-		public FromNewListener(){
+		public FromNewListener() {
 			
 		}
 		
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			
-			if(e.getStateChange() == ItemEvent.DESELECTED){
+			if(e.getStateChange() == ItemEvent.DESELECTED) {
 				model.removeNextPage();
 				//createFromSelected = null;
-			}else if(e.getStateChange() == ItemEvent.SELECTED){
+			}else if(e.getStateChange() == ItemEvent.SELECTED) {
 				createFromSelected = PortfolioStartPage.CREATE_FROM_NEW;
 				checkNext();
 			}
@@ -94,20 +99,20 @@ public class WizardStartPageController extends WizardPageController {
 		}	
 	}
 	
-	private boolean checkNext(){
+	private boolean checkNext() {
 		
 		boolean canNext = false;
-		if(pageModel.getProperties().get(PortfolioWizardModel.PROPERTY_NAME) == true){
+		if(pageModel.getProperties().get(PortfolioWizardModel.PROPERTY_NAME) == true) {
 			page.setErrorName(false);
-			if(createFromSelected != null && createFromSelected.equals(PortfolioStartPage.CREATE_FROM_NEW)){
+			if(createFromSelected != null && createFromSelected.equals(PortfolioStartPage.CREATE_FROM_NEW)) {
 				model.setNextPage(PortfolioPages.PAGE_CREATE_FROM_NEW);
 				canNext = true;
 			}
-		}else{
+		}else {
 			page.setErrorName(true);
 		}
 		
-		if(!canNext && model.haveNext()){
+		if(!canNext && model.haveNext()) {
 			model.removeNextPage();
 		}
 		
@@ -128,17 +133,13 @@ public class WizardStartPageController extends WizardPageController {
 		}
 	}
 		
-	public class PortfolioNameLitesner implements KeyListener{
+	public class PortfolioNameLitesner implements KeyListener {
 
 		@Override
-		public void keyTyped(KeyEvent e) {
-
-			
-		}
+		public void keyTyped(KeyEvent e) {} //NOPMD
 
 		@Override
-		public void keyPressed(KeyEvent e) {
-		}
+		public void keyPressed(KeyEvent e) {} //NOPMD
 
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -151,38 +152,42 @@ public class WizardStartPageController extends WizardPageController {
 	//==============================================
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
-	public void display(Object model) {
-		
-	}
+	public void display(Object model) {} //NOPMD
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
 		
+		page.cleanup();
+		
+		page = null;
 	}
 
+	/**
+	 * Get map of all eventlisteners this controller uses
+	 */
 	@Override
 	public Map<String, EventListener> getActionListeners() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public void defineSubControllers() {
-		// TODO Auto-generated method stub
 		
+		return actions;
 	}
 
+	/**
+	 * Define Subcontrollers
+	 * 
+	 * No subcontrollers defined yet
+	 */
+	@Override
+	public void defineSubControllers() {} //NOPMD
+
+	/**
+	 * Get this classes unique name
+	 */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return CLASS_NAME;
 	}
 }

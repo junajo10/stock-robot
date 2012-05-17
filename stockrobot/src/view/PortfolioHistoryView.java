@@ -30,7 +30,6 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
 /**
- * 
  * @author Daniel
  */
 public class PortfolioHistoryView extends JFrame implements IView {
@@ -148,16 +147,13 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		portfolioModel.addPropertyChangeListener(this);
 		portfolioModel.startGeneratingPortfolioDate();
 	}
+	
 	@Override
-	public void cleanup() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void cleanup() {} //NOPMD
+	
 	@Override
-	public void addActions(Map<String, EventListener> actions) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void addActions(Map<String, EventListener> actions) {} //NOPMD
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().contentEquals("Table Generated")) {

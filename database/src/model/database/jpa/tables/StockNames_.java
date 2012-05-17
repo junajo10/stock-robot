@@ -10,10 +10,11 @@ import javax.persistence.metamodel.SingularAttribute;
 @javax.persistence.metamodel.StaticMetamodel
 (value=model.database.jpa.tables.StockNames.class)
 @javax.annotation.Generated
-(value="org.apache.openjpa.persistence.meta.AnnotationProcessor6",date="Thu May 03 20:24:15 CEST 2012")
+(value="org.apache.openjpa.persistence.meta.AnnotationProcessor6",date="Wed May 16 20:21:34 CEST 2012")
 public class StockNames_ {
     public static volatile SingularAttribute<StockNames,Integer> id;
     public static volatile SingularAttribute<StockNames,String> market;
     public static volatile SingularAttribute<StockNames,String> name;
+    public static volatile SingularAttribute<StockNames,Boolean> simulatedStock;
     public static volatile ListAttribute<StockNames,StockPrices> stockPrices;
 }

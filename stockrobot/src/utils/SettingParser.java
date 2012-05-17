@@ -23,13 +23,19 @@ import org.xml.sax.SAXException;
 import utils.global.Log;
 import utils.global.Log.TAG;
 
+/**
+ * 
+ * @author Daniel
+ *
+ */
 public class SettingParser {
+	
 	public static String getAlgorithmPath() {
+		
 		File f = new File("configuration.xml");
 
 		if (!f.exists()) {
 			File defualtPluginFolder = new File("bin/model/algorithms");
-			
 			
 			if (defualtPluginFolder.exists()) {
 				try {
@@ -50,6 +56,7 @@ public class SettingParser {
 		}
 		
 		try {
+			
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 			domFactory.setNamespaceAware(true); 
 			DocumentBuilder builder = domFactory.newDocumentBuilder();
@@ -62,29 +69,29 @@ public class SettingParser {
 			NodeList nodes = (NodeList) result;
 
 			List<String> results = new LinkedList<String>();
+			
 			for (int i = 0; i < nodes.getLength(); i++) {
 				results.add(nodes.item(i).getNodeValue()); 
 			}
-			if (nodes.getLength() != 1)
+			
+			if (nodes.getLength() != 1) {	
 				return null;
-			else
+			} else {
 				return nodes.item(0).getNodeValue();
+			}
+			
 		} catch (XPathExpressionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (DOMException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return null;
 	}
 }

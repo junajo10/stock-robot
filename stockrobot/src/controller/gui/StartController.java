@@ -60,8 +60,7 @@ public class StartController implements IController {
 	};
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object model) {
@@ -75,10 +74,7 @@ public class StartController implements IController {
 	}
 
 	@Override
-	public void cleanup() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
@@ -101,12 +97,12 @@ public class StartController implements IController {
 
 	@Override
 	public void defineSubControllers() {
-		if (harvester == null)
+		if (harvester == null) {
 			harvester = new HarvesterController();
+		}
 		
-		if (astroController == null)
+		if (astroController == null) {
 			astroController = new AstroController();
-
+		}
 	}
-
 }

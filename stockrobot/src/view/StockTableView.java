@@ -104,9 +104,11 @@ public class StockTableView extends JFrame implements IView {
 		Pair<Object[][], Object[]> dataAndNames = populate();
 		
 		//Iterate through all table cells and update them according to the new data
-		for( int i = 0; i < dataAndNames.getLeft().length; i ++ )
-			for( int j = 0; j < dataAndNames.getRight().length; j ++ )
+		for( int i = 0; i < dataAndNames.getLeft().length; i ++ ) {
+			for( int j = 0; j < dataAndNames.getRight().length; j ++ ) {
 				model.setValueAt(dataAndNames.getLeft()[i][j], i, j);
+			}
+		}
 	}
 	
 	/**
@@ -137,25 +139,16 @@ public class StockTableView extends JFrame implements IView {
 
 	@Override
 	public void display(Object model) {
-		// TODO Auto-generated method stub
+		
 		init();
 	}
 
 	@Override
-	public void cleanup() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
-	public void addActions(Map<String, EventListener> actions) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void addActions(Map<String, EventListener> actions) {} //NOPMD
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 }

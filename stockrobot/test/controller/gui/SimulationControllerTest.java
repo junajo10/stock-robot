@@ -16,7 +16,7 @@ import testhelpers.DatabaseCleaner;
 /**
  * Test the simulation controller!
  * 
- * TODO:
+ * TODO: Kristian check out what's wrong
  * This test causes a NullPointer at:
  * 
  *  Exception in thread "Thread-5" java.lang.NullPointerException

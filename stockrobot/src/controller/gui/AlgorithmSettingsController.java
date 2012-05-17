@@ -31,6 +31,8 @@ public class AlgorithmSettingsController implements IController {
 			IJPAHelper jpaHelper = JPAHelper.getInstance();
 			
 			jpaHelper.updateObject( portfolio.getPortfolioTable() );
+			
+			portfolio.updateSettings();
 		}
 	};
 	

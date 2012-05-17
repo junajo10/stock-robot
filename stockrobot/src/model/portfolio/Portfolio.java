@@ -1,6 +1,5 @@
 package model.portfolio;
 
-
 import java.util.List;
 
 import utils.global.FinancialLongConverter;
@@ -14,7 +13,6 @@ import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-
 
 /**
  * An object of this class will hold one portfolio.
@@ -87,7 +85,7 @@ public class Portfolio implements IPortfolio {
 
 	@Override
 	public boolean setStocksToWatch(List<StockNames> stocks) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
@@ -142,7 +140,9 @@ public class Portfolio implements IPortfolio {
 	public long getCurrentWorth() {
 		long currentWorth = getUnusedAmount();
 		
-		for (PortfolioHistory ph : portfolioTable.getHistory()) {
+		for (int i = 0; i < portfolioTable.getHistory().size(); i++) {
+			PortfolioHistory ph = portfolioTable.getHistory().get(i);
+			
 			if (ph.getSoldDate() == null) {
 				StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 				currentWorth += latest.getSell()*ph.getAmount();
@@ -150,5 +150,12 @@ public class Portfolio implements IPortfolio {
 		}
 		
 		return currentWorth;
+	}
+	@Override
+	public void updateSettings() {
+		if (algorithm != null) {
+			algorithm.giveDoubleSettings(portfolioTable.getAlgortihmSettings().getCurrentDoubleSettings());
+			algorithm.giveLongSettings(portfolioTable.getAlgortihmSettings().getCurrentLongSettings());
+		}
 	}
 }

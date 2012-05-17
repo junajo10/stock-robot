@@ -18,7 +18,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JProgressBar;
 
-import utils.WindowCloseAdapter;
+import utils.AbstractWindowCloseAdapter;
 import utils.global.FinancialLongConverter;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -42,12 +42,11 @@ public class SimResultView extends JFrame implements IView {
 	private static final long serialVersionUID = -5877884096041331653L;
 	private JPanel contentPane;
 
-	
 	private JProgressBar progressBar = new JProgressBar();
 	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private JPanel panel = new JPanel();
 	
-	private WindowListener windowListener = new WindowCloseAdapter() {
+	private WindowListener windowListener = new AbstractWindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			pcs.firePropertyChange(SimulationHandler.RESULTCLOSE, false, true);
@@ -133,16 +132,10 @@ public class SimResultView extends JFrame implements IView {
 	}
 
 	@Override
-	public void cleanup() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
-	public void addActions(Map<String, EventListener> actions) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void addActions(Map<String, EventListener> actions) {} //NOPMD
 
 	public void setProgress(int progress) {
 		progressBar.setValue(progress);
@@ -152,7 +145,6 @@ public class SimResultView extends JFrame implements IView {
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		pcs.addPropertyChangeListener(listener);
 	}
-    
     
     public void removePropertyChangeListener(PropertyChangeListener listener) {
     	pcs.removePropertyChangeListener(listener);
@@ -181,7 +173,6 @@ public class SimResultView extends JFrame implements IView {
 	
     private JFreeChart createChart(PieDataset dataset) {
         
-    	
         //JFreeChart chart = ChartFactory.createPieChart3D(
     	JFreeChart chart = ChartFactory.createPieChart(
             "Stock Distribution",  				// chart title
@@ -197,13 +188,8 @@ public class SimResultView extends JFrame implements IView {
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.5f);
         return chart;
-        
     }
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 }

@@ -238,14 +238,14 @@ public class PortfolioView extends JFrame implements IView {
 
 		@Override
 		public void addListDataListener(ListDataListener l) {
-			// TODO Auto-generated method stub
 			
+			// TODO Mattias: Do something here?
 		}
 
 		@Override
 		public void removeListDataListener(ListDataListener l) {
-			// TODO Auto-generated method stub
 			
+			// TODO Mattias: Do something here?
 		}
 
 		@Override

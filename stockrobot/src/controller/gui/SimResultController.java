@@ -14,6 +14,9 @@ import view.SimResultView;
  * @author Daniel
  */
 public class SimResultController implements IController {
+	
+	private static final String CLASS_NAME = "SimResultController";
+	
 	SimResultView view;
 	SimulationHandler model;
 	
@@ -38,24 +41,25 @@ public class SimResultController implements IController {
 	}
 
 	@Override
-	public void display(Object model) {
-		SimModel oldModel = (SimModel) model;
+	public void display(Object simModel) {
+		SimModel oldModel = (SimModel) simModel;
 		
-		if (this.model == null) {
-			this.model = new SimulationHandler();
+		if (model == null) {
+			model = new SimulationHandler();
 		}
-		this.model.setAlgorithm(oldModel.getAlgorithm());
-		this.model.setStocksBack(oldModel.getStocksBack());
-		
+		model.setAlgorithm(oldModel.getAlgorithm());
+		model.setStocksBack(oldModel.getStocksBack());
+		model.setLongSettings(oldModel.getLongSettings());
+		model.setDoubleSettings(oldModel.getDoubleSettings());
 		
 		this.view = new SimResultView();
 		view.display(this.model);
 		
 		view.addPropertyChangeListener(this);
 		
-		this.model.addPropertyChangeListener(this);
+		model.addPropertyChangeListener(this);
 		
-		this.model.startSimulation();
+		model.startSimulation();
 	}
 
 	@Override
@@ -65,20 +69,16 @@ public class SimResultController implements IController {
 	}
 
 	@Override
-	public Map<String, EventListener> getActionListeners() {
-		// TODO Auto-generated method stub
+	public Map<String, EventListener> getActionListeners() { //NOPMD
+	
 		return null;
 	}
 
 	@Override
 	public String getName() {
-		return "SimulationController";
+		return CLASS_NAME;
 	}
 
 	@Override
-	public void defineSubControllers() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void defineSubControllers() {} //NOPMD
 }

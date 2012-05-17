@@ -145,7 +145,7 @@ public class GraphView extends JFrame implements IView {
         		false //generate URLs?
         );
 
-        //Pimp the chart!
+        //Color the chart!
         chart.setBackgroundPaint( Color.black );
 
         final XYPlot plot = chart.getXYPlot();
@@ -170,16 +170,10 @@ public class GraphView extends JFrame implements IView {
     }
 
 	@Override
-	public void display(Object model) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void display(Object model) {} //NOPMD
 
 	@Override
-	public void cleanup() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
@@ -188,8 +182,5 @@ public class GraphView extends JFrame implements IView {
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 }

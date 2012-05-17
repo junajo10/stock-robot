@@ -55,7 +55,6 @@ public class PortfolioHandlerTest implements IRobot_Algorithms {
 
 	@Override
 	public ITrader getTrader() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

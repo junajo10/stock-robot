@@ -5,7 +5,6 @@ import org.junit.runners.Suite;
 
 import controller.gui.GraphControllerTest;
 import controller.gui.SimulationControllerTest;
-import controller.wizard.WizardControllerTest;
 import database.jpa.JPATest;
 import database.jpa.MainBasicJPATest;
 import controller.wizard.portfolio.WizardFromNewPageControllerTest;
@@ -31,7 +30,7 @@ import model.wizard.WizardPageModelTest;
  * 
  * <p>
  * 
- * TODO: Right now JPA needs to have the -javaagent 
+ * Right now JPA needs to have the -javaagent 
  * -javaagent:/PATH-TO-YOUR-OPENJPA2/stock-robot/stockrobot/jar/openjpa-all-2.2.0.jar
  * 
  * </p>
@@ -56,7 +55,6 @@ import model.wizard.WizardPageModelTest;
 	TraderTest.class,
 	PortfolioTest.class,
 	RobotSchedulerTest.class,
-	WizardControllerTest.class,
 	WizardFromNewPageControllerTest.class,
 	WizardModelTest.class,
 	WizardPageModelTest.class,
@@ -66,5 +64,5 @@ import model.wizard.WizardPageModelTest;
 })
 
 public class TestSuiteForEverything {
-// nothing goes here	 
+	//All glory to the Hypnotoad!
 }

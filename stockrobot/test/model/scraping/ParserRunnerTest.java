@@ -53,7 +53,6 @@ public class ParserRunnerTest {
 	@AfterClass
 	public static void tearDownTest() {
 		
-		
 		toTest.stopParser();
 		toTest.stopRunner();
 		
@@ -64,17 +63,15 @@ public class ParserRunnerTest {
 				
 				runnerCreated = false;
 				
-				
 				try {
 					th.join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
 		} );
 		closer.start();
-		
 	}
 	
 	/**
@@ -122,17 +119,13 @@ public class ParserRunnerTest {
 	/**
 	 * This is to test that the stopRunner method works as anticipated
 	 * 
-	 * TODO:
-	 * However, why is it not possible to assert with assertTrue here???
-	 *    It gives a nullpointer exception. But assertFalse is ok. WHY?
+	 * Why is it not possible to assert with assertTrue here???
+	 * It gives a nullpointer exception. But assertFalse is ok. WHY?
 	 */
 	@Test
 	public void testStopRunner() {
 		
 		boolean wasStopped = toTest.stopRunner();
-		
-		//System.out.println("wasStopped: " + wasStopped );
-		//System.out.println( "toTest.status(): " + toTest.status() );
 		
 		Assert.assertFalse( toTest.status() && !wasStopped );
 	}

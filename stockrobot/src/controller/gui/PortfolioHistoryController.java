@@ -15,14 +15,12 @@ import model.portfolio.PortfolioHistoryModel;
  * @author Daniel
  */
 public class PortfolioHistoryController implements IController{
-	private static final String NAME = "StockTableHistory";
+	private static final String CLASSNAME = "StockTableHistory";
 	private PortfolioHistoryModel portfolioModel;
 	private PortfolioHistoryView portfolioHistoryView;
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	public static void main(String args[]) {
 		PortfolioHistoryController phc = new PortfolioHistoryController();
@@ -38,25 +36,20 @@ public class PortfolioHistoryController implements IController{
 	}
 
 	@Override
-	public void cleanup() {
-		// TODO Auto-generated method stub
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
-	public Map<String, EventListener> getActionListeners() {
-		// TODO Auto-generated method stub
+	public Map<String, EventListener> getActionListeners() { //NOPMD
+		
 		return null;
 	}
 
 	@Override
-	public void defineSubControllers() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void defineSubControllers() {} //NOPMD
 
 	@Override
 	public String getName() {
-		return NAME;
+		return CLASSNAME;
 	}
 
 }

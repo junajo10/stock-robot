@@ -3,12 +3,18 @@ package model.simulation;
 import java.util.List;
 
 import model.algorithms.loader.PluginAlgortihmLoader;
+import model.database.jpa.tables.AlgorithmSettingDouble;
+import model.database.jpa.tables.AlgorithmSettingLong;
 
 public class SimModel {
 	private String algorithm;
 	private int stocksBack;
 	private PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
 	private long initialValue = Long.valueOf("10000000000000");
+	protected List<AlgorithmSettingDouble> doubleSettings;
+	protected List<AlgorithmSettingLong> longSettings;
+	
+	
 	public SimModel() {
 		if (algorithmLoader.getAlgorithmNames().size() == 0)
 			algorithmLoader.reloadAlgorithmClasses();
@@ -39,5 +45,17 @@ public class SimModel {
 	public long getInitialValue() {
 		return initialValue;
 	}
-	
+
+	public void giveDoubleSettings(List<AlgorithmSettingDouble> asd) {
+		doubleSettings = asd;
+	}
+	public void giveLongSettings(List<AlgorithmSettingLong> asl) {
+		longSettings = asl;
+	}
+	public List<AlgorithmSettingLong> getLongSettings() {
+		return longSettings;
+	}
+	public List<AlgorithmSettingDouble> getDoubleSettings() {
+		return doubleSettings;
+	}
 }
