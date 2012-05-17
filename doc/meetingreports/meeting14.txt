@@ -1,0 +1,31 @@
+Meeting Agenda
+Location: 5509
+Date: 2012-05-17
+Time: 12:00
+Facilitator: Erik Ramqvist
+Note taker: Daniel Malmqvist
+Participants: Erik Ramqvist, Mattias Markehed, Daniel Malmqvist, Kristian Sällberg
+
+1. Objectives (5 min)
+Next meeing:
+* Fix Buggs 
+* Start preparing presentation / slides for presentation
+* Try to fix last circular dependency.
+* Finish RAD/SDD
+
+2. Reports (15 min)
+* Kristian: Fixed algorithms settings.
+* Mattias: Worked on wizard gui. Made a logo proposal.
+* Erik: More functions has been added to parser gui. Fixed server-client module.
+* Daniel: Add graph and statistics to PortfolioHistory, A lot of bugs have been fixed.
+
+3. Discussion items (35 min)
+* Planing of presentation, making a more detailed plan for what to talk about.
+
+4. Outcomes and assignments (5 min)
+* All: Fix the remaining bugs.
+* All: Make GUI hotter.
+
+5. Wrap up
+* Everyone Make ASTRo runnable and documents readable.
+
