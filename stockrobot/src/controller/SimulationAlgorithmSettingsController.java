@@ -45,10 +45,7 @@ public class SimulationAlgorithmSettingsController implements IController {
 	}
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object model) {
@@ -71,10 +68,7 @@ public class SimulationAlgorithmSettingsController implements IController {
 	}
 
 	@Override
-	public void cleanup() {
-		
-		
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
@@ -83,10 +77,7 @@ public class SimulationAlgorithmSettingsController implements IController {
 	}
 
 	@Override
-	public void defineSubControllers() {
-		
-		
-	}
+	public void defineSubControllers() {} //NOPMD
 
 	@Override
 	public String getName() {

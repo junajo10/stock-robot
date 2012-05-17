@@ -38,8 +38,8 @@ public class GraphController implements IController {
 	private Map<String, EventListener> retList;
 	
 	public GraphView getView() { return view; }
-
-	public GraphController() {
+	
+	public void init() {
 		
 		retList = new HashMap<String,EventListener>();
 		retList.put(BIND_GRAPH_VIEW, bindGraphView());
@@ -71,11 +71,11 @@ public class GraphController implements IController {
 		return new ActionListener() {
 
 			@Override
-			public void actionPerformed( ActionEvent arg0 ) {
+			public void actionPerformed( final ActionEvent arg0 ) {
 		
 				//Sign up for the jpaHelper
-				IJPAHelper jpaHelper = JPAHelper.getInstance();
-				List<StockNames> nameList = jpaHelper.getAllStockNames();
+				final IJPAHelper jpaHelper = JPAHelper.getInstance();
+				final List<StockNames> nameList = jpaHelper.getAllStockNames();
 		
 				//Search through all stocknames to find the right one if it exists
 				//TODO: Make this search more effective! Maybe by adding a new method to JPAHelper that does this
@@ -88,7 +88,7 @@ public class GraphController implements IController {
 						final TimeSeries series = new TimeSeries( st.getName() );
 		
 						//Get all of the stock's prices
-						List<StockPrices> priceList = jpaHelper.getPricesForStock( st );
+						final List<StockPrices> priceList = jpaHelper.getPricesForStock( st );
 		
 						//Add all prices through time to the serie
 						for( StockPrices sp : priceList ) {
@@ -121,8 +121,5 @@ public class GraphController implements IController {
 	}
 
 	@Override
-	public void defineSubControllers() {
-		
-		//We have no sub controllers at this level
-	}
+	public void defineSubControllers() {} //NOPMD
 }

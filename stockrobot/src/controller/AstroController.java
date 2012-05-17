@@ -36,7 +36,7 @@ public class AstroController implements IController {
 	
 	//Hardcoded sub controllers:
 	private IController simController;
-	private IController graphController;
+	private GraphController graphController; //Typed this GraphController instead of IController to be able to call init(), to avoid a PMD error.
 	private IController stockInfoController;
 	private IController portfolioController;
 	
@@ -176,6 +176,7 @@ public class AstroController implements IController {
 	public void defineSubControllers() {
 		
 		graphController = new GraphController();
+		graphController.init();
 		subControllers.add( graphController );
 		
 		stockInfoController = new StockTableController();
