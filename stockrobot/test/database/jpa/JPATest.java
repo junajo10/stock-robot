@@ -33,7 +33,7 @@ public class JPATest extends DatabaseCleaner {
 	public void testDuplicateSafeEntry() {
 		StockNames stockName = new StockNames("Stock2" + rand.nextFloat(), "marketB", true);
 		StockPrices sp = new StockPrices(stockName, 100, 100, 100, 100, new Date(123231));
-		System.out.println(sp);
+
 		jpaHelper.storeObjectIfPossible(stockName);
 		jpaHelper.storeObjectIfPossible(sp);
 		jpaHelper.storeObjectIfPossible(sp);
@@ -52,7 +52,7 @@ public class JPATest extends DatabaseCleaner {
 		jpaHelper.remove(testPortfolio);
 		
 		for (PortfolioEntity p : jpaHelper.getAllPortfolios()) {
-			System.out.println(jpaHelper.getAllPortfolios().size());
+
 			if (p.getName().contentEquals("testPortfolio"))
 				throw new IllegalArgumentException("Still in the system");
 		}
@@ -83,7 +83,7 @@ public class JPATest extends DatabaseCleaner {
 		list.clear();
 		for (int i = 0; i < 100; i++) {
 			ParserStock ps = new ParserStock("ParserStock" + i);
-			ps.setDate(new Date(new Long("1231231231233")));
+			ps.setDate(new Date(Long.valueOf("1231231231233")));
 			ps.setBuy(123);
 			ps.setSell(123);
 			ps.setLastClose(321);

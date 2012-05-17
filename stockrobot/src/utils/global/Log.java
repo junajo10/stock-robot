@@ -33,9 +33,9 @@ public class Log {
 	public static void log(TAG tag, String message){
 	
 		if(log.filter.get(tag)){
-			System.out.print("[" + log.shortenerMap.get(tag) + "] " );
-			System.out.print(message);
-			System.out.println();
+			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
+			System.out.print(message); //NOPMD
+			System.out.println(); //NOPMD
 		}
 	}
 	

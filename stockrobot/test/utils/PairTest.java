@@ -26,11 +26,11 @@ import utils.global.Pair;
 @RunWith( value = Parameterized.class )
 public class PairTest {
 	
-	private Object _insertLeft;
-	private Object _insertRight;
-	private Object _compareLeft;
-	private Object _compareRight;
-	private boolean _shouldBeTrue;
+	private Object insertLeft;
+	private Object insertRight;
+	private Object compareLeft;
+	private Object compareRight;
+	private boolean shouldBeTrue;
 	
 	/**
 	 * Constructor, send the test objects here 
@@ -43,11 +43,11 @@ public class PairTest {
 	 */
 	public PairTest( Object insertLeft, Object insertRight, Object compareLeft, Object compareRight, boolean shouldBeTrue ) {
 		
-		_insertLeft		= insertLeft;
-		_insertRight	= insertRight;
-		_compareLeft	= compareLeft;
-		_compareRight	= compareRight;
-		_shouldBeTrue	= shouldBeTrue;
+		this.insertLeft		= insertLeft;
+		this.insertRight	= insertRight;
+		this.compareLeft	= compareLeft;
+		this.compareRight	= compareRight;
+		this.shouldBeTrue	= shouldBeTrue;
 	}
 	
 	/**
@@ -111,12 +111,12 @@ public class PairTest {
 	@Test
 	public void test() {
 		
-		Pair<Object, Object> testPair = new Pair<Object, Object>( _insertLeft, _insertRight );
+		Pair<Object, Object> testPair = new Pair<Object, Object>( insertLeft, insertRight );
 		
 		Assert.assertTrue(
-			( 	testPair.getLeft().equals( _compareLeft ) && 
-				testPair.getRight().equals( _compareRight ) ) 
-				== _shouldBeTrue
+			( 	testPair.getLeft().equals( compareLeft ) && 
+				testPair.getRight().equals( compareRight ) ) 
+				== shouldBeTrue
 		);
 	}
 }

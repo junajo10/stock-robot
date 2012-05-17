@@ -57,18 +57,10 @@ public class JPAHelperForUnderstanding {
 		Calendar startAt = new GregorianCalendar();
 		startAt.set(2012, 02, 23, 15, 00, 10);
 		
-		System.out.println( "StartTime: " + startAt.getTime() );
 		
 		Calendar endAt = new GregorianCalendar();
 		endAt.set(2012, 02, 23, 15, 00, 26);
 		
 		List<StockPrices> prices = jpaHelper.getPricesForStockPeriod( firstStock, startAt.getTime(), endAt.getTime() );
-		
-		System.out.println( "After prices!" );
-		
-		for( StockPrices sp : prices ) {
-			
-			System.out.println( "Latest: " + sp.getLatest() + ", Date: " + sp.getTime() + ", Time: " + sp.getTime() + ", Name: " + sp.getStockName() );
-		}
 	}
 }

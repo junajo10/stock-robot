@@ -222,7 +222,6 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 			e.printStackTrace();
 		}
 		
-		System.out.println(algorithm.getUpdatedNrTimes());
 		assertTrue(algorithm.getUpdatedNrTimes() > 2);
 		assertTrue(algorithm2.getUpdatedNrTimes() > 2);
 		assertTrue(algorithm3.getUpdatedNrTimes() > 2);

@@ -24,7 +24,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 	private boolean okToShutDown = false;
 	private Thread th;
 	
-	private static final int pollingTime = 100;
+	private static final int POLLINGTIME = 100;
 	
 	@Before
 	public void setup() {
@@ -55,7 +55,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		while( !runnercreated ) {
 			
 			try {
-				Thread.sleep(pollingTime);
+				Thread.sleep(POLLINGTIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -89,7 +89,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		while( okToShutDown ) {
 			
 			try {
-				Thread.sleep(pollingTime);
+				Thread.sleep(POLLINGTIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -106,7 +106,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		while( !runnercreated ) {
 			
 			try {
-				Thread.sleep(pollingTime);
+				Thread.sleep(POLLINGTIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -136,7 +136,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		while( !runnercreated ) {
 			
 			try {
-				Thread.sleep(pollingTime);
+				Thread.sleep(POLLINGTIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -168,7 +168,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		while( !runnercreated ) {
 			
 			try {
-				Thread.sleep(pollingTime);
+				Thread.sleep(POLLINGTIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
