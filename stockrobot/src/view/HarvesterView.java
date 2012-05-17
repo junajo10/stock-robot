@@ -86,6 +86,7 @@ public class HarvesterView extends JFrame implements IView{
 		
 		parserBar = new JProgressBar(0, 20000);
 		parserBar.setToolTipText("Parsing progress.");
+		parserBar.setStringPainted(true);
 		parserBar.setVisible(false);
 		
 		chckbxAutoscrollLog = new JCheckBox("Autoscroll Log");
@@ -112,8 +113,8 @@ public class HarvesterView extends JFrame implements IView{
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(parserBar, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-								.addComponent(chckbxForceStop, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnStopParser, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)))
+								.addComponent(btnStopParser, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+								.addComponent(chckbxForceStop, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnStatus, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
