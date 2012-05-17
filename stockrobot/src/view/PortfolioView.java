@@ -37,7 +37,7 @@ public class PortfolioView extends JFrame implements IView {
 	public static final String MANAGE_ALGORITHMS		= "manageAlgorithms";
 	public static final String HISTORY					= "History";
 	private JPanel contentPane;
-	private IPortfolioHandler portfolios;
+	//private IPortfolioHandler portfolios;
 	private JComboBox cmbSelectPortfolio;
 	private ITrader trader;
 	
@@ -59,7 +59,7 @@ public class PortfolioView extends JFrame implements IView {
 	 */
 	public PortfolioView(ITrader trader, IPortfolioHandler portfolios) {
 		
-		this.portfolios = portfolios; 
+		//this.portfolios = portfolios; 
 		this.trader = trader;
 		trader.addAddObserver(this);
 		setTitle("Portfolio");

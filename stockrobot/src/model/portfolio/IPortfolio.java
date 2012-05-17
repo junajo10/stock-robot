@@ -74,15 +74,7 @@ public interface IPortfolio {
 	 * @return True if investment went ok
 	 */
 	boolean investAmount(long n);
-	
-	/**
-	 * 
-	 * @param stocks A list of stocks this portfolio will watch
-	 * @return True if setting was ok
-	 */
-	boolean setStocksToWatch(List<StockNames> stocks);
-	
-	
+		
 	/**
 	 * Will set the stop buying flag
 	 * @param flag 

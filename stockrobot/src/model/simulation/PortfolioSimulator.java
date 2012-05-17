@@ -76,12 +76,6 @@ public class PortfolioSimulator implements IPortfolio {
 	}
 
 	@Override
-	public boolean setStocksToWatch(List<StockNames> stocks) {
-		// TODO Daniel: Do anything here?
-		return false;
-	}
-
-	@Override
 	public void stopBuying(boolean flag) {
 		if (flag != portfolioTable.isStopBuying()) {
 			portfolioTable.setStopBuying(flag);

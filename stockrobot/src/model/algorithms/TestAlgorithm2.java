@@ -121,7 +121,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 	@Override
 	public boolean giveDoubleSettings(List<Pair<String, Double>> doubleSettings) {
-		// TODO Daniel: What's your idea here?
+		// Since this algorithm don't need any double as settings this just returns false
 		return false;
 	}
 

@@ -294,11 +294,6 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		}
 
 		@Override
-		public boolean setStocksToWatch(List<StockNames> stocks) {
-			return false;
-		}
-
-		@Override
 		public void stopBuying(boolean flag) {
 			
 		}

@@ -3,10 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComboBox;
@@ -23,19 +21,16 @@ public class SimController implements IController {
 	private SimView view = new SimView();
 	private SimModel model;
 	
-	private List<IController> subControllers = new ArrayList<IController>();
 	
 	private SimulationAlgorithmSettingsController settingController;
+	private SimResultController simResultController;
 	
 	ActionListener startSimulation = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (IController c : subControllers) {
-				if (c.getName().contentEquals("SimulationController")) {
-					c.display(model);
-				}
+			if (simResultController != null) {
+				simResultController.display(model);
 			}
-			
 		}
 	};
 	ActionListener comboBoxListener = new ActionListener() {
@@ -52,6 +47,7 @@ public class SimController implements IController {
 			settingController.display(model);
 		}
 	};
+
 	
 	
 	@Override
@@ -93,8 +89,7 @@ public class SimController implements IController {
 
 	@Override
 	public void defineSubControllers() {
-		if (subControllers.size() == 0)
-			subControllers.add(new SimResultController());
+		simResultController = new SimResultController();
 	}
 
 }
