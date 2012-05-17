@@ -17,7 +17,7 @@ public class Scheduler implements IScheduler {
 	//TODO: Implement startTime and endTime
 	//private Date startTime;
 	//private Date endTime;
-	private boolean _shouldRun = true;
+	private boolean shouldRun = true;
 	
 	/**
 	 * When called, shouldRun will return true or false depending on how
@@ -27,7 +27,7 @@ public class Scheduler implements IScheduler {
 	@Override
 	public boolean shouldRun() {
 			
-			if( !_shouldRun )
+			if( !shouldRun )
 				return false;
 		
 			
@@ -62,11 +62,11 @@ public class Scheduler implements IScheduler {
 	@Override
 	public void setShouldRun(boolean run) {
 		
-		_shouldRun = run;
+		shouldRun = run;
 	}
 	
 	@Override
-	public boolean getShouldRun() { return _shouldRun; }
+	public boolean getShouldRun() { return shouldRun; }
 	
 	public long timeUntilNextParse() {
 		long time = 0;

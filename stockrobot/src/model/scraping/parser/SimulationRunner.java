@@ -25,7 +25,7 @@ public class SimulationRunner implements IParserRunner {
 
 	boolean run = false;
 	boolean close = false;
-	private int PORT_NR;
+	private int portNr;
 
 	IScheduler scheduler;
 	IInserter inserter;
@@ -39,7 +39,7 @@ public class SimulationRunner implements IParserRunner {
 	public SimulationRunner(int PORT_NR){
 		inserter = new JPAInserter();
 		scheduler = new Scheduler();
-		this.PORT_NR = PORT_NR;
+		this.portNr = PORT_NR;
 	}
 	@Override
 	public void run() {
@@ -166,7 +166,7 @@ public class SimulationRunner implements IParserRunner {
 	 */
 	public boolean startParser() {
 		if(!run){
-			connector = new Connector(PORT_NR, pcs);
+			connector = new Connector(portNr, pcs);
 			run = true;
 			close = false;
 			return true;
