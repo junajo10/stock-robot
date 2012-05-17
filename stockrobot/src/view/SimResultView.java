@@ -78,7 +78,7 @@ public class SimResultView extends JFrame implements IView {
 		textField.setEditable(false);
 		textField.setText("-5%");
 		textField.setColumns(10);
-		setBounds(100, 100, 612, 483);
+		setBounds(100, 100, 729, 571);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
