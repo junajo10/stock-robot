@@ -26,7 +26,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
-import controller.gui.GraphController;
+import controller.GraphController;
 
 import view.IView;
 

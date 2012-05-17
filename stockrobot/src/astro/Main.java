@@ -1,8 +1,8 @@
 package astro;
 
 import model.robot.StartModel;
-import controller.gui.IController;
-import controller.gui.StartController;
+import controller.IController;
+import controller.StartController;
 
 /**
  * This is where we start ASTRo. 

@@ -1,5 +1,5 @@
 package astro;
-import controller.gui.HarvesterController;
+import controller.HarvesterController;
 
 
 /**
