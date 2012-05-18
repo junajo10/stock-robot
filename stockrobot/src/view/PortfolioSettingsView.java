@@ -33,7 +33,8 @@ public class PortfolioSettingsView extends JFrame implements IView {
 	public final static String OKPRESSED = "Ok pressed";
 	public final static String CANCELPRESSED = "Cancel pressed";
 	public final static String WINDOWCLOSE = "Window Close";
-	
+	public final static String INVESTEXTRAXT = "Invest/Extract";
+	public final static String SETTINGS = "Settings";
 	
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	private final JPanel panel = new JPanel();
@@ -107,7 +108,7 @@ public class PortfolioSettingsView extends JFrame implements IView {
 					.addContainerGap())
 		);
 		
-		tabbedPane.addTab("Invest/Extract", null, panel, null);
+		tabbedPane.addTab(INVESTEXTRAXT, null, panel, null);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -141,7 +142,7 @@ public class PortfolioSettingsView extends JFrame implements IView {
 		buttonGroup.add(rdbtnExtractMoney);
 		panel.setLayout(gl_panel);
 		
-		tabbedPane.addTab("Settings", null, panel_1, null);
+		tabbedPane.addTab(SETTINGS, null, panel_1, null);
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -163,6 +164,10 @@ public class PortfolioSettingsView extends JFrame implements IView {
 		);
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
+		
+		tabbedPane.setSelectedIndex(0);
+		
+		System.out.println(getSelectedPane());
 	}
 
 	@Override
@@ -177,6 +182,10 @@ public class PortfolioSettingsView extends JFrame implements IView {
 		
 		//TODO: Update amount
 		textCurrentAmount.setText(FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getUnusedAmount()));
+		
+		
+		chckbxStopBuying.setSelected(portfolio.isStopBuyingFlagSet());
+		chckbxStopSelling.setSelected(portfolio.isStopSellingFlagSet());
 		
 		setVisible(true);
 	}
@@ -220,5 +229,14 @@ public class PortfolioSettingsView extends JFrame implements IView {
 			amount = -amount;
 		}
 		return amount;
+	}
+	public String getSelectedPane() {
+		return tabbedPane.getTitleAt(tabbedPane.getSelectedIndex());
+	}
+	public boolean isStopBuyingFlagSet() {
+		return chckbxStopBuying.isSelected();
+	}
+	public boolean isStopSellingFlagSet() {
+		return chckbxStopSelling.isSelected();
 	}
 }

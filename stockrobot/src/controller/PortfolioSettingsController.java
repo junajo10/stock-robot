@@ -22,10 +22,16 @@ public class PortfolioSettingsController implements IController {
 	ActionListener okAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int amount = view.getAmountEntered();
-			
-			if (amount != 0) {
-				portfolio.investAmount(FinancialLongConverter.toFinancialLong(amount));
+			if (view.getSelectedPane().contentEquals(PortfolioSettingsView.INVESTEXTRAXT)) {
+				int amount = view.getAmountEntered();
+				
+				if (amount != 0) {
+					portfolio.investAmount(FinancialLongConverter.toFinancialLong(amount));
+				}
+			}
+			else if (view.getSelectedPane().contentEquals(PortfolioSettingsView.SETTINGS)) {
+				portfolio.stopBuying(view.isStopBuyingFlagSet());
+				portfolio.stopSelling(view.isStopBuyingFlagSet());
 			}
 			cleanup();
 		}
