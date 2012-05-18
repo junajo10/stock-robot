@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.JProgressBar;
 import java.awt.Color;
+import javax.swing.UIManager;
 
 /**
  * View for Harvester.
@@ -58,7 +59,7 @@ public class HarvesterView extends JFrame implements IView{
 	private JCheckBox chckbxAutoscrollLog;
 
 	public HarvesterView() {
-		getContentPane().setBackground(Color.BLACK);
+		getContentPane().setBackground(UIManager.getColor("text"));
 		
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
