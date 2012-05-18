@@ -29,7 +29,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBox;
 import java.awt.SystemColor;
-import javax.swing.UIManager;
+
 
 public class AstroView extends JFrame implements IView {
 
@@ -79,7 +79,7 @@ public class AstroView extends JFrame implements IView {
 	public AstroView() {
 		setResizable(false);
 		setTitle("ASTRo Main");
-		setBounds(100, 100, 358, 152);
+		setBounds(150, 150, 358, 168);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -99,7 +99,7 @@ public class AstroView extends JFrame implements IView {
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();
-		contentPane.setBackground(UIManager.getColor("ToolBar.light"));
+		contentPane.setBackground(SystemColor.control);
 		contentPane.setForeground(Color.GREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -124,7 +124,7 @@ public class AstroView extends JFrame implements IView {
 		
 		chckbxShowLog = new JCheckBox("Show Log");
 		chckbxShowLog.setForeground(Color.BLACK);
-		chckbxShowLog.setBackground(UIManager.getColor("ToolBar.light"));
+		chckbxShowLog.setBackground(SystemColor.control);
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -206,13 +206,13 @@ public class AstroView extends JFrame implements IView {
 	public void showLog(){
 		Rectangle currentPosition = getBounds();
 		
-		setBounds(currentPosition.x, currentPosition.y, 358, 575);
+		setBounds(currentPosition.x, currentPosition.y, 358, 580);
 	}
 	
 	public void hideLog(){
 		Rectangle currentPosition = getBounds();
 		
-		setBounds(currentPosition.x, currentPosition.y, 358, 165);
+		setBounds(currentPosition.x, currentPosition.y, 358, 168);
 	}
 	
 	public Boolean getShowLogIsSelected(){
