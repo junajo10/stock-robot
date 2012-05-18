@@ -29,6 +29,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBox;
 import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 
 public class AstroView extends JFrame implements IView {
@@ -79,7 +80,7 @@ public class AstroView extends JFrame implements IView {
 	public AstroView() {
 		setResizable(false);
 		setTitle("ASTRo Main");
-		setBounds(150, 150, 358, 168);
+		setBounds(150, 150, 358, 165);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -118,7 +119,7 @@ public class AstroView extends JFrame implements IView {
 		JButton btnExportLog = new JButton("Export Log");
 		
 		JCheckBox autoScroll = new JCheckBox("Autoscroll Log");
-		autoScroll.setBackground(Color.LIGHT_GRAY);
+		autoScroll.setBackground(UIManager.getColor("control"));
 		autoScroll.setForeground(Color.BLACK);
 		autoScroll.setSelected(true);
 		

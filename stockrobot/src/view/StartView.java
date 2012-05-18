@@ -29,6 +29,7 @@ import javax.swing.DefaultComboBoxModel;
 import utils.global.Log;
 import javax.swing.JCheckBox;
 import java.awt.Color;
+import javax.swing.UIManager;
 
 /**
  * 
@@ -70,8 +71,8 @@ public class StartView extends JFrame implements IView {
 	 * Create the frame.
 	 */
 	public StartView() {
-		chckbxConnectToParser.setBackground(Color.BLACK);
-		chckbxConnectToParser.setForeground(Color.GREEN);
+		chckbxConnectToParser.setBackground(Color.WHITE);
+		chckbxConnectToParser.setForeground(UIManager.getColor("Tree.textForeground"));
 		chckbxConnectToParser.setSelected(true);
 		setResizable(false);
 		setTitle("ASTRo Stock Robot");
@@ -83,8 +84,8 @@ public class StartView extends JFrame implements IView {
 		setContentPane(contentPane);
 		
 		txtLocalhost = new JTextField();
-		txtLocalhost.setForeground(Color.GREEN);
-		txtLocalhost.setBackground(Color.BLACK);
+		txtLocalhost.setForeground(Color.BLACK);
+		txtLocalhost.setBackground(UIManager.getColor("control"));
 		txtLocalhost.setText("localhost:54551");
 		txtLocalhost.setColumns(10);
 		
