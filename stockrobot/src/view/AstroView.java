@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
@@ -29,8 +28,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBox;
 import java.awt.SystemColor;
-import javax.swing.UIManager;
-import javax.swing.ScrollPaneConstants;
 
 
 public class AstroView extends JFrame implements IView {
@@ -44,7 +41,7 @@ public class AstroView extends JFrame implements IView {
 	public static final String OPEN_PORTFOLIOVIEW 		= "PortfolioView";
 	public static final String SHOW_LOG			 		= "ShowLog";
 
-	private final int HEIGHT_FRAME_SUBTRACTED 	= 180;
+	private final int HEIGHT_FRAME_SUBTRACTED 	= 170;
 	private final int HEIGHT_FRAME_EXPANDED 	= 655;
 	private final int WIDTH_FRAME = 373;
 
@@ -102,6 +99,7 @@ public class AstroView extends JFrame implements IView {
 		progressBar.setValue(100);
 		
 		pnlLog = new JPanel();
+		pnlLog.setBackground(null);
 		
 		chckbxShowLog = new JCheckBox("Show Log");
 		chckbxShowLog.setForeground(Color.BLACK);
@@ -163,10 +161,10 @@ public class AstroView extends JFrame implements IView {
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
 		
-		JCheckBox autoScroll = new JCheckBox("Autoscroll Log");
-		autoScroll.setBackground(UIManager.getColor("control"));
-		autoScroll.setForeground(Color.BLACK);
-		autoScroll.setSelected(true);
+		JCheckBox cbxAutoScroll = new JCheckBox("Autoscroll Log");
+		cbxAutoScroll.setBackground(null);
+		cbxAutoScroll.setForeground(Color.BLACK);
+		cbxAutoScroll.setSelected(true);
 		
 		JButton btnClearLog = new JButton("Clear Log");
 		
@@ -182,7 +180,7 @@ public class AstroView extends JFrame implements IView {
 							.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_pnlLog.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(autoScroll, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(cbxAutoScroll, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)))
 					.addGap(9))
 				.addGroup(gl_pnlLog.createSequentialGroup()
 					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
@@ -194,7 +192,7 @@ public class AstroView extends JFrame implements IView {
 					.addGap(5)
 					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(autoScroll)
+					.addComponent(cbxAutoScroll)
 					.addGap(18)
 					.addGroup(gl_pnlLog.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnClearLog)
