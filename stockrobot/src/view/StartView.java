@@ -29,13 +29,7 @@ import javax.swing.DefaultComboBoxModel;
 import utils.global.Log;
 import javax.swing.JCheckBox;
 import java.awt.Color;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import javax.swing.UIManager;
-=======
->>>>>>> Change background color of StartView to match current and future logo better.
-=======
->>>>>>> fca02af876f8f019442f6a2b141e13a5c9ec85bd
 
 /**
  * 
@@ -78,13 +72,6 @@ public class StartView extends JFrame implements IView {
 	 */
 	public StartView() {
 		chckbxConnectToParser.setBackground(Color.WHITE);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		chckbxConnectToParser.setForeground(UIManager.getColor("Tree.textForeground"));
-=======
->>>>>>> Change background color of StartView to match current and future logo better.
-=======
->>>>>>> fca02af876f8f019442f6a2b141e13a5c9ec85bd
 		chckbxConnectToParser.setSelected(true);
 		setResizable(false);
 		setTitle("ASTRo Stock Robot");
