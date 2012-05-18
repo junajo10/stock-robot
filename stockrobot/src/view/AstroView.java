@@ -5,11 +5,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
@@ -18,6 +20,12 @@ import java.util.EventListener;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JList;
+import javax.swing.SwingConstants;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class AstroView extends JFrame implements IView {
 
@@ -33,11 +41,15 @@ public class AstroView extends JFrame implements IView {
 	private JPanel contentPane;
 	JButton btnSimulate 								= new JButton("Simulate Algorithms");
 	JButton btnGraph 									= new JButton("Graph Window");
-	JButton btnStocks 									= new JButton("Show Stocks");
+	JButton btnStocks 									= new JButton("Browse Stocks");
 	JButton btnPortfolio 								= new JButton("Open Portfolio");
 
 	WindowListener windowListener;
 
+	
+	DefaultListModel logModel;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +72,25 @@ public class AstroView extends JFrame implements IView {
 	public AstroView() {
 		setResizable(false);
 		setTitle("ASTRo Main");
-		setBounds(100, 100, 231, 207);
+		setBounds(100, 100, 213, 396);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnNewMenu = new JMenu("File");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Exit");
+		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+		
+		JMenuItem mntmHelp = new JMenuItem("Help");
+		mnHelp.add(mntmHelp);
+		
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -70,39 +100,63 @@ public class AstroView extends JFrame implements IView {
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setForeground(Color.GREEN);
 		progressBar.setValue(100);
+		
+		JScrollPane scrollPane = new JScrollPane();
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-				gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-										.addComponent(lblAstroStatus)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-										.addComponent(btnPortfolio, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-										.addComponent(btnStocks, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-										.addComponent(btnSimulate, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-										.addComponent(btnGraph, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
-										.addGap(48))
-				);
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(lblAstroStatus)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnPortfolio, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(btnStocks, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(btnSimulate, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+					.addGap(35))
+		);
 		gl_contentPane.setVerticalGroup(
-				gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblAstroStatus)
-								.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(btnPortfolio)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnStocks)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnSimulate)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnGraph)
-								.addContainerGap(70, Short.MAX_VALUE))
-				);
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblAstroStatus)
+						.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnPortfolio)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnStocks)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnSimulate)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnGraph)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		JList log = new JList();
+		scrollPane.setViewportView(log);
+		
+		JLabel lblAstroLog = new JLabel("ASTRo Log");
+		lblAstroLog.setHorizontalAlignment(SwingConstants.CENTER);
+		scrollPane.setColumnHeaderView(lblAstroLog);
 		contentPane.setLayout(gl_contentPane);
+		scrollPane.setViewportView(log);
+		logModel = new DefaultListModel();
+		log.setModel(logModel);
+	}
+	
+	public void addLogItem(Object o){
+		String str = (String) o;
+		logModel.addElement(str);
+	}
+	
+	public void setLogModel(DefaultListModel model){
+		this.logModel = model;
 	}
 
 	@Override
@@ -127,6 +181,7 @@ public class AstroView extends JFrame implements IView {
 			btnPortfolio.removeActionListener(al);
 		}
 	}
+
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
