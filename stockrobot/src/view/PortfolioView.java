@@ -195,7 +195,7 @@ public class PortfolioView extends JFrame implements IView {
 		return cmbModel.getSelectedItem();
 	}
 	
-	public void setSelectedPortfolio(IPortfolio portfolio){
+	public void setSelectedPortfolio(final IPortfolio portfolio){
 		
 		selectedPortfolio = portfolio;
 	}

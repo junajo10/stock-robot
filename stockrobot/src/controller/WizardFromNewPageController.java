@@ -9,6 +9,8 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Transient;
+
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 import view.wizard.WizardPage;
@@ -18,15 +20,15 @@ public class WizardFromNewPageController extends WizardPageController {
 
 	private static final String CLASS_NAME = "WizardFromNewPageController";
 	
-	private PortfolioFromNewPage page;
-	private WizardModel model;
-	private PortfolioWizardModel pageModel;
+	private final PortfolioFromNewPage page;
+	private final WizardModel model;
+	private final  PortfolioWizardModel pageModel;
 	
-	private Map<String, EventListener> actions;
+	private final Map<String, EventListener> actions;
 	
 	public WizardFromNewPageController(WizardModel model, PortfolioWizardModel pageModel) {		
 		
-		this.name = WizardFromNewPageController.class.getName();
+		this.name = CLASS_NAME;
 		this.page = new PortfolioFromNewPage(model, pageModel);
 		this.model = model;
 		this.pageModel = pageModel;

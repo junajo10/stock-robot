@@ -17,7 +17,7 @@ import controller.WizardFromNewPageController;
 
 public class WizardFromNewPageControllerTest {
 
-	WizardFromNewPageController toTest;
+	private WizardFromNewPageController toTest;
 	
 	@Before
 	public void setupTest() {

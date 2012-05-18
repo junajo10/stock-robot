@@ -17,7 +17,7 @@ import utils.observer.IObservable;
  */
 public class PassablePortfolioBuilder implements IObservable {
 
-	private PropertyChangeSupport observers;
+	private final PropertyChangeSupport observers;
 	
 	public PassablePortfolioBuilder(){
 		
@@ -25,13 +25,13 @@ public class PassablePortfolioBuilder implements IObservable {
 	}
 	
 	@Override
-	public void addAddObserver(PropertyChangeListener listener) {
+	public void addAddObserver(final PropertyChangeListener listener) {
 		
 		observers.addPropertyChangeListener(listener);
 	}
 
 	@Override
-	public void removeObserver(PropertyChangeListener listener) {
+	public void removeObserver(final PropertyChangeListener listener) {
 
 		observers.removePropertyChangeListener(listener);
 	}

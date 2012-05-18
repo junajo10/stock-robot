@@ -25,11 +25,11 @@ public class WizardContoller implements IController {
 	
 	public static final String CLASS_NAME = "WizardContoller";
 	
-	private WizardModel model;
-	private WizardView view;
-	private WizardPageModel pageModel;
+	private final WizardModel model;
+	private final WizardView view;
+	private final WizardPageModel pageModel;
 	
-	private Map<String, EventListener> actions;
+	private final Map<String, EventListener> actions;
 	
 	public WizardContoller(WizardPageModel pageModel){
 		
@@ -40,18 +40,12 @@ public class WizardContoller implements IController {
 		this.pageModel = pageModel;
 		
 		actions = new HashMap<String,EventListener>();
-		actions.put(WizardView.GO_NEXT, getNextListener());
-		actions.put(WizardView.GO_BACK, getBackListener());
-		actions.put(WizardView.GO_CANCEL, getCancelListener());
-		actions.put(WizardView.GO_FINISH, getFinishListener());
+		actions.put(WizardView.GO_NEXT, new NextPageListener());
+		actions.put(WizardView.GO_BACK, new BackPageListener());
+		actions.put(WizardView.GO_CANCEL, new CancelListener(view));
+		actions.put(WizardView.GO_FINISH, new FinishPageListener());
 		actions.put(WizardView.WINDOW_CLOSE, windowClose);
 		view.addActions(actions);
-	}
-	
-	public ActionListener getCancelListener(){
-		CancelListener listener = new CancelListener(view);
-		
-		return listener;
 	}
 	
 	public class CancelListener implements ActionListener{
@@ -69,13 +63,6 @@ public class WizardContoller implements IController {
 			view.setVisible(false);
 			view.dispose();
 		}	
-	}
-	
-	public ActionListener getBackListener(){
-		
-		ActionListener listener = new BackPageListener();
-		
-		return listener;
 	}
 	
 	public class BackPageListener implements ActionListener{
@@ -96,13 +83,6 @@ public class WizardContoller implements IController {
 		return view;
 	}
 	
-	public ActionListener getNextListener(){
-		
-		ActionListener listener = new NextPageListener();
-		
-		return listener;
-	}
-	
 	public class NextPageListener implements ActionListener{
 		
 		public NextPageListener() {
@@ -116,13 +96,6 @@ public class WizardContoller implements IController {
 				model.goNextPage();
 			}
 		}	
-	}
-	
-	public ActionListener getFinishListener(){
-		
-		ActionListener listener = new FinishPageListener();
-		
-		return listener;
 	}
 	
 	public class FinishPageListener implements ActionListener{
