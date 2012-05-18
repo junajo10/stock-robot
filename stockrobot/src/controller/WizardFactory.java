@@ -1,4 +1,4 @@
-package controller.gui;
+package controller;
 
 
 import model.wizard.WizardModel;

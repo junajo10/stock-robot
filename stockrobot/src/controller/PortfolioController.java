@@ -1,4 +1,4 @@
-package controller.gui;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +60,7 @@ public class PortfolioController implements IController {
 			if (portfolio != null) {
 				
 				AlgorithmSettingsController algoSettings = new AlgorithmSettingsController( portfolio );
+				algoSettings.init();
 				algoSettings.display( new Object() );
 			}
 		}

@@ -14,17 +14,17 @@ public interface IView extends PropertyChangeListener {
 	 * 
 	 * @param model The model this view should be associated with, could also be null if a fixed model is set.
 	 */
-	public void display(Object model);
+	void display(Object model);
 	
 	/**
 	 * Should clean this view from listeners etc.
 	 */
-	public void cleanup();
+	void cleanup();
 	
 	/**
 	 * Adds actions to this view, the left side of an action is a string to help sort out where it should be.
 	 * 
 	 * @param actions a list of ActionListeners for this view
 	 */
-	public void addActions(Map<String, EventListener> actions);
+	void addActions(Map<String, EventListener> actions);
 }

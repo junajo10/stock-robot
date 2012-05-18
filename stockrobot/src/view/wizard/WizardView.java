@@ -43,8 +43,8 @@ public class WizardView extends JFrame implements IView {
 	private JLabel lblTitle;
 	private JLabel lblSubtitle;
 	
-	private JPanel pnl_MainPane;
-	private JPanel pnl_Content;
+	private JPanel pnlMainPane;
+	private JPanel pnlContent;
 	
 	protected JButton btnCancel;
 	protected JButton btnBack;
@@ -74,13 +74,13 @@ public class WizardView extends JFrame implements IView {
 		
 		this.setVisible(true);
 		
-		pnl_MainPane = new JPanel();
-		setContentPane(pnl_MainPane);
+		pnlMainPane = new JPanel();
+		setContentPane(pnlMainPane);
 		
 		
 		//============ CONTENT ============
-		pnl_Content = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) pnl_Content.getLayout();
+		pnlContent = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) pnlContent.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		//================================
 		
@@ -122,30 +122,30 @@ public class WizardView extends JFrame implements IView {
 		lblSubtitle.setVisible(false);
 		pnlTitle.add(lblSubtitle);
 		pnl_Header.add(pnlTitle);
-		GroupLayout gl_pnl_MainPane = new GroupLayout(pnl_MainPane);
+		GroupLayout gl_pnl_MainPane = new GroupLayout(pnlMainPane);
 		gl_pnl_MainPane.setHorizontalGroup(
 			gl_pnl_MainPane.createParallelGroup(Alignment.LEADING)
 				.addComponent(pnl_Header, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
-				.addComponent(pnl_Content, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+				.addComponent(pnlContent, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
 				.addComponent(pnl_Footer, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
 		);
 		gl_pnl_MainPane.setVerticalGroup(
 			gl_pnl_MainPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnl_MainPane.createSequentialGroup()
 					.addComponent(pnl_Header, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addComponent(pnl_Content, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
+					.addComponent(pnlContent, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
 					.addComponent(pnl_Footer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
-		pnl_MainPane.setLayout(gl_pnl_MainPane);
+		pnlMainPane.setLayout(gl_pnl_MainPane);
 		//================================
 		
 		//============ MAIN LAYOUT ============
-		GroupLayout lou_MainLayout = new GroupLayout(pnl_MainPane);
+		GroupLayout lou_MainLayout = new GroupLayout(pnlMainPane);
 		lou_MainLayout.setHorizontalGroup(
 			lou_MainLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.TRAILING, lou_MainLayout.createSequentialGroup()
 					.addGroup(lou_MainLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(pnl_Content, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+						.addComponent(pnlContent, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
 						.addGroup(lou_MainLayout.createSequentialGroup()
 							.addComponent(pnl_Footer, GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
 						.addComponent(pnl_Header, GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
@@ -155,11 +155,11 @@ public class WizardView extends JFrame implements IView {
 			lou_MainLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(lou_MainLayout.createSequentialGroup()
 					.addComponent(pnl_Header, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addComponent(pnl_Content, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+					.addComponent(pnlContent, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
 					.addComponent(pnl_Footer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		
-		pnl_MainPane.setLayout(lou_MainLayout);
+		pnlMainPane.setLayout(lou_MainLayout);
 		//================================
 		
 		//setScreen(SCREEN_PORTFOLIO_INFO);
@@ -207,10 +207,10 @@ public class WizardView extends JFrame implements IView {
 				
 				Log.log(Log.TAG.NORMAL, "loading screen");
 				if(page != null){
-					pnl_Content.removeAll();
-					pnl_Content.add(page);
-					pnl_Content.validate();
-					pnl_Content.repaint();					
+					pnlContent.removeAll();
+					pnlContent.add(page);
+					pnlContent.validate();
+					pnlContent.repaint();					
 					
 					Log.log(Log.TAG.NORMAL, "Loading page " + screen);
 				}

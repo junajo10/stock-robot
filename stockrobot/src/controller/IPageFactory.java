@@ -1,4 +1,4 @@
-package controller.gui;
+package controller;
 
 import view.wizard.WizardPage;
 import model.wizard.WizardPageModel;

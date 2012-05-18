@@ -1,9 +1,14 @@
 package model.wizard.portfolio;
 
+import utils.global.FinancialLongConverter;
 import utils.global.Log;
+import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
+import model.portfolio.IPortfolio;
+import model.portfolio.IPortfolioHandler;
+import model.portfolio.PortfolioHandler;
 import model.wizard.WizardPageModel;
 
 public class PortfolioWizardModel extends WizardPageModel{
@@ -83,10 +88,11 @@ public class PortfolioWizardModel extends WizardPageModel{
 		
 		if(canFinish()){
 			IJPAHelper jpaHelper = JPAHelper.getInstance();
-			PortfolioEntity p = new PortfolioEntity(name);
-			p.setAlgorithm(algorithm);
-			p.invest(balance, true);
-			jpaHelper.storeObject(p);
+			IPortfolioHandler portfolioHandler = PortfolioHandler.getInstance();
+			
+			IPortfolio newPortfolio = portfolioHandler.createNewPortfolio(name);
+			newPortfolio.setAlgorithm(PluginAlgortihmLoader.getInstance().loadAlgorithm(algorithm));
+			newPortfolio.investAmount(FinancialLongConverter.toFinancialLong(balance));
 			
 			Log.log(Log.TAG.DEBUG, "[PageModel] Portfolio Created \n" +
 					"name: " + name + "\n" +
@@ -98,6 +104,7 @@ public class PortfolioWizardModel extends WizardPageModel{
 				existingPortfolios +=  pE.getName() + "\n";
 			}
 			Log.log(Log.TAG.DEBUG, existingPortfolios);
+			
 		}
 	}
 }

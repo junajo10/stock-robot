@@ -1,4 +1,4 @@
-package controller.gui;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +16,6 @@ import view.AlgorithmSettingsView;
 public class AlgorithmSettingsController implements IController {
 
 	public static final String CLASS_NAME = "AlgorithmSettingsController";
-	
 	
 	private Map<String,EventListener> actionListeners;
 	
@@ -39,6 +38,9 @@ public class AlgorithmSettingsController implements IController {
 	public AlgorithmSettingsController( IPortfolio portfolio ) {
 		
 		this.portfolio = portfolio;
+	}
+	
+	public void init() {
 		
 		actionListeners = new HashMap<String, EventListener>();
 		actionListeners.put( AlgorithmSettingsView.SAVE_DOWN, saveDown );
@@ -50,25 +52,17 @@ public class AlgorithmSettingsController implements IController {
 	}
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-		
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object model) {
-		
-		System.out.println( "AlgoSettingsController: display" );
 		
 		//No model yet
 		view.display(new Object());
 	}
 
 	@Override
-	public void cleanup() {
-		
-		
-	}
+	public void cleanup() {} //NOPMD
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
@@ -77,10 +71,7 @@ public class AlgorithmSettingsController implements IController {
 	}
 
 	@Override
-	public void defineSubControllers() {
-		
-		
-	}
+	public void defineSubControllers() {} //NOPMD
 
 	@Override
 	public String getName() {

@@ -28,7 +28,7 @@ public class RobotScheduler implements Runnable{
 	public static final long MINUTE = 60*SECOND;
 
 	private boolean isRunning = false;
-	private volatile boolean pause = false;
+	private boolean pause = false;
 	private boolean isStoped = false;
 
 	@SuppressWarnings("unused")

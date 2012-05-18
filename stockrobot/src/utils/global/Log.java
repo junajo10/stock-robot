@@ -11,7 +11,7 @@ import java.util.HashMap;
  * Log will be used take care of outprints to the terminal. Different filter values can be set
  * if the user only wants to see a specific type of messages
  */
-public class Log {
+public final class Log {
 
 	private static Log log = new Log();
 	
@@ -33,9 +33,9 @@ public class Log {
 	public static void log(TAG tag, String message){
 	
 		if(log.filter.get(tag)){
-			System.out.print("[" + log.shortenerMap.get(tag) + "] " );
-			System.out.print(message);
-			System.out.println();
+			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
+			System.out.print(message); //NOPMD
+			System.out.println(); //NOPMD
 		}
 	}
 	

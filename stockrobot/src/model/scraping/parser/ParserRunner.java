@@ -31,7 +31,7 @@ public class ParserRunner implements IParserRunner {
 	
 	boolean run = false;
 	boolean close = false;
-	private int PORT_NR;
+	private int portNr;
 	
 	AvanzaParser parser;
 	IScheduler scheduler;
@@ -42,7 +42,7 @@ public class ParserRunner implements IParserRunner {
 	private PropertyChangeSupport pcs;
 	
 	public ParserRunner(int PORT_NR){
-		this.PORT_NR = PORT_NR;
+		this.portNr = PORT_NR;
 		//this.server = new HarvesterServer(port);
 		parser = new AvanzaParser();
 		inserter = new JPAInserter();
@@ -96,7 +96,7 @@ public class ParserRunner implements IParserRunner {
 					/* Send a message to the robot saying that new data is available.
 					 * Reciever on robot not implemented yet, uncomment when. */
 					connector.sendDataAvailable(newRows);
-					System.out.println("Parsing loop done in: " +timeElapsed + " ms.");
+
 					pcs.firePropertyChange("Parsing Progress.", null, 20000);
 					pcs.firePropertyChange("Parsing done.", null , timeElapsed);
 					if(timeElapsed < 20000){
@@ -188,7 +188,7 @@ public class ParserRunner implements IParserRunner {
 	public boolean startParser() {
 		if(!run){
 			run = true;
-			connector = new Connector(PORT_NR, pcs);
+			connector = new Connector(portNr, pcs);
 			return true;
 		}
 		else{

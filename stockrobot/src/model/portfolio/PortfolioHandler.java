@@ -118,7 +118,6 @@ public final class PortfolioHandler implements IPortfolioHandler{
 			
 			if (sp != null) {
 				if (lastStockPost.getTime() < sp.getTime().getTime()) {
-					System.out.println(lastStockPost.getTime() + " " + sp.getTime().getTime());
 					for (IPortfolio p : listOfPortfolios) {
 						p.updateAlgorithm();
 					}

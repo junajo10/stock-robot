@@ -21,7 +21,7 @@ public class ParserRunnerTest {
 	private static Thread th;
 	private static boolean runnerCreated = false;
 	
-	private final static int pollingTime = 100;
+	private final static int POLLINGTIME = 100;
 	
 	@BeforeClass
 	public static void setupTest() {
@@ -43,7 +43,7 @@ public class ParserRunnerTest {
 		while( !runnerCreated ) {
 			
 			try {
-				Thread.sleep(pollingTime);
+				Thread.sleep(POLLINGTIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -83,7 +83,7 @@ public class ParserRunnerTest {
 		while( !runnerCreated ) {
 			
 			try {
-				Thread.sleep(pollingTime);
+				Thread.sleep(POLLINGTIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

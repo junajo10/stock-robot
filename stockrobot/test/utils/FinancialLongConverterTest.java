@@ -21,9 +21,9 @@ import utils.global.FinancialLongConverter;
 @RunWith( value = Parameterized.class )
 public class FinancialLongConverterTest {
 	
-	private double 	_convertToLong;
-	private long 	_testAgainst;
-	private boolean _expectedResult;
+	private double 	convertToLong;
+	private long 	testAgainst;
+	private boolean expectedResult;
 	
 	/**
 	 * Constructor, OMG!
@@ -34,9 +34,9 @@ public class FinancialLongConverterTest {
 	 */
 	public FinancialLongConverterTest( double convertToLong, long testAgainst, boolean expectedResult  ) {
 		
-		_convertToLong 	= convertToLong;
-		_testAgainst 	= testAgainst;
-		_expectedResult = expectedResult;
+		this.convertToLong 	= convertToLong;
+		this.testAgainst 	= testAgainst;
+		this.expectedResult = expectedResult;
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class FinancialLongConverterTest {
 	@Test
 	public void test() {
 		
-		long converted = FinancialLongConverter.fromDouble( _convertToLong );
-		Assert.assertTrue( (_testAgainst == converted) == _expectedResult );
+		long converted = FinancialLongConverter.fromDouble( convertToLong );
+		Assert.assertTrue( (testAgainst == converted) == expectedResult );
 	}
 }

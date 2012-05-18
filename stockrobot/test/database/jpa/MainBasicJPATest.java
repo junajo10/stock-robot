@@ -50,7 +50,6 @@ public class MainBasicJPATest extends DatabaseCleaner {
 		
 		for (PortfolioEntity p : jpaHelper.getAllPortfolios()) {
 			jpaHelper.investMoney(10000000, p);
-			System.out.println(p);
 		}
 		
 		List<StockNames> stockNames = jpaHelper.getAllStockNames();
@@ -109,39 +108,18 @@ public class MainBasicJPATest extends DatabaseCleaner {
 		jpaHelper.updateObject(p);
 		
 		List<StockPrices> prices = jpaHelper.getAllStockPrices();
-		
-		for (StockPrices s : prices) {
-			System.out.println(s);
-		}
+
 		
 		List<StockPrices> bla = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
 		
-		System.out.println("Current nr of stocks: " + bla.size());
-		
 		jpaHelper.getAllPortfolios().get(0);
 		
-		System.out.println(jpaHelper.getOldStocks(jpaHelper.getAllPortfolios().get(0)).size());
-		System.out.println(p.getTotalInvestedAmount());
-		System.out.println(jpaHelper.getStockInfo(10).size() + " " + jpaHelper.getStockInfo(10).get(0).getRight().size());
-		
-		for (StockPrices sp2 : jpaHelper.getStockInfo(10).get(0).getRight()) {
-			System.out.println(sp2);
-		}
 		
 		//-------- Test get latest StockPrice from any stockPrice
 		StockPrices old = jpaHelper.getAllStockPrices().get(0);
 		StockPrices newestPrice = jpaHelper.getLatestStockPrice(jpaHelper.getAllStockPrices().get(0));
-		System.out.println("Given stockPrice: " + old);
-		System.out.println("Latest stockPrice: " + newestPrice);
 		//------
 		
-		System.out.println();
-		
-		for (PortfolioHistory phistory :  p.getHistory()) {
-			System.out.println(phistory);
-		}
-		
-		System.out.println();
 		
 		StockPrices stock = new StockPrices(jpaHelper.getAllStockNames().get(0), 123, 123, 123, 123, new Date(1233));
 		
@@ -151,13 +129,7 @@ public class MainBasicJPATest extends DatabaseCleaner {
 		
 		PortfolioHistory pHistory = p.getSpecificPortfolioHistory(stock, 77);
 		
-		System.out.println(pHistory);
-		
 		List<StockPrices> ble = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
-		
-		for (StockPrices sp : ble) {
-			System.out.println(sp.getTime());
-		}
 		
 		jpaHelper.remove(stock);
 	}

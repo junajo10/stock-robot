@@ -10,6 +10,7 @@ import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 
 
+//TODO: Mattias rewrite this, and fix thread problems.
 /**
  * @author Mattias Markehed
  * mattias.markehed@gmail.com

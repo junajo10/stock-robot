@@ -3,6 +3,8 @@ package model.scraping.core;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import utils.global.Log;
+
 /**
  * Controller for Harvester.
  * @author Erik
@@ -13,8 +15,6 @@ public class HarvesterController {
 	private Harvester model;
 	private HarvesterView view;
 	private Logger log;
-
-
 
 	public HarvesterController(Harvester model, HarvesterView view) {
 		this.model = model;
@@ -63,9 +63,8 @@ public class HarvesterController {
 			try {
 				int port = Integer.parseInt(view.getPortTextbox());
 				model.setPort(port);
-				System.out.println("*** Server port set to: " + port);
+				Log.log(Log.TAG.NORMAL,"*** Server port set to: " + port);
 
-				
 				if(view.simulateStocksChecked()){
 					if(model.startSimulation()){
 						log.start();
@@ -87,7 +86,7 @@ public class HarvesterController {
 					}
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("*** Malformed portnumber");
+				Log.log(Log.TAG.DEBUG,"*** Malformed portnumber");
 			}
 		}
 	}
@@ -124,6 +123,4 @@ public class HarvesterController {
 			view.clearLog();
 		}
 	}
-    
-
 }

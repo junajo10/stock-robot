@@ -52,7 +52,7 @@ public class PortfolioStartPage extends WizardPage {
 	public static final String CREATE_FROM_LISTENER 	= "createFromListener";
 	public static final String NAME_INPUT_LISTENER 	= "nameInputListener";
 	
-	private DefaultComboBoxModel cmb_hld_ClonePortfolioList = new DefaultComboBoxModel();
+	private DefaultComboBoxModel cmbHldClonePortfolioList = new DefaultComboBoxModel();
 	
 	private static final long serialVersionUID = 1271972909341943446L;
 	
@@ -60,7 +60,6 @@ public class PortfolioStartPage extends WizardPage {
 		super(wizardModel, pageModel);
 		
 		this.portfolioHandler = portfolioHandler;
-		init();
 	}
 
 	public void init() {
@@ -145,7 +144,7 @@ public class PortfolioStartPage extends WizardPage {
 		pnlPortfolioToClone.add(lblClonePortfolio);
 		
 		cmbClonePortfolioList = new JComboBox();
-		cmbClonePortfolioList.setModel(cmb_hld_ClonePortfolioList);
+		cmbClonePortfolioList.setModel(cmbHldClonePortfolioList);
 		pnlPortfolioToClone.add(cmbClonePortfolioList);
 		cmbClonePortfolioList.setPreferredSize(new Dimension(200,20));
 		cmbClonePortfolioList.setEnabled(false);
@@ -158,18 +157,18 @@ public class PortfolioStartPage extends WizardPage {
 	public void updatePortfolios(){
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run(){
-			Object selected = cmb_hld_ClonePortfolioList.getSelectedItem();
+			Object selected = cmbHldClonePortfolioList.getSelectedItem();
 			
 			List<IPortfolio> portfolios = portfolioHandler.getPortfolios();
-			cmb_hld_ClonePortfolioList.removeAllElements();
+			cmbHldClonePortfolioList.removeAllElements();
 			for(int i = 0; i < portfolios.size(); i++){
 				
-				cmb_hld_ClonePortfolioList.addElement(new ItemCmbPortfolio(portfolios.get(i)));
+				cmbHldClonePortfolioList.addElement(new ItemCmbPortfolio(portfolios.get(i)));
 			}
 			if(portfolios.contains(selected))
-				cmb_hld_ClonePortfolioList.setSelectedItem(selected);
+				cmbHldClonePortfolioList.setSelectedItem(selected);
 			else
-				cmb_hld_ClonePortfolioList.setSelectedItem(null);
+				cmbHldClonePortfolioList.setSelectedItem(null);
 			}
 		});
 	}
@@ -199,8 +198,7 @@ public class PortfolioStartPage extends WizardPage {
 	}
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-	}
+	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object model) {} //NOPMD
