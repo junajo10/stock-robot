@@ -34,7 +34,7 @@ public class PortfolioView extends JFrame implements IView {
 	private static final long serialVersionUID = -1857650100977127973L;
 	public static final String WINDOW_CLOSE 				= "windowClose";
 	public static final String CREATE_PORTFOLIO			= "createPortfolio";	
-	public static final String MANAGE_ALGORITHMS		= "manageAlgorithms";
+	public static final String MANAGE_ALGORITHMS			= "manageAlgorithms";
 	public static final String HISTORY					= "History";
 	private JPanel contentPane;
 	private IPortfolioHandler portfolios;
@@ -64,7 +64,7 @@ public class PortfolioView extends JFrame implements IView {
 		trader.addAddObserver(this);
 		setTitle("Portfolio");
 		
-		setBounds(100, 100, 432, 196);
+		setBounds(100, 100, 441, 194);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		
@@ -195,6 +195,11 @@ public class PortfolioView extends JFrame implements IView {
 		return cmbModel.getSelectedItem();
 	}
 	
+	public void setSelectedPortfolio(IPortfolio portfolio){
+		
+		selectedPortfolio = portfolio;
+	}
+	
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
 
@@ -231,7 +236,7 @@ public class PortfolioView extends JFrame implements IView {
 		@Override
 		public Object getElementAt(int index) {
 
-			selectedPortfolio = portfolios.getPortfolios().get(index);
+			setSelectedPortfolio(portfolios.getPortfolios().get(index));
 			updateValues();
 			return selectedPortfolio.getName();
 		}
