@@ -13,9 +13,9 @@ import model.portfolio.IPortfolio;
  */
 public class ItemCmbPortfolio{
 	
-	private IPortfolio portfolio;
+	private final IPortfolio portfolio;
 	
-	public ItemCmbPortfolio(IPortfolio portfolio){
+	public ItemCmbPortfolio(final IPortfolio portfolio){
 		this.portfolio = portfolio;
 	}
 	
