@@ -72,6 +72,8 @@ public class HarvesterView extends JFrame implements IView{
 		scrollPane = new JScrollPane();
 		
 		textField = new JTextField();
+		textField.setBackground(Color.BLACK);
+		textField.setForeground(Color.GREEN);
 		textField.setText("45000");
 		textField.setToolTipText("Assign Port number");
 		textField.setColumns(10);
@@ -94,7 +96,8 @@ public class HarvesterView extends JFrame implements IView{
 		btnExportLog = new JButton("Export Log");
 		
 		parserBar = new JProgressBar(0, 20000);
-		parserBar.setForeground(Color.CYAN);
+		parserBar.setBackground(Color.BLACK);
+		parserBar.setForeground(Color.GREEN);
 		parserBar.setToolTipText("Parsing progress.");
 		parserBar.setStringPainted(true);
 		parserBar.setVisible(false);
@@ -169,6 +172,8 @@ public class HarvesterView extends JFrame implements IView{
 		 */
 		
 		log = new JList();
+		log.setBackground(Color.BLACK);
+		log.setForeground(Color.GREEN);
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
 		

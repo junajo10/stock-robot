@@ -167,11 +167,13 @@ public class AstroView extends JFrame implements IView {
 		);
 		
 		log = new JList();
+		log.setBackground(Color.BLACK);
 		log.setForeground(Color.GREEN);
 		scrollPane.setViewportView(log);
 		
 		JLabel lblAstroLog = new JLabel("ASTRo Log");
-		lblAstroLog.setBackground(Color.GREEN);
+		lblAstroLog.setForeground(Color.BLACK);
+		lblAstroLog.setBackground(Color.WHITE);
 		lblAstroLog.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(lblAstroLog);
 		contentPane.setLayout(gl_contentPane);
