@@ -149,7 +149,6 @@ public class AstroView extends JFrame implements IView {
 		);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
 		log = new JList();
 		log.setBackground(Color.WHITE);
@@ -204,7 +203,7 @@ public class AstroView extends JFrame implements IView {
 		);
 		pnlLog.setLayout(gl_pnlLog);
 		contentPane.setLayout(gl_contentPane);
-		
+		hideLog();
 	}
 	
 	public void addLogItem(Object o){
