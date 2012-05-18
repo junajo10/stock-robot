@@ -56,6 +56,7 @@ public class AstroView extends JFrame implements IView {
 	JList log;
 	DefaultListModel logModel;
 	JCheckBox chckbxShowLog;
+	JScrollPane scrollPane;
 	
 	
 	/**
@@ -112,7 +113,7 @@ public class AstroView extends JFrame implements IView {
 		progressBar.setForeground(Color.CYAN);
 		progressBar.setValue(100);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		
 		JButton btnClearLog = new JButton("Clear Log");
 		
@@ -193,7 +194,7 @@ public class AstroView extends JFrame implements IView {
 		scrollPane.setViewportView(log);
 		logModel = new DefaultListModel();
 		log.setModel(logModel);
-		log.setVisible(false);
+		scrollPane.setVisible(false);
 	}
 	
 	public void addLogItem(Object o){
@@ -207,13 +208,13 @@ public class AstroView extends JFrame implements IView {
 	
 	public void showLog(){
 		Rectangle currentPosition = getBounds();
-		log.setVisible(true);
+		scrollPane.setVisible(true);
 		setBounds(currentPosition.x, currentPosition.y, 358, 580);
 	}
 	
 	public void hideLog(){
 		Rectangle currentPosition = getBounds();
-		log.setVisible(true);
+		scrollPane.setVisible(false);
 		setBounds(currentPosition.x, currentPosition.y, 358, 168);
 	}
 	
