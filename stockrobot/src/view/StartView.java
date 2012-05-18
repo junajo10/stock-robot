@@ -29,6 +29,7 @@ import javax.swing.DefaultComboBoxModel;
 import utils.global.Log;
 import javax.swing.JCheckBox;
 import java.awt.Color;
+import javax.swing.UIManager;
 
 /**
  * 
@@ -82,6 +83,8 @@ public class StartView extends JFrame implements IView {
 		setContentPane(contentPane);
 		
 		txtLocalhost = new JTextField();
+		txtLocalhost.setForeground(Color.BLACK);
+		txtLocalhost.setBackground(UIManager.getColor("control"));
 		txtLocalhost.setText("localhost:54551");
 		txtLocalhost.setColumns(10);
 		

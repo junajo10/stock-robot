@@ -19,6 +19,7 @@ import model.database.jpa.tables.AlgorithmSettingLong;
 import utils.global.Log;
 import view.algorithmsettings.SettingsPanelDouble;
 import view.algorithmsettings.SettingsPanelLong;
+import java.awt.SystemColor;
 
 /**
  * View that could be used for modifying an algortihm's settings
@@ -48,7 +49,8 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		
 		//Main container for the algorithm settings window
 		container = new JPanel();
-		add( container );
+		container.setBackground(SystemColor.control);
+		getContentPane().add( container );
 		
 		//Add save button
 		saveBtn = new JButton();

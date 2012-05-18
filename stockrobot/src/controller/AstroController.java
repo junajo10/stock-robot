@@ -86,6 +86,18 @@ public class AstroController implements IController {
 				}
 			});
 		}
+	};	
+	
+	ActionListener showLog = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(view.getShowLogIsSelected()){
+				view.showLog();
+			}
+			else {
+				view.hideLog();
+			}
+		}
 	};
 		
 	WindowListener windowClose = new AbstractWindowCloseAdapter() {
@@ -103,6 +115,8 @@ public class AstroController implements IController {
 		String server[] = parserServer.toString().split(":");
 		String host = "";
 		int port = 0;
+		
+		view.setLogModel(Log.instance().getModel());
 		
 		if (server.length >= 2) {
 			host = parserServer.toString().substring(0, parserServer.toString().lastIndexOf(":"));
@@ -163,6 +177,7 @@ public class AstroController implements IController {
 		actions.put(AstroView.OPEN_STOCKTABLE, openStockInfo);
 		actions.put(AstroView.OPEN_PORTFOLIOVIEW, openPortfolioView);
 		actions.put(AstroView.WINDOW_CLOSE, windowClose);
+		actions.put(AstroView.SHOW_LOG, showLog);
 		return actions;
 	}
 

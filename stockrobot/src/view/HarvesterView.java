@@ -26,6 +26,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.JProgressBar;
+import java.awt.Color;
+import javax.swing.UIManager;
+import java.awt.SystemColor;
 
 /**
  * View for Harvester.
@@ -57,18 +60,22 @@ public class HarvesterView extends JFrame implements IView{
 	private JCheckBox chckbxAutoscrollLog;
 
 	public HarvesterView() {
+		getContentPane().setBackground(SystemColor.control);
 		
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setTitle("ASTRo Harvester");
 		
 		btnStartParser = new JButton("Start Parser");
+		btnStartParser.setForeground(Color.BLACK);
 		btnStopParser = new JButton("Stop Parser");
 		btnStopParser.setEnabled(false);
 		logModel = new DefaultListModel();
 		scrollPane = new JScrollPane();
 		
 		textField = new JTextField();
+		textField.setBackground(SystemColor.controlHighlight);
+		textField.setForeground(Color.BLACK);
 		textField.setText("45000");
 		textField.setToolTipText("Assign Port number");
 		textField.setColumns(10);
@@ -76,21 +83,30 @@ public class HarvesterView extends JFrame implements IView{
 		btnClearLog = new JButton("Clear Log");
 		
 		JLabel lblPortNumber = new JLabel("Port Number:");
+		lblPortNumber.setForeground(UIManager.getColor("Tree.textForeground"));
 		
 		chckbxSimulateStocks = new JCheckBox("Simulate Stocks");
+		chckbxSimulateStocks.setForeground(Color.BLACK);
+		chckbxSimulateStocks.setBackground(UIManager.getColor("control"));
 		
 		btnStatus = new JButton("Print Status");
 		
 		chckbxForceStop = new JCheckBox("Force Stop");
+		chckbxForceStop.setBackground(UIManager.getColor("control"));
+		chckbxForceStop.setForeground(Color.BLACK);
 		
 		btnExportLog = new JButton("Export Log");
 		
 		parserBar = new JProgressBar(0, 20000);
+		parserBar.setBackground(Color.BLACK);
+		parserBar.setForeground(Color.GREEN);
 		parserBar.setToolTipText("Parsing progress.");
 		parserBar.setStringPainted(true);
 		parserBar.setVisible(false);
 		
 		chckbxAutoscrollLog = new JCheckBox("Autoscroll Log");
+		chckbxAutoscrollLog.setForeground(Color.BLACK);
+		chckbxAutoscrollLog.setBackground(SystemColor.control);
 		chckbxAutoscrollLog.setSelected(true);
 
 		/**
@@ -158,6 +174,8 @@ public class HarvesterView extends JFrame implements IView{
 		 */
 		
 		log = new JList();
+		log.setBackground(Color.WHITE);
+		log.setForeground(Color.GREEN);
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
 		
@@ -216,8 +234,8 @@ public class HarvesterView extends JFrame implements IView{
 		this.setSize(new Dimension(450, 588));
 		this.setVisible(true);
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-		int X = (screen.width / 2) - (450 / 2); // Center horizontally.
-		int Y = (screen.height / 2) - (588 / 2); // Center vertically.
+		int X = (screen.width / 2) - (450 / 2);
+		int Y = (screen.height / 2) - (588 / 2);
 
 		this.setBounds(X,Y , 450,588);
 	}

@@ -2,6 +2,8 @@ package utils.global;
 
 import java.util.HashMap;
 
+import javax.swing.DefaultListModel;
+
 /**
  * @author Mattias Markehed
  * mattias.markehed@gmail.com
@@ -25,21 +27,31 @@ public final class Log {
 	
 	private HashMap<TAG, Boolean> filter;
 	private HashMap<TAG, String> shortenerMap;
+	private DefaultListModel listModel;
 	
 	private Log() {
 		initialize();
 	}
 	
 	public static void log(TAG tag, String message){
-	
-		if(log.filter.get(tag)){
+		instance().addLogMessage(message);
+		/*if(log.filter.get(tag)){
 			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
 			System.out.print(message); //NOPMD
 			System.out.println(); //NOPMD
-		}
+		}*/
 	}
 	
+	private void addLogMessage(String message) {
+		listModel.addElement(message);
+	}
+	
+	public DefaultListModel getModel(){
+		return listModel;
+	}
+
 	private void initialize(){
+		listModel = new DefaultListModel();
 		filter=new HashMap<Log.TAG, Boolean>();
 		filter.put(TAG.NORMAL, true);
 		filter.put(TAG.VERBOSE, false);
@@ -81,8 +93,7 @@ public final class Log {
 		}
 		
 	}
-	
-	@Deprecated
+
 	public static Log instance(){
 		
 		return log;
