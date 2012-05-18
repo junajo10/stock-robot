@@ -193,6 +193,7 @@ public class AstroView extends JFrame implements IView {
 		scrollPane.setViewportView(log);
 		logModel = new DefaultListModel();
 		log.setModel(logModel);
+		log.setVisible(false);
 	}
 	
 	public void addLogItem(Object o){
@@ -206,13 +207,13 @@ public class AstroView extends JFrame implements IView {
 	
 	public void showLog(){
 		Rectangle currentPosition = getBounds();
-		
+		log.setVisible(true);
 		setBounds(currentPosition.x, currentPosition.y, 358, 580);
 	}
 	
 	public void hideLog(){
 		Rectangle currentPosition = getBounds();
-		
+		log.setVisible(true);
 		setBounds(currentPosition.x, currentPosition.y, 358, 168);
 	}
 	
