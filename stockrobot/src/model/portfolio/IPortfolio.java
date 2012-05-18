@@ -70,10 +70,10 @@ public interface IPortfolio {
 	
 	/**
 	 * Will invest n more money into the portfolio
-	 * @param n Amount to invest
+	 * @param amount Amount to invest
 	 * @return True if investment went ok
 	 */
-	boolean investAmount(long n);
+	boolean investAmount(long amount);
 		
 	/**
 	 * Will set the stop buying flag

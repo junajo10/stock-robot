@@ -28,42 +28,42 @@ import model.database.jpa.tables.StockPrices;
 public final class PortfolioHandler implements IPortfolioHandler{
 
 	private static PortfolioHandler instance = null;
-	private List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
-	private IJPAHelper jpaHelper;
-	private PropertyChangeSupport propertyChangeSuport = new PropertyChangeSupport(this);
-	private PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
-	private IRobot_Algorithms robot;
-	private Date lastStockPost = null;
+	private final transient List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
+	private final transient IJPAHelper jpaHelper;
+	private final transient PropertyChangeSupport pChangeSuport = new PropertyChangeSupport(this);
+	private final transient PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+	private final transient IRobot_Algorithms robot;
+	private transient Date lastStockPost = null;
 	
-	private PortfolioHandler(IRobot_Algorithms robot) {
+	private PortfolioHandler(final IRobot_Algorithms robot) {
 		this.robot = robot;
 		jpaHelper = JPAHelper.getInstance();
-		List<PortfolioEntity> portfolioTables = jpaHelper.getAllPortfolios();
+		final List<PortfolioEntity> portfolioTables = jpaHelper.getAllPortfolios();
 		
 		Log.log(TAG.VERY_VERBOSE, "Starting to create portfolios");
 		for (PortfolioEntity pt : portfolioTables) {
-			IPortfolio p = createExistingPortfolio(pt);
+			final IPortfolio p = createExistingPortfolio(pt);
 			Log.log(TAG.VERY_VERBOSE, "Portfolio created: " + p.getName());
 		}
 		Log.log(TAG.VERY_VERBOSE, "Done creating portfolios, number of portfolios: " + listOfPortfolios.size());
 	}
 	
-	private IPortfolio createExistingPortfolio(PortfolioEntity pt) {
-		Portfolio p = new Portfolio(pt);
+	private IPortfolio createExistingPortfolio(PortfolioEntity portfolioTable) {
+		final Portfolio p = new Portfolio(portfolioTable);
 		
-		if (pt.getAlgortihmSettings().getAlgorithmName() != null) {
-			IAlgorithm algorithm = algorithmLoader.loadAlgorithm(pt.getAlgortihmSettings().getAlgorithmName());
+		if (portfolioTable.getAlgortihmSettings().getAlgorithmName() != null) {
+			final IAlgorithm algorithm = algorithmLoader.loadAlgorithm(portfolioTable.getAlgortihmSettings().getAlgorithmName());
 			
 			if (algorithm != null) {
 				algorithm.setRobot(robot);
 				algorithm.setPortfolio(p);
 				
-				if (!pt.getAlgortihmSettings().isInitiated()) {
-					pt.getAlgortihmSettings().initiate(algorithm.getDefaultDoubleSettings(), algorithm.getDefaultLongSettings());
-					jpaHelper.updateObject(pt);
+				if (!portfolioTable.getAlgortihmSettings().isInitiated()) {
+					portfolioTable.getAlgortihmSettings().initiate(algorithm.getDefaultDoubleSettings(), algorithm.getDefaultLongSettings());
+					jpaHelper.updateObject(portfolioTable);
 				}
-				algorithm.giveDoubleSettings(pt.getAlgortihmSettings().getCurrentDoubleSettings());
-				algorithm.giveLongSettings(pt.getAlgortihmSettings().getCurrentLongSettings());
+				algorithm.giveDoubleSettings(portfolioTable.getAlgortihmSettings().getCurrentDoubleSettings());
+				algorithm.giveLongSettings(portfolioTable.getAlgortihmSettings().getCurrentLongSettings());
 				
 				p.setAlgorithm(algorithm);
 				listOfPortfolios.add(p);
@@ -71,7 +71,7 @@ public final class PortfolioHandler implements IPortfolioHandler{
 				Log.log(TAG.VERY_VERBOSE, p.getName() + " algorithm set to: " + algorithm.getName());
 			}
 			else {
-				Log.log(TAG.ERROR, p.getName() + " couldent set algorithm to: " + pt.getAlgortihmSettings().getAlgorithmName() + " == null");
+				Log.log(TAG.ERROR, p.getName() + " couldent set algorithm to: " + portfolioTable.getAlgortihmSettings().getAlgorithmName() + " == null");
 			}
 		}
 		else {
@@ -80,11 +80,11 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		return p;
 	}
 	@Override
-	public IPortfolio createNewPortfolio(String name) {
-		PortfolioEntity pt = new PortfolioEntity(name);
+	public IPortfolio createNewPortfolio(final String name) {
+		final PortfolioEntity pt = new PortfolioEntity(name);
 		jpaHelper.storeObject(pt);
 		
-		IPortfolio p = new Portfolio(pt);
+		final IPortfolio p = new Portfolio(pt);
 		
 		listOfPortfolios.add(p);
 		
@@ -92,8 +92,8 @@ public final class PortfolioHandler implements IPortfolioHandler{
 	}
 	
 	@Override
-	public boolean setAlgorithm(IPortfolio p, String algorithmName) {
-		IAlgorithm algorithm = algorithmLoader.loadAlgorithm(algorithmName);
+	public boolean setAlgorithm(final IPortfolio p, final String algorithmName) {
+		final IAlgorithm algorithm = algorithmLoader.loadAlgorithm(algorithmName);
 		if (algorithm != null) {
 			p.setAlgorithm(algorithm);
 			
@@ -143,23 +143,22 @@ public final class PortfolioHandler implements IPortfolioHandler{
 	}
 	public static IPortfolioHandler getInstance(IRobot_Algorithms robot) {
 		synchronized (PortfolioHandler.class) {
-			if (instance == null)
+			if (instance == null) {
 				instance = new PortfolioHandler(robot);
+			}
 		}
 		return instance;
 	}
 	public static IPortfolioHandler getInstance() {
-		if (instance != null)
-			return instance;
-		return null;
+		return instance;
 	}
 	@Override
 	public void addAddObserver(PropertyChangeListener listener) {
-		propertyChangeSuport.addPropertyChangeListener(listener);
+		pChangeSuport.addPropertyChangeListener(listener);
 	}
 	@Override
 	public void removeObserver(PropertyChangeListener listener) {
-		propertyChangeSuport.addPropertyChangeListener(listener);
+		pChangeSuport.addPropertyChangeListener(listener);
 	}
 
 	@Override

@@ -17,9 +17,8 @@ private Harvester harv;
 	 * @param args
 	 * @author Erik
 	 */
-	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		HarvesterConsole harvest = new HarvesterConsole();
+		new HarvesterConsole();
 	}
 
 	

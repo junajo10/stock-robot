@@ -22,7 +22,7 @@ public interface IPortfolioHandler extends IObservable {
 	 * Will give a list of all the portfolios currently in the portfoliohandler
 	 * @return A list of portfolios
 	 */
-	public List<IPortfolio> getPortfolios();
+	List<IPortfolio> getPortfolios();
 	
 	/**
 	 * Deletes a portfolio
@@ -33,6 +33,6 @@ public interface IPortfolioHandler extends IObservable {
 
 	List<String> getAlgorithmNames();
 	
-	public boolean setAlgorithm(IPortfolio p, String algorithmName);
+	boolean setAlgorithm(IPortfolio p, String algorithmName);
 	
 }

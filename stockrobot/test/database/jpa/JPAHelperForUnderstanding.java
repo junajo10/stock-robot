@@ -2,12 +2,10 @@ package database.jpa;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
-import model.database.jpa.tables.StockPrices;
 
 
 /**
@@ -61,6 +59,6 @@ public class JPAHelperForUnderstanding {
 		Calendar endAt = new GregorianCalendar();
 		endAt.set(2012, 02, 23, 15, 00, 26);
 		
-		List<StockPrices> prices = jpaHelper.getPricesForStockPeriod( firstStock, startAt.getTime(), endAt.getTime() );
+		jpaHelper.getPricesForStockPeriod( firstStock, startAt.getTime(), endAt.getTime() );
 	}
 }

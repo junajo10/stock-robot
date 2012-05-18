@@ -93,8 +93,11 @@ public class MainBasicJPATest extends DatabaseCleaner {
 		
 		// create one stockPrice for each stockName
 		for (StockNames stockName : stockNames) {
-			StockPrices sp = new StockPrices(stockName, r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), r.nextInt(1000), new Date(System.currentTimeMillis()));
-			jpaHelper.storeObject(sp);
+			
+			for (int i = 1; i <= 10; i++) {
+				StockPrices sp = new StockPrices(stockName, r.nextInt(1000*i), r.nextInt(1000*i), r.nextInt(1000*i), r.nextInt(1000*i), new Date(System.currentTimeMillis()+1000*i));
+				jpaHelper.storeObject(sp);
+			}
 		}
 		
 		StockPrices aStock = jpaHelper.getAllStockPrices().get(0);
@@ -107,30 +110,33 @@ public class MainBasicJPATest extends DatabaseCleaner {
 			p.addPortfolioHistory(new PortfolioHistory(aStock, new Date(System.currentTimeMillis()-10000), 10, p));
 		jpaHelper.updateObject(p);
 		
-		List<StockPrices> prices = jpaHelper.getAllStockPrices();
+		Assert.assertTrue(jpaHelper.getAllStockPrices().size() > 0);
 
 		
-		List<StockPrices> bla = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
+		Assert.assertTrue(jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0)).size() > 0);
 		
-		jpaHelper.getAllPortfolios().get(0);
+		Assert.assertTrue(jpaHelper.getAllPortfolios().size() > 0);
 		
 		
 		//-------- Test get latest StockPrice from any stockPrice
 		StockPrices old = jpaHelper.getAllStockPrices().get(0);
 		StockPrices newestPrice = jpaHelper.getLatestStockPrice(jpaHelper.getAllStockPrices().get(0));
+		
+		Assert.assertNotNull(old);
+		Assert.assertNotNull(newestPrice);
+		
+		Assert.assertNotSame(old, newestPrice);
 		//------
 		
 		
-		StockPrices stock = new StockPrices(jpaHelper.getAllStockNames().get(0), 123, 123, 123, 123, new Date(1233));
-		
+		StockPrices stock = new StockPrices(jpaHelper.getAllStockNames().get(0), 123, 123, 123, 123, new Date(1233000));
 		jpaHelper.storeObject(stock);
 		
 		p.addPortfolioHistory(new PortfolioHistory(stock, new Date(123), 77, p));
+		jpaHelper.updateObject(p);
 		
-		PortfolioHistory pHistory = p.getSpecificPortfolioHistory(stock, 77);
+		Assert.assertNotNull(p.getSpecificPortfolioHistory(stock, 77));
 		
-		List<StockPrices> ble = jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0));
-		
-		jpaHelper.remove(stock);
+		Assert.assertTrue(jpaHelper.getCurrentStocks(jpaHelper.getAllPortfolios().get(0)).size() > 0);
 	}
 }

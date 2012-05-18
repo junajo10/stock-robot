@@ -192,6 +192,7 @@ public class ParserRunner implements IParserRunner {
 		if(!run){
 			run = true;
 			connector = new Connector(portNr, pcs);
+			connector.startConnector();
 			return true;
 		}
 		else{

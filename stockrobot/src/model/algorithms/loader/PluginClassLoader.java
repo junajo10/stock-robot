@@ -16,8 +16,8 @@ public class PluginClassLoader extends ClassLoader {
 	private static final String EXPORTEDPACKAGE = "model.algorithms";
 
 	@Override
-	public Class<?> findClass (String name) {
-		byte[] data = loadClassData (name);
+	public Class<?> findClass (final String name) {
+		final byte[] data = loadClassData (name);
 		
 		return defineClass(EXPORTEDPACKAGE + "." + name, data, 0, data.length);
 	}

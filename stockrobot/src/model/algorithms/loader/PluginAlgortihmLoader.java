@@ -23,7 +23,7 @@ public final class PluginAlgortihmLoader {
 	
 	private static PluginAlgortihmLoader instance = null;
 	
-	Map<String, Class<?>> algorithmMap = new HashMap<String, Class<?>>();
+	private Map<String, Class<?>> algorithmMap = new HashMap<String, Class<?>>();
 	
 	public List<String> getAlgorithmNames() {
 		List<String> algorithmNames = new ArrayList<String>();

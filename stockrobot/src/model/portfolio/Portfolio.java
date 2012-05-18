@@ -21,24 +21,24 @@ import model.database.jpa.tables.StockPrices;
  * @author Daniel
  */
 public class Portfolio implements IPortfolio {
-	private PortfolioEntity portfolioTable;
-	private IJPAHelper jpaHelper;
+	final transient private PortfolioEntity portfolioTable;
+	final transient private IJPAHelper jpaHelper;
 	private IAlgorithm algorithm;
 	
 	/**
 	 * Start up an existing portfolio
 	 * @param portfolioTable The table with this portfolio
 	 */
-	public Portfolio(PortfolioEntity portfolioTable, IAlgorithm algorithm) {
+	public Portfolio(final PortfolioEntity portfolioTable, final IAlgorithm algorithm) {
 		jpaHelper = JPAHelper.getInstance();
 		this.portfolioTable = portfolioTable;
 		this.algorithm = algorithm;
 
 		Log.log(TAG.VERY_VERBOSE, "Portfolio " + portfolioTable.getName() + " is loaded");
 	}
-	public Portfolio(PortfolioEntity pt) {
+	public Portfolio(final PortfolioEntity portfolioTable) {
 		// Portfolio without algorithm yet.
-		this.portfolioTable = pt;
+		this.portfolioTable = portfolioTable;
 		jpaHelper = JPAHelper.getInstance();
 	}
 	
@@ -58,7 +58,7 @@ public class Portfolio implements IPortfolio {
 	}
 
 	@Override
-	public boolean setAlgorithm(IAlgorithm algorithm) {
+	public boolean setAlgorithm(final IAlgorithm algorithm) {
 		this.algorithm = algorithm;
 		return true;
 	}
@@ -79,12 +79,12 @@ public class Portfolio implements IPortfolio {
 	}
 
 	@Override
-	public boolean investAmount(long n) {
-		return jpaHelper.investMoney(n, portfolioTable);
+	public boolean investAmount(final long amount) {
+		return jpaHelper.investMoney(amount, portfolioTable);
 	}
 
 	@Override
-	public void stopBuying(boolean flag) {
+	public void stopBuying(final boolean flag) {
 		if (flag != portfolioTable.isStopBuying()) {
 			portfolioTable.setStopBuying(flag);
 			jpaHelper.updateObject(portfolioTable);
@@ -125,22 +125,23 @@ public class Portfolio implements IPortfolio {
 	}
 	@Override
 	public boolean updateAlgorithm() {
+		boolean state = false;
 		if (this.algorithm != null) {
 			algorithm.update();
-			return true;
+			state = true;
 		}
-		return false;
+		return state;
 	}
 	@Override
 	public long getCurrentWorth() {
 		long currentWorth = getUnusedAmount();
 		
 		for (int i = 0; i < portfolioTable.getHistory().size(); i++) {
-			PortfolioHistory ph = portfolioTable.getHistory().get(i);
+			final PortfolioHistory portfolioHistory = portfolioTable.getHistory().get(i);
 			
-			if (ph.getSoldDate() == null) {
-				StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
-				currentWorth += latest.getSell()*ph.getAmount();
+			if (portfolioHistory.getSoldDate() == null) {
+				final StockPrices latest = jpaHelper.getLatestStockPrice(portfolioHistory.getStockPrice());
+				currentWorth += latest.getSell()*portfolioHistory.getAmount();
 			}
 		}
 		

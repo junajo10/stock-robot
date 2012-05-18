@@ -46,5 +46,5 @@ public interface IAlgorithm {
 	
 	void setRobot(IRobot_Algorithms robot);
 
-	void setPortfolio(IPortfolio p);
+	void setPortfolio(IPortfolio portfolio);
 }

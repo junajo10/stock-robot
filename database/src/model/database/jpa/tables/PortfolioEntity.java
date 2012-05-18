@@ -176,7 +176,7 @@ public class PortfolioEntity {
 	}
 	public PortfolioHistory getSpecificPortfolioHistory(StockPrices s, long amount) {
 		for (PortfolioHistory ph : history) {
-			if (ph.getBuyDate().equals(s.getTime()) && ph.getAmount() == amount)
+			if (ph.getStockPrice().getTime().equals(s.getTime()) && ph.getAmount() == amount)
 				return ph;
 		}
 		return null;

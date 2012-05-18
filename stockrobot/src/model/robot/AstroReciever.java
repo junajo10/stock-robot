@@ -38,6 +38,9 @@ public class AstroReciever {
 		shouldRun = true;
 		this.PORT_NR = PORT_NR;
 		this.SERVER_ADRESS = SERVER_ADRESS;
+	}
+	
+	public void startReciever() {
 		AstroClient client = new AstroClient();
 		Pinger ping = new Pinger();
 		
@@ -61,7 +64,10 @@ public class AstroReciever {
 			return true;
 		}
 		while(!newData){
-			
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+			}
 		}
 		newData = false;
 		return true;
@@ -131,7 +137,7 @@ public class AstroReciever {
 							isConnected = false;
 							e.printStackTrace();
 						}
-						if(!latestStocks.equals("")){
+						if(latestStocks != null && !latestStocks.equals("")){
 							Log.log(TAG.NORMAL, "New data is available from database.");
 							newData = true;
 						} 

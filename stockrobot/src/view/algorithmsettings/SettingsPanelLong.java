@@ -77,7 +77,7 @@ public class SettingsPanelLong extends JPanel implements ChangeListener {
 		ta.repaint();
 		subContainer.add( ta );
 		
-		JSlider fromDate = new JSlider( SwingConstants.HORIZONTAL, Math.round( minValue ), Math.round( maxValue ), Math.round( initValue ) );
+		JSlider fromDate = new JSlider( SwingConstants.HORIZONTAL, (int) minValue , (int) maxValue , (int) initValue  );
 		fromDate.addChangeListener(this);
 		subContainer.add( fromDate );
 	}

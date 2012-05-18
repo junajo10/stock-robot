@@ -41,6 +41,12 @@ public class Connector implements IConnector {
 		shouldRun = true;
 		this.PORT_NR = PORT_NR;
 		clients = new ConcurrentHashMap<Socket, Socket>();
+		
+
+	}
+
+	@Override
+	public void startConnector() {
 		AstroServer server = new AstroServer();
 		AstroSender sender = new AstroSender();
 		
@@ -54,9 +60,7 @@ public class Connector implements IConnector {
 		serverThread.start();
 		astroSender.start();
 		//pingerThread.start();
-
 	}
-
 	/**
 	 * Sends a message to all connected clients,
 	 * that new data is available.

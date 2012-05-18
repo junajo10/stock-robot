@@ -100,8 +100,12 @@ public class StartView extends JFrame implements IView {
 			
 			e1.printStackTrace();
 		}
-		
-		JLabel lblNewLabel  = new JLabel(new ImageIcon( myPicture ));
+		JLabel lblNewLabel;
+		if (myPicture != null) {
+			lblNewLabel = new JLabel(new ImageIcon( myPicture ));
+		}
+		else
+			lblNewLabel = new JLabel();
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(

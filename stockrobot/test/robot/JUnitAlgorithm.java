@@ -24,12 +24,10 @@ import model.portfolio.IRobot_Algorithms;
  */
 public class JUnitAlgorithm implements IAlgorithm {
 
-	private volatile int updateVar = 0;
+	private int updateVar = 0;
 	private long freq;
 	
 	public JUnitAlgorithm(long freq){
-	
-		this.updateVar = updateVar;
 		this.freq = freq;
 	}
 	

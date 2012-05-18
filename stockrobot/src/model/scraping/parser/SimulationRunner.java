@@ -12,10 +12,6 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.scraping.connect.Connector;
 import model.scraping.connect.IConnector;
-import model.scraping.database.IInserter;
-import model.scraping.database.JPAInserter;
-import model.scraping.scheduler.IScheduler;
-import model.scraping.scheduler.Scheduler;
 
 /**
  * 
@@ -27,18 +23,14 @@ public class SimulationRunner implements IParserRunner {
 	boolean close = false;
 	private int portNr;
 
-	IScheduler scheduler;
-	IInserter inserter;
-	IConnector connector;
-	IJPAParser jpaHelper = JPAHelper.getInstance();
+	private IConnector connector;
+	private IJPAParser jpaHelper = JPAHelper.getInstance();
 	private List<StockNames> simulatedStocks = new ArrayList<StockNames>();
-	Random rand = new Random(System.currentTimeMillis());
+	private Random rand = new Random(System.currentTimeMillis());
 	private PropertyChangeSupport pcs;
 	
 	
 	public SimulationRunner(int PORT_NR){
-		inserter = new JPAInserter();
-		scheduler = new Scheduler();
 		this.portNr = PORT_NR;
 	}
 	@Override
@@ -170,6 +162,7 @@ public class SimulationRunner implements IParserRunner {
 	public boolean startParser() {
 		if(!run){
 			connector = new Connector(portNr, pcs);
+			connector.startConnector();
 			run = true;
 			close = false;
 			return true;

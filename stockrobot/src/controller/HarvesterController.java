@@ -32,7 +32,7 @@ public class HarvesterController implements IController {
 	
 	private final Harvester model;
 	private final HarvesterView view;
-	private final Logger log;	
+	private final Logger log;	//NOPMD
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	
 	private class StartBtnListener implements ActionListener{
