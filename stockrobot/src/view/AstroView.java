@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JCheckBox;
 
 public class AstroView extends JFrame implements IView {
 
@@ -72,7 +73,7 @@ public class AstroView extends JFrame implements IView {
 	public AstroView() {
 		setResizable(false);
 		setTitle("ASTRo Main");
-		setBounds(100, 100, 359, 501);
+		setBounds(100, 100, 358, 570);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -102,25 +103,38 @@ public class AstroView extends JFrame implements IView {
 		progressBar.setValue(100);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JButton btnClearLog = new JButton("Clear Log");
+		
+		JButton btnExportLog = new JButton("Export Log");
+		
+		JCheckBox autoScroll = new JCheckBox("Autoscroll Log");
+		autoScroll.setSelected(true);
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addComponent(lblAstroStatus)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnSimulate, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnPortfolio, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-								.addComponent(btnStocks, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createParallelGroup(Alignment.TRAILING)
+							.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+							.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+								.addComponent(lblAstroStatus)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+							.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+									.addComponent(btnSimulate, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
+									.addComponent(btnPortfolio, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+									.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+									.addComponent(btnStocks, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)))
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(btnClearLog, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(autoScroll, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -138,8 +152,13 @@ public class AstroView extends JFrame implements IView {
 						.addComponent(btnSimulate)
 						.addComponent(btnGraph))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(autoScroll)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnExportLog)
+						.addComponent(btnClearLog)))
 		);
 		
 		log = new JList();
