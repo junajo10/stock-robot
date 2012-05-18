@@ -46,7 +46,7 @@ public class AstroView extends JFrame implements IView {
 
 	WindowListener windowListener;
 
-	
+	JList log;
 	DefaultListModel logModel;
 	
 	
@@ -72,7 +72,7 @@ public class AstroView extends JFrame implements IView {
 	public AstroView() {
 		setResizable(false);
 		setTitle("ASTRo Main");
-		setBounds(100, 100, 296, 396);
+		setBounds(100, 100, 359, 501);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -142,7 +142,7 @@ public class AstroView extends JFrame implements IView {
 					.addContainerGap())
 		);
 		
-		JList log = new JList();
+		log = new JList();
 		scrollPane.setViewportView(log);
 		
 		JLabel lblAstroLog = new JLabel("ASTRo Log");
@@ -160,7 +160,7 @@ public class AstroView extends JFrame implements IView {
 	}
 	
 	public void setLogModel(DefaultListModel model){
-		this.logModel = model;
+		log.setModel(model);
 	}
 
 	@Override

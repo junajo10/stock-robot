@@ -104,6 +104,8 @@ public class AstroController implements IController {
 		String host = "";
 		int port = 0;
 		
+		view.setLogModel(Log.instance().getModel());
+		
 		if (server.length >= 2) {
 			host = parserServer.toString().substring(0, parserServer.toString().lastIndexOf(":"));
 			try {
