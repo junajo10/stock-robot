@@ -30,6 +30,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JCheckBox;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+import javax.swing.ScrollPaneConstants;
 
 
 public class AstroView extends JFrame implements IView {
@@ -43,8 +44,10 @@ public class AstroView extends JFrame implements IView {
 	public static final String OPEN_PORTFOLIOVIEW 		= "PortfolioView";
 	public static final String SHOW_LOG			 		= "ShowLog";
 
+	private final int HEIGHT_FRAME_SUBTRACTED 	= 180;
+	private final int HEIGHT_FRAME_EXPANDED 	= 655;
+	private final int WIDTH_FRAME = 373;
 
-	int i = 2133;
 	private JPanel contentPane;
 	JButton btnSimulate 								= new JButton("Simulate Algorithms");
 	JButton btnGraph 									= new JButton("Graph Window");
@@ -57,31 +60,16 @@ public class AstroView extends JFrame implements IView {
 	DefaultListModel logModel;
 	JCheckBox chckbxShowLog;
 	JScrollPane scrollPane;
-	
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AstroView frame = new AstroView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JPanel pnlLog;
 
 	/**
 	 * Create the frame.
 	 */
 	public AstroView() {
-		setResizable(false);
 		setTitle("ASTRo Main");
-		setBounds(150, 150, 358, 165);
+		logModel = new DefaultListModel();
+		
+		setBounds(150, 150, 373, 655);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -113,16 +101,7 @@ public class AstroView extends JFrame implements IView {
 		progressBar.setForeground(Color.CYAN);
 		progressBar.setValue(100);
 		
-		scrollPane = new JScrollPane();
-		
-		JButton btnClearLog = new JButton("Clear Log");
-		
-		JButton btnExportLog = new JButton("Export Log");
-		
-		JCheckBox autoScroll = new JCheckBox("Autoscroll Log");
-		autoScroll.setBackground(UIManager.getColor("control"));
-		autoScroll.setForeground(Color.BLACK);
-		autoScroll.setSelected(true);
+		pnlLog = new JPanel();
 		
 		chckbxShowLog = new JCheckBox("Show Log");
 		chckbxShowLog.setForeground(Color.BLACK);
@@ -133,26 +112,21 @@ public class AstroView extends JFrame implements IView {
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblAstroStatus)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+							.addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnSimulate, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-								.addComponent(btnPortfolio, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
+								.addComponent(btnSimulate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnPortfolio, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
 								.addComponent(btnStocks, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnClearLog, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
-						.addComponent(autoScroll, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
-						.addComponent(chckbxShowLog, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(chckbxShowLog))
+					.addGap(9))
+				.addComponent(pnlLog, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 361, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -168,17 +142,14 @@ public class AstroView extends JFrame implements IView {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSimulate)
 						.addComponent(btnGraph))
-					.addPreferredGap(ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(chckbxShowLog)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(autoScroll)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnExportLog)
-						.addComponent(btnClearLog)))
+					.addComponent(pnlLog, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
 		log = new JList();
 		log.setBackground(Color.WHITE);
@@ -190,11 +161,50 @@ public class AstroView extends JFrame implements IView {
 		lblAstroLog.setBackground(Color.WHITE);
 		lblAstroLog.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(lblAstroLog);
-		contentPane.setLayout(gl_contentPane);
 		scrollPane.setViewportView(log);
-		logModel = new DefaultListModel();
 		log.setModel(logModel);
-		scrollPane.setVisible(false);
+		
+		JCheckBox autoScroll = new JCheckBox("Autoscroll Log");
+		autoScroll.setBackground(UIManager.getColor("control"));
+		autoScroll.setForeground(Color.BLACK);
+		autoScroll.setSelected(true);
+		
+		JButton btnClearLog = new JButton("Clear Log");
+		
+		JButton btnExportLog = new JButton("Export Log");
+		GroupLayout gl_pnlLog = new GroupLayout(pnlLog);
+		gl_pnlLog.setHorizontalGroup(
+			gl_pnlLog.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlLog.createSequentialGroup()
+					.addGroup(gl_pnlLog.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlLog.createSequentialGroup()
+							.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_pnlLog.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(autoScroll, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)))
+					.addGap(9))
+				.addGroup(gl_pnlLog.createSequentialGroup()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_pnlLog.setVerticalGroup(
+			gl_pnlLog.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnlLog.createSequentialGroup()
+					.addGap(5)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(autoScroll)
+					.addGap(18)
+					.addGroup(gl_pnlLog.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnClearLog)
+						.addComponent(btnExportLog))
+					.addContainerGap())
+		);
+		pnlLog.setLayout(gl_pnlLog);
+		contentPane.setLayout(gl_contentPane);
+		
 	}
 	
 	public void addLogItem(Object o){
@@ -208,14 +218,14 @@ public class AstroView extends JFrame implements IView {
 	
 	public void showLog(){
 		Rectangle currentPosition = getBounds();
-		scrollPane.setVisible(true);
-		setBounds(currentPosition.x, currentPosition.y, 358, 580);
+		pnlLog.setVisible(true);
+		setBounds(currentPosition.x, currentPosition.y, WIDTH_FRAME, HEIGHT_FRAME_EXPANDED);
 	}
 	
 	public void hideLog(){
 		Rectangle currentPosition = getBounds();
-		scrollPane.setVisible(false);
-		setBounds(currentPosition.x, currentPosition.y, 358, 168);
+		pnlLog.setVisible(false);
+		setBounds(currentPosition.x, currentPosition.y, WIDTH_FRAME, HEIGHT_FRAME_SUBTRACTED);
 	}
 	
 	public Boolean getShowLogIsSelected(){
