@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -76,7 +77,7 @@ public class SettingsPanelLong extends JPanel implements ChangeListener {
 		ta.repaint();
 		subContainer.add( ta );
 		
-		JSlider fromDate = new JSlider( JSlider.HORIZONTAL, Math.round( minValue ), Math.round( maxValue ), Math.round( initValue ) );
+		JSlider fromDate = new JSlider( SwingConstants.HORIZONTAL, Math.round( minValue ), Math.round( maxValue ), Math.round( initValue ) );
 		fromDate.addChangeListener(this);
 		subContainer.add( fromDate );
 	}
@@ -84,6 +85,7 @@ public class SettingsPanelLong extends JPanel implements ChangeListener {
 	/**
 	 * TODO: Maybe not have this in the view
 	 */
+	@Override
 	public void stateChanged( ChangeEvent e ) {
 		
 		JSlider source = (JSlider) e.getSource();

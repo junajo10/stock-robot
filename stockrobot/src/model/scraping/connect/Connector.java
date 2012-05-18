@@ -71,6 +71,7 @@ public class Connector implements IConnector {
 	 * 
 	 * @return Number of connected clients.
 	 */
+	@Override
 	public int getConnected(){
 		return clients.size();
 	}
@@ -80,6 +81,7 @@ public class Connector implements IConnector {
 	 * <p>
 	 * Method used for testing.
 	 */
+	@Override
 	public void shutdown(){
 		pcs.firePropertyChange("Server shutdown.", null, null);
 		shouldRun = false;
@@ -106,6 +108,7 @@ public class Connector implements IConnector {
 	 * <p>
 	 * Method used for testing.
 	 */
+	@Override
 	public boolean isRunning(){
 		if(recieve != null){
 			return ( getConnected()!=0 || !recieve.isClosed() || serverThread.isAlive() || astroSender.isAlive() );
@@ -158,6 +161,7 @@ public class Connector implements IConnector {
 	
 	@SuppressWarnings("unused")
 	private class PingReciever implements Runnable {
+		@Override
 		public void run() {
 			while (shouldRun) {
 				int delay = 0;

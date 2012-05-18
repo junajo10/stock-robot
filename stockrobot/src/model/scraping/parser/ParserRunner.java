@@ -75,7 +75,7 @@ public class ParserRunner implements IParserRunner {
 				//Should run right now?
 				if( scheduler.shouldRun() || skipScheduler ) {
 					if(timeElapsed!=null){
-						progress = (int) (15000-timeElapsed.intValue());
+						progress = (15000-timeElapsed.intValue());
 						pcs.firePropertyChange("Parsing Progress.", null,progress);
 
 					}
@@ -144,6 +144,7 @@ public class ParserRunner implements IParserRunner {
 	 *  @return true is it was successfully close
 	 *  Otherwise false.
 	 */
+	@Override
 	public boolean stopRunner() {
 		if(!close){
 			close = true;
@@ -163,6 +164,7 @@ public class ParserRunner implements IParserRunner {
 	 *  it will wait until parser finishes a loop and then it will stop.
 	 *  
 	 */
+	@Override
 	public boolean stopParser() {
 		if(run){
 			run = false;
@@ -185,6 +187,7 @@ public class ParserRunner implements IParserRunner {
 	 *  By default parser is not running.
 	 *  
 	 */
+	@Override
 	public boolean startParser() {
 		if(!run){
 			run = true;

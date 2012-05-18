@@ -60,6 +60,7 @@ public class SimResultView extends JFrame implements IView {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					SimResultView frame = new SimResultView();
@@ -146,7 +147,8 @@ public class SimResultView extends JFrame implements IView {
 		pcs.addPropertyChangeListener(listener);
 	}
     
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
     	pcs.removePropertyChangeListener(listener);
     }
 

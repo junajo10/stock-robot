@@ -19,10 +19,12 @@ public abstract class WizardPageModel implements IObservable {
 		observers = new PropertyChangeSupport(this);
 	}
 		
+	@Override
 	public void addAddObserver(PropertyChangeListener listener){
 		observers.addPropertyChangeListener(listener);
 	}
 	
+	@Override
 	public void removeObserver(PropertyChangeListener listener){
 		observers.removePropertyChangeListener(listener);
 	}

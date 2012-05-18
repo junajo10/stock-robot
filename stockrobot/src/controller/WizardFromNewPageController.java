@@ -9,8 +9,6 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Transient;
-
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 import view.wizard.WizardPage;

@@ -49,6 +49,7 @@ public class SimView extends JFrame implements IView {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					SimView frame = new SimView();

@@ -201,7 +201,6 @@ public class AstroView extends JFrame implements IView {
 		);
 		pnlLog.setLayout(gl_pnlLog);
 		contentPane.setLayout(gl_contentPane);
-		hideLog();
 	}
 	
 	public void addLogItem(Object o){
@@ -231,6 +230,7 @@ public class AstroView extends JFrame implements IView {
 
 	@Override
 	public void display(Object model) {
+		hideLog();
 		setVisible(true);
 	}
 

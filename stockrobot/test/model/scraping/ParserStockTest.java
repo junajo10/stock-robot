@@ -24,9 +24,9 @@ public class ParserStockTest {
 		long multiplier = (long) Math.random() * 20;
 		
 		int 	vol 	= 29038 + (int) Math.round( Math.random() * 199 );
-		long 	latest 	= (long) 123	* multiplier;
-		long 	buy 	= (long) 1383	* multiplier;
-		long 	sell 	= (long) 294	* multiplier;
+		long 	latest 	= 123	* multiplier;
+		long 	buy 	= 1383	* multiplier;
+		long 	sell 	= 294	* multiplier;
 		Date 	date 	= new Date(2884444);
 		
 		//Price to test

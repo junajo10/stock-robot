@@ -36,6 +36,7 @@ public class AvanzaParser implements IParser {
 	 * @param market the URL belongs to.
 	 * 
 	 *  */
+	@Override
 	public ArrayList<ParserStock> parse(URL url, String market){
 			this.market = market;
 			URLConnection connection;

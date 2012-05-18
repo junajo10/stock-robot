@@ -161,6 +161,7 @@ public class PortfolioView extends JFrame implements IView {
 		
 		btnManageAlgortihmSettings = new JButton("Algortihm Settings");
 		btnManageAlgortihmSettings.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});

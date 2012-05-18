@@ -171,6 +171,7 @@ public class WizardView extends JFrame implements IView {
 	 * 
 	 * @param title
 	 */
+	@Override
 	public void setTitle(String title) {		
 		lblTitle.setText(title);
 		this.validate();
@@ -202,6 +203,7 @@ public class WizardView extends JFrame implements IView {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			
+			@Override
 			public void run() {
 				WizardPage page = pages.get(screen);
 				
@@ -353,7 +355,7 @@ public class WizardView extends JFrame implements IView {
 			
 			if(model.getActivePage() instanceof Integer){
 				
-				Integer page = (Integer)model.getActivePage();
+				Integer page = model.getActivePage();
 				
 				setEnableNext(model.getNextPage() != null);
 				setEnableBack(model.getBackPage() != null);

@@ -112,6 +112,7 @@ public class Portfolio implements IPortfolio {
 	public String getName() {
 		return portfolioTable.getName();
 	}
+	@Override
 	public String toString() {
 		if (algorithm != null)
 			return "Name: " + getName() + "Algorithm: " + algorithm.getName() + " Balance: " + FinancialLongConverter.toStringTwoDecimalPoints(getUnusedAmount());

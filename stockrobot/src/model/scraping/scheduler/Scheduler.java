@@ -68,6 +68,7 @@ public class Scheduler implements IScheduler {
 	@Override
 	public boolean getShouldRun() { return shouldRun; }
 	
+	@Override
 	public long timeUntilNextParse() {
 		long time = 0;
 		

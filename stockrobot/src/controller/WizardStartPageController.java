@@ -48,6 +48,7 @@ public class WizardStartPageController extends WizardPageController {
 		page.addActions(actions);
 	}
 	
+	@Override
 	public WizardPage getView(){
 		return page;
 	}

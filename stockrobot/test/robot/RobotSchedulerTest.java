@@ -271,6 +271,7 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 			return null;
 		}
 		
+		@Override
 		public boolean setAlgorithm(IAlgorithm algorithm) {
 			this.algorithm = algorithm;
 			
@@ -316,6 +317,7 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 			return name;
 		}
 		
+		@Override
 		public String toString() {
 			return "TestPortfolio " + name + "\n";
 		}

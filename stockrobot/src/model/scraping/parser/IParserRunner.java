@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
  */
 public interface IParserRunner extends Runnable {
 	
+	@Override
 	public void run();
 	public boolean stopParser();
 	public boolean stopRunner();

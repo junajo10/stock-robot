@@ -82,7 +82,7 @@ public class TestAlgorithm2 implements IAlgorithm{
 				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 				if( firstStockBuyPrice != 0 ) {
 					
-					long amount = (long) (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
+					long amount = (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
 					
 					buyStock( stockInfo.getRight().get(0), amount );
 				}

@@ -56,6 +56,7 @@ public class StartView extends JFrame implements IView {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					StartView frame = new StartView();

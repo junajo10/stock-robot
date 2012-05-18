@@ -156,6 +156,7 @@ public class PortfolioStartPage extends WizardPage {
 	
 	public void updatePortfolios(){
 		SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run(){
 			Object selected = cmbHldClonePortfolioList.getSelectedItem();
 			

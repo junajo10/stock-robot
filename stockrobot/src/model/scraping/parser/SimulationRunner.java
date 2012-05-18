@@ -123,6 +123,7 @@ public class SimulationRunner implements IParserRunner {
 	 *  @return true is it was successfully close
 	 *  Otherwise false.
 	 */
+	@Override
 	public boolean stopRunner() {
 		if(!close){
 			connector.shutdown();
@@ -144,6 +145,7 @@ public class SimulationRunner implements IParserRunner {
 	 *  it will wait until parser finishes a loop and then it will stop.
 	 *  
 	 */
+	@Override
 	public boolean stopParser() {
 		if(run){
 			connector.shutdown();
@@ -164,6 +166,7 @@ public class SimulationRunner implements IParserRunner {
 	 *  By default parser is not running.
 	 *  
 	 */
+	@Override
 	public boolean startParser() {
 		if(!run){
 			connector = new Connector(portNr, pcs);

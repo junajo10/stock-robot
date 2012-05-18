@@ -26,6 +26,7 @@ public abstract class WizardPage extends JPanel  implements IView  {
 		
 	}
 	
+	@Override
 	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 	
 	@Override
