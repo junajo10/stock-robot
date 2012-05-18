@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
@@ -214,6 +215,11 @@ public class HarvesterView extends JFrame implements IView{
 	public void display(Object model) {
 		this.setSize(new Dimension(450, 588));
 		this.setVisible(true);
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		int X = (screen.width / 2) - (450 / 2); // Center horizontally.
+		int Y = (screen.height / 2) - (588 / 2); // Center vertically.
+
+		this.setBounds(X,Y , 450,588);
 	}
 
 	@Override
