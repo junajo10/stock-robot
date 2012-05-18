@@ -255,7 +255,10 @@ class JPAHelperBase implements IJPAHelper {
 	}
 	@Override
 	public synchronized boolean investMoney(long amount, PortfolioEntity portfolio) {
-		portfolio.invest(amount, true);
+		if (amount > 0)
+			portfolio.invest(amount, true);
+		else
+			portfolio.invest(-amount, false);
 
 		updateObject(portfolio);
 
@@ -382,8 +385,6 @@ class JPAHelperBase implements IJPAHelper {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<StockPrices> getLatestStockPrices() {
-		// TODO: fix in jpa instead.
-		
 		//SELECT * FROM StockPrices s1 JOIN ( SELECT stockName, MAX(time) AS mTime FROM StockPrices GROUP BY stockName) AS s2 ON s1.stockName = s2.stockName AND s1.time = s2.mTime;
 		 
 		Query query = em.createNativeQuery("SELECT * " +

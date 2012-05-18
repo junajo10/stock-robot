@@ -1,5 +1,7 @@
 package model.scraping.parser;
 
+import java.beans.PropertyChangeSupport;
+
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -38,6 +40,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 				
 				port = 25000 + (int) Math.round( Math.random() * 4000 );
 				runner = new SimulationRunner( port );
+				runner.setPropertyChangeSupport(new PropertyChangeSupport(this));
 				runnercreated = true;
 				
 				try {

@@ -111,5 +111,10 @@ public interface IJPAAlgortihm {
 	 */
 	public boolean updateObject(Object o);
 	
+	/**
+	 * Gets all the portfolioHistorys with unsold stocks from a given portfolio table.
+	 * @param portfolioTable PortfolioTable to get stocks from.
+	 * @return A list of PortfolioHistory
+	 */
 	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable);
 }

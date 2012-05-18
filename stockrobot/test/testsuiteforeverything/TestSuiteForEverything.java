@@ -46,8 +46,6 @@ import model.wizard.WizardPageModelTest;
 	GraphControllerTest.class,
 	JPATest.class,
 	MainBasicJPATest.class,
-	SimulationHandlerTest.class,
-	SimulationRunnerTest.class,
 	ItemCmbPortfolioTest.class,
 	AstroRecieverTest.class,
 	ParserStockTest.class,
@@ -61,6 +59,8 @@ import model.wizard.WizardPageModelTest;
 	SchedulerTest.class,
 	AvanzaParserTest.class,
 	ParserRunnerTest.class,
+	SimulationRunnerTest.class,
+	SimulationHandlerTest.class,
 })
 
 public class TestSuiteForEverything {

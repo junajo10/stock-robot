@@ -23,7 +23,8 @@ public class PortfolioController implements IController {
 	public static final String CLASS_NAME = "PortfolioController";
 	private PortfolioView view;
 	private ITrader trader;
-	private IPortfolioHandler portfolios; 
+	private IPortfolioHandler portfolios;
+	private PortfolioSettingsController portfolioSettings;
 	
 	private Map<String, EventListener> actions;
 	private PortfolioHistoryController historyController = new PortfolioHistoryController();
@@ -39,8 +40,20 @@ public class PortfolioController implements IController {
 		actions.put(PortfolioView.CREATE_PORTFOLIO, createPortfolioListener);
 		actions.put(PortfolioView.MANAGE_ALGORITHMS, manageAlgorithmSettingsListener);
 		actions.put(PortfolioView.HISTORY, portfolioHistoryListener);
+		actions.put(PortfolioView.SETTINGS, settingsListener);
 	}
-	
+	ActionListener settingsListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			IPortfolio portfolio = (view.getSelectedPortfolio());
+			
+			if (portfolio != null) {
+				portfolioSettings.display(portfolio);
+			}
+		}
+	};
 	ActionListener createPortfolioListener = new ActionListener() {
 		
 		@Override
@@ -79,6 +92,7 @@ public class PortfolioController implements IController {
 	
 	@Override
 	public void display(Object model) {
+		defineSubControllers();
 		
 		view = new PortfolioView(trader, portfolios);
 		IPortfolioHandler handler = (IPortfolioHandler) model;
@@ -96,8 +110,9 @@ public class PortfolioController implements IController {
 	}
 
 	@Override
-	public void defineSubControllers() {} //NOPMD
-
+	public void defineSubControllers() {
+		portfolioSettings = new PortfolioSettingsController();
+	}
 	@Override
 	public String getName() {
 

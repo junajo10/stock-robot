@@ -36,6 +36,7 @@ public class PortfolioView extends JFrame implements IView {
 	public static final String CREATE_PORTFOLIO			= "createPortfolio";	
 	public static final String MANAGE_ALGORITHMS			= "manageAlgorithms";
 	public static final String HISTORY					= "History";
+	public static final String SETTINGS 				= "Portfolio Settings";
 	private JPanel contentPane;
 	//private IPortfolioHandler portfolios;
 	private JComboBox cmbSelectPortfolio;
@@ -49,6 +50,7 @@ public class PortfolioView extends JFrame implements IView {
 	private JButton btnHistory;
 	private JButton btnNewPortfolio;
 	private JButton btnManageAlgortihmSettings;
+	private JButton btnSettings = new JButton("Settings");
 	
 	private IPortfolio selectedPortfolio;
 	
@@ -106,6 +108,9 @@ public class PortfolioView extends JFrame implements IView {
 		
 		btnNewPortfolio = new JButton("New Portfolio");
 		pnlViewsHolder.add(btnNewPortfolio);
+		
+		
+		pnlViewsHolder.add(btnSettings);
 		pnlBalanceContainer.setLayout(new BoxLayout(pnlBalanceContainer, BoxLayout.Y_AXIS));
 		
 		JPanel pnlBalance = new JPanel();
@@ -215,6 +220,9 @@ public class PortfolioView extends JFrame implements IView {
 		//Connect the history button to it's corresponding ActionListener
 		if(actions.get(HISTORY) instanceof ActionListener) {
 			btnHistory.addActionListener( (ActionListener) actions.get(HISTORY) );
+		}
+		if(actions.get(SETTINGS) instanceof ActionListener) {
+			btnSettings.addActionListener( (ActionListener) actions.get(SETTINGS) );
 		}
 	}
 	
