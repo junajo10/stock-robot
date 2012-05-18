@@ -93,13 +93,16 @@ public class AstroView extends JFrame implements IView {
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.BLACK);
+		contentPane.setForeground(Color.GREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JLabel lblAstroStatus = new JLabel("ASTRo Status:");
+		JLabel lblAstroStatus = new JLabel("ASTRo Robot Status:");
+		lblAstroStatus.setForeground(Color.GREEN);
 
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setForeground(Color.GREEN);
+		progressBar.setForeground(Color.CYAN);
 		progressBar.setValue(100);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -109,6 +112,8 @@ public class AstroView extends JFrame implements IView {
 		JButton btnExportLog = new JButton("Export Log");
 		
 		JCheckBox autoScroll = new JCheckBox("Autoscroll Log");
+		autoScroll.setBackground(Color.BLACK);
+		autoScroll.setForeground(Color.GREEN);
 		autoScroll.setSelected(true);
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -124,12 +129,12 @@ public class AstroView extends JFrame implements IView {
 								.addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
 							.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-									.addComponent(btnSimulate, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-									.addComponent(btnPortfolio, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
+									.addComponent(btnSimulate, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+									.addComponent(btnPortfolio, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
 								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-									.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-									.addComponent(btnStocks, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)))
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnStocks, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)))
 							.addGroup(gl_contentPane.createSequentialGroup()
 								.addComponent(btnClearLog, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
 								.addPreferredGap(ComponentPlacement.RELATED)
@@ -152,7 +157,7 @@ public class AstroView extends JFrame implements IView {
 						.addComponent(btnSimulate)
 						.addComponent(btnGraph))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(autoScroll)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -162,9 +167,11 @@ public class AstroView extends JFrame implements IView {
 		);
 		
 		log = new JList();
+		log.setForeground(Color.GREEN);
 		scrollPane.setViewportView(log);
 		
 		JLabel lblAstroLog = new JLabel("ASTRo Log");
+		lblAstroLog.setBackground(Color.GREEN);
 		lblAstroLog.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(lblAstroLog);
 		contentPane.setLayout(gl_contentPane);

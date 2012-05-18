@@ -26,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.JProgressBar;
+import java.awt.Color;
 
 /**
  * View for Harvester.
@@ -57,12 +58,14 @@ public class HarvesterView extends JFrame implements IView{
 	private JCheckBox chckbxAutoscrollLog;
 
 	public HarvesterView() {
+		getContentPane().setBackground(Color.BLACK);
 		
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setTitle("ASTRo Harvester");
 		
 		btnStartParser = new JButton("Start Parser");
+		btnStartParser.setForeground(Color.BLACK);
 		btnStopParser = new JButton("Stop Parser");
 		btnStopParser.setEnabled(false);
 		logModel = new DefaultListModel();
@@ -76,21 +79,29 @@ public class HarvesterView extends JFrame implements IView{
 		btnClearLog = new JButton("Clear Log");
 		
 		JLabel lblPortNumber = new JLabel("Port Number:");
+		lblPortNumber.setForeground(Color.GREEN);
 		
 		chckbxSimulateStocks = new JCheckBox("Simulate Stocks");
+		chckbxSimulateStocks.setForeground(Color.GREEN);
+		chckbxSimulateStocks.setBackground(Color.BLACK);
 		
 		btnStatus = new JButton("Print Status");
 		
 		chckbxForceStop = new JCheckBox("Force Stop");
+		chckbxForceStop.setBackground(Color.BLACK);
+		chckbxForceStop.setForeground(Color.GREEN);
 		
 		btnExportLog = new JButton("Export Log");
 		
 		parserBar = new JProgressBar(0, 20000);
+		parserBar.setForeground(Color.CYAN);
 		parserBar.setToolTipText("Parsing progress.");
 		parserBar.setStringPainted(true);
 		parserBar.setVisible(false);
 		
 		chckbxAutoscrollLog = new JCheckBox("Autoscroll Log");
+		chckbxAutoscrollLog.setForeground(Color.GREEN);
+		chckbxAutoscrollLog.setBackground(Color.BLACK);
 		chckbxAutoscrollLog.setSelected(true);
 
 		/**
