@@ -10,7 +10,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import javax.swing.JProgressBar;
+import javax.swing.JProgressBar; 
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.Color;
