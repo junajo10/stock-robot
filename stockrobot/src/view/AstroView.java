@@ -247,6 +247,9 @@ public class AstroView extends JFrame implements IView {
 		for (ActionListener al : btnStocks.getActionListeners()) {
 			btnStocks.removeActionListener(al);
 		}
+		for (ActionListener al : chckbxShowLog.getActionListeners()) {
+			chckbxShowLog.removeActionListener(al);
+		}
 		for (ActionListener al : btnPortfolio.getActionListeners()) {
 			btnPortfolio.removeActionListener(al);
 		}
