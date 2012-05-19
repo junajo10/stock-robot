@@ -11,6 +11,9 @@ import utils.observer.IObservable;
  */
 public interface IPortfolioHandler extends IObservable {
 
+	public final static String MSG_PORTFOLIO_ADDED = "msgPortfolioAdded";
+	public final static String MSG_PORTFOLIO_REMOVED = "msgPortfolioRemoved";
+	
 	/**
 	 * Creates a new portfolio with default settings, and a given name
 	 * @param name The name of the portfolio this must be unique

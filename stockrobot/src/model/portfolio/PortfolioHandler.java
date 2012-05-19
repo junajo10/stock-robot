@@ -67,6 +67,7 @@ public final class PortfolioHandler implements IPortfolioHandler{
 				
 				p.setAlgorithm(algorithm);
 				listOfPortfolios.add(p);
+				pChangeSuport.firePropertyChange(MSG_PORTFOLIO_ADDED,null,p.getName());
 				
 				Log.log(TAG.VERY_VERBOSE, p.getName() + " algorithm set to: " + algorithm.getName());
 			}
@@ -136,6 +137,7 @@ public final class PortfolioHandler implements IPortfolioHandler{
 	public boolean removePortfolio(IPortfolio portfolio) {
 		if (portfolio.getPortfolioTable().getBalance() == 0) {
 			listOfPortfolios.remove(portfolio);
+			pChangeSuport.firePropertyChange(MSG_PORTFOLIO_ADDED,null,portfolio.getName());
 			jpaHelper.remove(portfolio.getPortfolioTable());
 			return true;
 		}
