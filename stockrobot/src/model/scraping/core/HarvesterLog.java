@@ -16,9 +16,20 @@ import javax.swing.DefaultListModel;
  *
  */
 public class HarvesterLog {
+	
+	public static final String PARSING_DONE			= "Parsing done.";
+	public static final String PARSING_PROGRESS		= "Parsing Progress.";
+	public static final String DISCONNECTED			= "Disconnected.";
+	public static final String CONNECTED			= "Connected.";
+	public static final String TEXT					= "Text.";
+	public static final String SHUTDOWN				= "Server shutdown.";
+	public static final String SERVER_UP			= "Server up.";
+	public static final String SERVER_DOWN			= "Stopped successfull.";
+	
 	long totalLoops = 0;
 	int connected = 0;
 	DefaultListModel model;
+	
 	static HarvesterLog log;
 	
 	public static HarvesterLog getInstance(){

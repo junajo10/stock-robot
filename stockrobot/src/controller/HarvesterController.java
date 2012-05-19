@@ -25,6 +25,7 @@ import utils.AbstractWindowCloseAdapter;
 import view.HarvesterView;
 
 import model.scraping.core.Harvester;
+import model.scraping.core.HarvesterLog;
 
 /**
  * Controller for Harvester.
@@ -216,38 +217,39 @@ public class HarvesterController implements IController {
 			}
         } 
 	}
+	
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		if(event.getPropertyName().equals("Parsing done.")){
+		if(event.getPropertyName().equals(HarvesterLog.PARSING_DONE)){
 			log.parsingLoop((Long) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Parsing Progress.")){
+		if(event.getPropertyName().equals(HarvesterLog.PARSING_PROGRESS)){
 			view.setParserBarProgress((Integer) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Connected.")){
+		if(event.getPropertyName().equals(HarvesterLog.CONNECTED)){
 			log.connected((String) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Disconnected.")){
+		if(event.getPropertyName().equals(HarvesterLog.DISCONNECTED)){
 			log.disconnected((String) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Text.")){
+		if(event.getPropertyName().equals(HarvesterLog.TEXT)){
 			log.addText((String) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Server shutdown.")){
+		if(event.getPropertyName().equals(HarvesterLog.SHUTDOWN)){
 			log.showDownServer();
 		}
 		
-		if(event.getPropertyName().equals("Server up.")){
+		if(event.getPropertyName().equals(HarvesterLog.SERVER_UP)){
 			log.serverUp();
 		}
 		
-		if(event.getPropertyName().equals("Stopped successfull.")){
+		if(event.getPropertyName().equals(HarvesterLog.SERVER_DOWN)){
 			log.finishStopped();
 		}
 	}

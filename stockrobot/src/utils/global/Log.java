@@ -1,5 +1,7 @@
 package utils.global;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.DefaultListModel;
@@ -35,7 +37,9 @@ public final class Log {
 	
 	public static void log(TAG tag, String message){
 		if(log.filter.get(tag)){
-			instance().addLogMessage(message);
+			Date date= new java.util.Date();
+			String time = new Timestamp(date.getTime()) + "";
+			instance().addLogMessage("[" + time.substring(11, 16) + "] - " + message);
 			/* Temorary solution //Erik
 			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
 			System.out.print(message); //NOPMD
