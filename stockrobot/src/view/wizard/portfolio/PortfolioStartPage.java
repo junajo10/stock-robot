@@ -51,9 +51,7 @@ public class PortfolioStartPage extends WizardPage {
 	public static final String CREATE_FROM_CLONE 		= "createFromClone";
 	public static final String CREATE_FROM_LISTENER 	= "createFromListener";
 	public static final String NAME_INPUT_LISTENER 	= "nameInputListener";
-	
-	private DefaultComboBoxModel cmbHldClonePortfolioList = new DefaultComboBoxModel();
-	
+		
 	private static final long serialVersionUID = 1271972909341943446L;
 	
 	public PortfolioStartPage(WizardModel wizardModel, PortfolioWizardModel pageModel, IPortfolioHandler portfolioHandler) {
@@ -144,10 +142,13 @@ public class PortfolioStartPage extends WizardPage {
 		pnlPortfolioToClone.add(lblClonePortfolio);
 		
 		cmbClonePortfolioList = new JComboBox();
-		cmbClonePortfolioList.setModel(cmbHldClonePortfolioList);
-		pnlPortfolioToClone.add(cmbClonePortfolioList);
+		//cmbClonePortfolioList.setModel(cmbHldClonePortfolioList);
+		//pnlPortfolioToClone.add(cmbClonePortfolioList);
 		cmbClonePortfolioList.setPreferredSize(new Dimension(200,20));
 		cmbClonePortfolioList.setEnabled(false);
+		
+		pnlPortfolioToClone.add(cmbClonePortfolioList);
+		updatePortfolios();
 		pnlContent.setLayout(gl_pnlContent);
 		
 		//DefaultComboBoxModel cmb_hld_ClonePortfolioList = new DefaultComboBoxModel();
@@ -155,23 +156,15 @@ public class PortfolioStartPage extends WizardPage {
 	}
 	
 	public void updatePortfolios(){
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run(){
-			Object selected = cmbHldClonePortfolioList.getSelectedItem();
-			
-			List<IPortfolio> portfolios = portfolioHandler.getPortfolios();
-			cmbHldClonePortfolioList.removeAllElements();
-			for(int i = 0; i < portfolios.size(); i++){
-				
-				cmbHldClonePortfolioList.addElement(new ItemCmbPortfolio(portfolios.get(i)));
-			}
-			if(portfolios.contains(selected))
-				cmbHldClonePortfolioList.setSelectedItem(selected);
-			else
-				cmbHldClonePortfolioList.setSelectedItem(null);
-			}
-		});
+		
+		cmbClonePortfolioList.removeAllItems();
+		for(IPortfolio p : portfolioHandler.getPortfolios()){
+			cmbClonePortfolioList.addItem(p.getName());
+		}
+		
+		cmbClonePortfolioList.validate();
+		cmbClonePortfolioList.repaint();
+
 	}
 	
 	public void setCreateFromNewListener(ItemListener listener){
