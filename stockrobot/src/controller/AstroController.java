@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -12,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 
 import model.portfolio.PortfolioHandler;
@@ -83,6 +88,47 @@ public class AstroController implements IController {
 				@Override
 				public void run() {
 					portfolioController.display(null);
+				}
+			});
+		}
+	};
+	
+	ActionListener clearLog = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					Log.instance().clearLog();
+				}
+			});
+		}
+	};
+	
+	ActionListener exportLog = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					File logTxtFile = view.openChooseDirectory();
+					if (logTxtFile != null) {
+						ListModel model = Log.instance().getModel();
+						PrintStream out = null;
+						try {
+							out = new PrintStream(new FileOutputStream(logTxtFile));
+					        int len = model.getSize(); 
+					        for(int i = 0; i < len; i++) { 
+					        	out.println(model.getElementAt(i).toString()); 
+					        } 
+							Log.log(Log.TAG.NORMAL, "Log exported to "+logTxtFile.getAbsolutePath());
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						}  finally {
+							if (out != null)
+								out.close();
+						}
+					}
 				}
 			});
 		}
@@ -178,6 +224,8 @@ public class AstroController implements IController {
 		actions.put(AstroView.OPEN_PORTFOLIOVIEW, openPortfolioView);
 		actions.put(AstroView.WINDOW_CLOSE, windowClose);
 		actions.put(AstroView.SHOW_LOG, showLog);
+		actions.put(AstroView.CLEAR_LOG, clearLog);
+		actions.put(AstroView.EXPORT_LOG, exportLog);
 		return actions;
 	}
 

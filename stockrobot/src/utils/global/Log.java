@@ -100,6 +100,10 @@ public final class Log {
 		
 		return log;
 	}
+
+	public void clearLog() {
+		listModel.clear();
+	}
 	
 	
 }
