@@ -165,7 +165,10 @@ public class PortfolioView extends JFrame implements IView {
 		
 		//cmbModel = new PortfoliosCmbModel();
 		//cmbSelectPortfolio.setModel(cmbModel);
-		updatePortfolios();
+		cmbSelectPortfolio.removeAllItems();
+		for(IPortfolio p : portfolios.getPortfolios()){
+			cmbSelectPortfolio.addItem(p.getName());
+		}
 		
 		btnManageAlgortihmSettings = new JButton("Algortihm Settings");
 		btnManageAlgortihmSettings.addActionListener(new ActionListener() {
@@ -179,8 +182,7 @@ public class PortfolioView extends JFrame implements IView {
 			
 			for(IPortfolio p : portfolios.getPortfolios()){
 				if (p.getName().equals(cmbSelectPortfolio.getItemAt(0))) {
-					setSelectedPortfolio(p);
-					break;
+					selectedPortfolio = p;
 				}
 			}
 			
