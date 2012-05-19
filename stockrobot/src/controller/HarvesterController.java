@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -19,6 +21,7 @@ import java.util.Map;
 import javax.swing.ListModel;
 
 
+import utils.AbstractWindowCloseAdapter;
 import view.HarvesterView;
 
 import model.scraping.core.Harvester;
@@ -34,6 +37,13 @@ public class HarvesterController implements IController {
 	private final HarvesterView view;
 	private final Logger log;	//NOPMD
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	
+	WindowListener windowClose = new AbstractWindowCloseAdapter() {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			cleanup();
+		}
+	};
 	
 	private class StartBtnListener implements ActionListener{
 
@@ -263,6 +273,7 @@ public class HarvesterController implements IController {
 		actions.put(HarvesterView.PRINT_STATUS, new StatusBtnListener());
 		actions.put(HarvesterView.CLEAR_LOG, new ClearLogBtnListener());
 		actions.put(HarvesterView.EXPORT_LOG, new ExportLogBtnListener());
+		actions.put(HarvesterView.WINDOW_CLOSE, windowClose);
 
 		return actions;
 	}

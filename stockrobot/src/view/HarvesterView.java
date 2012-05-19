@@ -3,6 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -32,12 +33,16 @@ import java.awt.SystemColor;
 
 /**
  * View for Harvester.
+ * <p>
+ * Uses MVC-model by Daniel.
+ * <p>
  * @author Erik
  *
  */
 public class HarvesterView extends JFrame implements IView{
 
 	private static final long serialVersionUID = 1614338829073701762L;
+	
 	private JTextField textField;
 	private JButton btnStartParser;
 	private JButton btnStopParser;
@@ -50,15 +55,18 @@ public class HarvesterView extends JFrame implements IView{
 	private JCheckBox chckbxForceStop;
 	private JScrollPane scrollPane;
 	private JProgressBar parserBar;
+	private JCheckBox chckbxAutoscrollLog;
+	
+	public static final String START_PARSER				= "startParser";
+	public static final String STOP_PARSER				= "stopParser";
+	public static final String PRINT_STATUS				= "printStatus";	
+	public static final String CLEAR_LOG				= "clearLog";
+	public static final String EXPORT_LOG 				= "exportLog";
+	public static final String WINDOW_CLOSE 			= "windowClose";
+	
+	WindowListener windowListener;
 
 	
-	public static final String START_PARSER = "startParser";
-	public static final String STOP_PARSER = "stopParser";
-	public static final String PRINT_STATUS = "printStatus";	
-	public static final String CLEAR_LOG = "clearLog";
-	public static final String EXPORT_LOG = "exportLog";
-	private JCheckBox chckbxAutoscrollLog;
-
 	public HarvesterView() {
 		getContentPane().setBackground(SystemColor.control);
 		
@@ -271,6 +279,9 @@ public class HarvesterView extends JFrame implements IView{
 		btnStatus.addActionListener((ActionListener) actions.get(PRINT_STATUS));
 		btnClearLog.addActionListener((ActionListener) actions.get(CLEAR_LOG));
 		btnExportLog.addActionListener((ActionListener) actions.get(EXPORT_LOG));
+		
+		windowListener = (WindowListener) actions.get(WINDOW_CLOSE);
+		addWindowListener(windowListener);
 	}
 
 	public ListModel getLogModel() {
