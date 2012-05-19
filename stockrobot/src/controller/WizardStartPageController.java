@@ -9,6 +9,8 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.portfolio.IPortfolio;
+import model.portfolio.IPortfolioHandler;
 import model.portfolio.PortfolioHandler;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
@@ -114,9 +116,25 @@ public class WizardStartPageController extends WizardPageController {
 		public void itemStateChanged(ItemEvent e) {
 			
 			if(e.getStateChange() == ItemEvent.SELECTED){
-				model.setFinish(true);
+				IPortfolioHandler portfolios = PortfolioHandler.getInstance();
+				
+				IPortfolio selectedPortfolio = null;
+				for(IPortfolio p : portfolios.getPortfolios()){
+					if (p.getName().equals(e.getItem())) {
+						selectedPortfolio = p;
+						break;
+					}
+				}
+				if(selectedPortfolio != null){
+					pageModel.setBalance(selectedPortfolio.getUnusedAmount());
+					pageModel.setAlgorithm(selectedPortfolio.getAlgorithm().getName());
+					model.setFinish(true);	
+				}
+				
 				
 			}else if(e.getStateChange() == ItemEvent.DESELECTED){
+				pageModel.setBalance(-1);
+				pageModel.setAlgorithm(null);
 				model.setFinish(false);
 			}
 		}
