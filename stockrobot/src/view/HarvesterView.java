@@ -241,7 +241,27 @@ public class HarvesterView extends JFrame implements IView{
 	}
 
 	@Override
-	public void cleanup() {} //NOPMD
+	public void cleanup() {
+
+		for (ActionListener al : btnStartParser.getActionListeners()) {
+			btnStartParser.removeActionListener(al);
+		}
+		for (ActionListener al : btnStopParser.getActionListeners()) {
+			btnStopParser.removeActionListener(al);
+		}
+		for (ActionListener al : btnClearLog.getActionListeners()) {
+			btnClearLog.removeActionListener(al);
+		}
+		for (ActionListener al : btnExportLog.getActionListeners()) {
+			btnExportLog.removeActionListener(al);
+		}
+		for (ActionListener al : btnStatus.getActionListeners()) {
+			btnStatus.removeActionListener(al);
+		}
+		for (ActionListener al : btnStartParser.getActionListeners()) {
+			btnStartParser.removeActionListener(al);
+		}
+	} 
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {

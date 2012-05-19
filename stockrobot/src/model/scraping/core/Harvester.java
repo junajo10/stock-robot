@@ -147,6 +147,10 @@ public class Harvester {
 	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
 		this.pcs = pcs;
 	}
+
+	public void stopRunner() {
+		parserRunner.stopRunner();
+	}
 	
 
 }
