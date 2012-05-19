@@ -58,7 +58,7 @@ public class PortfolioWizardModel extends WizardPageModel{
 	public void setBalance(long amount){
 		
 		if(amount >= 0){
-			balance = amount;
+			balance = FinancialLongConverter.toFinancialLong(amount);
 			properties.put(PROPERTY_BALANCE, true);
 			Log.log(Log.TAG.DEBUG, "[PageModel] Balance set to " + amount);
 		}else{
