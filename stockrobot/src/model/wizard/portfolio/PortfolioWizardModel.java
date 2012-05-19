@@ -92,19 +92,13 @@ public class PortfolioWizardModel extends WizardPageModel{
 			
 			IPortfolio newPortfolio = portfolioHandler.createNewPortfolio(name);
 			newPortfolio.setAlgorithm(PluginAlgortihmLoader.getInstance().loadAlgorithm(algorithm));
-			newPortfolio.investAmount(FinancialLongConverter.toFinancialLong(balance));
+			newPortfolio.investAmount(balance);
 			
-			Log.log(Log.TAG.DEBUG, "[PageModel] Portfolio Created \n" +
+			Log.log(Log.TAG.NORMAL, "Portfolio Created \n" +
 					"name: " + name + "\n" +
 					"balance: " + balance + "\n" +
 					"algorithm: " + algorithm); 
-			
-			String existingPortfolios =  "Existing portfolios \n";
-			for(PortfolioEntity pE : jpaHelper.getAllPortfolios()){
-				existingPortfolios +=  pE.getName() + "\n";
-			}
-			Log.log(Log.TAG.DEBUG, existingPortfolios);
-			
+				
 		}
 	}
 }
