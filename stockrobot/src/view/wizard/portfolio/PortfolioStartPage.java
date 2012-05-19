@@ -6,22 +6,18 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
-import model.portfolio.wizard.ItemCmbPortfolio;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 import view.wizard.WizardPage;
@@ -142,8 +138,6 @@ public class PortfolioStartPage extends WizardPage {
 		pnlPortfolioToClone.add(lblClonePortfolio);
 		
 		cmbClonePortfolioList = new JComboBox();
-		//cmbClonePortfolioList.setModel(cmbHldClonePortfolioList);
-		//pnlPortfolioToClone.add(cmbClonePortfolioList);
 		cmbClonePortfolioList.setPreferredSize(new Dimension(200,20));
 		cmbClonePortfolioList.setEnabled(false);
 		
@@ -151,7 +145,6 @@ public class PortfolioStartPage extends WizardPage {
 		updatePortfolios();
 		pnlContent.setLayout(gl_pnlContent);
 		
-		//DefaultComboBoxModel cmb_hld_ClonePortfolioList = new DefaultComboBoxModel();
 		//========================================
 	}
 	
