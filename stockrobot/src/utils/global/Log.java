@@ -34,12 +34,14 @@ public final class Log {
 	}
 	
 	public static void log(TAG tag, String message){
-		instance().addLogMessage(message);
-		/*if(log.filter.get(tag)){
+		if(log.filter.get(tag)){
+			instance().addLogMessage(message);
+			/* Temorary solution //Erik
 			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
 			System.out.print(message); //NOPMD
 			System.out.println(); //NOPMD
-		}*/
+			*/
+		}
 	}
 	
 	private void addLogMessage(String message) {
