@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -33,13 +35,13 @@ public class PortfolioController implements IController {
 	public PortfolioController(ITrader trader, IPortfolioHandler portfolios){
 		
 		this.trader = trader;
-		this.trader.addAddObserver(this);
 		this.portfolios = portfolios;
 		
 		actions = new HashMap<String, EventListener>();
 		actions.put(PortfolioView.CREATE_PORTFOLIO, createPortfolioListener);
 		actions.put(PortfolioView.MANAGE_ALGORITHMS, manageAlgorithmSettingsListener);
 		actions.put(PortfolioView.HISTORY, portfolioHistoryListener);
+		actions.put(PortfolioView.PORTFOLIOSELECTOR, selectedPortfolioListener);
 		actions.put(PortfolioView.SETTINGS, settingsListener);
 	}
 	ActionListener settingsListener = new ActionListener() {
@@ -87,6 +89,20 @@ public class PortfolioController implements IController {
 			
 			if (portfolio != null)
 				historyController.display(portfolio.getPortfolioTable());
+		}
+	};
+	
+	ItemListener selectedPortfolioListener = new ItemListener() {
+		
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			if(e.getStateChange() == ItemEvent.SELECTED){
+				for(IPortfolio p : portfolios.getPortfolios()){
+					if (p.getName().equals(e.getItem())) {
+						view.setSelectedPortfolio(p);
+					}
+				}
+			}
 		}
 	};
 	

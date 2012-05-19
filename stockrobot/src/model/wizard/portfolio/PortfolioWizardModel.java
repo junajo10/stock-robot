@@ -3,8 +3,6 @@ package model.wizard.portfolio;
 import utils.global.FinancialLongConverter;
 import utils.global.Log;
 import model.algorithms.loader.PluginAlgortihmLoader;
-import model.database.jpa.IJPAHelper;
-import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
@@ -87,7 +85,6 @@ public class PortfolioWizardModel extends WizardPageModel{
 	public void finish() {
 		
 		if(canFinish()){
-			IJPAHelper jpaHelper = JPAHelper.getInstance();
 			IPortfolioHandler portfolioHandler = PortfolioHandler.getInstance();
 			
 			IPortfolio newPortfolio = portfolioHandler.createNewPortfolio(name);

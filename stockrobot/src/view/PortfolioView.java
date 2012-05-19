@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -13,6 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
@@ -20,7 +20,6 @@ import java.util.Map;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.ListDataListener;
 
 import utils.global.FinancialLongConverter;
 
@@ -35,8 +34,9 @@ public class PortfolioView extends JFrame implements IView {
 	public static final String WINDOW_CLOSE 				= "windowClose";
 	public static final String CREATE_PORTFOLIO			= "createPortfolio";	
 	public static final String MANAGE_ALGORITHMS			= "manageAlgorithms";
+	public static final String PORTFOLIOSELECTOR			= "portfolioSelector";
 	public static final String HISTORY					= "History";
-	public static final String SETTINGS 				= "Portfolio Settings";
+	public static final String SETTINGS 					= "Portfolio Settings";
 	private JPanel contentPane;
 	//private IPortfolioHandler portfolios;
 	private JComboBox cmbSelectPortfolio;
@@ -54,8 +54,8 @@ public class PortfolioView extends JFrame implements IView {
 	
 	private IPortfolio selectedPortfolio;
 	
-	private PortfoliosCmbModel cmbModel;
-	
+	private IPortfolioHandler portfolios;
+		
 	/**
 	 * Create the frame.
 	 */
@@ -63,7 +63,9 @@ public class PortfolioView extends JFrame implements IView {
 		
 		//this.portfolios = portfolios; 
 		this.trader = trader;
+		this.portfolios = portfolios;
 		trader.addAddObserver(this);
+		portfolios.addAddObserver(this);
 		setTitle("Portfolio");
 		
 		setBounds(100, 100, 441, 194);
@@ -161,8 +163,9 @@ public class PortfolioView extends JFrame implements IView {
 		pnlSelectPortfolio.add(cmbSelectPortfolio);
 		contentPane.setLayout(gl_contentPane);
 		
-		cmbModel = new PortfoliosCmbModel(portfolios);
-		cmbSelectPortfolio.setModel(cmbModel);
+		//cmbModel = new PortfoliosCmbModel();
+		//cmbSelectPortfolio.setModel(cmbModel);
+		updatePortfolios();
 		
 		btnManageAlgortihmSettings = new JButton("Algortihm Settings");
 		btnManageAlgortihmSettings.addActionListener(new ActionListener() {
@@ -171,9 +174,18 @@ public class PortfolioView extends JFrame implements IView {
 			}
 		});
 		pnlSelectPortfolio.add(btnManageAlgortihmSettings);
-		if(cmbModel.getSize() > 0){
+		if(cmbSelectPortfolio.getItemCount() > 0){
 			cmbSelectPortfolio.setSelectedIndex(0);
+			
+			for(IPortfolio p : portfolios.getPortfolios()){
+				if (p.getName().equals(cmbSelectPortfolio.getItemAt(0))) {
+					setSelectedPortfolio(p);
+					break;
+				}
+			}
+			
 		}
+		
 	}
 
 	@Override
@@ -186,24 +198,6 @@ public class PortfolioView extends JFrame implements IView {
 	public void cleanup() {
 		
 		trader.removeObserver(this);
-	}
-	
-	/**
-	 * 
-	 * Added this window to be able to read the current selected value from the controller
-	 * 
-	 * TOOD: Maybe create a better way to read the selected value?
-	 * 
-	 * @return
-	 */
-	public Object getSelectedItem() {
-		
-		return cmbModel.getSelectedItem();
-	}
-	
-	public void setSelectedPortfolio(final IPortfolio portfolio){
-		
-		selectedPortfolio = portfolio;
 	}
 	
 	@Override
@@ -224,54 +218,8 @@ public class PortfolioView extends JFrame implements IView {
 		if(actions.get(SETTINGS) instanceof ActionListener) {
 			btnSettings.addActionListener( (ActionListener) actions.get(SETTINGS) );
 		}
-	}
-	
-	private class PortfoliosCmbModel implements ComboBoxModel {
-
-		private IPortfolioHandler portfolios;
-		private String selected;
-		
-		public PortfoliosCmbModel(IPortfolioHandler portfolios){
-			
-			this.portfolios = portfolios;
-		}
-		
-		@Override
-		public int getSize() {
-
-			return portfolios.getPortfolios().size();
-		}
-
-		@Override
-		public Object getElementAt(int index) {
-
-			setSelectedPortfolio(portfolios.getPortfolios().get(index));
-			updateValues();
-			return selectedPortfolio.getName();
-		}
-
-		@Override
-		public void addListDataListener(ListDataListener l) {
-			
-			// TODO Mattias: Do something here?
-		}
-
-		@Override
-		public void removeListDataListener(ListDataListener l) {
-			
-			// TODO Mattias: Do something here?
-		}
-
-		@Override
-		public void setSelectedItem(Object anItem) {
-			
-			selected = (String) anItem;
-		}
-
-		@Override
-		public Object getSelectedItem() {
-
-			return selected;
+		if(actions.get(PORTFOLIOSELECTOR) instanceof ItemListener){
+			cmbSelectPortfolio.addItemListener((ItemListener) actions.get(PORTFOLIOSELECTOR));
 		}
 	}
 
@@ -284,6 +232,21 @@ public class PortfolioView extends JFrame implements IView {
 		}
 	}
 	
+	public void updatePortfolios(){
+		
+		//cmbModel = new PortfoliosCmbModel(portfolios);
+		//cmbSelectPortfolio.setModel(cmbModel);
+		
+		cmbSelectPortfolio.removeAllItems();
+		for(IPortfolio p : portfolios.getPortfolios()){
+			cmbSelectPortfolio.addItem(p.getName());
+		}
+		
+		cmbSelectPortfolio.validate();
+		cmbSelectPortfolio.repaint();
+
+	}
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		
@@ -292,9 +255,19 @@ public class PortfolioView extends JFrame implements IView {
 		}else if(evt.getPropertyName().equals(ITrader.SELL_STOCK)){
 			updateValues();
 		}
+		else if(evt.getPropertyName().equals(IPortfolioHandler.MSG_PORTFOLIO_ADDED) 
+				|| evt.getPropertyName().equals(IPortfolioHandler.MSG_PORTFOLIO_REMOVED)){
+			
+			updatePortfolios();
+		}
 	}
 	
 	public IPortfolio getSelectedPortfolio() {
 		return selectedPortfolio;
+	}
+	
+	public void setSelectedPortfolio(final IPortfolio portfolio){
+		
+		selectedPortfolio = portfolio;
 	}
 }

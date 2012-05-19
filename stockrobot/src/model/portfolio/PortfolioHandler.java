@@ -67,7 +67,6 @@ public final class PortfolioHandler implements IPortfolioHandler{
 				
 				p.setAlgorithm(algorithm);
 				listOfPortfolios.add(p);
-				pChangeSuport.firePropertyChange(MSG_PORTFOLIO_ADDED,null,p.getName());
 				
 				Log.log(TAG.VERY_VERBOSE, p.getName() + " algorithm set to: " + algorithm.getName());
 			}
@@ -88,6 +87,8 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		final IPortfolio p = new Portfolio(pt);
 		
 		listOfPortfolios.add(p);
+		
+		pChangeSuport.firePropertyChange(MSG_PORTFOLIO_ADDED,null,p.getName());
 		
 		return p;
 	}
