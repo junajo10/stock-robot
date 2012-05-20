@@ -25,6 +25,8 @@ import javax.swing.JScrollPane;
 /**
  * A simple view in which users can add as many companies stock price's as they like to.
  * 
+ * This class also works as a wrapper for the JFreeChart graph
+ * 
  * @author kristian
  *
  */
@@ -106,6 +108,11 @@ public class GraphView extends JFrame implements IView {
     public void insertSeries( TimeSeries series ) {
     	
     	((TimeSeriesCollection) dataset).addSeries(series);
+    }
+    
+    public void removeSeries( int index ) {
+    	
+    	((TimeSeriesCollection) dataset).removeSeries( index );
     }
     
     /**

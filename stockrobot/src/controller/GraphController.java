@@ -21,6 +21,8 @@ import view.graph.GraphView;
 /**
  * Controller for the simple graph view
  * 
+ * 
+ * 
  * @author kristian
  *
  */
@@ -37,7 +39,11 @@ public class GraphController implements IController {
 	
 	public GraphView getView() { return view; }
 	
+	private List<String> timeSeriesList; //List in which the stocks added to the graph get their names registered, so it's easy to know which to remove when they get called off the stage
+	
 	public void init() {
+		
+		timeSeriesList = new ArrayList<String>();
 		
 		view = new GraphView( WINDOW_TITLE );
 		view.addActions(getActionListeners());
@@ -53,6 +59,20 @@ public class GraphController implements IController {
 		//Fetch the associated stock name from the toggler interacted with
 		String wantedStockName = ((GraphStockTogglerController) arg0.getSource() ).getAssociatedStockName();
 		
+		//If the box was checked, show stock in the graph
+		if( arg0.getNewValue().equals( GraphStockTogglerController.CHECKED ) ) {
+			
+			showStock( wantedStockName );
+		}
+		
+		if( arg0.getNewValue().equals( GraphStockTogglerController.UNCHECKED ) ) {
+			
+			hideStock( wantedStockName );
+		}
+	}
+	
+	private void showStock( final String stockName ) {
+		
 		//Sign up for the jpaHelper
 		final IJPAHelper jpaHelper = JPAHelper.getInstance();
 		final List<StockNames> nameList = jpaHelper.getAllStockNames();
@@ -61,7 +81,7 @@ public class GraphController implements IController {
 		for( StockNames st : nameList ) {
 
 			//If match
-			if( st.getName().equals( wantedStockName ) ) {
+			if( st.getName().equals( stockName ) ) {
 
 				//Create new series
 				final TimeSeries series = new TimeSeries( st.getName() );
@@ -77,10 +97,22 @@ public class GraphController implements IController {
 
 				//Insert serie to the view / model of the view
 				view.insertSeries( series );
+				
+				timeSeriesList.add( stockName );
 			}
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param stockName
+	 */
+	private void hideStock( final String stockName ) {
+		
+		view.removeSeries( timeSeriesList.indexOf( stockName ) );
+		timeSeriesList.remove( stockName );
+	}
+	
 	@Override
 	public void display(Object model) {
 		
