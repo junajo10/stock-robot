@@ -166,8 +166,6 @@ public class PortfolioSettingsView extends JFrame implements IView {
 		contentPane.setLayout(gl_contentPane);
 		
 		tabbedPane.setSelectedIndex(0);
-		
-		System.out.println(getSelectedPane());
 	}
 
 	@Override

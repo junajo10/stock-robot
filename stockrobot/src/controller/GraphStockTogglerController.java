@@ -22,14 +22,11 @@ public class GraphStockTogglerController implements IController {
 	public static final String CHECKBOX_PROPERTY = "checkBoxProperty";
 	public static final String CHECKED = "checked";
 	public static final String UNCHECKED = "unchecked";
-	
 	private static final String CLASS_NAME = "GraphStockTogglerController";
+	
 	private Map<String, EventListener> events;
-	
 	private final String stockName;
-	
 	private IView view;
-	
 	private PropertyChangeSupport dispatcher;
 	
 	ActionListener checkboxChanged = new ActionListener() {
@@ -65,6 +62,7 @@ public class GraphStockTogglerController implements IController {
 		events.put( GraphStockTogglerView.CHECKBOX_CHANGED , checkboxChanged );
 		
 		view = new GraphStockTogglerView( stockName );
+		( ( GraphStockTogglerView) view ).init();
 		view.addActions( getActionListeners() );
 	}
 	
@@ -73,7 +71,7 @@ public class GraphStockTogglerController implements IController {
 	 * 
 	 * @param controller
 	 */
-	public void registerListener( IController controller ) {
+	public void registerListener( final IController controller ) {
 		
 		dispatcher.addPropertyChangeListener( controller );
 	}
@@ -83,7 +81,7 @@ public class GraphStockTogglerController implements IController {
 	 * 
 	 * @param controller
 	 */
-	public void unregisterListener( IController controller ) {
+	public void unregisterListener( final IController controller ) {
 		
 		dispatcher.removePropertyChangeListener( controller );
 	}
@@ -92,7 +90,7 @@ public class GraphStockTogglerController implements IController {
 	public void propertyChange(PropertyChangeEvent arg0) {} //NOPMD
 
 	@Override
-	public void display(Object model) {
+	public void display( final Object model ) {
 		
 		view.display(new Object());
 	}
@@ -109,10 +107,7 @@ public class GraphStockTogglerController implements IController {
 			events.remove( str );
 		}
 		
-		events = null;
-		
 		view.cleanup();
-		view = null;
 	}
 
 	/**

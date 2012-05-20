@@ -64,6 +64,10 @@ public class PortfolioView extends JFrame implements IView {
 		//this.portfolios = portfolios; 
 		this.trader = trader;
 		this.portfolios = portfolios;
+	}
+	
+	public void init() {
+		
 		trader.addAddObserver(this);
 		portfolios.addAddObserver(this);
 		setTitle("Portfolio");
@@ -185,7 +189,6 @@ public class PortfolioView extends JFrame implements IView {
 			}
 			
 		}
-		
 	}
 
 	@Override

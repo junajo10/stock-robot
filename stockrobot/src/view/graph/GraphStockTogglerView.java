@@ -17,17 +17,12 @@ public class GraphStockTogglerView extends JPanel implements IView {
 	
 	private static final long serialVersionUID = -1473430321302544640L;
 	private JCheckBox checkBox;
-	private JLabel textField;
 	private final String stockName;
+	private JLabel textField;
 	
-	public GraphStockTogglerView( String stockName ) {
-		
-		//layout = new BoxLayout( this, BoxLayout.X_AXIS );
-		//setLayout( layout );
+	public GraphStockTogglerView( final String stockName ) {
 		
 		this.stockName = stockName;
-		
-		init();
 	}	
 	
 	public void init() {
@@ -41,18 +36,19 @@ public class GraphStockTogglerView extends JPanel implements IView {
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {}
+	public void propertyChange(PropertyChangeEvent arg0) {} //NOPMD
 
+	/**
+	 * This class does not need a display method because it will just be embedded into something else
+	 */
 	@Override
-	public void display(Object model) {
-		
-		
-	}
+	public void display(Object model) {} //NOPMD
 
 	@Override
 	public void cleanup() {
 		
-		
+		remove( textField );
+		remove( textField );
 	}
 
 	@Override
