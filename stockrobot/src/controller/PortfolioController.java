@@ -111,6 +111,7 @@ public class PortfolioController implements IController {
 		defineSubControllers();
 		
 		view = new PortfolioView(trader, portfolios);
+		view.init(); //Avoiding PMD errors
 		IPortfolioHandler handler = (IPortfolioHandler) model;
 		view.addActions(actions);
 		view.display(handler);

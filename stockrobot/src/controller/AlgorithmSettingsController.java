@@ -46,6 +46,7 @@ public class AlgorithmSettingsController implements IController {
 		actionListeners.put( AlgorithmSettingsView.SAVE_DOWN, saveDown );
 		
 		view = new AlgorithmSettingsView( portfolio.getAlgorithm().getName() );
+		view.init();
 		view.addActions( getActionListeners() );
 		view.populateDoubleSettings( portfolio.getPortfolioTable().getAlgortihmSettings().getDoubleSettings() );
 		view.populateLongSettings( portfolio.getPortfolioTable().getAlgortihmSettings().getLongSettings() );

@@ -48,8 +48,6 @@ public class SettingsPanelLong extends JPanel implements ChangeListener {
 		this.initValue = initValue;
 		
 		value = this.initValue;
-		
-		init(); //NOPMD
 	}
 	
 	public void init() {
@@ -67,12 +65,14 @@ public class SettingsPanelLong extends JPanel implements ChangeListener {
 		container.add( header );
 		
 		JPanel subContainer = fact.getInvisibleContainer();
+		BoxLayout subContainerLayout = new BoxLayout( subContainer, BoxLayout.Y_AXIS );
+		subContainer.setLayout( subContainerLayout );
 		container.add( subContainer );
 		
 		ta = new TextField();
 		ta.setBounds(0, 0, 100, 30);
 		ta.setText( "" + ((int)initValue) );
-		ta.setSize( 100, 30 );
+		ta.setSize( new Dimension(100, 30) );
 		ta.setMinimumSize(new Dimension(100, 30));
 		ta.repaint();
 		subContainer.add( ta );

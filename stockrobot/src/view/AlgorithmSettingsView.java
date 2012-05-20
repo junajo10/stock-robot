@@ -8,9 +8,11 @@ import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 
 import model.database.jpa.tables.AlgorithmSettingDouble;
@@ -19,6 +21,8 @@ import model.database.jpa.tables.AlgorithmSettingLong;
 import utils.global.Log;
 import view.algorithmsettings.SettingsPanelDouble;
 import view.algorithmsettings.SettingsPanelLong;
+
+import java.awt.Dimension;
 import java.awt.SystemColor;
 
 /**
@@ -39,25 +43,40 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	public static final String SAVE_DOWN = "savedDown";
 	
 	private String		algorithmName;
-	private JPanel 		container;
+	private JPanel 		scrolledContainer;
+	private JPanel		mainContainer;
 	
 	private JButton		saveBtn;
 	
 	public AlgorithmSettingsView( String algorithmName ) {
 		
 		this.algorithmName = algorithmName;
+	}
+	
+	public void init() {
+		
+		JScrollPane scrollPane = new JScrollPane();
 		
 		//Main container for the algorithm settings window
-		container = new JPanel();
-		container.setBackground(SystemColor.control);
-		getContentPane().add( container );
+		mainContainer = new JPanel();
+		BoxLayout maincontainerLayout = new BoxLayout(mainContainer, BoxLayout.Y_AXIS);
+		mainContainer.setLayout( maincontainerLayout );
+		
+		scrolledContainer = new JPanel();
+		scrolledContainer.setBackground(SystemColor.control);
+		scrolledContainer.setMaximumSize(new Dimension(300,400));
+		BoxLayout containerLayout = new BoxLayout(scrolledContainer, BoxLayout.Y_AXIS);
+		scrolledContainer.setLayout( containerLayout );
+		
+		getContentPane().add( mainContainer );
+		mainContainer.add( scrollPane );
+		scrollPane.getViewport().add( scrolledContainer );
 		
 		//Add save button
 		saveBtn = new JButton();
 		saveBtn.setText( "Save settings" );
-		container.add( saveBtn );
 	}
-	
+		
 	/**
 	 * Populate this view with all settings that are of type Double
 	 * 
@@ -99,27 +118,28 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	public void addSetting( AlgorithmSettingDouble set, String desc, double init, double min, double max ) {
 		
 		SettingsPanelDouble panel = new SettingsPanelDouble( set, desc, init, min, max );
-		container.add(panel);
+		panel.init();
+		scrolledContainer.add(panel);
 	}
 	
 	public void addSetting( AlgorithmSettingLong set, String desc, long init, long min, long max ) {
 		
 		SettingsPanelLong panel = new SettingsPanelLong( set, desc, init, min, max );
-		container.add(panel);
+		panel.init();
+		scrolledContainer.add(panel);
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		
-		
-	}
+	public void propertyChange(PropertyChangeEvent arg0) {} //NOPMD
 
 	@Override
 	public void display(Object model) {
 		
+		mainContainer.add( saveBtn );
+		
+		pack();
 		//Settings for the window
 		setTitle( "Algorithm settings for " + algorithmName );
-		setSize( 320,500 );
 		setVisible(true);
 	}
 

@@ -38,6 +38,7 @@ public class HarvesterController implements IController {
 	private final HarvesterView view;
 	private final Logger log;	//NOPMD
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private boolean shutdownOnClose = true;
 	
 	WindowListener windowClose = new AbstractWindowCloseAdapter() {
 		@Override
@@ -45,6 +46,7 @@ public class HarvesterController implements IController {
 			cleanup();
 		}
 	};
+	
 	
 	private class StartBtnListener implements ActionListener{
 
@@ -256,15 +258,19 @@ public class HarvesterController implements IController {
 
 	@Override
 	public void display(Object model) {
+		if (model != null) {
+			shutdownOnClose  = false;
+		}
 		view.addActions(getActionListeners());
 		view.display(this.model);
 	}
 
 	@Override
 	public void cleanup() {
-		model.stopParser();
-		model.stopRunner();
-		view.cleanup();
+		if (shutdownOnClose) {
+			model.stopParser();
+			view.cleanup();
+		}
 	} 
 
 	@Override

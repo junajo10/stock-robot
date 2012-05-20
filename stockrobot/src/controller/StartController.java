@@ -46,7 +46,7 @@ public class StartController implements IController {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					harvester.display(null);
+					harvester.display(new Object());
 				}
 			});
 		}
