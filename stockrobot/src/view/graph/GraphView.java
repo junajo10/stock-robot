@@ -1,21 +1,14 @@
 package view.graph;
 
 import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import model.database.jpa.IJPAHelper;
-import model.database.jpa.JPAHelper;
-import model.database.jpa.tables.StockNames;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -26,9 +19,8 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
-import controller.GraphController;
-
 import view.IView;
+import javax.swing.JScrollPane;
 
 /**
  * A simple view in which users can add as many companies stock price's as they like to.
@@ -40,10 +32,11 @@ public class GraphView extends JFrame implements IView {
 
 	private static final long serialVersionUID = -7937601249697689239L;
 	
-	private JButton addSomething;
 	private XYDataset dataset;
 	private JComboBox dropDown;
 	private JPanel panel;
+	private JScrollPane scrollPanel;
+	private JPanel scrollPanelContainer;
 	
     /**
      * Creates a new demo.
@@ -53,45 +46,30 @@ public class GraphView extends JFrame implements IView {
     public GraphView( final String title ) {
 
         super( title );
+        setBackground(Color.WHITE);
         
         panel = new JPanel();
-        panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
-        add( panel );
+        getContentPane().add( panel );
         
         dataset = createDataset( "First" );
         final JFreeChart chart = createChart( dataset );
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         final ChartPanel chartPanel = new ChartPanel( chart );
         chartPanel.setPreferredSize( new java.awt.Dimension( 800, 600 ) );
         panel.add(chartPanel);
         
-        //Create  a drop down that will store all company names
-        constructDropDown();
+        scrollPanel = new JScrollPane();
+        panel.add( scrollPanel );
         
-        addSomething = new JButton( "Show stock on chart" );
-        panel.add( addSomething );
+        scrollPanelContainer = new JPanel();
+        BoxLayout scrollPanelContainerLayout = new BoxLayout( scrollPanelContainer, BoxLayout.Y_AXIS );
+        scrollPanelContainer.setLayout( scrollPanelContainerLayout );
+        scrollPanel.getViewport().add( scrollPanelContainer );
     }
     
-    /**
-     * Construct constructDropDown  
-     */
-    private void constructDropDown() {
+    public void addViewToScroller( JPanel view ) {
     	
-    	//Request all stock names from the database.
-    	//They have been loaded not long ago and will be cached in JPA, so it's quick to ask for them here
-    	
-    	IJPAHelper jpaHelper = JPAHelper.getInstance();
-		List<StockNames> nameList = jpaHelper.getAllStockNames();
-		
-		//Store all stock names to a String array 
-		String[] names = new String[nameList.size()];
-		for( int i = 0; i < nameList.size(); i ++ ) {
-			
-			names[ i ] = nameList.get( i ).getName();
-		}
-		
-		//Instantiate drop down
-    	dropDown = new JComboBox( names );
-    	panel.add( dropDown );
+    	scrollPanelContainer.add( view );
     }
     
     /**
@@ -158,16 +136,6 @@ public class GraphView extends JFrame implements IView {
         
         return chart;
     }
-    
-    /**
-     * Getter for the current user entered company name
-     * 
-     * @return stock name
-     */
-    public String getCurrentWantedStock() {
-    	
-    	return dropDown.getSelectedItem().toString();
-    }
 
 	@Override
 	public void display(Object model) {} //NOPMD
@@ -176,10 +144,7 @@ public class GraphView extends JFrame implements IView {
 	public void cleanup() {} //NOPMD
 
 	@Override
-	public void addActions(Map<String, EventListener> actions) {
-		
-		addSomething.addActionListener((ActionListener) actions.get(GraphController.BIND_GRAPH_VIEW));
-	}
+	public void addActions(Map<String, EventListener> actions) {} //NOPMD
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
