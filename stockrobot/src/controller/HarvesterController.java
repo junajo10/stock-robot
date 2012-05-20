@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -19,9 +21,11 @@ import java.util.Map;
 import javax.swing.ListModel;
 
 
+import utils.AbstractWindowCloseAdapter;
 import view.HarvesterView;
 
 import model.scraping.core.Harvester;
+import model.scraping.core.HarvesterLog;
 
 /**
  * Controller for Harvester.
@@ -34,6 +38,13 @@ public class HarvesterController implements IController {
 	private final HarvesterView view;
 	private final Logger log;	//NOPMD
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	
+	WindowListener windowClose = new AbstractWindowCloseAdapter() {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			cleanup();
+		}
+	};
 	
 	private class StartBtnListener implements ActionListener{
 
@@ -206,38 +217,39 @@ public class HarvesterController implements IController {
 			}
         } 
 	}
+	
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		if(event.getPropertyName().equals("Parsing done.")){
+		if(event.getPropertyName().equals(HarvesterLog.PARSING_DONE)){
 			log.parsingLoop((Long) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Parsing Progress.")){
+		if(event.getPropertyName().equals(HarvesterLog.PARSING_PROGRESS)){
 			view.setParserBarProgress((Integer) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Connected.")){
+		if(event.getPropertyName().equals(HarvesterLog.CONNECTED)){
 			log.connected((String) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Disconnected.")){
+		if(event.getPropertyName().equals(HarvesterLog.DISCONNECTED)){
 			log.disconnected((String) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Text.")){
+		if(event.getPropertyName().equals(HarvesterLog.TEXT)){
 			log.addText((String) event.getNewValue());
 		}
 		
-		if(event.getPropertyName().equals("Server shutdown.")){
+		if(event.getPropertyName().equals(HarvesterLog.SHUTDOWN)){
 			log.showDownServer();
 		}
 		
-		if(event.getPropertyName().equals("Server up.")){
+		if(event.getPropertyName().equals(HarvesterLog.SERVER_UP)){
 			log.serverUp();
 		}
 		
-		if(event.getPropertyName().equals("Stopped successfull.")){
+		if(event.getPropertyName().equals(HarvesterLog.SERVER_DOWN)){
 			log.finishStopped();
 		}
 	}
@@ -249,7 +261,11 @@ public class HarvesterController implements IController {
 	}
 
 	@Override
-	public void cleanup() {} //NOPMD
+	public void cleanup() {
+		model.stopParser();
+		model.stopRunner();
+		view.cleanup();
+	} 
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
@@ -259,6 +275,7 @@ public class HarvesterController implements IController {
 		actions.put(HarvesterView.PRINT_STATUS, new StatusBtnListener());
 		actions.put(HarvesterView.CLEAR_LOG, new ClearLogBtnListener());
 		actions.put(HarvesterView.EXPORT_LOG, new ExportLogBtnListener());
+		actions.put(HarvesterView.WINDOW_CLOSE, windowClose);
 
 		return actions;
 	}

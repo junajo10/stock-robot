@@ -3,6 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -32,12 +33,16 @@ import java.awt.SystemColor;
 
 /**
  * View for Harvester.
+ * <p>
+ * Uses MVC-model by Daniel.
+ * <p>
  * @author Erik
  *
  */
 public class HarvesterView extends JFrame implements IView{
 
 	private static final long serialVersionUID = 1614338829073701762L;
+	
 	private JTextField textField;
 	private JButton btnStartParser;
 	private JButton btnStopParser;
@@ -50,15 +55,18 @@ public class HarvesterView extends JFrame implements IView{
 	private JCheckBox chckbxForceStop;
 	private JScrollPane scrollPane;
 	private JProgressBar parserBar;
+	private JCheckBox chckbxAutoscrollLog;
+	
+	public static final String START_PARSER				= "startParser";
+	public static final String STOP_PARSER				= "stopParser";
+	public static final String PRINT_STATUS				= "printStatus";	
+	public static final String CLEAR_LOG				= "clearLog";
+	public static final String EXPORT_LOG 				= "exportLog";
+	public static final String WINDOW_CLOSE 			= "windowClose";
+	
+	WindowListener windowListener;
 
 	
-	public static final String START_PARSER = "startParser";
-	public static final String STOP_PARSER = "stopParser";
-	public static final String PRINT_STATUS = "printStatus";	
-	public static final String CLEAR_LOG = "clearLog";
-	public static final String EXPORT_LOG = "exportLog";
-	private JCheckBox chckbxAutoscrollLog;
-
 	public HarvesterView() {
 		getContentPane().setBackground(SystemColor.control);
 		
@@ -98,8 +106,8 @@ public class HarvesterView extends JFrame implements IView{
 		btnExportLog = new JButton("Export Log");
 		
 		parserBar = new JProgressBar(0, 20000);
-		parserBar.setBackground(Color.BLACK);
-		parserBar.setForeground(Color.GREEN);
+		parserBar.setBackground(Color.WHITE);
+		parserBar.setForeground(new Color(51, 153, 255));
 		parserBar.setToolTipText("Parsing progress.");
 		parserBar.setStringPainted(true);
 		parserBar.setVisible(false);
@@ -175,7 +183,7 @@ public class HarvesterView extends JFrame implements IView{
 		
 		log = new JList();
 		log.setBackground(Color.WHITE);
-		log.setForeground(Color.GREEN);
+		log.setForeground(Color.BLACK);
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
 		
@@ -241,7 +249,27 @@ public class HarvesterView extends JFrame implements IView{
 	}
 
 	@Override
-	public void cleanup() {} //NOPMD
+	public void cleanup() {
+
+		for (ActionListener al : btnStartParser.getActionListeners()) {
+			btnStartParser.removeActionListener(al);
+		}
+		for (ActionListener al : btnStopParser.getActionListeners()) {
+			btnStopParser.removeActionListener(al);
+		}
+		for (ActionListener al : btnClearLog.getActionListeners()) {
+			btnClearLog.removeActionListener(al);
+		}
+		for (ActionListener al : btnExportLog.getActionListeners()) {
+			btnExportLog.removeActionListener(al);
+		}
+		for (ActionListener al : btnStatus.getActionListeners()) {
+			btnStatus.removeActionListener(al);
+		}
+		for (ActionListener al : btnStartParser.getActionListeners()) {
+			btnStartParser.removeActionListener(al);
+		}
+	} 
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
@@ -251,6 +279,9 @@ public class HarvesterView extends JFrame implements IView{
 		btnStatus.addActionListener((ActionListener) actions.get(PRINT_STATUS));
 		btnClearLog.addActionListener((ActionListener) actions.get(CLEAR_LOG));
 		btnExportLog.addActionListener((ActionListener) actions.get(EXPORT_LOG));
+		
+		windowListener = (WindowListener) actions.get(WINDOW_CLOSE);
+		addWindowListener(windowListener);
 	}
 
 	public ListModel getLogModel() {

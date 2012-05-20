@@ -16,10 +16,12 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.util.EventListener;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
@@ -29,7 +31,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JCheckBox;
 import java.awt.SystemColor;
 
-
+/**
+ * View for Astro
+ * <p>
+ * Uses MVC-model by Daniel
+ * <p>
+ * @author Erik, Daniel, Mattias
+ *
+ */
 public class AstroView extends JFrame implements IView {
 
 	private static final long serialVersionUID 			= 2371008027508651564L;
@@ -40,22 +49,28 @@ public class AstroView extends JFrame implements IView {
 	public static final String WINDOW_CLOSE 			= "windowClose";
 	public static final String OPEN_PORTFOLIOVIEW 		= "PortfolioView";
 	public static final String SHOW_LOG			 		= "ShowLog";
+	public static final String CLEAR_LOG			 	= "ClearLog";
+	public static final String EXPORT_LOG			 	= "ExportLog";
 
 	private final int HEIGHT_FRAME_SUBTRACTED 	= 170;
 	private final int HEIGHT_FRAME_EXPANDED 	= 655;
 	private final int WIDTH_FRAME = 373;
 
-	private JPanel contentPane;
+
 	JButton btnSimulate 								= new JButton("Simulate Algorithms");
 	JButton btnGraph 									= new JButton("Graph Window");
 	JButton btnStocks 									= new JButton("Browse Stocks");
 	JButton btnPortfolio 								= new JButton("Open Portfolio");
+	JButton btnClearLog 								= new JButton("Clear Log");
+	JButton btnExportLog 								= new JButton("Export Log");
+	
+	JCheckBox chckbxShowLog								= new JCheckBox("Show Log");
+	JPanel contentPane 									= new JPanel();
 
 	WindowListener windowListener;
 
 	JList log;
 	DefaultListModel logModel;
-	JCheckBox chckbxShowLog;
 	JScrollPane scrollPane;
 	private JPanel pnlLog;
 
@@ -85,7 +100,7 @@ public class AstroView extends JFrame implements IView {
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
-		contentPane = new JPanel();
+		
 		contentPane.setBackground(SystemColor.control);
 		contentPane.setForeground(Color.GREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -101,7 +116,7 @@ public class AstroView extends JFrame implements IView {
 		pnlLog = new JPanel();
 		pnlLog.setBackground(null);
 		
-		chckbxShowLog = new JCheckBox("Show Log");
+		
 		chckbxShowLog.setForeground(Color.BLACK);
 		chckbxShowLog.setBackground(SystemColor.control);
 
@@ -166,9 +181,7 @@ public class AstroView extends JFrame implements IView {
 		cbxAutoScroll.setForeground(Color.BLACK);
 		cbxAutoScroll.setSelected(true);
 		
-		JButton btnClearLog = new JButton("Clear Log");
-		
-		JButton btnExportLog = new JButton("Export Log");
+
 		GroupLayout gl_pnlLog = new GroupLayout(pnlLog);
 		gl_pnlLog.setHorizontalGroup(
 			gl_pnlLog.createParallelGroup(Alignment.LEADING)
@@ -247,8 +260,17 @@ public class AstroView extends JFrame implements IView {
 		for (ActionListener al : btnStocks.getActionListeners()) {
 			btnStocks.removeActionListener(al);
 		}
+		for (ActionListener al : chckbxShowLog.getActionListeners()) {
+			chckbxShowLog.removeActionListener(al);
+		}
 		for (ActionListener al : btnPortfolio.getActionListeners()) {
 			btnPortfolio.removeActionListener(al);
+		}
+		for (ActionListener al : btnClearLog.getActionListeners()) {
+			btnClearLog.removeActionListener(al);
+		}
+		for (ActionListener al : btnExportLog.getActionListeners()) {
+			btnExportLog.removeActionListener(al);
 		}
 	}
 
@@ -260,13 +282,26 @@ public class AstroView extends JFrame implements IView {
 		btnGraph.addActionListener((ActionListener) actions.get(OPEN_GRAPHWINDOW));
 		btnStocks.addActionListener((ActionListener) actions.get(OPEN_STOCKTABLE));
 		btnPortfolio.addActionListener((ActionListener) actions.get(OPEN_PORTFOLIOVIEW));
+		chckbxShowLog.addActionListener((ActionListener) actions.get(SHOW_LOG));
+		btnClearLog.addActionListener((ActionListener) actions.get(CLEAR_LOG));
+		btnExportLog.addActionListener((ActionListener) actions.get(EXPORT_LOG));
 		windowListener = (WindowListener) actions.get(WINDOW_CLOSE);
 
-		chckbxShowLog.addActionListener((ActionListener) actions.get(SHOW_LOG));
+
 		
 		addWindowListener(windowListener);
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
+
+	public File openChooseDirectory() {
+		 JFileChooser fc = new JFileChooser();
+         int returnVal = fc.showSaveDialog(this);
+         if (returnVal == JFileChooser.APPROVE_OPTION) {
+        	 File file = fc.getSelectedFile();
+        	 return file;
+         }
+         return null;
+	}
 }
