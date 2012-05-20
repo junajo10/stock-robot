@@ -263,7 +263,6 @@ public class HarvesterController implements IController {
 	@Override
 	public void cleanup() {
 		model.stopParser();
-		model.stopRunner();
 		view.cleanup();
 	} 
 
