@@ -12,9 +12,9 @@ import javax.persistence.metamodel.SingularAttribute;
 @javax.annotation.Generated
 (value="org.apache.openjpa.persistence.meta.AnnotationProcessor6",date="Wed May 16 20:21:34 CEST 2012")
 public class StockNames_ {
-    public static volatile SingularAttribute<StockNames,Integer> id;
-    public static volatile SingularAttribute<StockNames,String> market;
-    public static volatile SingularAttribute<StockNames,String> name;
-    public static volatile SingularAttribute<StockNames,Boolean> simulatedStock;
-    public static volatile ListAttribute<StockNames,StockPrices> stockPrices;
+    public static volatile SingularAttribute<StockNames,Integer> id; //NOPMD
+    public static volatile SingularAttribute<StockNames,String> market; //NOPMD
+    public static volatile SingularAttribute<StockNames,String> name; //NOPMD
+    public static volatile SingularAttribute<StockNames,Boolean> simulatedStock; //NOPMD
+    public static volatile ListAttribute<StockNames,StockPrices> stockPrices; //NOPMD
 }

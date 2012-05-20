@@ -12,8 +12,8 @@ import javax.persistence.metamodel.SingularAttribute;
 @javax.annotation.Generated
 (value="org.apache.openjpa.persistence.meta.AnnotationProcessor6",date="Wed May 16 20:21:34 CEST 2012")
 public class AlgorithmSettings_ {
-    public static volatile SingularAttribute<AlgorithmSettings,String> algorithmName;
-    public static volatile ListAttribute<AlgorithmSettings,AlgorithmSettingDouble> doubleSettings;
-    public static volatile SingularAttribute<AlgorithmSettings,Boolean> initiated;
-    public static volatile ListAttribute<AlgorithmSettings,AlgorithmSettingLong> longSettings;
+    public static volatile SingularAttribute<AlgorithmSettings,String> algorithmName; //NOPMD
+    public static volatile ListAttribute<AlgorithmSettings,AlgorithmSettingDouble> doubleSettings; //NOPMD
+    public static volatile SingularAttribute<AlgorithmSettings,Boolean> initiated; //NOPMD
+    public static volatile ListAttribute<AlgorithmSettings,AlgorithmSettingLong> longSettings; //NOPMD
 }

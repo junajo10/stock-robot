@@ -18,7 +18,7 @@ public final class JPAHelper extends JPAHelperBase {
 	
 	private static JPAHelper instance = null;
 	
-	private static String TMPPERSISTENCE = "<persistence xmlns=\"http://java.sun.com/xml/ns/persistence\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\">\n" +
+	private final static String TMPPERSISTENCE = "<persistence xmlns=\"http://java.sun.com/xml/ns/persistence\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\">\n" +
 
 "<persistence-unit name=\"astroportfolio\" transaction-type=\"RESOURCE_LOCAL\">\n" +
 "	<class>model.database.jpa.tables.PortfolioHistory</class>\n" +
@@ -93,18 +93,13 @@ public final class JPAHelper extends JPAHelperBase {
 	private void fixPersistenceXML() {
 		File f = new File("bin/META-INF/persistence.xml");
 		File folder = new File("bin/META-INF");
-		System.out.println(f.getAbsolutePath());
 		
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
 		if (f.exists()) {
 			
-			System.out.println("exists");
-		
 		} else {
-			System.out.println("dosent exist");
-			
 			try {
 				f.createNewFile();
 				
