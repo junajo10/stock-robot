@@ -46,8 +46,6 @@ public class SettingsPanelDouble extends JPanel implements ChangeListener {
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.initValue = initValue;
-		
-		init(); //NOPMD
 	}
 	
 	public void init() {
@@ -65,6 +63,8 @@ public class SettingsPanelDouble extends JPanel implements ChangeListener {
 		container.add( header );
 		
 		JPanel subContainer = fact.getInvisibleContainer();
+		BoxLayout subContainerLayout = new BoxLayout( subContainer, BoxLayout.Y_AXIS );
+		subContainer.setLayout( subContainerLayout );
 		container.add( subContainer );
 		
 		ta = new TextField();
