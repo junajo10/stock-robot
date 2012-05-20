@@ -46,6 +46,9 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	public AlgorithmSettingsView( String algorithmName ) {
 		
 		this.algorithmName = algorithmName;
+	}
+	
+	public void init() {
 		
 		//Main container for the algorithm settings window
 		container = new JPanel();
@@ -99,20 +102,19 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	public void addSetting( AlgorithmSettingDouble set, String desc, double init, double min, double max ) {
 		
 		SettingsPanelDouble panel = new SettingsPanelDouble( set, desc, init, min, max );
+		panel.init();
 		container.add(panel);
 	}
 	
 	public void addSetting( AlgorithmSettingLong set, String desc, long init, long min, long max ) {
 		
 		SettingsPanelLong panel = new SettingsPanelLong( set, desc, init, min, max );
+		panel.init();
 		container.add(panel);
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		
-		
-	}
+	public void propertyChange(PropertyChangeEvent arg0) {} //NOPMD
 
 	@Override
 	public void display(Object model) {
