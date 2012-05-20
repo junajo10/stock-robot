@@ -6,7 +6,6 @@ import java.util.EventListener;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -33,7 +32,6 @@ public class GraphView extends JFrame implements IView {
 	private static final long serialVersionUID = -7937601249697689239L;
 	
 	private XYDataset dataset;
-	private JComboBox dropDown;
 	private JPanel panel;
 	private JScrollPane scrollPanel;
 	private JPanel scrollPanelContainer;
