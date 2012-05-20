@@ -1,6 +1,7 @@
 package view.graph;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
@@ -31,6 +32,9 @@ public class GraphView extends JFrame implements IView {
 
 	private static final long serialVersionUID = -7937601249697689239L;
 	
+	private static final int WINDOW_WIDTH = 1060;
+	private static final int WINDOW_HEIGHT = 700;
+	
 	private XYDataset dataset;
 	private JPanel panel;
 	private JScrollPane scrollPanel;
@@ -53,7 +57,8 @@ public class GraphView extends JFrame implements IView {
         final JFreeChart chart = createChart( dataset );
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         final ChartPanel chartPanel = new ChartPanel( chart );
-        chartPanel.setPreferredSize( new java.awt.Dimension( 800, 600 ) );
+        chartPanel.setPreferredSize( new Dimension( 800, 600 ) );
+        
         panel.add(chartPanel);
         
         scrollPanel = new JScrollPane();
@@ -76,6 +81,8 @@ public class GraphView extends JFrame implements IView {
     public void init() {
     	
     	pack();
+    	setMaximumSize( new Dimension( WINDOW_WIDTH, WINDOW_HEIGHT ) );
+        setSize( new Dimension( WINDOW_WIDTH, WINDOW_HEIGHT ) );
     	setVisible( true );
     }
     
