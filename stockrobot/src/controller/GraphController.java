@@ -1,8 +1,13 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +20,10 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 
 import utils.global.FinancialLongConverter;
+import utils.global.Log;
 import view.graph.GraphStockTogglerView;
 import view.graph.GraphView;
+import view.wizard.portfolio.PortfolioStartPage;
 
 /**
  * Controller for the simple graph view
@@ -32,6 +39,13 @@ public class GraphController implements IController {
 	public static final String BIND_GRAPH_VIEW = "bindGraphView";
 	public static final String WINDOW_TITLE = "Stock prices on a graph";
 	
+	public static final int YEAR_RANGE = 0;
+	public static final int MONTH_RANGE = 1;
+	public static final int DAY_RANGE = 2;
+	public static final int HOUR_RANGE = 3;
+	
+	public int slectedRange = 2;
+	
 	//Keep a reference of the view to be able to insert and read stuff from it
 	private GraphView view;
 	
@@ -46,11 +60,64 @@ public class GraphController implements IController {
 		timeSeriesList = new ArrayList<String>();
 		
 		view = new GraphView( WINDOW_TITLE );
-		view.addActions(getActionListeners());
 		
 		subControllers = new ArrayList<GraphStockTogglerController>();
 		
+		
+		view.addActions(getActionListeners());
+
+		
 		defineSubControllers();
+	}
+	
+	private class YearRangeListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			
+			if(e.getStateChange() == ItemEvent.SELECTED) {
+				slectedRange = YEAR_RANGE;
+				Log.log(Log.TAG.NORMAL, "Year selected");
+				
+			}
+		}
+	}
+	
+	private class MonthRangeListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			
+			if(e.getStateChange() == ItemEvent.SELECTED) {
+				slectedRange = MONTH_RANGE;
+				Log.log(Log.TAG.DEBUG, "Month selected");
+			}
+		}
+	}
+	
+	private class DayRangeListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			
+			if(e.getStateChange() == ItemEvent.SELECTED) {
+				slectedRange = DAY_RANGE;
+				Log.log(Log.TAG.DEBUG, "Day selected");
+			}
+		}
+	}
+	
+	private class HourRangeListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			
+			if(e.getStateChange() == ItemEvent.SELECTED) {
+				slectedRange = HOUR_RANGE;
+				Log.log(Log.TAG.DEBUG, "Hour selected");
+				
+			}
+		}
 	}
 	
 	@Override
@@ -70,6 +137,8 @@ public class GraphController implements IController {
 			hideStock( wantedStockName );
 		}
 	}
+	
+
 	
 	private void showStock( final String stockName ) {
 		
@@ -138,7 +207,13 @@ public class GraphController implements IController {
 	@Override
 	public Map<String, EventListener> getActionListeners() { //NOPMD
 		
-		return null;
+		Map<String, EventListener> listeners = new HashMap<String,EventListener>();
+		listeners.put(view.rangeYearSelectListener, new YearRangeListener());
+		listeners.put(view.rangeMonthSelectListener, new MonthRangeListener());
+		listeners.put(view.rangeDaySelectListener, new DayRangeListener());
+		listeners.put(view.rangeHourSelectListener, new HourRangeListener());
+			
+		return listeners;
 	}
 		
 	/**
