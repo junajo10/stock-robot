@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
-import java.sql.Date;
+import java.util.Date;
 import java.util.EventListener;
 import java.util.Map;
 
@@ -131,6 +131,7 @@ public class GraphView extends JFrame implements IView {
         rangeSelectGroup.add(rdbtnRangeHours);
         
         txtRangeValue = new JTextField();
+        txtRangeValue.setText("1");
         pnlTimeRange.add(txtRangeValue);
         txtRangeValue.setColumns(10);
     }
@@ -225,9 +226,9 @@ public class GraphView extends JFrame implements IView {
 
     public void setRange(Date dateLower, Date dateUpper){
     	
-    	dateAxis.setAutoRange(false);
-   
+    	dateAxis.setAutoRange(true);
     	dateAxis.setRange(dateLower,dateUpper);
+    	
     }
     
     public void autoRange(){

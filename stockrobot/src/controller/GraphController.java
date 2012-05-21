@@ -6,6 +6,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,8 @@ import model.database.jpa.tables.StockPrices;
 
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
+import org.joda.time.DateTime;
+import org.joda.time.JodaTimePermission;
 
 import utils.global.FinancialLongConverter;
 import utils.global.Log;
@@ -44,7 +47,8 @@ public class GraphController implements IController {
 	public static final int DAY_RANGE = 2;
 	public static final int HOUR_RANGE = 3;
 	
-	public int slectedRange = 2;
+	private int selectedRange = 2;
+	private int selectedValue = 1;
 	
 	//Keep a reference of the view to be able to insert and read stuff from it
 	private GraphView view;
@@ -70,15 +74,39 @@ public class GraphController implements IController {
 		defineSubControllers();
 	}
 	
+	private void updateRange(DateTime date){
+	
+		DateTime lowerDate = new DateTime(date);
+		
+		switch (selectedRange) {
+		case YEAR_RANGE:
+			lowerDate = lowerDate.minusYears(selectedValue);
+			break;
+		case MONTH_RANGE:
+			lowerDate = lowerDate.minusMonths(selectedValue);
+			break;
+		case DAY_RANGE:
+			lowerDate = lowerDate.minusDays(selectedValue);
+			break;
+		case HOUR_RANGE:
+			lowerDate = lowerDate.minusHours(selectedValue);
+			break;
+		default:
+			break;
+		}
+		
+		view.setRange(lowerDate.toDate(), date.toDate());
+	}
+	
 	private class YearRangeListener implements ItemListener{
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			
 			if(e.getStateChange() == ItemEvent.SELECTED) {
-				slectedRange = YEAR_RANGE;
+				selectedRange = YEAR_RANGE;
 				Log.log(Log.TAG.NORMAL, "Year selected");
-				
+				updateRange(new DateTime());
 			}
 		}
 	}
@@ -89,8 +117,9 @@ public class GraphController implements IController {
 		public void itemStateChanged(ItemEvent e) {
 			
 			if(e.getStateChange() == ItemEvent.SELECTED) {
-				slectedRange = MONTH_RANGE;
+				selectedRange = MONTH_RANGE;
 				Log.log(Log.TAG.DEBUG, "Month selected");
+				updateRange(new DateTime());
 			}
 		}
 	}
@@ -101,8 +130,9 @@ public class GraphController implements IController {
 		public void itemStateChanged(ItemEvent e) {
 			
 			if(e.getStateChange() == ItemEvent.SELECTED) {
-				slectedRange = DAY_RANGE;
+				selectedRange = DAY_RANGE;
 				Log.log(Log.TAG.DEBUG, "Day selected");
+				updateRange(new DateTime());
 			}
 		}
 	}
@@ -113,9 +143,9 @@ public class GraphController implements IController {
 		public void itemStateChanged(ItemEvent e) {
 			
 			if(e.getStateChange() == ItemEvent.SELECTED) {
-				slectedRange = HOUR_RANGE;
+				selectedRange = HOUR_RANGE;
 				Log.log(Log.TAG.DEBUG, "Hour selected");
-				
+				updateRange(new DateTime());
 			}
 		}
 	}
