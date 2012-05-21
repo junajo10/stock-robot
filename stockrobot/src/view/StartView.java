@@ -95,7 +95,7 @@ public class StartView extends JFrame implements IView {
 
 		BufferedImage myPicture = null;
 		try {
-			myPicture = ImageIO.read(new File("logo.jpg"));
+			myPicture = ImageIO.read(new File("logo.png"));
 		} catch (IOException e1) {
 			
 			e1.printStackTrace();
