@@ -1,5 +1,6 @@
 package view.graph;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
@@ -144,8 +145,18 @@ public class GraphView extends JFrame implements IView {
         plot.setRangeGridlinePaint( Color.white );
         
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true,false);
+        //TODO Change this to use a method that isnt depricated
+        renderer.setStroke(
+                new BasicStroke(
+                    2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND
+                )
+            );
+        
+        
         plot.setRenderer( renderer );
         
+        
+                
         return chart;
     }
 
