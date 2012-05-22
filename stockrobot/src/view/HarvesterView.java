@@ -20,6 +20,11 @@ import javax.swing.ListModel;
 import java.awt.Dialog.ModalExclusionType;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.EventListener;
 import java.util.Map;
 
@@ -29,6 +34,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JProgressBar;
 import java.awt.Color;
 import javax.swing.UIManager;
+
+import model.scraping.core.Harvester;
+import model.scraping.core.HarvesterLog;
+
 import java.awt.SystemColor;
 
 /**
@@ -49,6 +58,7 @@ public class HarvesterView extends JFrame implements IView{
 	private JButton btnClearLog;
 	private JButton btnExportLog;
 	private JList log;
+	private Logger logHandler;
 	private JCheckBox chckbxSimulateStocks;
 	private JButton btnStatus;
 	private DefaultListModel logModel;
@@ -63,6 +73,9 @@ public class HarvesterView extends JFrame implements IView{
 	public static final String CLEAR_LOG				= "clearLog";
 	public static final String EXPORT_LOG 				= "exportLog";
 	public static final String WINDOW_CLOSE 			= "windowClose";
+	
+	long totalLoops		= 0;
+	int connected 		= 0;
 	
 	WindowListener windowListener;
 
@@ -80,6 +93,7 @@ public class HarvesterView extends JFrame implements IView{
 		btnStopParser.setEnabled(false);
 		logModel = new DefaultListModel();
 		scrollPane = new JScrollPane();
+		logHandler = new Logger();
 		
 		textField = new JTextField();
 		textField.setBackground(SystemColor.controlHighlight);
@@ -146,7 +160,7 @@ public class HarvesterView extends JFrame implements IView{
 							.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
-						.addComponent(chckbxAutoscrollLog, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
+						.addComponent(chckbxAutoscrollLog, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -233,12 +247,52 @@ public class HarvesterView extends JFrame implements IView{
 		
 		btnStopParser.setEnabled(true);
 	}
+	
+	private void addToList(String input){
+		Date date= new java.util.Date();
+		String time = new Timestamp(date.getTime()) + "";
+		addLogItem("[" + time.substring(11, 19) + "] - " + input);
+	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals(HarvesterLog.PARSING_DONE)){
+			logHandler.parsingLoop((Long) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.PARSING_PROGRESS)){
+			setParserBarProgress((Integer) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.CONNECTED)){
+			logHandler.connected((String) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.DISCONNECTED)){
+			logHandler.disconnected((String) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.TEXT)){
+			logHandler.addText((String) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.SHUTDOWN)){
+			logHandler.showDownServer();
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.SERVER_UP)){
+			logHandler.serverUp();
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.SERVER_DOWN)){
+			logHandler.finishStopped();
+		}
+	}
 
 	@Override
 	public void display(Object model) {
+		Harvester harv = (Harvester) model;
+		harv.addObserver(this);
 		this.setSize(new Dimension(450, 588));
 		this.setVisible(true);
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -301,4 +355,93 @@ public class HarvesterView extends JFrame implements IView{
          }
          return null;
 	}	
+	public void start(){
+		addToList("Parser initializing.");
+	}	
+	
+	public void failPortNumber(String portTextbox) {
+		addToList(portTextbox + " is not a valid port-number. ");
+	}
+
+	public void printStatus(boolean status){
+		if(status){
+			addToList("Parser is up and running. ");
+			addToList("Total parsing loops done: " + totalLoops);
+			addToList("Number of connected to server: " + connected);
+		}
+		else {
+			addToList("Parser closed,crashed or shutting down.");
+		}
+	}
+	
+	public void stop(){
+		addToList("Parser starting to shutdown.");
+	}
+	
+	public void failStart() {
+		addToList("Parser failed to start. Already started or crashed.");
+	}
+	
+	public void exportLog(){
+		File logTxtFile = openChooseDirectory();
+		if (logTxtFile != null) {
+			ListModel model = getLogModel();
+			PrintStream out = null;
+			try {
+				out = new PrintStream(new FileOutputStream(logTxtFile));
+		        int len = model.getSize(); 
+		        for(int i = 0; i < len; i++) { 
+		        	out.println(model.getElementAt(i).toString()); 
+		        } 
+				addToList("Log exported to "+logTxtFile.getAbsolutePath());
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}  finally {
+				if (out != null)
+					out.close();
+			}
+		}
+    }
+	
+	private class Logger {
+
+
+		public void serverUp(){
+			addToList("Server is up and accepting connections.");
+		}	
+		
+		public void parsingLoop(long timeElapsed){
+			totalLoops++;
+			addToList("Parsing loop finished in " + timeElapsed + " ms. ");
+		}		
+		
+		public void finishStopped(){
+			addToList("Parser shutdown complete.");
+		}
+		
+		public void showDownServer(){
+			addToList("Shutting down server.");
+		}
+
+
+		
+		public void connected(String hostname) {
+			connected++;
+			addToList(hostname + " has connected to Harvester.");
+		}
+		
+		public void disconnected(String hostname) {
+			connected--;
+			addToList(hostname + " has disconnected from Harvester.");
+		}
+		
+		public void addText(String text) {
+			addToList(text);
+		}
+		
+
+		
+ 
+	}
+	
 }

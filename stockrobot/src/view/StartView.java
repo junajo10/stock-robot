@@ -3,14 +3,10 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.EventListener;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -40,7 +36,6 @@ public class StartView extends JFrame implements IView {
 	private JPanel contentPane;
 	private JTextField txtLocalhost;
 	private JButton btnStartAstro = new JButton("Start ASTRo");
-	private JButton btnStopAstro = new JButton("Stop ASTRo");
 	private JButton btnStartParser = new JButton("Open Harvester");
 	private JComboBox comboBox = new JComboBox();
 	private StartModel model;
@@ -77,7 +72,7 @@ public class StartView extends JFrame implements IView {
 		setResizable(false);
 		setTitle("ASTRo Stock Robot");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 301, 420);
+		setBounds(100, 100, 252, 402);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,61 +84,45 @@ public class StartView extends JFrame implements IView {
 		txtLocalhost.setText("localhost:54551");
 		txtLocalhost.setColumns(10);
 		
-		btnStopAstro.setEnabled(false);
-		
 		JLabel lblLogLevel = new JLabel("Log level:");
 
-		BufferedImage myPicture = null;
-		try {
-			myPicture = ImageIO.read(new File("logo.png"));
-		} catch (IOException e1) {
-			
-			e1.printStackTrace();
-		}
-		JLabel lblNewLabel;
-		if (myPicture != null) {
-			lblNewLabel = new JLabel(new ImageIcon( myPicture ));
-		}
-		else
-			lblNewLabel = new JLabel();
+
+		JLabel lblNewLabel  = new JLabel();
+		lblNewLabel.setIcon(new ImageIcon(StartView.class.getResource("/images/logo.png")));
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-						.addComponent(btnStartParser, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-						.addComponent(txtLocalhost, 248, 256, Short.MAX_VALUE)
-						.addComponent(lblLogLevel)
-						.addComponent(comboBox, 0, 256, Short.MAX_VALUE)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnStopAstro, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE))
-						.addComponent(chckbxConnectToParser))
-					.addGap(27))
+						.addComponent(chckbxConnectToParser, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addGap(1)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))
+						.addComponent(lblLogLevel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(chckbxConnectToParser)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnStopAstro, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
 					.addComponent(lblLogLevel)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(5)
 					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-					.addContainerGap())
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addGap(9))
 		);
 		contentPane.setLayout(gl_contentPane);
 		

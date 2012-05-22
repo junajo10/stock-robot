@@ -1,9 +1,14 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.Map;
 
+import model.database.jpa.tables.AlgorithmSettingDouble;
+import model.database.jpa.tables.AlgorithmSettingLong;
 import model.simulation.SimModel;
 import model.simulation.SimulationHandler;
 
@@ -14,12 +19,13 @@ import view.SimResultView;
  * @author Daniel
  */
 public class SimResultController implements IController {
-	
+
 	private static final String CLASS_NAME = "SimResultController";
-	
+
 	private SimResultView view;
 	private SimulationHandler model;
-	
+	PortfolioHistoryController history = new PortfolioHistoryController();
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(final PropertyChangeEvent evt) {
@@ -33,17 +39,35 @@ public class SimResultController implements IController {
 			long oldValue = (Long) evt.getOldValue();
 			long newValue = (Long) evt.getNewValue();
 			double diff = (double)newValue/(double)oldValue;
+			diff *= 100;
 			view.setWorth(diff);
 		}
 		else if (evt.getPropertyName().contains(SimulationHandler.PROGRESSUPDATE)){
 			view.setProgress((Integer)evt.getNewValue());
 		}
+		else if (evt.getPropertyName().contains(SimulationHandler.WORTHUPDATE)){
+			view.setCurrentWorth((Long)evt.getNewValue());
+		}
+		else if (evt.getPropertyName().contains(SimulationHandler.BALANCEUPDATE)){
+			view.setCurrentBalance((Long)evt.getNewValue());
+		}
+		else if (evt.getPropertyName().contains(SimulationHandler.DONE)){
+			view.setDone();
+		}
+
+
 	}
 
+	ActionListener historyListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			history.display(model.getPortfolioEntity());
+		}
+	};
 	@Override
 	public void display(final Object simModel) {
 		final SimModel oldModel = (SimModel) simModel;
-		
+
 		if (model == null) {
 			model = new SimulationHandler();
 		}
@@ -51,14 +75,21 @@ public class SimResultController implements IController {
 		model.setStocksBack(oldModel.getStocksBack());
 		model.setLongSettings(oldModel.getLongSettings());
 		model.setDoubleSettings(oldModel.getDoubleSettings());
-		
+
+		model.setInitialValue(oldModel.getInitialValue());
+
 		this.view = new SimResultView();
+
+		view.setStartBalance(oldModel.getInitialValue());
+
+		view.addActions(getActionListeners());
+
 		view.display(this.model);
-		
+
 		view.addPropertyChangeListener(this);
-		
+
 		model.addPropertyChangeListener(this);
-		
+
 		model.startSimulation();
 	}
 
@@ -70,8 +101,9 @@ public class SimResultController implements IController {
 
 	@Override
 	public Map<String, EventListener> getActionListeners() { //NOPMD
-	
-		return null;
+		Map<String, EventListener> actions = new HashMap<String, EventListener>();
+		actions.put(SimResultView.HISTORYBUTTON, historyListener);
+		return actions;
 	}
 
 	@Override

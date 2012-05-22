@@ -1,5 +1,7 @@
 package model.scraping;
 
+import java.beans.PropertyChangeSupport;
+
 import junit.framework.Assert;
 import model.scraping.parser.ParserRunner;
 
@@ -20,13 +22,13 @@ public class ParserRunnerTest {
 	private static ParserRunner toTest;
 	private static Thread th;
 	private static boolean runnerCreated = false;
-	
+	private static PropertyChangeSupport pcs = new PropertyChangeSupport(null);
 	private final static int POLLINGTIME = 100;
 	
 	@BeforeClass
 	public static void setupTest() {
 		
-		toTest = new ParserRunner((int) Math.round( Math.random() * 1000 ) + 20003);
+		toTest = new ParserRunner((int) Math.round( Math.random() * 1000 ) + 20003, pcs);
 		toTest.setSkipScheduler();
 		
 		th = new Thread( new Runnable() {

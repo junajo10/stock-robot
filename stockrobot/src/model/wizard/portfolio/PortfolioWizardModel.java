@@ -4,6 +4,7 @@ import utils.global.FinancialLongConverter;
 import utils.global.Log;
 import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.tables.PortfolioEntity;
+import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.PortfolioHandler;
@@ -88,8 +89,9 @@ public class PortfolioWizardModel extends WizardPageModel{
 			IPortfolioHandler portfolioHandler = PortfolioHandler.getInstance();
 			
 			IPortfolio newPortfolio = portfolioHandler.createNewPortfolio(name);
-			newPortfolio.setAlgorithm(PluginAlgortihmLoader.getInstance().loadAlgorithm(algorithm));
 			newPortfolio.investAmount(balance);
+			
+			portfolioHandler.setAlgorithm(newPortfolio, algorithm);
 			
 			Log.log(Log.TAG.NORMAL, "Portfolio Created \n" +
 					"name: " + name + "\n" +

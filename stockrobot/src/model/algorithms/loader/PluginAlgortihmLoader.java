@@ -2,6 +2,7 @@ package model.algorithms.loader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,9 @@ public final class PluginAlgortihmLoader {
 	public List<String> getAlgorithmNames() {
 		List<String> algorithmNames = new ArrayList<String>();
 		algorithmNames.addAll(algorithmMap.keySet());
+		
+		Collections.sort(algorithmNames);
+		
 		return algorithmNames;
 	}
 	

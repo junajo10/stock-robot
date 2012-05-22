@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.EventListener;
@@ -43,11 +44,12 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	public static final String SAVE_DOWN = "savedDown";
 	
 	private String		algorithmName;
-	private JPanel 		scrolledContainer;
-	private JPanel		mainContainer;
+	private JPanel 		scrolledContainer = new JPanel();;
+	private JPanel		mainContainer = new JPanel();;
 	
-	private JButton		saveBtn;
-	
+	private JButton		saveBtn = new JButton();;
+	List<AlgorithmSettingDouble> doubleSettings = new ArrayList<AlgorithmSettingDouble>();
+	List<AlgorithmSettingLong> longSettings = new ArrayList<AlgorithmSettingLong>();
 	public AlgorithmSettingsView( String algorithmName ) {
 		
 		this.algorithmName = algorithmName;
@@ -58,11 +60,9 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		//Main container for the algorithm settings window
-		mainContainer = new JPanel();
 		BoxLayout maincontainerLayout = new BoxLayout(mainContainer, BoxLayout.Y_AXIS);
 		mainContainer.setLayout( maincontainerLayout );
 		
-		scrolledContainer = new JPanel();
 		scrolledContainer.setBackground(SystemColor.control);
 		scrolledContainer.setMaximumSize(new Dimension(300,400));
 		BoxLayout containerLayout = new BoxLayout(scrolledContainer, BoxLayout.Y_AXIS);
@@ -73,7 +73,6 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		scrollPane.getViewport().add( scrolledContainer );
 		
 		//Add save button
-		saveBtn = new JButton();
 		saveBtn.setText( "Save settings" );
 	}
 		
@@ -120,6 +119,8 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		SettingsPanelDouble panel = new SettingsPanelDouble( set, desc, init, min, max );
 		panel.init();
 		scrolledContainer.add(panel);
+		
+		doubleSettings.add(set);
 	}
 	
 	public void addSetting( AlgorithmSettingLong set, String desc, long init, long min, long max ) {
@@ -127,6 +128,8 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		SettingsPanelLong panel = new SettingsPanelLong( set, desc, init, min, max );
 		panel.init();
 		scrolledContainer.add(panel);
+		
+		longSettings.add(set);
 	}
 
 	@Override
@@ -171,5 +174,11 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 			
 			return o1.getName().hashCode() > o2.getName().hashCode() ? -1 : 1;
 		}
+	}
+	public List<AlgorithmSettingDouble> getDoubleSettings() {
+		return doubleSettings;
+	}
+	public List<AlgorithmSettingLong> getLongSettings() {
+		return longSettings;
 	}
 }

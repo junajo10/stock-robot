@@ -32,9 +32,11 @@ public class SimulationAlgorithmSettingsController implements IController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (algortihmSettingsDouble != null) {
+				algortihmSettingsDouble = view.getDoubleSettings();
 				model.giveDoubleSettings(algortihmSettingsDouble);
 			}
 			if (algortihmSettingsLong != null) {
+				algortihmSettingsLong = view.getLongSettings();
 				model.giveLongSettings(algortihmSettingsLong);
 			}
 		}
@@ -49,10 +51,8 @@ public class SimulationAlgorithmSettingsController implements IController {
 
 	@Override
 	public void display(Object model) {
-		actionListeners = new HashMap<String, EventListener>();
-		actionListeners.put( AlgorithmSettingsView.SAVE_DOWN, saveDown );
-		
 		view = new AlgorithmSettingsView( algorithmName );
+		view.init();
 		view.addActions( getActionListeners() );
 		
 		IAlgorithm algorithm = PluginAlgortihmLoader.getInstance().loadAlgorithm(algorithmName);
@@ -64,6 +64,9 @@ public class SimulationAlgorithmSettingsController implements IController {
 		
 		this.model = (SimModel) model;
 
+		this.model.giveDoubleSettings(algortihmSettingsDouble);
+		this.model.giveLongSettings(algortihmSettingsLong);
+		
 		view.display(null);
 	}
 
@@ -72,6 +75,10 @@ public class SimulationAlgorithmSettingsController implements IController {
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
+		if (actionListeners == null) {
+			actionListeners = new HashMap<String, EventListener>();
+			actionListeners.put( AlgorithmSettingsView.SAVE_DOWN, saveDown );
+		}
 		
 		return actionListeners;
 	}

@@ -88,8 +88,6 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		
 		listOfPortfolios.add(p);
 		
-		pChangeSuport.firePropertyChange(MSG_PORTFOLIO_ADDED,null,p.getName());
-		
 		return p;
 	}
 	
@@ -109,6 +107,8 @@ public final class PortfolioHandler implements IPortfolioHandler{
 			
 			jpaHelper.updateObject(pe);
 			
+			pChangeSuport.firePropertyChange(MSG_PORTFOLIO_ADDED,null,p.getName());
+			
 			return true;
 		}
 		return false;
@@ -121,7 +121,8 @@ public final class PortfolioHandler implements IPortfolioHandler{
 			if (sp != null) {
 				if (lastStockPost.getTime() < sp.getTime().getTime()) {
 					for (IPortfolio p : listOfPortfolios) {
-						p.updateAlgorithm();
+						if (p.getAlgorithm() != null)
+							p.updateAlgorithm();
 					}
 				}
 				this.lastStockPost = sp.getTime();

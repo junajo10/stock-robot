@@ -187,6 +187,8 @@ public class PortfolioView extends JFrame implements IView {
 			for(IPortfolio p : portfolios.getPortfolios()){
 				if (p.getName().equals(cmbSelectPortfolio.getItemAt(0))) {
 					selectedPortfolio = p;
+					
+					updateValues();
 				}
 			}
 			
@@ -264,6 +266,18 @@ public class PortfolioView extends JFrame implements IView {
 				|| evt.getPropertyName().equals(IPortfolioHandler.MSG_PORTFOLIO_REMOVED)){
 			
 			updatePortfolios();
+			
+			if(cmbSelectPortfolio.getItemCount() == 1){
+				cmbSelectPortfolio.setSelectedIndex(0);
+				
+				for(IPortfolio p : portfolios.getPortfolios()){
+					if (p.getName().equals(cmbSelectPortfolio.getItemAt(0))) {
+						selectedPortfolio = p;
+						updateValues();
+					}
+				}
+			}
+			
 		}
 	}
 	
@@ -274,5 +288,6 @@ public class PortfolioView extends JFrame implements IView {
 	public void setSelectedPortfolio(final IPortfolio portfolio){
 		
 		selectedPortfolio = portfolio;
+		updateValues();
 	}
 }

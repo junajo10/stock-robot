@@ -126,7 +126,7 @@ public class PortfolioSimulator implements IPortfolio {
 
 	@Override
 	public long getCurrentWorth() {
-		long currentWorth = getUnusedAmount();
+		long currentWorth = 0;
 		
 		for (PortfolioHistory ph : portfolioTable.getHistory()) {
 			if (ph.getSoldDate() == null) {
