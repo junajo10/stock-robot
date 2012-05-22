@@ -1,6 +1,5 @@
 package model.scraping.parser;
 
-import java.beans.PropertyChangeSupport;
 
 /**
  * @author Erik

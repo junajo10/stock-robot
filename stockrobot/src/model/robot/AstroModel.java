@@ -4,7 +4,6 @@ import java.net.UnknownHostException;
 
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
-import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.IRobot_Algorithms;
 import model.portfolio.PortfolioHandler;
