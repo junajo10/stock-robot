@@ -276,5 +276,6 @@ public class PortfolioView extends JFrame implements IView {
 	public void setSelectedPortfolio(final IPortfolio portfolio){
 		
 		selectedPortfolio = portfolio;
+		updateValues();
 	}
 }
