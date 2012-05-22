@@ -16,5 +16,4 @@ public interface IParserRunner extends Runnable {
 	public boolean stopRunner();
 	public boolean startParser();
 	public boolean status();
-	public void setPropertyChangeSupport(PropertyChangeSupport pcs);
 }
