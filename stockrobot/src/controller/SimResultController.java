@@ -10,6 +10,7 @@ import java.util.Map;
 import model.simulation.SimModel;
 import model.simulation.SimulationHandler;
 
+import utils.global.FinancialLongConverter;
 import view.SimResultView;
 
 /**
@@ -37,16 +38,17 @@ public class SimResultController implements IController {
 			long oldValue = (Long) evt.getOldValue();
 			long newValue = (Long) evt.getNewValue();
 			double diff = (double)newValue/(double)oldValue;
+			diff *= 100;
 			view.setWorth(diff);
 		}
 		else if (evt.getPropertyName().contains(SimulationHandler.PROGRESSUPDATE)){
 			view.setProgress((Integer)evt.getNewValue());
 		}
 		else if (evt.getPropertyName().contains(SimulationHandler.WORTHUPDATE)){
-			view.setCurrentWorth(evt.getNewValue().toString());
+			view.setCurrentWorth((Long)evt.getNewValue());
 		}
 		else if (evt.getPropertyName().contains(SimulationHandler.BALANCEUPDATE)){
-			view.setCurrentBalance(evt.getNewValue().toString());
+			view.setCurrentBalance((Long)evt.getNewValue());
 		}
 		
 		
@@ -71,6 +73,8 @@ public class SimResultController implements IController {
 		model.setDoubleSettings(oldModel.getDoubleSettings());
 		
 		this.view = new SimResultView();
+		
+		view.setStartBalance(model.getInitialValue());
 		
 		view.addActions(getActionListeners());
 		

@@ -61,6 +61,9 @@ public class SimResultView extends JFrame implements IView {
 	private JTextField txtCurrentamount;
 	private JTextField txtStockworth;
 	private JButton btnShowHistory = new JButton("Show History");
+	private long startBalance;
+	private long currentWorth;
+	private long currentBalance;
 	/**
 	 * Launch the application.
 	 */
@@ -212,11 +215,6 @@ public class SimResultView extends JFrame implements IView {
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
     	pcs.removePropertyChangeListener(listener);
     }
-
-	public void setWorth(double change) {
-		DecimalFormat df = new DecimalFormat("#.##");
-		textField.setText("" + df.format(change) + "%");
-	}
 	public void setPieView(Map<String, Long> pieData) {
         DefaultPieDataset result = new DefaultPieDataset();
         
@@ -256,11 +254,26 @@ public class SimResultView extends JFrame implements IView {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
-	public void setCurrentWorth(String string) {
-		txtStockworth.setText(string);
+	public void setCurrentWorth(long worth) {
+		txtStockworth.setText(FinancialLongConverter.toStringTwoDecimalPoints(worth));
+		this.currentWorth = worth;
 	}
 
-	public void setCurrentBalance(String string) {
-		txtCurrentamount.setText(string);
+	public void setCurrentBalance(long currentBalance) {
+		txtCurrentamount.setText(FinancialLongConverter.toStringTwoDecimalPoints(currentBalance));
+		this.currentBalance = currentBalance;
+	}
+	public void setWorth(double change) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		
+		if (change > 100)
+			textField.setText("+ " + df.format(change) + "%");
+		else {
+			textField.setText("- " + df.format(100-change) + "%");
+		}
+	}
+	public void setStartBalance(long startBalance) {
+		txtStartamount.setText(FinancialLongConverter.toStringTwoDecimalPoints(startBalance));
+		this.startBalance = startBalance;
 	}
 }

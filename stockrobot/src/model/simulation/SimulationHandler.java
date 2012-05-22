@@ -129,8 +129,8 @@ public class SimulationHandler extends SimModel {
 			if (curr%5 == 0) {
 				setProgress((int) (((double)curr/(double)max)*100));
 				
-				propertyChangeSupport.firePropertyChange(WORTHUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getCurrentWorth()));
-				propertyChangeSupport.firePropertyChange(BALANCEUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getUnusedAmount()));
+				propertyChangeSupport.firePropertyChange(WORTHUPDATE, -11, portfolio.getCurrentWorth());
+				propertyChangeSupport.firePropertyChange(BALANCEUPDATE, -11, portfolio.getUnusedAmount());
 			}
 			
 			if (p.getTime().equals(lastSeenTime) || lastSeenTime == null) {
@@ -162,8 +162,8 @@ public class SimulationHandler extends SimModel {
 		setProgress(100);
 		Log.log(TAG.VERBOSE, "Simulation before selling of stocks: Current balance: " + portfolio.getPortfolioTable().getBalance());
 		
-		propertyChangeSupport.firePropertyChange(WORTHUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getCurrentWorth()));
-		propertyChangeSupport.firePropertyChange(BALANCEUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getUnusedAmount()));
+		propertyChangeSupport.firePropertyChange(WORTHUPDATE, -11, portfolio.getCurrentWorth());
+		propertyChangeSupport.firePropertyChange(BALANCEUPDATE, -11, portfolio.getUnusedAmount());
 		
 		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
 			if (ph.getSoldDate() == null) {
@@ -179,8 +179,8 @@ public class SimulationHandler extends SimModel {
 		updatePieData();
 		
 		Log.log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
-		propertyChangeSupport.firePropertyChange(WORTHUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getCurrentWorth()));
-		propertyChangeSupport.firePropertyChange(BALANCEUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getUnusedAmount()));
+		propertyChangeSupport.firePropertyChange(WORTHUPDATE, "OldValue", portfolio.getCurrentWorth());
+		propertyChangeSupport.firePropertyChange(BALANCEUPDATE, "OldValue", portfolio.getUnusedAmount());
 		
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
 	}
@@ -192,7 +192,7 @@ public class SimulationHandler extends SimModel {
 		}
 	}
 	private void setWorth(long currentWorth) {
-		firePropertyChange(PORTFOLIOWORTH, getInitialValue(), currentWorth);
+		firePropertyChange(PORTFOLIOWORTH, getInitialValue(), portfolio.getCurrentWorth() + portfolio.getUnusedAmount());
 	}
 	private void fillPie(String name, long amount, long buy) {
 		if (latestPieData.containsKey(name)) {
