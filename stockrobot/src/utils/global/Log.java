@@ -39,12 +39,10 @@ public final class Log {
 		if(log.filter.get(tag)){
 			Date date= new java.util.Date();
 			String time = new Timestamp(date.getTime()) + "";
-			instance().addLogMessage("[" + time.substring(11, 16) + "] - " + message);
-			/* Temorary solution //Erik
+			log.addLogMessage("[" + time.substring(11, 16) + "] - " + message);
+			// Temorary solution //Erik
 			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
-			System.out.print(message); //NOPMD
-			System.out.println(); //NOPMD
-			*/
+			System.out.println(message); //NOPMD
 		}
 	}
 	
