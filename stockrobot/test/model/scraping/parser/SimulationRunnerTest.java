@@ -39,8 +39,7 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 			public void run() {
 				
 				port = 25000 + (int) Math.round( Math.random() * 4000 );
-				runner = new SimulationRunner( port );
-				runner.setPropertyChangeSupport(new PropertyChangeSupport(this));
+				runner = new SimulationRunner( port, new PropertyChangeSupport(this) );
 				runnercreated = true;
 				
 				try {
