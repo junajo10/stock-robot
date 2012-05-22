@@ -61,9 +61,7 @@ public class SimResultView extends JFrame implements IView {
 	private JTextField txtCurrentamount;
 	private JTextField txtStockworth;
 	private JButton btnShowHistory = new JButton("Show History");
-	private long startBalance;
-	private long currentWorth;
-	private long currentBalance;
+
 	/**
 	 * Launch the application.
 	 */
@@ -85,6 +83,7 @@ public class SimResultView extends JFrame implements IView {
 	 * Create the frame.
 	 */
 	public SimResultView() {
+		btnShowHistory.setEnabled(false);
 		textField.setEditable(false);
 		textField.setText("0.00%");
 		textField.setColumns(10);
@@ -256,24 +255,24 @@ public class SimResultView extends JFrame implements IView {
 
 	public void setCurrentWorth(long worth) {
 		txtStockworth.setText(FinancialLongConverter.toStringTwoDecimalPoints(worth));
-		this.currentWorth = worth;
 	}
 
 	public void setCurrentBalance(long currentBalance) {
 		txtCurrentamount.setText(FinancialLongConverter.toStringTwoDecimalPoints(currentBalance));
-		this.currentBalance = currentBalance;
 	}
 	public void setWorth(double change) {
 		DecimalFormat df = new DecimalFormat("#.##");
 		
 		if (change > 100)
-			textField.setText("+ " + df.format(change) + "%");
+			textField.setText("+ " + df.format(change-100) + "%");
 		else {
 			textField.setText("- " + df.format(100-change) + "%");
 		}
 	}
 	public void setStartBalance(long startBalance) {
 		txtStartamount.setText(FinancialLongConverter.toStringTwoDecimalPoints(startBalance));
-		this.startBalance = startBalance;
+	}
+	public void setDone() {
+		btnShowHistory.setEnabled(true);
 	}
 }

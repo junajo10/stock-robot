@@ -10,7 +10,6 @@ import java.util.Map;
 import model.simulation.SimModel;
 import model.simulation.SimulationHandler;
 
-import utils.global.FinancialLongConverter;
 import view.SimResultView;
 
 /**
@@ -50,6 +49,9 @@ public class SimResultController implements IController {
 		else if (evt.getPropertyName().contains(SimulationHandler.BALANCEUPDATE)){
 			view.setCurrentBalance((Long)evt.getNewValue());
 		}
+		else if (evt.getPropertyName().contains(SimulationHandler.DONE)){
+			view.setDone();
+		}
 		
 		
 	}
@@ -71,10 +73,11 @@ public class SimResultController implements IController {
 		model.setStocksBack(oldModel.getStocksBack());
 		model.setLongSettings(oldModel.getLongSettings());
 		model.setDoubleSettings(oldModel.getDoubleSettings());
+		model.setInitialValue(oldModel.getInitialValue());
 		
 		this.view = new SimResultView();
 		
-		view.setStartBalance(model.getInitialValue());
+		view.setStartBalance(oldModel.getInitialValue());
 		
 		view.addActions(getActionListeners());
 		
