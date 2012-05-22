@@ -52,7 +52,7 @@ public class AstroView extends JFrame implements IView {
 	public static final String CLEAR_LOG			 	= "ClearLog";
 	public static final String EXPORT_LOG			 	= "ExportLog";
 
-	private final int HEIGHT_FRAME_SUBTRACTED 	= 175;
+	private final int HEIGHT_FRAME_SUBTRACTED 	= 146;
 	private final int HEIGHT_FRAME_EXPANDED 	= 655;
 	private final int WIDTH_FRAME = 373;
 
@@ -83,35 +83,10 @@ public class AstroView extends JFrame implements IView {
 		
 		setBounds(150, 150, 373, 655);
 		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu mnNewMenu = new JMenu("File");
-		menuBar.add(mnNewMenu);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Exit");
-		mnNewMenu.add(mntmNewMenuItem);
-		
-		JMenu mnHelp = new JMenu("Help");
-		menuBar.add(mnHelp);
-		
-		JMenuItem mntmHelp = new JMenuItem("Help");
-		mnHelp.add(mntmHelp);
-		
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mnHelp.add(mntmAbout);
-		
 		contentPane.setBackground(SystemColor.control);
 		contentPane.setForeground(Color.GREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
-		JLabel lblAstroStatus = new JLabel("ASTRo Robot Status:");
-		lblAstroStatus.setForeground(SystemColor.desktop);
-
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setForeground(Color.CYAN);
-		progressBar.setValue(100);
 		
 		pnlLog = new JPanel();
 		pnlLog.setBackground(null);
@@ -123,31 +98,23 @@ public class AstroView extends JFrame implements IView {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblAstroStatus)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnSimulate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnPortfolio, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-								.addComponent(btnStocks, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)))
-						.addComponent(chckbxShowLog))
-					.addGap(9))
 				.addComponent(pnlLog, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 361, Short.MAX_VALUE)
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnSimulate, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+						.addComponent(btnPortfolio, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnGraph, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+						.addComponent(btnStocks, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+					.addContainerGap())
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addComponent(chckbxShowLog)
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblAstroStatus)
-						.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnPortfolio)
 						.addComponent(btnStocks))
@@ -155,9 +122,9 @@ public class AstroView extends JFrame implements IView {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSimulate)
 						.addComponent(btnGraph))
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(chckbxShowLog)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(22)
 					.addComponent(pnlLog, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
