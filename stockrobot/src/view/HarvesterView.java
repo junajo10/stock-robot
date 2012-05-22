@@ -160,7 +160,7 @@ public class HarvesterView extends JFrame implements IView{
 							.addComponent(btnClearLog, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnExportLog, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
-						.addComponent(chckbxAutoscrollLog, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
+						.addComponent(chckbxAutoscrollLog, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
