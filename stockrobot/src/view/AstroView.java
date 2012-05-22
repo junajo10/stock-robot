@@ -52,7 +52,7 @@ public class AstroView extends JFrame implements IView {
 	public static final String CLEAR_LOG			 	= "ClearLog";
 	public static final String EXPORT_LOG			 	= "ExportLog";
 
-	private final int HEIGHT_FRAME_SUBTRACTED 	= 170;
+	private final int HEIGHT_FRAME_SUBTRACTED 	= 175;
 	private final int HEIGHT_FRAME_EXPANDED 	= 655;
 	private final int WIDTH_FRAME = 373;
 
