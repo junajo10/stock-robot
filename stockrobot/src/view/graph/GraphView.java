@@ -31,6 +31,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeListener;
 
 /**
  * A simple view in which users can add as many companies stock price's as they like to.
@@ -179,6 +180,16 @@ public class GraphView extends JFrame implements IView {
     	((TimeSeriesCollection) dataset).removeSeries( index );
     }
     
+    public void updateRange(Date lower, Date upper){
+    	
+    	
+    }
+    
+    public JSlider getSlider(){
+    	
+    	return sldRange;
+    }
+    
     /**
      * Creates a chart.
      * 
@@ -256,7 +267,9 @@ public class GraphView extends JFrame implements IView {
 		if(actions.get(rangeHourSelectListener) instanceof ItemListener){
 			rdbtnRangeHours.addItemListener((ItemListener)actions.get(rangeHourSelectListener));
 		}
-		
+		if(actions.get(rangeSliderListener) instanceof ChangeListener){
+			sldRange.addChangeListener((ChangeListener)actions.get(rangeSliderListener));
+		}
 	}
 
 	@Override
