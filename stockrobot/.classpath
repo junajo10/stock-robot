@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="jar/openjpa-all-2.2.0.jar"/>
 	<classpathentry kind="lib" path="jar/hsqldb.jar"/>
 	<classpathentry kind="lib" path="jar/mysql-connector-java-5.1.18-bin.jar"/>
+	<classpathentry kind="lib" path="jar/images.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
