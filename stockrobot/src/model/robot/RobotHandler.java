@@ -3,6 +3,8 @@ package model.robot;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import utils.global.Log;
 
@@ -24,6 +26,7 @@ public class RobotHandler {
 	//Used to retrieve the algorithms and portfolios that are used
 	private IPortfolioHandler portfolioHandler;
 	private List<AlgorithmThread> algorithms;
+	private ExecutorService threadExecutor = Executors.newFixedThreadPool( 1 );
 	
 		
 	/**
@@ -47,7 +50,7 @@ public class RobotHandler {
 	 */
 	public void runAlgorithms(){
 		
-		Log.log(Log.TAG.VERY_VERBOSE, "Running algorithms");
+		Log.log(Log.TAG.VERBOSE, "Running algorithms");
 		
 		List<AlgorithmThread> stillRunning = new LinkedList<AlgorithmThread>();
 		
@@ -74,9 +77,12 @@ public class RobotHandler {
 			if(!found){
 				AlgorithmThread aThread = new AlgorithmThread(portfolio);
 				algorithms.add(aThread);
-				aThread.start();
+				//aThread.run();
+				threadExecutor.execute(aThread);
 			}
+			
 		}
+		Log.log(Log.TAG.VERBOSE, "Started execution of " + (algorithms.size() - stillRunning.size()) + " algorithms");
 	}
 	
 	/**
@@ -91,12 +97,12 @@ public class RobotHandler {
 	 * Additional functionality is to see it the algorithm have 
 	 * finished and how long the run took.
 	 */
-	private class AlgorithmThread extends Thread{
+	private class AlgorithmThread implements Runnable{
 		
 		public static final long NON_VALID_TIME = -1;
 		
 		private IPortfolio portfolio;
-		private boolean running = false;
+		private boolean running = true;
 		private long time = NON_VALID_TIME;
 		private long startTime = NON_VALID_TIME;
 		
@@ -147,11 +153,11 @@ public class RobotHandler {
 		public void run() {
 			time = NON_VALID_TIME;
 			
-			running = true;
 			startTime = System.currentTimeMillis();
 			
+			Log.log(Log.TAG.VERBOSE, "Start execution of " + portfolio.getName() + " with algorithm " + portfolio.getAlgorithm().getName());
 			portfolio.updateAlgorithm();
-			
+			Log.log(Log.TAG.VERBOSE, "Finnished execution of " + portfolio.getName());
 			
 			time = System.currentTimeMillis() - startTime;
 			running = false;

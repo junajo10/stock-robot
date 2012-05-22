@@ -20,7 +20,7 @@ import model.portfolio.IPortfolioHandler;
  */
 public class RobotScheduler implements Runnable{
 
-	//private RobotHandler handler;	
+	private RobotHandler handler;	
 	IPortfolioHandler portfolioHandler;
 
 	public static final long MILLI_SECOND = 1;
@@ -46,7 +46,7 @@ public class RobotScheduler implements Runnable{
 		this.portfolioHandler = portfolioHandler;
 	}
 	public RobotScheduler(IPortfolioHandler portfolioHandler, String host, int port) throws Exception {
-		//handler = new RobotHandler(portfolioHandler);
+		handler = new RobotHandler(portfolioHandler);
 		this.portfolioHandler = portfolioHandler;
 		usingServer = true;
 		
@@ -159,9 +159,7 @@ public class RobotScheduler implements Runnable{
 			StockPrices lastStock = JPAHelper.getInstance().getLastStockPrice();
 
 			if (lastStock != null && lastStock.getTime().getTime() > lastStockPriceDate.getTime()) {
-				for (IPortfolio p : portfolioHandler.getPortfolios()) {
-					p.updateAlgorithm();
-				}
+				handler.runAlgorithms();
 				lastStockPriceDate = lastStock.getTime();			
 			}
 		}
@@ -171,6 +169,7 @@ public class RobotScheduler implements Runnable{
 	 * This method is only called by {@link RobotSchedulerClient}
 	 */
 	public void doWork() {
+		
 		cleanDatabaseCache();
 		
 		runAlgorithms();

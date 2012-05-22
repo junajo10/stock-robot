@@ -6,6 +6,8 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import utils.global.Log;
+
 /**
  * 
  * @author Daniel
@@ -41,14 +43,19 @@ public class RobotSchedulerClient extends Thread{
 	}
 	@Override
 	public void run() {
+		
 		while(keepRunning) {
 			try {
 				// Blocking call:
+				Log.log(Log.TAG.VERBOSE, "Reading data from harvester");
 				inputStream.read();
-
+				Log.log(Log.TAG.VERBOSE, "Got data from harvester");
+				
 				robotScheduler.doWork();
+				
 			} catch (IOException e) {
 				// Try to reconnect if fail it fails give up.
+				Log.log(Log.TAG.VERBOSE, "IO exeption in harvester connection");
 				if (socket != null) {
 					try {
 						socket.close();
@@ -63,6 +70,7 @@ public class RobotSchedulerClient extends Thread{
 				} 
 			}
 		}
+		Log.log(Log.TAG.VERBOSE, "Connecting to harvester broke");
 	}
 	public void cleanup() {
 		keepRunning = false;
