@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Date;
 import java.util.EventListener;
@@ -107,7 +108,7 @@ public class GraphView extends JFrame implements IView {
         pnlRange.setLayout(new BoxLayout(pnlRange, BoxLayout.Y_AXIS));
         
         sldRange = new JSlider();
-        sldRange.setValue(100);
+        sldRange.setValue(10000);
         pnlRange.add(sldRange);
         
         pnlTimeRange = new JPanel();
@@ -190,6 +191,10 @@ public class GraphView extends JFrame implements IView {
     	return sldRange;
     }
     
+    public String getRangeValue(){
+		return txtRangeValue.getText();
+    }
+    
     /**
      * Creates a chart.
      * 
@@ -237,15 +242,10 @@ public class GraphView extends JFrame implements IView {
 
     public void setRange(Date dateLower, Date dateUpper){
     	
-    	dateAxis.setAutoRange(true);
     	dateAxis.setRange(dateLower,dateUpper);
     	
     }
-    
-    public void autoRange(){
-    	dateAxis.setAutoRange(true);
-    }
-    
+
 	@Override
 	public void display(Object model) {} //NOPMD
 
@@ -269,6 +269,10 @@ public class GraphView extends JFrame implements IView {
 		}
 		if(actions.get(rangeSliderListener) instanceof ChangeListener){
 			sldRange.addChangeListener((ChangeListener)actions.get(rangeSliderListener));
+		}
+		if(actions.get(rangeValueListener) instanceof KeyListener){
+			
+			txtRangeValue.addKeyListener((KeyListener) actions.get(rangeValueListener));
 		}
 	}
 

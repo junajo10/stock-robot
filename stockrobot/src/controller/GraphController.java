@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,7 +54,7 @@ public class GraphController implements IController {
 	public static final int HOUR_RANGE = 3;
 	
 	private int selectedRange = 2;
-	private int sliderValue = 100;
+	private int sliderValue = 0;
 	
 	private int selectedValue = 1;
 	
@@ -82,28 +84,35 @@ public class GraphController implements IController {
 	
 	private void updateRange(){
 	
-		DateTime upperDate = new DateTime();
-		upperDate = upperDate.minusDays(sliderValue);
+		final IJPAHelper jpaHelper = JPAHelper.getInstance();
+		
+		DateTime upperDate = new DateTime(jpaHelper.getLastStockPrice().getTime());
+		System.out.println("upper: "+ upperDate + " slide " + sliderValue);
+		upperDate = upperDate.minusDays(sliderValue/10);
 		DateTime lowerDate = upperDate;
 		
 		switch (selectedRange) {
 		case YEAR_RANGE:
-			lowerDate = lowerDate.minusYears(selectedValue);
+			upperDate = upperDate.minusYears(sliderValue/10);
+			lowerDate = upperDate.minusYears(selectedValue);
 			break;
 		case MONTH_RANGE:
-			lowerDate = lowerDate.minusMonths(selectedValue);
+			upperDate = upperDate.minusMonths(sliderValue/10);
+			lowerDate = upperDate.minusMonths(selectedValue);
 			break;
 		case DAY_RANGE:
-			lowerDate = lowerDate.minusDays(selectedValue);
+			upperDate = upperDate.minusDays(sliderValue/10);
+			lowerDate = upperDate.minusDays(selectedValue);
 			break;
 		case HOUR_RANGE:
-			lowerDate = lowerDate.minusHours(selectedValue);
+			upperDate = upperDate.minusHours(sliderValue/10);
+			lowerDate = upperDate.minusHours(selectedValue);
 			break;
 		default:
 			break;
 		}
 		
-		System.out.println("upper: "+ upperDate + " Lower: " + lowerDate);
+		
 		view.setRange(lowerDate.toDate(), upperDate.toDate());
 	}
 	
@@ -166,9 +175,32 @@ public class GraphController implements IController {
 			
 			JSlider slider = view.getSlider();
 			
-			sliderValue = slider.getMinimum()-slider.getValue();
+			sliderValue = slider.getMaximum()-slider.getValue();
 			updateRange();
 		}
+	}
+	
+	public class RangeValueLitesner implements KeyListener {
+
+		@Override
+		public void keyTyped(KeyEvent e) {} //NOPMD
+
+		@Override
+		public void keyPressed(KeyEvent e) {} //NOPMD
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			try {
+				selectedValue = Integer.valueOf(view.getRangeValue());
+			}catch (Exception err) {
+				
+			}
+			finally{
+				updateRange();
+			}
+			
+		}
+
 	}
 	
 	@Override
@@ -264,6 +296,7 @@ public class GraphController implements IController {
 		listeners.put(view.rangeDaySelectListener, new DayRangeListener());
 		listeners.put(view.rangeHourSelectListener, new HourRangeListener());
 		listeners.put(view.rangeSliderListener, new RangeSliderListener());
+		listeners.put(view.rangeValueListener, new RangeValueLitesner());
 		
 		return listeners;
 	}
