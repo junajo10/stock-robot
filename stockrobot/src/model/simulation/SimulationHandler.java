@@ -64,7 +64,7 @@ public class SimulationHandler extends SimModel {
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
 	}
-	private void initSimulation(String algorithmToSimulate, List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
+	private void initSimulation(String algorithmToSimulate) {
 		PortfolioEntity portfolioEntity = new PortfolioEntity("Simulated Portfolio");
 		portfolioEntity.setAlgorithm(algorithmToSimulate);
 		
@@ -81,10 +81,19 @@ public class SimulationHandler extends SimModel {
 		
 		portfolio.setAlgorithm(algorithm);
 		
-		if (longSettings != null) {
+		if (algorithmLongSettings != null) {
+			List<Pair<String, Long>> longSettings = new ArrayList<Pair<String,Long>>();
+			
+			for (AlgorithmSettingLong asl : algorithmLongSettings) {
+				longSettings.add(new Pair<String, Long>(asl.getName(), asl.getValue()));
+			}
 			algorithm.giveLongSettings(longSettings);
 		}
-		if (doubleSettings != null) {
+		if (algorithmDoubleSettings != null) {
+			List<Pair<String, Double>> doubleSettings = new ArrayList<Pair<String,Double>>();
+			for (AlgorithmSettingDouble asl : algorithmDoubleSettings) {
+				doubleSettings.add(new Pair<String, Double>(asl.getName(), asl.getValue()));
+			}
 			algorithm.giveDoubleSettings(doubleSettings);
 		}
 	}
@@ -94,13 +103,12 @@ public class SimulationHandler extends SimModel {
 	 * @param howManyStocksBack How many stocks back in time should be copied.
 	 * @return Returns the % difference
 	 */
-	public double simulateAlgorithm(String algorithmToSimulate, int howManyStocksBack,
-			List<Pair<String, Long>> longSettings, List<Pair<String, Double>> doubleSettings) {
+	public double simulateAlgorithm(String algorithmToSimulate, int howManyStocksBack) {
 		clearTestDatabase();
 		
 		latestPieData.clear();
 		
-		initSimulation(algorithmToSimulate, longSettings, doubleSettings);
+		initSimulation(algorithmToSimulate);
 		
 		long startingBalance = getInitialValue();
 		
@@ -253,7 +261,7 @@ public class SimulationHandler extends SimModel {
 			
 			@Override
 			public void run() {
-				simulateAlgorithm(getAlgorithm(), getStocksBack(), currentLongSettings(), currentDoubleSettings());
+				simulateAlgorithm(getAlgorithm(), getStocksBack());
 				
 				
 			}
@@ -282,11 +290,9 @@ public class SimulationHandler extends SimModel {
 	}
 	public void setLongSettings(List<AlgorithmSettingLong> longSettings) {
 		this.algorithmLongSettings = longSettings;
-		
 	}
 	public void setDoubleSettings(List<AlgorithmSettingDouble> doubleSettings) {
 		this.algorithmDoubleSettings = doubleSettings;
-		
 	}
 	public PortfolioEntity getPortfolioEntity() {
 		return portfolio.getPortfolioTable();

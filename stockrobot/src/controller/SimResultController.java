@@ -7,6 +7,8 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.database.jpa.tables.AlgorithmSettingDouble;
+import model.database.jpa.tables.AlgorithmSettingLong;
 import model.simulation.SimModel;
 import model.simulation.SimulationHandler;
 
@@ -17,13 +19,13 @@ import view.SimResultView;
  * @author Daniel
  */
 public class SimResultController implements IController {
-	
+
 	private static final String CLASS_NAME = "SimResultController";
-	
+
 	private SimResultView view;
 	private SimulationHandler model;
 	PortfolioHistoryController history = new PortfolioHistoryController();
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(final PropertyChangeEvent evt) {
@@ -52,8 +54,8 @@ public class SimResultController implements IController {
 		else if (evt.getPropertyName().contains(SimulationHandler.DONE)){
 			view.setDone();
 		}
-		
-		
+
+
 	}
 
 	ActionListener historyListener = new ActionListener() {
@@ -65,7 +67,7 @@ public class SimResultController implements IController {
 	@Override
 	public void display(final Object simModel) {
 		final SimModel oldModel = (SimModel) simModel;
-		
+
 		if (model == null) {
 			model = new SimulationHandler();
 		}
@@ -73,20 +75,21 @@ public class SimResultController implements IController {
 		model.setStocksBack(oldModel.getStocksBack());
 		model.setLongSettings(oldModel.getLongSettings());
 		model.setDoubleSettings(oldModel.getDoubleSettings());
+
 		model.setInitialValue(oldModel.getInitialValue());
-		
+
 		this.view = new SimResultView();
-		
+
 		view.setStartBalance(oldModel.getInitialValue());
-		
+
 		view.addActions(getActionListeners());
-		
+
 		view.display(this.model);
-		
+
 		view.addPropertyChangeListener(this);
-		
+
 		model.addPropertyChangeListener(this);
-		
+
 		model.startSimulation();
 	}
 

@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class SimView extends JFrame implements IView {
 	public static final String COMBOBOX = "ComboboxListener";
 	public static final String STARTSIMULATION = "Start Simulation";
 	public static final String CONFIGUREALGORTIHM = "Configure Algorithm";
+	public static final String WINDOWCLOSE = "Window Close";
 	/**
 	 * Launch the application.
 	 */
@@ -170,6 +172,13 @@ public class SimView extends JFrame implements IView {
 		for (ActionListener a : btnSimulate.getActionListeners()) {
 			btnSimulate.removeActionListener(a);
 		}
+		
+		for (ActionListener a : btnConfigureAlgorithm.getActionListeners()) {
+			btnConfigureAlgorithm.removeActionListener(a);
+		}
+		for (WindowListener a : getWindowListeners()) {
+			removeWindowListener(a);
+		}
 	}
 
 	@Override
@@ -178,6 +187,8 @@ public class SimView extends JFrame implements IView {
 		comboBox.addActionListener((ActionListener) actions.get(COMBOBOX));
 		btnSimulate.addActionListener((ActionListener) actions.get(STARTSIMULATION));
 		btnConfigureAlgorithm.addActionListener((ActionListener) actions.get(CONFIGUREALGORTIHM));
+		
+		addWindowListener((WindowListener) actions.get(WINDOWCLOSE));
 	}
 
 	@Override

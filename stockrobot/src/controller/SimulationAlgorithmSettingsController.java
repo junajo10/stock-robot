@@ -32,9 +32,11 @@ public class SimulationAlgorithmSettingsController implements IController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (algortihmSettingsDouble != null) {
+				algortihmSettingsDouble = view.getDoubleSettings();
 				model.giveDoubleSettings(algortihmSettingsDouble);
 			}
 			if (algortihmSettingsLong != null) {
+				algortihmSettingsLong = view.getLongSettings();
 				model.giveLongSettings(algortihmSettingsLong);
 			}
 		}
@@ -50,6 +52,7 @@ public class SimulationAlgorithmSettingsController implements IController {
 	@Override
 	public void display(Object model) {
 		view = new AlgorithmSettingsView( algorithmName );
+		view.init();
 		view.addActions( getActionListeners() );
 		
 		IAlgorithm algorithm = PluginAlgortihmLoader.getInstance().loadAlgorithm(algorithmName);
@@ -61,6 +64,9 @@ public class SimulationAlgorithmSettingsController implements IController {
 		
 		this.model = (SimModel) model;
 
+		this.model.giveDoubleSettings(algortihmSettingsDouble);
+		this.model.giveLongSettings(algortihmSettingsLong);
+		
 		view.display(null);
 	}
 

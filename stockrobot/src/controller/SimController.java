@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import javax.swing.JComboBox;
 
 import model.simulation.SimModel;
 
+import utils.AbstractWindowCloseAdapter;
 import utils.global.FinancialLongConverter;
 import view.SimView;
 
@@ -20,7 +23,7 @@ import view.SimView;
  */
 public class SimController implements IController {
 	private final SimView view = new SimView();
-	private SimModel model;
+	private SimModel model = new SimModel();
 	
 	
 	private SimulationAlgorithmSettingsController settingController;
@@ -50,6 +53,13 @@ public class SimController implements IController {
 			settingController.display(model);
 		}
 	};
+	
+	private final WindowListener windowClose = new AbstractWindowCloseAdapter() {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			cleanup();
+		}
+	};
 
 	
 	
@@ -62,14 +72,8 @@ public class SimController implements IController {
 	public void display(final Object model) {
 		defineSubControllers();
 		
-		if (this.model == null) {
-			this.model = new SimModel();
-		}
-		
-		
 		view.addActions(getActionListeners());
 		view.display(this.model);
-		
 	}
 
 	@Override
@@ -83,6 +87,7 @@ public class SimController implements IController {
 		actions.put(SimView.STARTSIMULATION, startSimulation);
 		actions.put(SimView.COMBOBOX, comboBoxListener);
 		actions.put(SimView.CONFIGUREALGORTIHM, configureAlgorithm);
+		actions.put(SimView.WINDOWCLOSE, windowClose);
 		return actions;
 	}
 

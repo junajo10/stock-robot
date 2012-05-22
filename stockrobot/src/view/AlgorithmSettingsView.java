@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.EventListener;
@@ -47,7 +48,8 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	private JPanel		mainContainer = new JPanel();;
 	
 	private JButton		saveBtn = new JButton();;
-	
+	List<AlgorithmSettingDouble> doubleSettings = new ArrayList<AlgorithmSettingDouble>();
+	List<AlgorithmSettingLong> longSettings = new ArrayList<AlgorithmSettingLong>();
 	public AlgorithmSettingsView( String algorithmName ) {
 		
 		this.algorithmName = algorithmName;
@@ -117,6 +119,8 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		SettingsPanelDouble panel = new SettingsPanelDouble( set, desc, init, min, max );
 		panel.init();
 		scrolledContainer.add(panel);
+		
+		doubleSettings.add(set);
 	}
 	
 	public void addSetting( AlgorithmSettingLong set, String desc, long init, long min, long max ) {
@@ -124,6 +128,8 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		SettingsPanelLong panel = new SettingsPanelLong( set, desc, init, min, max );
 		panel.init();
 		scrolledContainer.add(panel);
+		
+		longSettings.add(set);
 	}
 
 	@Override
@@ -168,5 +174,11 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 			
 			return o1.getName().hashCode() > o2.getName().hashCode() ? -1 : 1;
 		}
+	}
+	public List<AlgorithmSettingDouble> getDoubleSettings() {
+		return doubleSettings;
+	}
+	public List<AlgorithmSettingLong> getLongSettings() {
+		return longSettings;
 	}
 }
