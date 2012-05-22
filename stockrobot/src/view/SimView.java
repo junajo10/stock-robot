@@ -65,7 +65,9 @@ public class SimView extends JFrame implements IView {
 	 * Create the frame.
 	 */
 	public SimView() {
-		setBounds(100, 100, 242, 276);
+		setResizable(false);
+		setTitle("Simulate Algorithms");
+		setBounds(100, 100, 252, 276);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -106,22 +108,24 @@ public class SimView extends JFrame implements IView {
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNumberOfStocks)
-						.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 							.addComponent(lblAmountToStart)
 							.addContainerGap(107, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnSimulate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-								.addComponent(btnConfigureAlgorithm, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-								.addComponent(textFieldStartAmount, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+								.addComponent(btnSimulate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+								.addComponent(btnConfigureAlgorithm, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+								.addComponent(textFieldStartAmount, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(slider, 0, 0, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
 								.addComponent(comboBox, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
-							.addGap(147))))
+							.addGap(147))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblNumberOfStocks)
+							.addContainerGap(218, Short.MAX_VALUE))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -131,12 +135,11 @@ public class SimView extends JFrame implements IView {
 					.addGap(11)
 					.addComponent(btnConfigureAlgorithm)
 					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblNumberOfStocks)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNumberOfStocks)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblAmountToStart)
 					.addPreferredGap(ComponentPlacement.RELATED)
