@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import utils.global.FinancialLongConverter;
 import utils.global.Log;
 import utils.global.Pair;
 import utils.global.Log.TAG;
@@ -56,6 +57,9 @@ public class SimulationHandler extends SimModel {
 	public static final String NEWPIEDATA = "newPieData";
 	public static final String PORTFOLIOWORTH = "Portfolio Worth";
 	public static final String PROGRESSUPDATE = "Progress";
+	
+	public static final String BALANCEUPDATE = "Balance Update";
+	public static final String WORTHUPDATE = "Worth Update";
 	
 	public SimulationHandler() {
 		jpaSimHelper = robotSim.getJPAHelper();
@@ -124,6 +128,9 @@ public class SimulationHandler extends SimModel {
 			curr++;
 			if (curr%5 == 0) {
 				setProgress((int) (((double)curr/(double)max)*100));
+				
+				propertyChangeSupport.firePropertyChange(WORTHUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getCurrentWorth()));
+				propertyChangeSupport.firePropertyChange(BALANCEUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getUnusedAmount()));
 			}
 			
 			if (p.getTime().equals(lastSeenTime) || lastSeenTime == null) {
@@ -155,6 +162,9 @@ public class SimulationHandler extends SimModel {
 		setProgress(100);
 		Log.log(TAG.VERBOSE, "Simulation before selling of stocks: Current balance: " + portfolio.getPortfolioTable().getBalance());
 		
+		propertyChangeSupport.firePropertyChange(WORTHUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getCurrentWorth()));
+		propertyChangeSupport.firePropertyChange(BALANCEUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getUnusedAmount()));
+		
 		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
 			if (ph.getSoldDate() == null) {
 				fillPie(ph.getStockPrice().getStockName().getName(), ph.getAmount(), ph.getStockPrice().getBuy());
@@ -169,7 +179,9 @@ public class SimulationHandler extends SimModel {
 		updatePieData();
 		
 		Log.log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
-
+		propertyChangeSupport.firePropertyChange(WORTHUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getCurrentWorth()));
+		propertyChangeSupport.firePropertyChange(BALANCEUPDATE, "OldValue", FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getUnusedAmount()));
+		
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
 	}
 	private void updatePieData() {
@@ -273,5 +285,8 @@ public class SimulationHandler extends SimModel {
 	public void setDoubleSettings(List<AlgorithmSettingDouble> doubleSettings) {
 		this.algorithmDoubleSettings = doubleSettings;
 		
+	}
+	public PortfolioEntity getPortfolioEntity() {
+		return portfolio.getPortfolioTable();
 	}
 }

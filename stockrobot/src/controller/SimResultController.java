@@ -1,7 +1,10 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.Map;
 
 import model.simulation.SimModel;
@@ -19,6 +22,7 @@ public class SimResultController implements IController {
 	
 	private SimResultView view;
 	private SimulationHandler model;
+	PortfolioHistoryController history = new PortfolioHistoryController();
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -38,8 +42,22 @@ public class SimResultController implements IController {
 		else if (evt.getPropertyName().contains(SimulationHandler.PROGRESSUPDATE)){
 			view.setProgress((Integer)evt.getNewValue());
 		}
+		else if (evt.getPropertyName().contains(SimulationHandler.WORTHUPDATE)){
+			view.setCurrentWorth(evt.getNewValue().toString());
+		}
+		else if (evt.getPropertyName().contains(SimulationHandler.BALANCEUPDATE)){
+			view.setCurrentBalance(evt.getNewValue().toString());
+		}
+		
+		
 	}
 
+	ActionListener historyListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			history.display(model.getPortfolioEntity());
+		}
+	};
 	@Override
 	public void display(final Object simModel) {
 		final SimModel oldModel = (SimModel) simModel;
@@ -53,6 +71,9 @@ public class SimResultController implements IController {
 		model.setDoubleSettings(oldModel.getDoubleSettings());
 		
 		this.view = new SimResultView();
+		
+		view.addActions(getActionListeners());
+		
 		view.display(this.model);
 		
 		view.addPropertyChangeListener(this);
@@ -70,8 +91,9 @@ public class SimResultController implements IController {
 
 	@Override
 	public Map<String, EventListener> getActionListeners() { //NOPMD
-	
-		return null;
+		Map<String, EventListener> actions = new HashMap<String, EventListener>();
+		actions.put(SimResultView.HISTORYBUTTON, historyListener);
+		return actions;
 	}
 
 	@Override
