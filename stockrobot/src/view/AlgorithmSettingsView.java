@@ -43,10 +43,10 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	public static final String SAVE_DOWN = "savedDown";
 	
 	private String		algorithmName;
-	private JPanel 		scrolledContainer;
-	private JPanel		mainContainer;
+	private JPanel 		scrolledContainer = new JPanel();;
+	private JPanel		mainContainer = new JPanel();;
 	
-	private JButton		saveBtn;
+	private JButton		saveBtn = new JButton();;
 	
 	public AlgorithmSettingsView( String algorithmName ) {
 		
@@ -58,11 +58,9 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		//Main container for the algorithm settings window
-		mainContainer = new JPanel();
 		BoxLayout maincontainerLayout = new BoxLayout(mainContainer, BoxLayout.Y_AXIS);
 		mainContainer.setLayout( maincontainerLayout );
 		
-		scrolledContainer = new JPanel();
 		scrolledContainer.setBackground(SystemColor.control);
 		scrolledContainer.setMaximumSize(new Dimension(300,400));
 		BoxLayout containerLayout = new BoxLayout(scrolledContainer, BoxLayout.Y_AXIS);
@@ -73,7 +71,6 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 		scrollPane.getViewport().add( scrolledContainer );
 		
 		//Add save button
-		saveBtn = new JButton();
 		saveBtn.setText( "Save settings" );
 	}
 		
