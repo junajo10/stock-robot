@@ -221,8 +221,8 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		assertTrue(algorithm.getUpdatedNrTimes() > 2); //TODO: this test fails
+
+		assertTrue(algorithm.getUpdatedNrTimes() > 2); //TODO: these test fails
 		assertTrue(algorithm2.getUpdatedNrTimes() > 2);
 		assertTrue(algorithm3.getUpdatedNrTimes() > 2);
 		assertTrue(algorithm4.getUpdatedNrTimes() > 1);

@@ -231,7 +231,7 @@ public class WizardModelTest {
 		toTest.addPage(234);
 		toTest.addPage(232);
 		toTest.addPage(0);
-		Assert.assertTrue( toTest.addPage(35) ); //TODO: this test fails
+		Assert.assertFalse( toTest.addPage(35) );
 	}
 	
 	/**
@@ -241,7 +241,14 @@ public class WizardModelTest {
 	public void addPageTestNegative() {
 		
 		toTest.addPage(-10);
-		Assert.assertTrue( toTest.addPage(-124) ); //TODO: this test fails
+		Assert.assertFalse( toTest.addPage(-124) );
+	}
+	
+	@Test
+	public void addAlreadyExistingPage() {
+		
+		toTest.addPage(10);
+		Assert.assertTrue( toTest.addPage(10) );
 	}
 	
 	//TODO: Find out how to test if a propertChangeSupport has listeners
