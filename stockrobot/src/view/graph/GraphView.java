@@ -154,7 +154,7 @@ public class GraphView extends JFrame implements IView {
         sldDayRange.setValue(20);
         sldDayRange.setPaintTicks(true);
         sldDayRange.setPaintLabels(true);
-        sldDayRange.setMinimum(-31);
+        sldDayRange.setMinimum(-30);
         sldDayRange.setMaximum(0);
         sldDayRange.setMajorTickSpacing(2);
         pnlRange.add(sldDayRange);
