@@ -88,8 +88,6 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		
 		listOfPortfolios.add(p);
 		
-		pChangeSuport.firePropertyChange(MSG_PORTFOLIO_ADDED,null,p.getName());
-		
 		return p;
 	}
 	
@@ -108,6 +106,8 @@ public final class PortfolioHandler implements IPortfolioHandler{
 			pe.getAlgortihmSettings().initiate(algorithm.getDefaultDoubleSettings(), algorithm.getDefaultLongSettings());
 			
 			jpaHelper.updateObject(pe);
+			
+			pChangeSuport.firePropertyChange(MSG_PORTFOLIO_ADDED,null,p.getName());
 			
 			return true;
 		}

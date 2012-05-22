@@ -89,9 +89,9 @@ public class PortfolioWizardModel extends WizardPageModel{
 			IPortfolioHandler portfolioHandler = PortfolioHandler.getInstance();
 			
 			IPortfolio newPortfolio = portfolioHandler.createNewPortfolio(name);
+			newPortfolio.investAmount(balance);
 			
 			portfolioHandler.setAlgorithm(newPortfolio, algorithm);
-			newPortfolio.investAmount(balance);
 			
 			Log.log(Log.TAG.NORMAL, "Portfolio Created \n" +
 					"name: " + name + "\n" +
