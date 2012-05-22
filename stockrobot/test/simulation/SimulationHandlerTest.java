@@ -45,7 +45,7 @@ public class SimulationHandlerTest {
 	@Test
 	public void testAlgo1() {
 		simulationHandler.clearTestDatabase();
-		Assert.assertTrue(simulationHandler.simulateAlgorithm("TestAlgorithm1", 100, null, null) > 0);
+		Assert.assertTrue(simulationHandler.simulateAlgorithm("TestAlgorithm1", 100) > 0);
 		simulationHandler.clearTestDatabase();
 	}
 	/**
@@ -54,7 +54,7 @@ public class SimulationHandlerTest {
 	@Test
 	public void testAlgo2() {
 		simulationHandler.clearTestDatabase();
-		Assert.assertTrue(simulationHandler.simulateAlgorithm("TestAlgorithm2", 100, null, null) > 0);
+		Assert.assertTrue(simulationHandler.simulateAlgorithm("TestAlgorithm2", 100) > 0);
 		simulationHandler.clearTestDatabase();
 	}
 	
