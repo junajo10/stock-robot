@@ -3,7 +3,8 @@ package model.portfolio.wizard;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import utils.observer.IObservable;
+import model.IModel;
+
 
 
 /**
@@ -15,7 +16,7 @@ import utils.observer.IObservable;
  * PassablePortgolioBuilder used by portfolio wizard to incrementally build up all elements needed
  * to create a new portfolio.
  */
-public class PassablePortfolioBuilder implements IObservable {
+public class PassablePortfolioBuilder implements IModel {
 
 	private final PropertyChangeSupport observers;
 	

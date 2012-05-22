@@ -5,11 +5,12 @@ import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.IModel;
 
-import utils.observer.IObservable;
 
 
-public abstract class WizardPageModel implements IObservable {
+
+public abstract class WizardPageModel implements IModel {
 
 	protected PropertyChangeSupport observers;
 	protected Map<Integer,Boolean> properties = new HashMap<Integer,Boolean>(); //Returns a map with flags if property is set or not

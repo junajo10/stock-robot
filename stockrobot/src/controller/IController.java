@@ -37,11 +37,13 @@ public interface IController extends PropertyChangeListener{
 	/**
 	 * Lets the user define whatever subControllers are needed in this class.
 	 */
+	@Deprecated
 	void defineSubControllers();
 	
 	/**
 	 * The unique name for this controller, this can be used to sort out which subController should start.
 	 * @return
 	 */
+	@Deprecated
 	String getName();
 }

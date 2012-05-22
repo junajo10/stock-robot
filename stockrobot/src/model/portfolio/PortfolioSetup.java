@@ -3,7 +3,8 @@ package model.portfolio;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import utils.observer.IObservable;
+import model.IModel;
+
 
 
 /**
@@ -14,7 +15,7 @@ import utils.observer.IObservable;
  * Description:
  * PortfolioSetup is used to create new portfolios.
  */
-public class PortfolioSetup implements IObservable {
+public class PortfolioSetup implements IModel {
 
 	private final PropertyChangeSupport observers = new PropertyChangeSupport(this);
 	

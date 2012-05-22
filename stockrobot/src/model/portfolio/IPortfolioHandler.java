@@ -3,13 +3,14 @@ package model.portfolio;
 
 import java.util.List;
 
-import utils.observer.IObservable;
+import model.IModel;
+
 
 /**
  * @author Daniel
  *
  */
-public interface IPortfolioHandler extends IObservable {
+public interface IPortfolioHandler extends IModel {
 
 	public final static String MSG_PORTFOLIO_ADDED = "msgPortfolioAdded";
 	public final static String MSG_PORTFOLIO_REMOVED = "msgPortfolioRemoved";

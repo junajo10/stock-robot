@@ -1,6 +1,6 @@
 package model.trader;
 
-import utils.observer.IObservable;
+import model.IModel;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockPrices;
@@ -15,7 +15,7 @@ import model.database.jpa.tables.StockPrices;
  * This will be used by the algorithms to for 
  * buying new stock or selling old one.
  */
-public interface ITrader extends IObservable{
+public interface ITrader extends IModel{
 
 	//Stocks
 	public static final String BUY_STOCK 			= "buyStock";

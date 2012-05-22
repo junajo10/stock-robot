@@ -6,7 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-import utils.observer.IObservable;
+import model.IModel;
+
 
 /**
  * 
@@ -17,7 +18,7 @@ import utils.observer.IObservable;
  * Description:
  * The model that holds the values for the wizards.
  */
-public class WizardModel implements IObservable {
+public class WizardModel implements IModel {
 
 	public final static String EVT_TITLE_CHANGE 			= "evtTitleChange";
 	public final static String EVT_SUBTITLE_CHANGE 		= "evtSubtitleChange";
