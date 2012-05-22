@@ -187,4 +187,15 @@ public class SimView extends JFrame implements IView {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
+
+	public long getInitialValue() {
+		long value;
+		try {
+			value = Long.valueOf(textFieldStartAmount.getText());
+		} catch (NumberFormatException e) {
+			value = Long.valueOf("100000000");
+		}
+		
+		return value;
+	}
 }

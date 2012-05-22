@@ -33,6 +33,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
+import javax.swing.JButton;
 
 /**
  * The View for simulation results.
@@ -52,8 +53,10 @@ public class SimResultView extends JFrame implements IView {
 			pcs.firePropertyChange(SimulationHandler.RESULTCLOSE, false, true);
 		}
 	};
-	private final JLabel lblPortfolioWorth = new JLabel("Portfolio worth:");
+	private final JLabel lblPortfolioWorth = new JLabel("Portfolio change:");
 	private final JTextField textField = new JTextField();
+	private JTextField txtStartamount;
+	private JTextField txtCurrentamount;
 	
 	/**
 	 * Launch the application.
@@ -77,7 +80,7 @@ public class SimResultView extends JFrame implements IView {
 	 */
 	public SimResultView() {
 		textField.setEditable(false);
-		textField.setText("-5%");
+		textField.setText("0.00%");
 		textField.setColumns(10);
 		setBounds(100, 100, 729, 571);
 		contentPane = new JPanel();
@@ -86,9 +89,22 @@ public class SimResultView extends JFrame implements IView {
 		
 		
 		progressBar.setStringPainted(true);
-		progressBar.setValue(50);
 		
 		JLabel lblSimulationProgress = new JLabel("Simulation progress:");
+		
+		txtStartamount = new JTextField();
+		txtStartamount.setEditable(false);
+		txtStartamount.setColumns(10);
+		
+		JLabel lblStartamount = new JLabel("Start Amount:");
+		
+		txtCurrentamount = new JTextField();
+		txtCurrentamount.setEditable(false);
+		txtCurrentamount.setColumns(10);
+		
+		JLabel lblCurrentAmount = new JLabel("Current Amount:");
+		
+		JButton btnShowHistory = new JButton("Show History");
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -97,14 +113,28 @@ public class SimResultView extends JFrame implements IView {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblSimulationProgress)
 								.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(51)
+							.addGap(29)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblStartamount)
+								.addComponent(txtStartamount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(13)
+									.addComponent(lblCurrentAmount))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(18)
+									.addComponent(txtCurrentamount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+									.addComponent(btnShowHistory))
 								.addComponent(lblPortfolioWorth))))
 					.addContainerGap())
 		);
@@ -113,13 +143,18 @@ public class SimResultView extends JFrame implements IView {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSimulationProgress)
+						.addComponent(lblStartamount)
+						.addComponent(lblCurrentAmount)
 						.addComponent(lblPortfolioWorth))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtStartamount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtCurrentamount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnShowHistory))
 					.addGap(18)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);

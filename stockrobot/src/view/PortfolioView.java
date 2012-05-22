@@ -187,6 +187,8 @@ public class PortfolioView extends JFrame implements IView {
 			for(IPortfolio p : portfolios.getPortfolios()){
 				if (p.getName().equals(cmbSelectPortfolio.getItemAt(0))) {
 					selectedPortfolio = p;
+					
+					updateValues();
 				}
 			}
 			

@@ -28,6 +28,9 @@ public class SimController implements IController {
 	private final ActionListener startSimulation = new ActionListener() {
 		@Override
 		public void actionPerformed(final ActionEvent event) {
+			model.setInitialValue(Long.valueOf(view.getInitialValue()));
+			
+			
 			if (simResultController != null) {
 				simResultController.display(model);
 			}
