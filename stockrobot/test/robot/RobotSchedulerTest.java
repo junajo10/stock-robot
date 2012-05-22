@@ -96,7 +96,7 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 
 		tSched.start();
 		schedueler.pause();
-		Assert.assertTrue(schedueler.isPaused());
+		Assert.assertTrue(schedueler.isPaused()); //TODO: this test fails
 		schedueler.unpause();
 		Assert.assertFalse(schedueler.isPaused());
 	}
@@ -168,7 +168,7 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 			e.printStackTrace();
 		}
 
-		assertTrue(algorithm.getUpdatedNrTimes() > 0);
+		assertTrue(algorithm.getUpdatedNrTimes() > 0); //TODO: this test fails
 		schedueler.stop();
 		try {
 			Thread.sleep(RobotScheduler.MILLI_SECOND*50);
@@ -222,7 +222,7 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 			e.printStackTrace();
 		}
 		
-		assertTrue(algorithm.getUpdatedNrTimes() > 2);
+		assertTrue(algorithm.getUpdatedNrTimes() > 2); //TODO: this test fails
 		assertTrue(algorithm2.getUpdatedNrTimes() > 2);
 		assertTrue(algorithm3.getUpdatedNrTimes() > 2);
 		assertTrue(algorithm4.getUpdatedNrTimes() > 1);
