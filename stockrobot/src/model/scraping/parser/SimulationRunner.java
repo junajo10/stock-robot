@@ -30,8 +30,9 @@ public class SimulationRunner implements IParserRunner {
 	private PropertyChangeSupport pcs;
 	
 	
-	public SimulationRunner(int PORT_NR){
+	public SimulationRunner(int PORT_NR, PropertyChangeSupport pcs){
 		this.portNr = PORT_NR;
+		this.pcs = pcs;
 	}
 	@Override
 	public void run() {
@@ -188,9 +189,5 @@ public class SimulationRunner implements IParserRunner {
 			return false;
 		}
 	}
-	@Override
-	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
-		this.pcs = pcs;
-	}
-	
+
 }

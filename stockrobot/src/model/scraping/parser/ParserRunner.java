@@ -41,8 +41,9 @@ public class ParserRunner implements IParserRunner {
 	boolean skipScheduler = false;
 	private PropertyChangeSupport pcs;
 	
-	public ParserRunner(int PORT_NR){
+	public ParserRunner(int PORT_NR, PropertyChangeSupport pcs){
 		this.portNr = PORT_NR;
+		this.pcs = pcs;
 		//this.server = new HarvesterServer(port);
 		parser = new AvanzaParser();
 		inserter = new JPAInserter();
@@ -215,11 +216,6 @@ public class ParserRunner implements IParserRunner {
 		else {
 			return false;
 		}
-	}
-
-	@Override
-	public void setPropertyChangeSupport(PropertyChangeSupport pcs) {
-		this.pcs = pcs;
 	}
 	
 }
