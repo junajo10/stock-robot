@@ -49,9 +49,6 @@ public class SimulationAlgorithmSettingsController implements IController {
 
 	@Override
 	public void display(Object model) {
-		actionListeners = new HashMap<String, EventListener>();
-		actionListeners.put( AlgorithmSettingsView.SAVE_DOWN, saveDown );
-		
 		view = new AlgorithmSettingsView( algorithmName );
 		view.addActions( getActionListeners() );
 		
@@ -72,6 +69,10 @@ public class SimulationAlgorithmSettingsController implements IController {
 
 	@Override
 	public Map<String, EventListener> getActionListeners() {
+		if (actionListeners == null) {
+			actionListeners = new HashMap<String, EventListener>();
+			actionListeners.put( AlgorithmSettingsView.SAVE_DOWN, saveDown );
+		}
 		
 		return actionListeners;
 	}
