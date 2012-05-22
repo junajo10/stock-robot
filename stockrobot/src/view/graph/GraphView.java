@@ -33,6 +33,7 @@ import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeListener;
+import javax.swing.JSplitPane;
 
 /**
  * A simple view in which users can add as many companies stock price's as they like to.
@@ -55,7 +56,7 @@ public class GraphView extends JFrame implements IView {
 	private JPanel scrollPanelContainer;
 	private DateAxis dateAxis;
 	private JPanel pnlRange;
-	private JSlider sldRange;
+	private JSlider sldYearRange;
 	private JPanel pnlTimeRange;
 	private JRadioButton rdbtnRangeYears;
 	private JRadioButton rdbtnRangeMonths;
@@ -107,9 +108,12 @@ public class GraphView extends JFrame implements IView {
         getContentPane().add(pnlRange);
         pnlRange.setLayout(new BoxLayout(pnlRange, BoxLayout.Y_AXIS));
         
-        sldRange = new JSlider();
-        sldRange.setValue(10000);
-        pnlRange.add(sldRange);
+        sldYearRange = new JSlider();
+        sldYearRange.setPaintTicks(true);
+        sldYearRange.setPaintLabels(true);
+        sldYearRange.setMaximum(20);
+        sldYearRange.setValue(20);
+        pnlRange.add(sldYearRange);
         
         pnlTimeRange = new JPanel();
         pnlRange.add(pnlTimeRange);
@@ -188,7 +192,7 @@ public class GraphView extends JFrame implements IView {
     
     public JSlider getSlider(){
     	
-    	return sldRange;
+    	return sldYearRange;
     }
     
     public String getRangeValue(){
@@ -268,7 +272,7 @@ public class GraphView extends JFrame implements IView {
 			rdbtnRangeHours.addItemListener((ItemListener)actions.get(rangeHourSelectListener));
 		}
 		if(actions.get(rangeSliderListener) instanceof ChangeListener){
-			sldRange.addChangeListener((ChangeListener)actions.get(rangeSliderListener));
+			sldYearRange.addChangeListener((ChangeListener)actions.get(rangeSliderListener));
 		}
 		if(actions.get(rangeValueListener) instanceof KeyListener){
 			

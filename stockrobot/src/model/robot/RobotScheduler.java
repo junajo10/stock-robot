@@ -39,7 +39,7 @@ public class RobotScheduler implements Runnable{
 	RobotSchedulerClient client;
 
 	public RobotScheduler(IPortfolioHandler portfolioHandler){
-		//handler = new RobotHandler(portfolioHandler);
+		handler = new RobotHandler(portfolioHandler);
 		this.pauseLength = 5*SECOND;
 		usingServer = false;
 		this.portfolioHandler = portfolioHandler;
