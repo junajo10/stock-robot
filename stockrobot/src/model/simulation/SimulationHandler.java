@@ -269,25 +269,6 @@ public class SimulationHandler extends SimModel {
 		
 		simulationThread.start();
 	}
-	
-	private List<Pair<String, Double>> currentDoubleSettings() {
-		List<Pair<String, Double>> doubleSettingsPair = new ArrayList<Pair<String,Double>>();
-		if (algorithmDoubleSettings != null) {
-			for (AlgorithmSettingDouble asd : algorithmDoubleSettings) {
-				doubleSettingsPair.add(new Pair<String, Double>(asd.getName(), asd.getValue()));
-			}
-		}
-		return doubleSettingsPair;
-	}
-	private List<Pair<String, Long>> currentLongSettings() {
-		List<Pair<String, Long>> longSettingsPair = new ArrayList<Pair<String,Long>>();
-		if (algorithmLongSettings != null) {
-			for (AlgorithmSettingLong asl : algorithmLongSettings) {
-				longSettingsPair.add(new Pair<String, Long>(asl.getName(), asl.getValue()));
-			}
-		}
-		return longSettingsPair;
-	}
 	public void setLongSettings(List<AlgorithmSettingLong> longSettings) {
 		this.algorithmLongSettings = longSettings;
 	}

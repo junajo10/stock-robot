@@ -3,25 +3,19 @@ package testsuiteforeverything;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import controller.gui.GraphControllerTest;
-import controller.gui.SimulationControllerTest;
 import database.jpa.JPATest;
 import database.jpa.MainBasicJPATest;
 import controller.wizard.portfolio.WizardFromNewPageControllerTest;
 import portfolio.PortfolioHandlerTest;
 import portfolio.PortfolioTest;
-import robot.AstroRecieverTest;
-import robot.RobotSchedulerTest;
 import robot.TraderTest;
 import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
 import view.components.ItemCmbPortfolioTest;
-import model.scraping.ParserRunnerTest;
 import model.scraping.ParserStockTest;
 import model.scraping.SchedulerTest;
 import model.scraping.parser.AvanzaParserTest;
-import model.scraping.parser.SimulationRunnerTest;
 import model.wizard.WizardModelTest;
 import model.wizard.WizardPageModelTest;
 

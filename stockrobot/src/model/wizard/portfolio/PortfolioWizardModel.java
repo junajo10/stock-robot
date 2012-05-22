@@ -2,9 +2,7 @@ package model.wizard.portfolio;
 
 import utils.global.FinancialLongConverter;
 import utils.global.Log;
-import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.tables.PortfolioEntity;
-import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.PortfolioHandler;

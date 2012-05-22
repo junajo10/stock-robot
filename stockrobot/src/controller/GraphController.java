@@ -82,7 +82,7 @@ public class GraphController implements IController {
 		final IJPAHelper jpaHelper = JPAHelper.getInstance();
 		
 		DateTime upperDate = new DateTime(jpaHelper.getLastStockPrice().getTime());
-		System.out.println("upper: "+ upperDate + " slide " + sliderValue);
+
 		upperDate = upperDate.minusDays(sliderValue/10);
 		DateTime lowerDate = upperDate;
 		

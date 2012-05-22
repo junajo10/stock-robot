@@ -7,8 +7,6 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.database.jpa.tables.AlgorithmSettingDouble;
-import model.database.jpa.tables.AlgorithmSettingLong;
 import model.simulation.SimModel;
 import model.simulation.SimulationHandler;
 

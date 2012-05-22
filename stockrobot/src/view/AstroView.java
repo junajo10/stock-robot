@@ -9,7 +9,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import javax.swing.JProgressBar; 
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.Color;
@@ -25,9 +24,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JCheckBox;
 import java.awt.SystemColor;
 

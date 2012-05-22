@@ -7,7 +7,6 @@ import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
-import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 
 /**
@@ -155,7 +154,7 @@ public class RobotScheduler implements Runnable{
 
 	public void runAlgorithms() {
 		if (isRunning) {
-
+			cleanDatabaseCache();
 			StockPrices lastStock = JPAHelper.getInstance().getLastStockPrice();
 
 			if (lastStock != null && lastStock.getTime().getTime() > lastStockPriceDate.getTime()) {
