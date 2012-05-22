@@ -34,6 +34,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeListener;
 import javax.swing.JSplitPane;
+import javax.swing.JLabel;
 
 /**
  * A simple view in which users can add as many companies stock price's as they like to.
@@ -70,7 +71,14 @@ public class GraphView extends JFrame implements IView {
 	public final String rangeDaySelectListener 	= "rngDaySelectListener";
 	public final String rangeHourSelectListener 	= "rnghourSelectListener";
 	public final String rangeValueListener  = "rngValueListener";
-	public final String rangeSliderListener = "rngSliderListener";
+	public final String rangeYearSliderListener 	= "rngYearSliderListener";
+	public final String rangeMonthSliderListener 	= "rngMonthSliderListener";
+	public final String rangeDaySliderListener 	= "rngDaySliderListener";
+	private JLabel lblYears;
+	private JLabel labelMonths;
+	private JSlider sldMonthRange;
+	private JLabel lblDays;
+	private JSlider sldDayRange;
 
 	
 	
@@ -108,12 +116,48 @@ public class GraphView extends JFrame implements IView {
         getContentPane().add(pnlRange);
         pnlRange.setLayout(new BoxLayout(pnlRange, BoxLayout.Y_AXIS));
         
+        lblYears = new JLabel("Years");
+        pnlRange.add(lblYears);
+        
         sldYearRange = new JSlider();
-        sldYearRange.setPaintTicks(true);
+        sldYearRange.setToolTipText("");
+        sldYearRange.setMinorTickSpacing(1);
+        sldYearRange.setSnapToTicks(true);
+        sldYearRange.setMinimum(-20);
         sldYearRange.setPaintLabels(true);
-        sldYearRange.setMaximum(20);
+        sldYearRange.setPaintTicks(true);
+        sldYearRange.setMajorTickSpacing(2);
+        sldYearRange.setMaximum(0);
         sldYearRange.setValue(20);
         pnlRange.add(sldYearRange);
+        
+        labelMonths = new JLabel("Months");
+        pnlRange.add(labelMonths);
+        
+        sldMonthRange = new JSlider();
+        sldMonthRange.setMinorTickSpacing(1);
+        sldMonthRange.setSnapToTicks(true);
+        sldMonthRange.setValue(20);
+        sldMonthRange.setPaintTicks(true);
+        sldMonthRange.setPaintLabels(true);
+        sldMonthRange.setMinimum(-11);
+        sldMonthRange.setMaximum(0);
+        sldMonthRange.setMajorTickSpacing(1);
+        pnlRange.add(sldMonthRange);
+        
+        lblDays = new JLabel("Days");
+        pnlRange.add(lblDays);
+        
+        sldDayRange = new JSlider();
+        sldDayRange.setMinorTickSpacing(1);
+        sldDayRange.setSnapToTicks(true);
+        sldDayRange.setValue(20);
+        sldDayRange.setPaintTicks(true);
+        sldDayRange.setPaintLabels(true);
+        sldDayRange.setMinimum(-31);
+        sldDayRange.setMaximum(0);
+        sldDayRange.setMajorTickSpacing(2);
+        pnlRange.add(sldDayRange);
         
         pnlTimeRange = new JPanel();
         pnlRange.add(pnlTimeRange);
@@ -190,10 +234,20 @@ public class GraphView extends JFrame implements IView {
     	
     }
     
-    public JSlider getSlider(){
+    public JSlider getYearSlider(){
     	
     	return sldYearRange;
     }
+    
+	public JSlider getMonthSlider(){
+	    	
+		return sldMonthRange;
+	}
+
+	public JSlider getDaySlider(){
+	
+		return sldDayRange;
+	}
     
     public String getRangeValue(){
 		return txtRangeValue.getText();
@@ -271,8 +325,14 @@ public class GraphView extends JFrame implements IView {
 		if(actions.get(rangeHourSelectListener) instanceof ItemListener){
 			rdbtnRangeHours.addItemListener((ItemListener)actions.get(rangeHourSelectListener));
 		}
-		if(actions.get(rangeSliderListener) instanceof ChangeListener){
-			sldYearRange.addChangeListener((ChangeListener)actions.get(rangeSliderListener));
+		if(actions.get(rangeYearSliderListener) instanceof ChangeListener){
+			sldYearRange.addChangeListener((ChangeListener)actions.get(rangeYearSliderListener));
+		}
+		if(actions.get(rangeMonthSliderListener) instanceof ChangeListener){
+			sldMonthRange.addChangeListener((ChangeListener)actions.get(rangeMonthSliderListener));
+		}
+		if(actions.get(rangeDaySliderListener) instanceof ChangeListener){
+			sldDayRange.addChangeListener((ChangeListener)actions.get(rangeDaySliderListener));
 		}
 		if(actions.get(rangeValueListener) instanceof KeyListener){
 			

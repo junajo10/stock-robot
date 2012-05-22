@@ -49,7 +49,9 @@ public class GraphController implements IController {
 	public static final int HOUR_RANGE = 3;
 	
 	private int selectedRange = 2;
-	private int sliderValue = 0;
+	private int sliderYearValue = 0;
+	private int sliderMonthValue = 0;
+	private int sliderDayValue = 0;
 	
 	private int selectedValue = 1;
 	
@@ -82,24 +84,25 @@ public class GraphController implements IController {
 		final IJPAHelper jpaHelper = JPAHelper.getInstance();
 		
 		DateTime upperDate = new DateTime(jpaHelper.getLastStockPrice().getTime());
-		upperDate = upperDate.minusDays(sliderValue/10);
+		
+		
+		upperDate = upperDate.minusYears(sliderYearValue);
+		upperDate = upperDate.minusMonths(sliderMonthValue);
+		upperDate = upperDate.minusDays(sliderDayValue);
+		
 		DateTime lowerDate = upperDate;
 		
 		switch (selectedRange) {
 		case YEAR_RANGE:
-			upperDate = upperDate.minusYears(sliderValue/10);
 			lowerDate = upperDate.minusYears(selectedValue);
 			break;
 		case MONTH_RANGE:
-			upperDate = upperDate.minusMonths(sliderValue/10);
 			lowerDate = upperDate.minusMonths(selectedValue);
 			break;
-		case DAY_RANGE:
-			upperDate = upperDate.minusDays(sliderValue/10);
+		case DAY_RANGE :
 			lowerDate = upperDate.minusDays(selectedValue);
 			break;
 		case HOUR_RANGE:
-			upperDate = upperDate.minusHours(sliderValue/10);
 			lowerDate = upperDate.minusHours(selectedValue);
 			break;
 		default:
@@ -149,27 +152,38 @@ public class GraphController implements IController {
 		}
 	}
 	
-	private class HourRangeListener implements ItemListener{
-
-		@Override
-		public void itemStateChanged(ItemEvent e) {
-			
-			if(e.getStateChange() == ItemEvent.SELECTED) {
-				selectedRange = HOUR_RANGE;
-				Log.log(Log.TAG.DEBUG, "Hour selected");
-				updateRange();
-			}
-		}
-	}
-	
-	private class RangeSliderListener implements ChangeListener{
+	private class RangeYearSliderListener implements ChangeListener{
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			
-			JSlider slider = view.getSlider();
+			JSlider slider = view.getYearSlider();
 			
-			sliderValue = slider.getMaximum()-slider.getValue();
+			sliderYearValue = Math.abs(slider.getValue());
+			updateRange();
+		}
+	}
+	
+	private class RangeMonthSliderListener implements ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			
+			JSlider slider = view.getMonthSlider();
+			
+			sliderMonthValue = Math.abs(slider.getValue());
+			updateRange();
+		}
+	}
+	
+	private class RangeDaySliderListener implements ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			
+			JSlider slider = view.getDaySlider();
+			
+			sliderDayValue = Math.abs(slider.getValue());
 			updateRange();
 		}
 	}
@@ -288,8 +302,9 @@ public class GraphController implements IController {
 		listeners.put(view.rangeYearSelectListener, new YearRangeListener());
 		listeners.put(view.rangeMonthSelectListener, new MonthRangeListener());
 		listeners.put(view.rangeDaySelectListener, new DayRangeListener());
-		listeners.put(view.rangeHourSelectListener, new HourRangeListener());
-		listeners.put(view.rangeSliderListener, new RangeSliderListener());
+		listeners.put(view.rangeYearSliderListener, new RangeYearSliderListener());
+		listeners.put(view.rangeMonthSliderListener, new RangeMonthSliderListener());
+		listeners.put(view.rangeDaySliderListener, new RangeDaySliderListener());
 		listeners.put(view.rangeValueListener, new RangeValueLitesner());
 		
 		return listeners;
