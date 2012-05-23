@@ -45,11 +45,10 @@ public class PortfolioView extends JFrame implements IView {
 	private JLabel lblBalanceVar;
 	private JLabel lblTotalVar;
 	
-	private JButton btnSeeStock;
 	private JButton btnHistory;
 	private JButton btnNewPortfolio;
 	private JButton btnManageAlgortihmSettings;
-	private JButton btnSettings = new JButton("Settings");
+	private JButton btnSettings = new JButton("Portfolio Settings");
 	
 	private IPortfolio selectedPortfolio;
 	
@@ -102,10 +101,6 @@ public class PortfolioView extends JFrame implements IView {
 					.addContainerGap(11, Short.MAX_VALUE))
 		);
 		pnlViewsHolder.setLayout(new BoxLayout(pnlViewsHolder, BoxLayout.X_AXIS));
-		
-		btnSeeStock = new JButton("Stock");
-		btnSeeStock.setEnabled(false);
-		pnlViewsHolder.add(btnSeeStock);
 		
 		btnHistory = new JButton("History");
 		pnlViewsHolder.add(btnHistory);
