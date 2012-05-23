@@ -242,7 +242,8 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 					StockNames stockName = buyPoint.getRight().getStockPrice().getStockName();
 					StockPrices latestStockPrice = jpaHelper.getLastStock(stockName, entry.getKey().toDate());
 					long amount = buyPoint.getRight().getAmount();
-					entry.getValue().add(latestStockPrice.getSell()*amount);
+					if (latestStockPrice != null)
+						entry.getValue().add(latestStockPrice.getSell()*amount);
 				}
 			}
 			for (Entry<DateTime, LongContainer> entry : worthMap.entrySet()) {
