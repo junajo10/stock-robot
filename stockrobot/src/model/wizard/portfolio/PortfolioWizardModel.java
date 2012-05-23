@@ -52,7 +52,6 @@ public class PortfolioWizardModel extends WizardPageModel{
 			Log.log(Log.TAG.DEBUG, "[PageModel] Algorithm set to " + algorithm);
 		}else{
 			properties.put(PROPERTY_ALGORITHM, false);
-			//TODO fire error event
 		}
 	}
 	
@@ -64,7 +63,6 @@ public class PortfolioWizardModel extends WizardPageModel{
 			Log.log(Log.TAG.DEBUG, "[PageModel] Balance set to " + amount);
 		}else{
 			properties.put(PROPERTY_BALANCE, false);
-			//TODO send error event
 		}
 	}
 	
