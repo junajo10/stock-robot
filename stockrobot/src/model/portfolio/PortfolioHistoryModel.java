@@ -19,7 +19,7 @@ import java.util.TreeMap;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import org.jfree.data.time.Day;
+import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -33,6 +33,7 @@ import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.PortfolioInvestment;
+import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 
 public class PortfolioHistoryModel implements PropertyChangeListener {
@@ -155,8 +156,7 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 					lc.setValue(lc.getValue() - ph.getAmount()*ph.getStockPrice().getBuy());
 				}
 				else {
-					long value = ph.getStockPrice().getBuy() * ph.getAmount();
-					value = value - 2*value;
+					long value = -(ph.getStockPrice().getBuy() * ph.getAmount());
 
 					sortedMap.put(ph.getBuyDate(), new LongContainer(value));
 				}
@@ -179,79 +179,76 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 			investments.addAll(selectedPortfolio.getInvestments());
 			Collections.sort(investments, new PortfolioInvestmentComparator());
 
-			long investedSoFar = 0;
+			
 			for (int i = 0; i < investments.size(); i++) {
+				long invested = 0;
 				if (investments.get(i).didInvest())
-					investedSoFar += investments.get(i).getAmount();
+					invested += investments.get(i).getAmount();
 				else
-					investedSoFar -= investments.get(i).getAmount();
+					invested -= investments.get(i).getAmount();
 
 				Date startDate = investments.get(i).getDate();
-				Date endDate = null;
-				if (i + 1 == investments.size()) {
-					endDate = new Date(System.currentTimeMillis());
-				}
-				else
-					endDate = investments.get(i+1).getDate();
+				Date endDate = new Date(System.currentTimeMillis());
 
 				SortedMap<Date, LongContainer> subMap = sortedMap.subMap(startDate, endDate);
 				Collection<LongContainer> bepa = subMap.values();
 				for (LongContainer l : bepa) {
-					l.setValue(investedSoFar);
+					l.setValue(l.getValue() + invested);
 				}
 			}
-
-			DateTime dtLast = new DateTime(0);
-			long currentValue = 0;
 
 			for (Entry<Date, LongContainer> apa : sortedMap.entrySet()) {
-				DateTime dtFromMap = new DateTime(apa.getKey());
-				if (dtFromMap.getDayOfYear() == dtLast.getDayOfYear()) {
-					currentValue += apa.getValue().getValue();
-				}
-				else {
-					dtLast = new DateTime(apa.getKey());
-					currentValue = apa.getValue().getValue();
-
-					t1.add(new Day(apa.getKey()), FinancialLongConverter.toDouble(currentValue));
-
-				}
-			}
-			try {
-				t1.add(new Day(dtLast.toDate()), currentValue);
-			} catch (Exception e) {
+				t1.add(new Millisecond(apa.getKey()), FinancialLongConverter.toDouble(apa.getValue().getValue()));
 			}
 		}
+		
 		return t1;
 	}
 	private void generateTimeSeries() {
 		TimeSeries worth = new TimeSeries("Worth");
-
+		
 		if (history.size() > 0) {
-			DateTime currDate = new DateTime(history.get(0).getBuyDate());
-			int minutesUntilAlmostMidnight = 60*24 - currDate.getMinuteOfDay() - 1;
-			currDate = currDate.plusMinutes(minutesUntilAlmostMidnight);
-
-			DateTime tomorrow = new DateTime(System.currentTimeMillis());
-			tomorrow.plusMinutes(60*24 - tomorrow.getMinuteOfDay());
-
-			while (currDate.isBefore(tomorrow)) {
-				long currWorth = 0;
-				for (PortfolioHistory ph : history) {
-					if (ph.getBuyDate().getTime() <= currDate.toDate().getTime()) {
-						if (ph.getSoldDate() == null) {
-							StockPrices sp = jpaHelper.getLastStock(ph.getStockPrice().getStockName(), currDate.toDate());
-							if (sp != null)
-								currWorth += ph.getAmount() * sp.getSell();
-						}
-					}
-					else
-						break; /* Since history is sorted on time we dont need to check more */
+			
+			List<Pair<DateTime, PortfolioHistory>> buyList = new ArrayList<Pair<DateTime, PortfolioHistory>>();
+			List<Pair<DateTime, PortfolioHistory>> sellList = new ArrayList<Pair<DateTime,PortfolioHistory>>();
+			Map<PortfolioHistory, DateTime> sellMap = new HashMap<PortfolioHistory, DateTime>();
+			
+			DateTime currentDate = new DateTime();
+			for (PortfolioHistory ph : history) {
+				buyList.add(new Pair<DateTime, PortfolioHistory>(new DateTime(ph.getBuyDate()), ph));
+				if (ph.stillInPortFolio()) {
+					sellList.add(new Pair<DateTime, PortfolioHistory>(currentDate, ph));
+					sellMap.put(ph, currentDate);
 				}
-				currDate = currDate.minusMinutes(currDate.getMinuteOfDay() - 1);
-				worth.add(new Day(currDate.toDate()), FinancialLongConverter.toDouble(currWorth));
-				currDate = currDate.plusDays(1);
+				else {
+					sellList.add(new Pair<DateTime, PortfolioHistory>(new DateTime(ph.getSoldDate()), ph));
+					sellMap.put(ph, new DateTime(ph.getSoldDate()));
+				}
 			}
+			
+			SortedMap<DateTime, LongContainer> worthMap = new TreeMap<DateTime, LongContainer>();
+			
+			for (Pair<DateTime, PortfolioHistory> buyPoint : buyList) {
+				worthMap.put(buyPoint.getLeft(), new LongContainer(0));				
+			}
+			for (Pair<DateTime, PortfolioHistory> sellPoint : sellList) {
+				worthMap.put(sellPoint.getLeft(), new LongContainer(0));				
+			}
+			
+			for (Pair<DateTime, PortfolioHistory> buyPoint : buyList) {
+				SortedMap<DateTime, LongContainer> subMap = worthMap.subMap(buyPoint.getLeft(), currentDate);
+				for (Entry<DateTime, LongContainer> apa : subMap.entrySet()) {
+					//Add the current value
+					StockNames stockName = buyPoint.getRight().getStockPrice().getStockName();
+					StockPrices latestStockPrice = jpaHelper.getLastStock(stockName, apa.getKey().toDate());
+					long amount = buyPoint.getRight().getAmount();
+					apa.getValue().add(latestStockPrice.getSell()*amount);
+				}
+			}
+			for (Entry<DateTime, LongContainer> apa : worthMap.entrySet()) {
+				worth.add(new Millisecond(apa.getKey().toDate()), FinancialLongConverter.toDouble(apa.getValue().getValue()));
+			}
+			worth.add(new Millisecond(new Date(System.currentTimeMillis())), 0);
 		}
 
 
