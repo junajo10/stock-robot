@@ -1,9 +1,14 @@
 package controller.gui;
 
-/*
+
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
-*/
+import org.junit.Test;
+
+import controller.GraphController;
+
 import testhelpers.DatabaseCleaner;
 
 /**
@@ -14,7 +19,7 @@ import testhelpers.DatabaseCleaner;
  */
 public class GraphControllerTest extends DatabaseCleaner {
 	
-	/*
+	
 	private GraphController toTest;
 	
 	@Before 
@@ -26,38 +31,16 @@ public class GraphControllerTest extends DatabaseCleaner {
 	@After
 	public void tearDownTest() {
 		
+		toTest.cleanup();
 		toTest = null;
 	}
 	
-	
+	/**
+	 * It's important to know the view is created in the controller, and not destroyed by something by accident
+	 */
 	@Test
-	public void testBindViewIsTheSameEquals() {
+	public void viewIsntNull() {
 		
-		GraphView view = ViewFactory.getGraphView();
-		toTest.bindGraphView( view );
-		
-		Assert.assertTrue( view.equals( toTest.getView() ) );
+		Assert.assertNotNull( toTest.getView() );
 	}
-	
-	@Test
-	public void testBindViewIsTheSameInstance() {
-		
-		GraphView view = ViewFactory.getGraphView();
-		toTest.bindGraphView( view );
-		
-		Assert.assertTrue( view == toTest.getView() );
-	}
-	
-	@Test
-	public void testRunActionListener() {
-		
-		//Fake a user/GUI call to the ActionListener provided by toTest
-		//If nothing was broken/no error was raised by the actionPerformed, for now, let's say everything went OK
-		ActionListener listener = toTest.bindAddStock();
-		
-		ActionEvent fakeEvent = new ActionEvent( new Object(), 0, "FakeTest" );
-		
-		listener.actionPerformed( fakeEvent );
-	}
-	*/
 }

@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 import database.jpa.JPATest;
 import database.jpa.MainBasicJPATest;
+import controller.gui.GraphControllerTest;
 import controller.wizard.portfolio.WizardFromNewPageControllerTest;
 import portfolio.PortfolioHandlerTest;
 import portfolio.PortfolioTest;
@@ -36,7 +37,7 @@ import model.wizard.WizardPageModelTest;
 @Suite.SuiteClasses({
 	FinancialLongConverterTest.class,
 	PairTest.class,
-	//GraphControllerTest.class,  //TODO: Kristian: fix
+	GraphControllerTest.class,
 	JPATest.class,
 	MainBasicJPATest.class,
 	ItemCmbPortfolioTest.class,
