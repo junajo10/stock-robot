@@ -95,7 +95,7 @@ public class AstroController implements IController {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					Log.instance().clearLog();
+					view.clearLog();
 				}
 			});
 		}
@@ -109,7 +109,7 @@ public class AstroController implements IController {
 				public void run() {
 					File logTxtFile = view.openChooseDirectory();
 					if (logTxtFile != null) {
-						ListModel model = Log.instance().getModel();
+						ListModel model = view.getLogModel();
 						PrintStream out = null;
 						try {
 							out = new PrintStream(new FileOutputStream(logTxtFile));
@@ -154,8 +154,6 @@ public class AstroController implements IController {
 		String server[] = parserServer.toString().split(":");
 		String host = "";
 		int port = 0;
-		
-		view.setLogModel(Log.instance().getModel());
 		
 		if (server.length >= 2) {
 			host = parserServer.toString().substring(0, parserServer.toString().lastIndexOf(":"));

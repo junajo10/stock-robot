@@ -1,7 +1,12 @@
 package model.robot;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.net.UnknownHostException;
 
+import utils.global.Log;
+
+import model.IModel;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.portfolio.IPortfolioHandler;
@@ -16,13 +21,14 @@ import model.trader.TraderSimulator;
  * 
  * @author Daniel
  */
-public class AstroModel implements IRobot_Algorithms{
+public class AstroModel implements IRobot_Algorithms, IModel{
 	private IJPAHelper jpaHelper = JPAHelper.getInstance();
 	private ITrader trader = TraderSimulator.getInstance();
 	
 	private IPortfolioHandler portfolioHandler;
 	
 	private RobotScheduler robotScheduler;
+	private PropertyChangeSupport observers;
 	
 	/**
 	 * This starts robotScheduler without connection to the parser,
@@ -30,9 +36,10 @@ public class AstroModel implements IRobot_Algorithms{
 	 */
 	public AstroModel() {
 		jpaHelper = JPAHelper.getInstance();
-
+		observers = new PropertyChangeSupport(this);
 		portfolioHandler = PortfolioHandler.getInstance(this);
 		robotScheduler = new RobotScheduler(portfolioHandler);
+		Log.instance().addObservers(observers);
 	}
 	/**
 	 * This starts robotScheduler with a connection to the parser,
@@ -68,5 +75,15 @@ public class AstroModel implements IRobot_Algorithms{
 	public void startScheduler() {
 		Thread t = new Thread(robotScheduler);
 		t.start();
+	}
+	@Override
+	public void addObserver(PropertyChangeListener listener) {
+		if(observers!=null && listener!=null){
+			observers.addPropertyChangeListener(listener);
+		}
+	}
+	@Override
+	public void removeObserver(PropertyChangeListener listener) {
+		observers.removePropertyChangeListener(listener);
 	}
 }

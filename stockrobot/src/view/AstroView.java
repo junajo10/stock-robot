@@ -23,8 +23,12 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
+
+import model.IModel;
+
 import java.awt.SystemColor;
 
 /**
@@ -47,6 +51,7 @@ public class AstroView extends JFrame implements IView {
 	public static final String SHOW_LOG			 		= "ShowLog";
 	public static final String CLEAR_LOG			 	= "ClearLog";
 	public static final String EXPORT_LOG			 	= "ExportLog";
+	public static final String ADD_LISTITEM				= "AddListItem";
 
 	private final int HEIGHT_FRAME_SUBTRACTED 	= 146;
 	private final int HEIGHT_FRAME_EXPANDED 	= 655;
@@ -60,6 +65,7 @@ public class AstroView extends JFrame implements IView {
 	private JButton btnClearLog 								= new JButton("Clear Log");
 	private JButton btnExportLog 								= new JButton("Export Log");
 	
+	private JCheckBox cbxAutoScroll 							= new JCheckBox("Autoscroll Log");
 	private JCheckBox chckbxShowLog								= new JCheckBox("Show Log");
 	private JPanel contentPane 									= new JPanel();
 
@@ -139,7 +145,7 @@ public class AstroView extends JFrame implements IView {
 		scrollPane.setViewportView(log);
 		log.setModel(logModel);
 		
-		JCheckBox cbxAutoScroll = new JCheckBox("Autoscroll Log");
+
 		cbxAutoScroll.setBackground(null);
 		cbxAutoScroll.setForeground(Color.BLACK);
 		cbxAutoScroll.setSelected(true);
@@ -178,14 +184,14 @@ public class AstroView extends JFrame implements IView {
 		contentPane.setLayout(gl_contentPane);
 	}
 	
-	public void addLogItem(Object o){
+	private void addLogItem(Object o){
 		String str = (String) o;
 		logModel.addElement(str);
+		if(cbxAutoScroll.isSelected()){
+			log.ensureIndexIsVisible(logModel.size()-1);
+		}
 	}
 	
-	public void setLogModel(DefaultListModel model){
-		log.setModel(model);
-	}
 	
 	public void showLog(){
 		Rectangle currentPosition = getBounds();
@@ -202,9 +208,13 @@ public class AstroView extends JFrame implements IView {
 	public Boolean getShowLogIsSelected(){
 		return chckbxShowLog.isSelected();
 	}
+	
+
 
 	@Override
 	public void display(Object model) {
+		IModel astro = (IModel) model;
+		astro.addObserver(this);
 		hideLog();
 		setVisible(true);
 	}
@@ -248,14 +258,16 @@ public class AstroView extends JFrame implements IView {
 		btnClearLog.addActionListener((ActionListener) actions.get(CLEAR_LOG));
 		btnExportLog.addActionListener((ActionListener) actions.get(EXPORT_LOG));
 		windowListener = (WindowListener) actions.get(WINDOW_CLOSE);
-
-
-		
+	
 		addWindowListener(windowListener);
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals(AstroView.ADD_LISTITEM)){
+			addLogItem(evt.getNewValue());
+		}
+	}
 
 	public File openChooseDirectory() {
 		 JFileChooser fc = new JFileChooser();
@@ -265,5 +277,13 @@ public class AstroView extends JFrame implements IView {
         	 return file;
          }
          return null;
+	}
+
+	public void clearLog() {
+		logModel.clear();
+	}
+
+	public ListModel getLogModel() {
+		return logModel;
 	}
 }

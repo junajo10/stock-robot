@@ -1,10 +1,9 @@
 package utils.global;
 
+import java.beans.PropertyChangeSupport;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
-
-import javax.swing.DefaultListModel;
 
 /**
  * @author Mattias Markehed
@@ -29,7 +28,7 @@ public final class Log {
 	
 	private HashMap<TAG, Boolean> filter;
 	private HashMap<TAG, String> shortenerMap;
-	private DefaultListModel listModel;
+	private static PropertyChangeSupport observers;
 	
 	private Log() {
 		initialize();
@@ -39,23 +38,16 @@ public final class Log {
 		if(log.filter.get(tag)){
 			Date date= new java.util.Date();
 			String time = new Timestamp(date.getTime()) + "";
-			log.addLogMessage("[" + time.substring(11, 16) + "] - " + message);
-			// Temorary solution //Erik
+			if(observers!=null){
+				observers.firePropertyChange("AddListItem", null, "[" + time.substring(11, 16) + "] - " + message);
+			} // Temorary solution //Erik
 			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
 			System.out.println(message); //NOPMD
 		}
 	}
 	
-	private void addLogMessage(String message) {
-		listModel.addElement(message);
-	}
-	
-	public DefaultListModel getModel(){
-		return listModel;
-	}
 
 	private void initialize(){
-		listModel = new DefaultListModel();
 		filter=new HashMap<Log.TAG, Boolean>();
 		filter.put(TAG.NORMAL, true);
 		filter.put(TAG.VERBOSE, false);
@@ -103,8 +95,9 @@ public final class Log {
 		return log;
 	}
 
-	public void clearLog() {
-		listModel.clear();
+	@SuppressWarnings("static-access")
+	public void addObservers(PropertyChangeSupport observers) {
+		this.observers = observers;
 	}
 	
 	
