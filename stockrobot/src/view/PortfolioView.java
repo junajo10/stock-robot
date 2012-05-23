@@ -60,7 +60,6 @@ public class PortfolioView extends JFrame implements IView {
 	 */
 	public PortfolioView(ITrader trader, IPortfolioHandler portfolios) {
 		
-		//this.portfolios = portfolios; 
 		this.trader = trader;
 		this.portfolios = portfolios;
 	}
@@ -166,8 +165,6 @@ public class PortfolioView extends JFrame implements IView {
 		pnlSelectPortfolio.add(cmbSelectPortfolio);
 		contentPane.setLayout(gl_contentPane);
 		
-		//cmbModel = new PortfoliosCmbModel();
-		//cmbSelectPortfolio.setModel(cmbModel);
 		cmbSelectPortfolio.removeAllItems();
 		for(IPortfolio p : portfolios.getPortfolios()){
 			cmbSelectPortfolio.addItem(p.getName());
@@ -239,9 +236,6 @@ public class PortfolioView extends JFrame implements IView {
 	}
 	
 	private void updatePortfolios(){
-		
-		//cmbModel = new PortfoliosCmbModel(portfolios);
-		//cmbSelectPortfolio.setModel(cmbModel);
 		
 		cmbSelectPortfolio.removeAllItems();
 		for(IPortfolio p : portfolios.getPortfolios()){
