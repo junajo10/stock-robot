@@ -23,6 +23,8 @@ public class PortfolioWizardModel extends WizardPageModel{
 		super();
 		
 		properties.put(PROPERTY_NAME, false);
+		properties.put(PROPERTY_ALGORITHM, false);
+		properties.put(PROPERTY_BALANCE, false);
 	}
 	
 	public void setName(String name){

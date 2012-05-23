@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
+import model.portfolio.PortfolioHandler;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 import view.wizard.WizardPage;
@@ -160,6 +161,20 @@ public class PortfolioStartPage extends WizardPage {
 
 	}
 	
+	public IPortfolio getSelectedPorIPortfolio(){
+		IPortfolioHandler portfolios = PortfolioHandler.getInstance();
+		
+		IPortfolio selectedPortfolio = null;
+		String portfolioName = (String)cmbClonePortfolioList.getSelectedItem();
+		for(IPortfolio p : portfolios.getPortfolios()){
+			if (p.getName().equals(portfolioName)) {
+				selectedPortfolio = p;
+				break;
+			}
+		}
+		return selectedPortfolio;
+	}
+	
 	public void setCreateFromNewListener(ItemListener listener){
 		
 		rbtnNewPortfolio.addItemListener(listener); 
@@ -188,7 +203,7 @@ public class PortfolioStartPage extends WizardPage {
 	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
-	public void display(Object model) {} //NOPMD
+	public void display(Object model) {}
 	
 	public void setErrorName(boolean error){
 		

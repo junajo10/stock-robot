@@ -77,8 +77,6 @@ public class WizardFromNewPageController extends WizardPageController {
 		}
 	}
 	
-	
-	
 	class BalanceListener implements KeyListener{
 
 		@Override
@@ -104,9 +102,9 @@ public class WizardFromNewPageController extends WizardPageController {
 	public WizardModel getWizardModel() { return model; }
 	
 	@Override
-	public void display(Object model) { //NOPMD
+	public void display(Object model) {
 		
-		//TODO Mattias, display?
+		updateFinnish();
 	}
 
 	@Override

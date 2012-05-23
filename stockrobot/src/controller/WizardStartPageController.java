@@ -79,11 +79,21 @@ public class WizardStartPageController extends WizardPageController {
 			
 			if(e.getStateChange() == ItemEvent.DESELECTED){
 				page.setEnabledPanelClone(false);
-				//createFromSelected = null;
+				pageModel.setBalance(-1);
+				pageModel.setAlgorithm(null);
 			}else if(e.getStateChange() == ItemEvent.SELECTED){
 				page.setEnabledPanelClone(true);
 				createFromSelected = PortfolioStartPage.CREATE_FROM_CLONE;
+				
+				IPortfolioHandler portfolios = PortfolioHandler.getInstance();
+				
+				IPortfolio selectedPortfolio = page.getSelectedPorIPortfolio();					
+				if (selectedPortfolio != null) {
+					pageModel.setBalance(selectedPortfolio.getUnusedAmount());
+					pageModel.setAlgorithm(selectedPortfolio.getAlgorithm().getName());
+				}
 			}
+			checkFinnish();
 		}	
 	}
 	
@@ -107,6 +117,17 @@ public class WizardStartPageController extends WizardPageController {
 		return canNext;
 	}
 	
+	private void checkFinnish(){
+		
+		IPortfolioHandler portfolios = PortfolioHandler.getInstance();
+			
+		if(pageModel.canFinish()){
+			model.setFinish(true);	
+		}else{
+			model.setFinish(false);	
+		}
+	}
+	
 	class CloneListener implements ItemListener{
 
 		@Override
@@ -125,15 +146,12 @@ public class WizardStartPageController extends WizardPageController {
 				if(selectedPortfolio != null){
 					pageModel.setBalance(selectedPortfolio.getUnusedAmount());
 					pageModel.setAlgorithm(selectedPortfolio.getAlgorithm().getName());
-					model.setFinish(true);	
 				}
-				
-				
 			}else if(e.getStateChange() == ItemEvent.DESELECTED){
 				pageModel.setBalance(-1);
 				pageModel.setAlgorithm(null);
-				model.setFinish(false);
 			}
+			checkFinnish();
 		}
 	}
 		
@@ -149,6 +167,7 @@ public class WizardStartPageController extends WizardPageController {
 		public void keyReleased(KeyEvent e) {
 			pageModel.setName(page.getPortfolioName());
 			checkNext();
+			checkFinnish();
 		}
 
 	}
