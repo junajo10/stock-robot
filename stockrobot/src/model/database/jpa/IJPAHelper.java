@@ -132,4 +132,6 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @return A stockPrice
 	 */
 	public StockPrices getLastStockPrice();
+	
+	public StockNames getStockNames(String key);
 }

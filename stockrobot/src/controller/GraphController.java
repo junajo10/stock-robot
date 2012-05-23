@@ -11,6 +11,7 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -22,7 +23,6 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 
 import org.jfree.data.time.Millisecond;
-import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.joda.time.DateTime;
 
@@ -62,6 +62,7 @@ public class GraphController implements IController, PropertyChangeListener {
 	public GraphView getView() { return view; }
 	
 	private List<String> timeSeriesList; //List in which the stocks added to the graph get their names registered, so it's easy to know which to remove when they get called off the stage
+	private Map<String, TimeSeries> timeSeriesMap = new HashMap<String, TimeSeries>();
 	
 	public void init() {
 		
@@ -244,17 +245,11 @@ public class GraphController implements IController, PropertyChangeListener {
 
 				//Create new series
 				final TimeSeries series = new TimeSeries( st.getName() );
-
-				//Get all of the stock's prices
-				final List<StockPrices> priceList = jpaHelper.getPricesForStock( st );
-
-				//Add all prices through time to the serie
-				for( StockPrices sp : priceList ) {
-
-					series.addOrUpdate( new Millisecond( sp.getTime() ), FinancialLongConverter.toDouble( sp.getLatest() ) );
-				}
-
-				//Insert serie to the view / model of the view
+				
+				timeSeriesMap.put(stockName, series);
+				
+				updateSeries();
+				
 				view.insertSeries( series );
 				
 				timeSeriesList.add( stockName );
@@ -262,6 +257,22 @@ public class GraphController implements IController, PropertyChangeListener {
 		}
 	}
 	
+	private void updateSeries() {
+		final IJPAHelper jpaHelper = JPAHelper.getInstance();
+		
+		for (Entry<String, TimeSeries> entry : timeSeriesMap.entrySet()) {
+			final StockNames stockName = jpaHelper.getStockNames(entry.getKey());
+			if (stockName != null) {
+				final List<StockPrices> priceList = jpaHelper.getPricesForStock( stockName );
+	
+				for( StockPrices sp : priceList ) {
+					entry.getValue().addOrUpdate( new Millisecond( sp.getTime() ), FinancialLongConverter.toDouble( sp.getLatest() ) );
+				}
+			}
+		}
+		
+	}
+
 	/**
 	 * 
 	 * @param stockName

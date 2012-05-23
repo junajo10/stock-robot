@@ -428,4 +428,23 @@ class JPAHelperBase implements IJPAHelper {
 		
 		return null;
 	}
+	@Override
+	public StockNames getStockNames(String key) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<StockNames> cri = cb.createQuery(StockNames.class);
+
+		Root<StockNames> root = cri.from(StockNames.class);
+
+		Predicate correctName = em.getCriteriaBuilder().equal( root.get("name"), key );
+
+		cri.select(root);
+		cri.where(correctName);
+		
+		TypedQuery<StockNames> query = em.createQuery(cri);
+
+		if (query.getResultList().size() == 1)
+			return query.getResultList().get(0);
+			
+		return null;
+	}
 }
