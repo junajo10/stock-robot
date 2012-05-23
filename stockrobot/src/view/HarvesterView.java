@@ -381,6 +381,12 @@ public class HarvesterView extends JFrame implements IView{
 		addToList("Parser failed to start. Already started or crashed.");
 	}
 	
+	/**
+	 * Called when user presses Export Log button.
+	 * <p>
+	 * Exports the Log to the given adress.
+	 * 
+	 */
 	public void exportLog(){
 		File logTxtFile = openChooseDirectory();
 		if (logTxtFile != null) {
@@ -402,6 +408,11 @@ public class HarvesterView extends JFrame implements IView{
 		}
     }
 	
+	/**
+	 * Internal class for handling the Log.
+	 * @author Erik
+	 *
+	 */
 	private class Logger {
 
 

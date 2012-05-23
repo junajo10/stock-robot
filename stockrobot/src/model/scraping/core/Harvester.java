@@ -140,14 +140,18 @@ public class Harvester {
 	}
 
 
-	public void stopRunner() {
-		parserRunner.stopRunner();
-	}
-
+	/**
+	 * Adds an observer to the observers.
+	 * @param observer
+	 */
 	public void addObserver(PropertyChangeListener observer) {
 		 pcs.addPropertyChangeListener(observer);
 	}
 	
+	/**
+	 * Returns the observers.
+	 * @return
+	 */
 	public PropertyChangeSupport getObservers(){
 		return pcs;
 	}
