@@ -3,7 +3,6 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
-import java.awt.image.ImageObserver;
 import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.Map;
@@ -53,23 +52,6 @@ public class PortfolioSettingsView extends JFrame implements IView {
 	private final JCheckBox chckbxStopSelling = new JCheckBox("Stop selling");
 	private IPortfolio portfolio;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					PortfolioSettingsView frame = new PortfolioSettingsView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
@@ -216,11 +198,11 @@ public class PortfolioSettingsView extends JFrame implements IView {
 			amount = Integer.parseInt(txtAmount.getText());
 			
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Couldent parse input data", "Error", ImageObserver.ERROR);
+			JOptionPane.showMessageDialog(null, "Couldent parse input data", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		if (amount < 0) {
-			JOptionPane.showMessageDialog(null, "input has to be larger than 0", "Error", ImageObserver.ERROR);
+			JOptionPane.showMessageDialog(null, "input has to be larger than 0", "Error", JOptionPane.ERROR_MESSAGE);
 			amount = 0;
 		}
 
