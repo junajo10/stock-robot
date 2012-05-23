@@ -17,6 +17,11 @@ import utils.global.FinancialLongConverter;
 import utils.global.LongContainer;
 import utils.global.Pair;
 
+/**
+ * This class generates all statistics for a given portfolio
+ * 
+ * @author Daniel
+ */
 public class PortfolioHistoryModelStatistics {
 	private String statisticsString = "Generating statistics";
 	public static final String STATISTICSMODELUPDATED = "StatisticModelUpdated";
@@ -30,6 +35,11 @@ public class PortfolioHistoryModelStatistics {
 	private long totalAmountOfSoldStocks = 0;
 	private long amountRemoved = 0;
 	
+	/**
+	 * Generates statistics, when done fires it to its observers.
+	 * @param history A list of sorted portfolioHistorys
+	 * @param selectedPortfolio The portfolio this statistics belong to
+	 */
 	public void generateStatistics(List<PortfolioHistory> history, PortfolioEntity selectedPortfolio) {
 		propertyChangeSupport.firePropertyChange(STATISTICSMODELUPDATED, null, statisticsString);
 		Map<String, Pair<LongContainer, LongContainer>> stocks = new HashMap<String, Pair<LongContainer,LongContainer>>();

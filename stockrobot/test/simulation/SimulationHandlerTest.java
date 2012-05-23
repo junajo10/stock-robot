@@ -11,7 +11,6 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.simulation.SimulationHandler;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
