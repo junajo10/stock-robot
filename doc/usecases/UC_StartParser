@@ -1,0 +1,24 @@
+Use Case: StartParser
+Short description: This usecase is initiated when the user presses the start parser button. Starts parsing stock-data from Avanza.
+
+Priority: Medium
+
+Extends or Includes: UC_Harvester
+
+Participating actors: User, Harvester
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User clicks start parser button
+
+								
+					Harvester starts parsing.
+
+Goto UC_Harvester
+
+Alternate flow:
+
+Exceptional flow:
+

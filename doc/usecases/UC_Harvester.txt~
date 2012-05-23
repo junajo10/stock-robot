@@ -1,0 +1,25 @@
+Use Case: Harvester
+Short description: Harvester is the main program that controlls the parser. User presses one of the buttons, and then starts one of the following: UC_Startparser, UC_StopParser
+
+Priority: High
+
+Extends or Includes: UC_Startparser, UC_StopParser, UC_ExportLog, UC_PrintStatus, UC_ClearLog
+
+Participating actors: User, Harvester
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+The user clicks on a button
+
+													      						Harvester lanches the UC associated with the button.
+
+User closes Harvester.
+
+					Harvester stops.
+
+Alternate flow:
+
+Exceptional flow:
+

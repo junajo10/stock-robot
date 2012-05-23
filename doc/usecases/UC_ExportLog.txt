@@ -1,0 +1,24 @@
+Use Case: ExportLog
+Short description: This usecase is initiated when the user presses the Export Log button. A txt file will be exported with the content of the current log.
+
+Priority: Medium
+
+Extends or Includes: UC_Harvester
+
+Participating actors: User, Harvester
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User clicks Export Log button
+
+								
+					Harvester exports the log into a txt file.
+
+Goto UC_Harvester
+
+Alternate flow:
+
+Exceptional flow:
+

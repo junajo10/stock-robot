@@ -1,0 +1,24 @@
+Use Case: ClearLog
+Short description: This usecase is initiated when the user presses the Stop Parser button. The Parser will stop parsing data.
+
+Priority: Medium
+
+Extends or Includes: UC_Harvester
+
+Participating actors: User, Harvester
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User clicks Stop Parser button
+
+								
+					Harvester stops parsing.
+
+Goto UC_Harvester
+
+Alternate flow:
+
+Exceptional flow:
+

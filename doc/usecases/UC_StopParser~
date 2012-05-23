@@ -1,0 +1,24 @@
+Use Case: StopParser
+Short description: This is where
+
+Priority: Medium
+
+Extends or Includes: UC_Harvester
+
+Participating actors: User, Harvester
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User clicks Stop Parser button
+
+								
+					Harvester stops parsing.
+
+Goto UC_Harvester
+
+Alternate flow:
+
+Exceptional flow:
+
