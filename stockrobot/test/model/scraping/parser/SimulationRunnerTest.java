@@ -98,8 +98,6 @@ public class SimulationRunnerTest extends DatabaseCleaner {
 		}
 		
 		runnercreated = false;
-		
-		runner.stopRunner();
 	}
 	
 	@Test

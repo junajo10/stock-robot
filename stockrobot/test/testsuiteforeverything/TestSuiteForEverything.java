@@ -18,6 +18,7 @@ import model.scraping.ParserRunnerTest;
 import model.scraping.ParserStockTest;
 import model.scraping.SchedulerTest;
 import model.scraping.parser.AvanzaParserTest;
+import model.scraping.parser.SimulationRunnerTest;
 import model.wizard.WizardModelTest;
 import model.wizard.WizardPageModelTest;
 
@@ -53,7 +54,7 @@ import model.wizard.WizardPageModelTest;
 	SchedulerTest.class,
 	AvanzaParserTest.class,
 	ParserRunnerTest.class,
-	//SimulationRunnerTest.class,  //TODO: Kristian: fix neverending loop
+	SimulationRunnerTest.class,
 	SimulationHandlerTest.class,
 })
 
