@@ -383,12 +383,6 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		}
 		
 		@Override
-		public List<String> getAlgorithmNames() { //NOPMD
-			// Not important in this test
-			return null;
-		}
-		
-		@Override
 		public boolean setAlgorithm(IPortfolio p, String algorithmName) { //NOPMD
 			// Not important in this test
 			return false;

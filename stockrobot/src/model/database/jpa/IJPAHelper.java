@@ -133,5 +133,10 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 */
 	public StockPrices getLastStockPrice();
 	
+	/**
+	 * Fetches the StockName with the same name as the given key.
+	 * @param key The key to search for
+	 * @return Returns a StockName, if none is found returns null
+	 */
 	public StockNames getStockNames(String key);
 }

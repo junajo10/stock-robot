@@ -53,11 +53,6 @@ class TestPortfolioHandler implements IPortfolioHandler{
 	public void removeObserver(PropertyChangeListener listener) {
 	}
 	@Override
-	public List<String> getAlgorithmNames() {
-		
-		return null;
-	}
-	@Override
 	public boolean setAlgorithm(IPortfolio p, String algorithmName) {
 		
 		return false;
