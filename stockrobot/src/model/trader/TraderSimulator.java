@@ -40,7 +40,7 @@ public final class TraderSimulator implements ITrader{
 	}
 	@Override
 	public boolean buyStock(StockPrices s, long amount, PortfolioEntity portfolio) {
-		if (amount > 0 && amount * s.getSell() < portfolio.getBalance()) {
+		if (amount > 0 && amount * s.getSell() < portfolio.getBalance() && !portfolio.isStopBuying()) {
 			
 			portfolio.bougthFor( amount * s.getSell() );
 			Log.log(Log.TAG.VERBOSE, "Buying " + amount + " of stock: " + s.getStockName().getName() + " for total price of: " + FinancialLongConverter.toDouble(amount * s.getSell()));
@@ -59,12 +59,17 @@ public final class TraderSimulator implements ITrader{
 			Log.log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
 			return false;
 		}
-		Log.log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
-		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
-		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount());
-		ph.setStockSoldPrice(latest);
-		ph.setSoldDate(new Date(System.currentTimeMillis()));
-		jpaHelper.updateObject(portfolio);
+		if (portfolio.isStopSelling()) {
+			System.out.println("Ble");
+		}
+		else {
+			Log.log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
+			StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
+			portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount());
+			ph.setStockSoldPrice(latest);
+			ph.setSoldDate(new Date(System.currentTimeMillis()));
+			jpaHelper.updateObject(portfolio);
+		}
 		
 		return true;
 	}

@@ -41,9 +41,6 @@ public class TestAlgorithm2 implements IAlgorithm{
 
 	@Override
 	public boolean update() {
-		
-		Log.log( Log.TAG.VERY_VERBOSE, "Algo2: UPDATE!" );
-		
 		if (portfolio.getUnusedAmount() < 1000000) {
 			return false;
 		}
@@ -77,7 +74,6 @@ public class TestAlgorithm2 implements IAlgorithm{
 			}
 			//Buy!
 			if (buy) {
-				Log.log( Log.TAG.VERY_VERBOSE, "Algo2: BUY!" );
 				//Buy a couple of stock, if the stockprice is NOT zero (avoid divide by zero)
 				long firstStockBuyPrice = stockInfo.getRight().get(0).getBuy();
 				if( firstStockBuyPrice != 0 ) {

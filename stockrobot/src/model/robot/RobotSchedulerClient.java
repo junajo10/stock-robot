@@ -47,9 +47,7 @@ public class RobotSchedulerClient extends Thread{
 		while(keepRunning) {
 			try {
 				// Blocking call:
-				Log.log(Log.TAG.VERBOSE, "Reading data from harvester");
 				inputStream.read();
-				Log.log(Log.TAG.VERBOSE, "Got data from harvester");
 				
 				robotScheduler.doWork();
 				

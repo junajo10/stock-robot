@@ -30,7 +30,7 @@ public class PortfolioSettingsController implements IController {
 			}
 			else if (view.getSelectedPane().contentEquals(PortfolioSettingsView.SETTINGS)) {
 				portfolio.stopBuying(view.isStopBuyingFlagSet());
-				portfolio.stopSelling(view.isStopBuyingFlagSet());
+				portfolio.stopSelling(view.isStopSellingFlagSet());
 			}
 			cleanup();
 		}

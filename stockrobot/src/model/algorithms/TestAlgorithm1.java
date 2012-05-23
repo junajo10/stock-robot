@@ -35,13 +35,10 @@ public class TestAlgorithm1 implements IAlgorithm{
 	private long sellSetting = 3;
 
 	public TestAlgorithm1() {
-		Log.log(TAG.VERY_VERBOSE, "Inside TestAlgorithm constructor");
+		Log.log(TAG.VERY_VERBOSE, "TestAlgorithm1 created");
 	}
 	@Override
 	public boolean update() {
-
-		Log.log( Log.TAG.VERY_VERBOSE, "Algo1: UPDATE!" );
-
 		if (portfolio.getPortfolioTable().getBalance() < 1000000) {
 			return false;
 		}
@@ -85,7 +82,6 @@ public class TestAlgorithm1 implements IAlgorithm{
 						long amount = (portfolio.getPortfolioTable().getBalance()/10/firstStockBuyPrice); 
 
 						if (amount > 0) {
-							Log.log( Log.TAG.VERY_VERBOSE, "Algo1: BUY!" );
 							buyStock( stockInfo.getRight().get(0), amount );
 						}
 					}
