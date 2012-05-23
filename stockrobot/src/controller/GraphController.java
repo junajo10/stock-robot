@@ -109,8 +109,15 @@ public class GraphController implements IController, PropertyChangeListener {
 			break;
 		}
 		
-		
-		view.setRange(lowerDate.toDate(), upperDate.toDate());
+		if (upperDate.isBefore(lowerDate))
+			view.setRange(upperDate.toDate(), lowerDate.toDate());
+		else if (upperDate.isEqual(lowerDate)) {
+			lowerDate = lowerDate.minusDays(1);
+			view.setRange(lowerDate.toDate(), upperDate.toDate());
+		}
+		else {
+			view.setRange(lowerDate.toDate(), upperDate.toDate());
+		}
 	}
 	
 	private class YearRangeListener implements ItemListener{
