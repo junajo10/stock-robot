@@ -18,8 +18,6 @@ import view.SimResultView;
  */
 public class SimResultController implements IController {
 
-	private static final String CLASS_NAME = "SimResultController";
-
 	private SimResultView view;
 	private SimulationHandler model;
 	PortfolioHistoryController history = new PortfolioHistoryController();
@@ -97,18 +95,10 @@ public class SimResultController implements IController {
 		this.model = null;
 	}
 
-	@Override
 	public Map<String, EventListener> getActionListeners() { //NOPMD
 		Map<String, EventListener> actions = new HashMap<String, EventListener>();
 		actions.put(SimResultView.HISTORYBUTTON, historyListener);
 		return actions;
 	}
 
-	@Override
-	public String getName() {
-		return CLASS_NAME;
-	}
-
-	@Override
-	public void defineSubControllers() {} //NOPMD
 }

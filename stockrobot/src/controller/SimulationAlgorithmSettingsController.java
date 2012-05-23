@@ -73,7 +73,6 @@ public class SimulationAlgorithmSettingsController implements IController {
 	@Override
 	public void cleanup() {} //NOPMD
 
-	@Override
 	public Map<String, EventListener> getActionListeners() {
 		if (actionListeners == null) {
 			actionListeners = new HashMap<String, EventListener>();
@@ -83,12 +82,4 @@ public class SimulationAlgorithmSettingsController implements IController {
 		return actionListeners;
 	}
 
-	@Override
-	public void defineSubControllers() {} //NOPMD
-
-	@Override
-	public String getName() {
-		
-		return CLASS_NAME;
-	}
 }

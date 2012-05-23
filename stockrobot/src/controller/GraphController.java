@@ -39,7 +39,6 @@ import view.graph.GraphView;
  */
 public class GraphController implements IController {
 	
-	public static final String CLASS_NAME = "GraphController";
 	public static final String BIND_GRAPH_VIEW = "bindGraphView";
 	public static final String WINDOW_TITLE = "Stock prices on a graph";
 	
@@ -295,7 +294,6 @@ public class GraphController implements IController {
 		view = null;
 	}
 	
-	@Override
 	public Map<String, EventListener> getActionListeners() { //NOPMD
 		
 		Map<String, EventListener> listeners = new HashMap<String,EventListener>();
@@ -309,20 +307,10 @@ public class GraphController implements IController {
 		
 		return listeners;
 	}
-		
-	/**
-	 * Get Class Name
-	 */
-	@Override
-	public String getName() {
-		
-		return CLASS_NAME;
-	}
 
 	/**
 	 * Ask the model to get all stock names recorded, then create a GraphStockToggler for each of them
 	 */
-	@Override
 	public void defineSubControllers() {
 		
 		IJPAHelper jpaHelper = JPAHelper.getInstance();

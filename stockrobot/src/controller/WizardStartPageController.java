@@ -25,8 +25,6 @@ import view.wizard.portfolio.PortfolioStartPage;
  *
  */
 public class WizardStartPageController extends WizardPageController {
-
-	private static final String CLASS_NAME = "WizardStartPageController";
 	
 	private PortfolioStartPage page;
 	private WizardModel model;
@@ -156,8 +154,6 @@ public class WizardStartPageController extends WizardPageController {
 
 	}
 	
-	//==============================================
-
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
@@ -172,29 +168,4 @@ public class WizardStartPageController extends WizardPageController {
 		page = null;
 	}
 
-	/**
-	 * Get map of all eventlisteners this controller uses
-	 */
-	@Override
-	public Map<String, EventListener> getActionListeners() {
-		
-		return actions;
-	}
-
-	/**
-	 * Define Subcontrollers
-	 * 
-	 * No subcontrollers defined yet
-	 */
-	@Override
-	public void defineSubControllers() {} //NOPMD
-
-	/**
-	 * Get this classes unique name
-	 */
-	@Override
-	public String getName() {
-		
-		return CLASS_NAME;
-	}
 }

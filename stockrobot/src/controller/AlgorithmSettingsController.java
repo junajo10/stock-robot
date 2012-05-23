@@ -47,7 +47,7 @@ public class AlgorithmSettingsController implements IController {
 		
 		view = new AlgorithmSettingsView( portfolio.getAlgorithm().getName() );
 		view.init();
-		view.addActions( getActionListeners() );
+		view.addActions( actionListeners );
 		view.populateDoubleSettings( portfolio.getPortfolioTable().getAlgortihmSettings().getDoubleSettings() );
 		view.populateLongSettings( portfolio.getPortfolioTable().getAlgortihmSettings().getLongSettings() );
 	}
@@ -63,20 +63,5 @@ public class AlgorithmSettingsController implements IController {
 	}
 
 	@Override
-	public void cleanup() {} //NOPMD
-
-	@Override
-	public Map<String, EventListener> getActionListeners() {
-		
-		return actionListeners;
-	}
-
-	@Override
-	public void defineSubControllers() {} //NOPMD
-
-	@Override
-	public String getName() {
-		
-		return CLASS_NAME;
-	}
+	public void cleanup() {view.cleanup();} //NOPMD
 }

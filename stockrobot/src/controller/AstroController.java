@@ -215,7 +215,6 @@ public class AstroController implements IController {
 		model = null;
 	}
 
-	@Override
 	public Map<String, EventListener> getActionListeners() {
 		Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		actions.put(AstroView.START_SIMULATION, startSim);
@@ -229,13 +228,6 @@ public class AstroController implements IController {
 		return actions;
 	}
 
-	@Override
-	public String getName() {
-		
-		return CLASSNAME;
-	}
-
-	@Override
 	public void defineSubControllers() {
 		
 		graphController = new GraphController();

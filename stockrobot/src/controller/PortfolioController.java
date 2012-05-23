@@ -120,20 +120,8 @@ public class PortfolioController implements IController {
 	@Override
 	public void cleanup() {} //NOPMD
 
-	@Override
-	public Map<String, EventListener> getActionListeners() {
-
-		return actions;
-	}
-
-	@Override
 	public void defineSubControllers() {
 		portfolioSettings = new PortfolioSettingsController();
-	}
-	@Override
-	public String getName() {
-
-		return CLASS_NAME;
 	}
 
 	@Override

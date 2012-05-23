@@ -33,7 +33,6 @@ public class HarvesterController implements IController {
 		}
 	};
 	
-	
 	private class StartBtnListener implements ActionListener{
 
 		@Override
@@ -113,10 +112,6 @@ public class HarvesterController implements IController {
 		this.model = new Harvester(45000);
 	}
 	
-
-
-
-
 	@Override
 	public void display(Object model) {
 		if (model != null) {
@@ -134,7 +129,6 @@ public class HarvesterController implements IController {
 		}
 	} 
 
-	@Override
 	public Map<String, EventListener> getActionListeners() {
 		Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		actions.put(HarvesterView.START_PARSER, new StartBtnListener());
@@ -146,18 +140,6 @@ public class HarvesterController implements IController {
 
 		return actions;
 	}
-
-	@Override
-	public void defineSubControllers() {} //NOPMD
-
-	@Override
-	public String getName() {
-		return "Harvester Controller";
-	}
-
-
-
-
 
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {} //NOPMD

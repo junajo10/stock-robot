@@ -76,7 +76,6 @@ public class StartController implements IController {
 	@Override
 	public void cleanup() {} //NOPMD
 
-	@Override
 	public Map<String, EventListener> getActionListeners() {
 		Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		
@@ -90,12 +89,6 @@ public class StartController implements IController {
 		return actions;
 	}
 
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
 	public void defineSubControllers() {
 		if (harvester == null) {
 			harvester = new HarvesterController();

@@ -15,7 +15,6 @@ import model.portfolio.PortfolioHistoryModel;
  * @author Daniel
  */
 public class PortfolioHistoryController implements IController{
-	private static final String CLASSNAME = "StockTableHistory";
 	private PortfolioHistoryModel portfolioModel;
 	private PortfolioHistoryView portfolioHistoryView;
 	
@@ -37,19 +36,4 @@ public class PortfolioHistoryController implements IController{
 
 	@Override
 	public void cleanup() {} //NOPMD
-
-	@Override
-	public Map<String, EventListener> getActionListeners() { //NOPMD
-		
-		return null;
-	}
-
-	@Override
-	public void defineSubControllers() {} //NOPMD
-
-	@Override
-	public String getName() {
-		return CLASSNAME;
-	}
-
 }

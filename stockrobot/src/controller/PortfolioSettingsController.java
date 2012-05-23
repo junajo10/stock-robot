@@ -69,7 +69,6 @@ public class PortfolioSettingsController implements IController {
 		view = null;
 	}
 
-	@Override
 	public Map<String, EventListener> getActionListeners() {
 		Map<String, EventListener> actions = new HashMap<String, EventListener>();
 		actions.put(PortfolioSettingsView.OKPRESSED, okAction);
@@ -78,17 +77,4 @@ public class PortfolioSettingsController implements IController {
 		
 		return actions;
 	}
-
-	@Override
-	public void defineSubControllers() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -26,7 +26,6 @@ public class WizardFromNewPageController extends WizardPageController {
 	
 	public WizardFromNewPageController(WizardModel model, PortfolioWizardModel pageModel) {		
 		
-		this.name = CLASS_NAME;
 		this.page = new PortfolioFromNewPage(model, pageModel);
 		this.model = model;
 		this.pageModel = pageModel;
@@ -101,26 +100,6 @@ public class WizardFromNewPageController extends WizardPageController {
 	public void cleanup() {
 		
 		page.cleanup();
-	}
-
-	@Override
-	public Map<String, EventListener> getActionListeners() {
-		
-		return actions;
-	}
-
-	/**
-	 * Define Subcontrollers
-	 * 
-	 * No sub controllers here yet
-	 */
-	@Override
-	public void defineSubControllers() {} //NOPMD
-
-	@Override
-	public String getName() {
-		
-		return CLASS_NAME;
 	}
 
 	@Override

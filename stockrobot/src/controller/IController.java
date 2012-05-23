@@ -28,22 +28,4 @@ public interface IController extends PropertyChangeListener{
 	 */
 	void cleanup();
 	
-	/**
-	 * Returns the list of all actions this controller has.
-	 * @return A list of pairs where the left side is a string associated with the action
-	 */
-	Map<String, EventListener> getActionListeners();
-	
-	/**
-	 * Lets the user define whatever subControllers are needed in this class.
-	 */
-	@Deprecated
-	void defineSubControllers();
-	
-	/**
-	 * The unique name for this controller, this can be used to sort out which subController should start.
-	 * @return
-	 */
-	@Deprecated
-	String getName();
 }

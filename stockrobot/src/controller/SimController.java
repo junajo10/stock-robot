@@ -81,7 +81,6 @@ public class SimController implements IController {
 		view.cleanup();
 	}
 
-	@Override
 	public Map<String, EventListener> getActionListeners() {
 		final Map<String, EventListener> actions = new HashMap<String,EventListener>();
 		actions.put(SimView.STARTSIMULATION, startSimulation);
@@ -91,12 +90,6 @@ public class SimController implements IController {
 		return actions;
 	}
 
-	@Override
-	public String getName() {
-		return "SimController";
-	}
-
-	@Override
 	public void defineSubControllers() {
 		simResultController = new SimResultController();
 	}

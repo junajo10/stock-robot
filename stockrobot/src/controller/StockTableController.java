@@ -17,8 +17,6 @@ import view.StockTableView;
  *
  */
 public class StockTableController implements IController {
-
-	public static final String CLASS_NAME = "StockTableController";
 	
 	private IView view;
 	private Map<String, EventListener> retList;
@@ -47,23 +45,5 @@ public class StockTableController implements IController {
 	public void cleanup() {
 		
 		
-	}
-
-	@Override
-	public Map<String, EventListener> getActionListeners() {
-		
-		return retList;
-	}
-
-	@Override
-	public void defineSubControllers() {
-		
-		//None to define
-	}
-
-	@Override
-	public String getName() {
-		
-		return CLASS_NAME;
 	}
 }

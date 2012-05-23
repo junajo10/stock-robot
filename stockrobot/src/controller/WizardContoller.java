@@ -138,19 +138,4 @@ public class WizardContoller implements IController {
 		view.setVisible(false);
 		view.dispose();
 	}
-
-	@Override
-	public Map<String, EventListener> getActionListeners() {
-		
-		return actions;
-	}
-
-	@Override
-	public void defineSubControllers() {} //NOPMD
-
-	@Override
-	public String getName() {
-
-		return CLASS_NAME;
-	}
 }

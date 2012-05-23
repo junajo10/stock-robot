@@ -63,7 +63,7 @@ public class GraphStockTogglerController implements IController {
 		
 		view = new GraphStockTogglerView( stockName );
 		( ( GraphStockTogglerView) view ).init();
-		view.addActions( getActionListeners() );
+		view.addActions( events );
 	}
 	
 	/**
@@ -109,27 +109,6 @@ public class GraphStockTogglerController implements IController {
 		
 		view.cleanup();
 	}
-
-	/**
-	 * Return all action listeners defined in this class
-	 */
-	@Override
-	public Map<String, EventListener> getActionListeners() {
-		
-		return events;
-	}
-
-	/**
-	 * No subcontrollers will need to be defined!
-	 */
-	@Override
-	public void defineSubControllers() {} //NOPMD
-
-	@Override
-	public String getName() {
-		
-		return CLASS_NAME;
-	}	
 	
 	public IView getView() {
 		
