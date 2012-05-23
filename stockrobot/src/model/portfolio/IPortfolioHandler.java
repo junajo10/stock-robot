@@ -7,8 +7,9 @@ import model.IModel;
 
 
 /**
+ * Interface to the PortfolioHandler.
+ * 
  * @author Daniel
- *
  */
 public interface IPortfolioHandler extends IModel {
 
@@ -35,8 +36,12 @@ public interface IPortfolioHandler extends IModel {
 	 */
 	boolean removePortfolio(IPortfolio portfolio);
 
-	List<String> getAlgorithmNames();
-	
+	/**
+	 * Sets the given algortihm to the given portfolio
+	 * @param p
+	 * @param algorithmName
+	 * @return Returns true if everything went ok.
+	 */
 	boolean setAlgorithm(IPortfolio p, String algorithmName);
 	
 }

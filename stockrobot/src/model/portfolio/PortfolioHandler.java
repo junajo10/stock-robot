@@ -141,9 +141,4 @@ public final class PortfolioHandler implements IPortfolioHandler{
 	public void removeObserver(PropertyChangeListener listener) {
 		pChangeSuport.addPropertyChangeListener(listener);
 	}
-
-	@Override
-	public List<String> getAlgorithmNames() {
-		return algorithmLoader.getAlgorithmNames();
-	}
 }
