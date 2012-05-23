@@ -18,6 +18,7 @@ public class WizardFactory {
     	wizard.getView().registerPage(1,startPage);
     	wizardModel.setNextPage(1);
     	wizardModel.goNextPage();
+    	wizardModel.setTitle("Portfolio Wizard");
     	
     	WizardPage fromNewPage = buildFromNewPage(wizardModel, pageModel);
     	wizard.getView().registerPage(2,fromNewPage);
