@@ -17,9 +17,6 @@ import model.portfolio.PortfolioHistoryModel;
 public class PortfolioHistoryController implements IController{
 	private PortfolioHistoryModel portfolioModel;
 	private PortfolioHistoryView portfolioHistoryView;
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	public static void main(String args[]) {
 		PortfolioHistoryController phc = new PortfolioHistoryController();

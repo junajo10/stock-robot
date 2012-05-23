@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,6 @@ public class PortfolioController implements IController {
 	private Map<String, EventListener> actions;
 	private PortfolioHistoryController historyController = new PortfolioHistoryController();
 	
-	//TODO MATTIAS: Implement a real model for this, so we can access selectedPortfolio without casts. 
 	public PortfolioController(ITrader trader, IPortfolioHandler portfolios){
 		
 		this.trader = trader;
@@ -124,6 +122,4 @@ public class PortfolioController implements IController {
 		portfolioSettings = new PortfolioSettingsController();
 	}
 
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {}
 }

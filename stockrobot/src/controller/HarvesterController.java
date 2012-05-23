@@ -140,7 +140,4 @@ public class HarvesterController implements IController {
 
 		return actions;
 	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {} //NOPMD
 }

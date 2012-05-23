@@ -47,9 +47,6 @@ public class SimulationAlgorithmSettingsController implements IController {
 	}
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
-
-	@Override
 	public void display(Object model) {
 		view = new AlgorithmSettingsView( algorithmName );
 		view.init();

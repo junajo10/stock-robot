@@ -28,12 +28,6 @@ public class StockTableController implements IController {
 		view = new StockTableView();
 		view.addActions( retList );
 	}
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		
-		
-	}
 
 	@Override
 	public void display(Object model) {

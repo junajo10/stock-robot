@@ -61,13 +61,6 @@ public class SimController implements IController {
 		}
 	};
 
-	
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-	}
-
 	@Override
 	public void display(final Object model) {
 		defineSubControllers();

@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ import view.SimResultView;
  * Controller for simulation result
  * @author Daniel
  */
-public class SimResultController implements IController {
+public class SimResultController implements IController, PropertyChangeListener {
 
 	private SimResultView view;
 	private SimulationHandler model;

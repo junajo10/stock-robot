@@ -155,9 +155,6 @@ public class WizardStartPageController extends WizardPageController {
 	}
 	
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
-
-	@Override
 	public void display(Object model) {} //NOPMD
 
 	@Override

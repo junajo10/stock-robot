@@ -58,9 +58,6 @@ public class StartController implements IController {
 			Log.setFilter(selectedTag, true);
 		}
 	};
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object model) {

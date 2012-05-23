@@ -123,9 +123,6 @@ public class WizardContoller implements IController {
 		
 		return model;
 	}
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 
 	@Override
 	public void display(Object model) {

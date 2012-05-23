@@ -82,14 +82,6 @@ public class WizardFromNewPageController extends WizardPageController {
 	public PortfolioFromNewPage getPage() { return page; }
 	public WizardModel getWizardModel() { return model; }
 	
-	/**
-	 * Property change target
-	 * 
-	 * Currently not handling anything
-	 */
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
-
 	@Override
 	public void display(Object model) { //NOPMD
 		

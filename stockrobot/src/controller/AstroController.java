@@ -154,9 +154,6 @@ public class AstroController implements IController {
 	};
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
-
-	@Override
 	public void display(Object parserServer) {
 		String server[] = parserServer.toString().split(":");
 		String host = "";
@@ -206,7 +203,6 @@ public class AstroController implements IController {
 
 	@Override
 	public void cleanup() {
-		view.removePropertyChangeListener(this);
 		view.cleanup();
 		
 		if (model != null) {

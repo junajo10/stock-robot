@@ -5,6 +5,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ import view.graph.GraphView;
  * @author kristian
  *
  */
-public class GraphController implements IController {
+public class GraphController implements IController, PropertyChangeListener {
 	
 	public static final String BIND_GRAPH_VIEW = "bindGraphView";
 	public static final String WINDOW_TITLE = "Stock prices on a graph";

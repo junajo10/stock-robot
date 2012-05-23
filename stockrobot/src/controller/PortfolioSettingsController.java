@@ -48,12 +48,6 @@ public class PortfolioSettingsController implements IController {
 			cleanup();
 		}
 	};
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void display(Object model) {

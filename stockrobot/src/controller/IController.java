@@ -11,7 +11,7 @@ import java.util.Map;
  * Should also hold a reference to the parent controller to re-enable buttons etc.
  * @author Daniel
  */
-public interface IController extends PropertyChangeListener{
+public interface IController {
 	/**
 	 * Sets up and displays the view associated with this controller.
 	 * Should also start to listen to the view for atleast WindowClose message.

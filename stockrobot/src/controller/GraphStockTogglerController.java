@@ -2,7 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -71,7 +71,7 @@ public class GraphStockTogglerController implements IController {
 	 * 
 	 * @param controller
 	 */
-	public void registerListener( final IController controller ) {
+	public void registerListener( final PropertyChangeListener controller ) {
 		
 		dispatcher.addPropertyChangeListener( controller );
 	}
@@ -81,14 +81,11 @@ public class GraphStockTogglerController implements IController {
 	 * 
 	 * @param controller
 	 */
-	public void unregisterListener( final IController controller ) {
+	public void unregisterListener( final PropertyChangeListener controller ) {
 		
 		dispatcher.removePropertyChangeListener( controller );
 	}
 	
-	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {} //NOPMD
-
 	@Override
 	public void display( final Object model ) {
 		

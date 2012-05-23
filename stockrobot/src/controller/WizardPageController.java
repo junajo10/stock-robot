@@ -11,7 +11,4 @@ import view.wizard.WizardPage;
 public abstract class WizardPageController implements IController {
 	
 	public abstract WizardPage getView();
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {} //NOPMD
 }
