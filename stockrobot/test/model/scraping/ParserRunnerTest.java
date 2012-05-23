@@ -60,7 +60,6 @@ public class ParserRunnerTest {
 	public static void tearDownTest() {
 		
 		toTest.stopParser();
-		toTest.stopRunner();
 		
 		Thread closer = new Thread( new Runnable() {
 			
