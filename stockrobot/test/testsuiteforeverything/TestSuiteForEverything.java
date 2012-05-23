@@ -14,6 +14,7 @@ import simulation.SimulationHandlerTest;
 import utils.FinancialLongConverterTest;
 import utils.PairTest;
 import view.components.ItemCmbPortfolioTest;
+import model.scraping.ParserRunnerTest;
 import model.scraping.ParserStockTest;
 import model.scraping.SchedulerTest;
 import model.scraping.parser.AvanzaParserTest;
@@ -51,7 +52,7 @@ import model.wizard.WizardPageModelTest;
 	WizardPageModelTest.class,
 	SchedulerTest.class,
 	AvanzaParserTest.class,
-	//ParserRunnerTest.class,  //TODO: Kristian: fix
+	ParserRunnerTest.class,
 	//SimulationRunnerTest.class,  //TODO: Kristian: fix neverending loop
 	SimulationHandlerTest.class,
 })

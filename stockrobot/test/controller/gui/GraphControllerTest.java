@@ -41,6 +41,7 @@ public class GraphControllerTest extends DatabaseCleaner {
 	@Test
 	public void viewIsntNull() {
 		
+		toTest.init();
 		Assert.assertNotNull( toTest.getView() );
 	}
 }

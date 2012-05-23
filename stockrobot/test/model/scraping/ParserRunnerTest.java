@@ -14,6 +14,8 @@ import org.junit.Test;
  * 
  * Just @BeforeClass and @AfterClass
  * 
+ * ALSO: note that this class prefers the database to be empty. Maybe not a need but it's highly recommended to run this test after one of the tests that clears DB when finished
+ * 
  * @author kristian
  *
  */
@@ -22,11 +24,13 @@ public class ParserRunnerTest {
 	private static ParserRunner toTest;
 	private static Thread th;
 	private static boolean runnerCreated = false;
-	private static PropertyChangeSupport pcs = new PropertyChangeSupport(null);
+	private static PropertyChangeSupport pcs;
 	private final static int POLLINGTIME = 100;
 	
 	@BeforeClass
 	public static void setupTest() {
+		
+		pcs = new PropertyChangeSupport(new Object());
 		
 		toTest = new ParserRunner((int) Math.round( Math.random() * 1000 ) + 20003, pcs);
 		toTest.setSkipScheduler();
@@ -116,19 +120,5 @@ public class ParserRunnerTest {
 		
 		//Check that the right value was sent back from stopParser, and that status was changed
 		Assert.assertTrue( !toTest.status() && wasStopped );
-	}
-	
-	/**
-	 * This is to test that the stopRunner method works as anticipated
-	 * 
-	 * Why is it not possible to assert with assertTrue here???
-	 * It gives a nullpointer exception. But assertFalse is ok. WHY?
-	 */
-	@Test
-	public void testStopRunner() {
-		
-		boolean wasStopped = toTest.stopRunner();
-		
-		Assert.assertFalse( toTest.status() && !wasStopped );
 	}
 }
