@@ -31,9 +31,6 @@ import view.AstroView;
  * @author Daniel
  */
 public class AstroController implements IController {
-	
-	public static final String CLASSNAME = "Astro Controller";
-	
 	private AstroModel model;
 	private AstroView view = new AstroView();
 	private List<IController> subControllers = new ArrayList<IController>();
@@ -133,7 +130,7 @@ public class AstroController implements IController {
 		}
 	};	
 	
-	ActionListener showLog = new ActionListener() {
+	private ActionListener showLog = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(view.getShowLogIsSelected()){
@@ -145,7 +142,7 @@ public class AstroController implements IController {
 		}
 	};
 		
-	WindowListener windowClose = new AbstractWindowCloseAdapter() {
+	private WindowListener windowClose = new AbstractWindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			cleanup();
@@ -223,7 +220,7 @@ public class AstroController implements IController {
 		return actions;
 	}
 
-	public void defineSubControllers() {
+	private void defineSubControllers() {
 		
 		graphController = new GraphController();
 		graphController.init();

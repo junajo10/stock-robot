@@ -255,7 +255,7 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 		allTimeSeries.put("Worth", worth);
 		allTimeSeries.put("Portfolio Balance", getBalanceTimeSeries());
 	}
-	public void sortHistory(List<PortfolioHistory> history) {
+	private void sortHistory(List<PortfolioHistory> history) {
 		Collections.sort(history, new PortfolioHistoryComparator());
 	}
 	class PortfolioHistoryComparator extends PortfolioHistory implements Comparator<PortfolioHistory> {

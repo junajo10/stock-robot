@@ -53,21 +53,21 @@ public class AstroView extends JFrame implements IView {
 	private final int WIDTH_FRAME = 373;
 
 
-	JButton btnSimulate 								= new JButton("Simulate Algorithms");
-	JButton btnGraph 									= new JButton("Graph Window");
-	JButton btnStocks 									= new JButton("Browse Stocks");
-	JButton btnPortfolio 								= new JButton("Open Portfolio");
-	JButton btnClearLog 								= new JButton("Clear Log");
-	JButton btnExportLog 								= new JButton("Export Log");
+	private JButton btnSimulate 								= new JButton("Simulate Algorithms");
+	private JButton btnGraph 									= new JButton("Graph Window");
+	private JButton btnStocks 									= new JButton("Browse Stocks");
+	private JButton btnPortfolio 								= new JButton("Open Portfolio");
+	private JButton btnClearLog 								= new JButton("Clear Log");
+	private JButton btnExportLog 								= new JButton("Export Log");
 	
-	JCheckBox chckbxShowLog								= new JCheckBox("Show Log");
-	JPanel contentPane 									= new JPanel();
+	private JCheckBox chckbxShowLog								= new JCheckBox("Show Log");
+	private JPanel contentPane 									= new JPanel();
 
-	WindowListener windowListener;
+	private WindowListener windowListener;
 
-	JList log;
-	DefaultListModel logModel;
-	JScrollPane scrollPane;
+	private JList log;
+	private DefaultListModel logModel;
+	private JScrollPane scrollPane;
 	private JPanel pnlLog;
 
 	/**

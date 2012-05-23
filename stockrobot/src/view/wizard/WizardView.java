@@ -330,7 +330,7 @@ public class WizardView extends JFrame implements IView {
 			view.setEnabled(false);
 	}
 	
-	public void removeListeners(JButton view){
+	private void removeListeners(JButton view){
 		view.setEnabled(false);
 		for(ActionListener listener : view.getActionListeners())
 			view.removeActionListener(listener);

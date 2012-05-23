@@ -31,7 +31,6 @@ import java.awt.event.ActionEvent;
 public class PortfolioView extends JFrame implements IView {
 
 	private static final long serialVersionUID = -1857650100977127973L;
-	public static final String WINDOW_CLOSE 				= "windowClose";
 	public static final String CREATE_PORTFOLIO			= "createPortfolio";	
 	public static final String MANAGE_ALGORITHMS			= "manageAlgorithms";
 	public static final String PORTFOLIOSELECTOR			= "portfolioSelector";
@@ -230,7 +229,7 @@ public class PortfolioView extends JFrame implements IView {
 		}
 	}
 
-	public void updateValues(){
+	private void updateValues(){
 		
 		if(selectedPortfolio != null){
 			lblBalanceVar.setText(FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getUnusedAmount()));
@@ -239,7 +238,7 @@ public class PortfolioView extends JFrame implements IView {
 		}
 	}
 	
-	public void updatePortfolios(){
+	private void updatePortfolios(){
 		
 		//cmbModel = new PortfoliosCmbModel(portfolios);
 		//cmbSelectPortfolio.setModel(cmbModel);

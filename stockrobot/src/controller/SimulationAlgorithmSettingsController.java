@@ -16,8 +16,6 @@ import model.simulation.SimModel;
 import view.AlgorithmSettingsView;
 
 public class SimulationAlgorithmSettingsController implements IController {
-
-	public static final String CLASS_NAME = "AlgorithmSettingsController";
 	private SimModel model;
 	private String algorithmName;
 	private Map<String,EventListener> actionListeners;

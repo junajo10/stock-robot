@@ -58,7 +58,7 @@ public class StockTableView extends JFrame implements IView {
 	 * 
 	 * @return
 	 */
-	public Pair<Object[][], Object[]> populate() {
+	private Pair<Object[][], Object[]> populate() {
 		
 		//Database connection
 		IJPAHelper jpa = JPAHelper.getInstance();

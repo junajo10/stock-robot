@@ -24,7 +24,7 @@ public class HarvesterController implements IController {
 	private final HarvesterView view;
 	private boolean shutdownOnClose = true;
 	
-	WindowListener windowClose = new AbstractWindowCloseAdapter() {
+	private WindowListener windowClose = new AbstractWindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			cleanup();

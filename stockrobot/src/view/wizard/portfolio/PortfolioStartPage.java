@@ -148,7 +148,7 @@ public class PortfolioStartPage extends WizardPage {
 		//========================================
 	}
 	
-	public void updatePortfolios(){
+	private void updatePortfolios(){
 		
 		cmbClonePortfolioList.removeAllItems();
 		for(IPortfolio p : portfolioHandler.getPortfolios()){

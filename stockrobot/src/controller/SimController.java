@@ -82,7 +82,7 @@ public class SimController implements IController {
 		return actions;
 	}
 
-	public void defineSubControllers() {
+	private void defineSubControllers() {
 		simResultController = new SimResultController();
 	}
 

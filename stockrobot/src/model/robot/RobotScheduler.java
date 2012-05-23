@@ -20,11 +20,9 @@ import model.portfolio.IPortfolioHandler;
 public class RobotScheduler implements Runnable{
 
 	private RobotHandler handler;	
-	private IPortfolioHandler portfolioHandler;
 
 	public static final long MILLI_SECOND = 1;
 	public static final long SECOND = 1000*MILLI_SECOND;
-	public static final long MINUTE = 60*SECOND;
 
 	private boolean isRunning = false;
 	private boolean pause = false;
@@ -42,11 +40,9 @@ public class RobotScheduler implements Runnable{
 		handler = new RobotHandler(portfolioHandler);
 		this.pauseLength = 5*SECOND;
 		usingServer = false;
-		this.portfolioHandler = portfolioHandler;
 	}
 	public RobotScheduler(IPortfolioHandler portfolioHandler, String host, int port) throws Exception {
 		handler = new RobotHandler(portfolioHandler);
-		this.portfolioHandler = portfolioHandler;
 		usingServer = true;
 		
 		cleanDatabaseCache();
@@ -152,7 +148,7 @@ public class RobotScheduler implements Runnable{
 		isStoped = true;
 	}
 
-	public void runAlgorithms() {
+	private void runAlgorithms() {
 		if (isRunning) {
 			cleanDatabaseCache();
 			StockPrices lastStock = JPAHelper.getInstance().getLastStockPrice();

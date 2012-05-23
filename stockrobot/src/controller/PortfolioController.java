@@ -20,8 +20,6 @@ import view.PortfolioView;
  *
  */
 public class PortfolioController implements IController {
-
-	public static final String CLASS_NAME = "PortfolioController";
 	private PortfolioView view;
 	private ITrader trader;
 	private IPortfolioHandler portfolios;
@@ -118,7 +116,7 @@ public class PortfolioController implements IController {
 	@Override
 	public void cleanup() {} //NOPMD
 
-	public void defineSubControllers() {
+	private void defineSubControllers() {
 		portfolioSettings = new PortfolioSettingsController();
 	}
 

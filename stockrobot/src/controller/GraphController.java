@@ -39,9 +39,7 @@ import view.graph.GraphView;
  *
  */
 public class GraphController implements IController, PropertyChangeListener {
-	
-	public static final String BIND_GRAPH_VIEW = "bindGraphView";
-	public static final String WINDOW_TITLE = "Stock prices on a graph";
+	private static final String WINDOW_TITLE = "Stock prices on a graph";
 	
 	private static final int YEAR_RANGE = 0;
 	private static final int MONTH_RANGE = 1;
@@ -312,7 +310,7 @@ public class GraphController implements IController, PropertyChangeListener {
 	/**
 	 * Ask the model to get all stock names recorded, then create a GraphStockToggler for each of them
 	 */
-	public void defineSubControllers() {
+	private void defineSubControllers() {
 		
 		IJPAHelper jpaHelper = JPAHelper.getInstance();
 		List<StockNames> nameList = jpaHelper.getAllStockNames();

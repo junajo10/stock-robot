@@ -14,8 +14,6 @@ import view.AlgorithmSettingsView;
 
 public class AlgorithmSettingsController implements IController {
 
-	public static final String CLASS_NAME = "AlgorithmSettingsController";
-	
 	private Map<String,EventListener> actionListeners;
 	
 	private AlgorithmSettingsView view;

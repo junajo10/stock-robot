@@ -346,7 +346,7 @@ public class HarvesterView extends JFrame implements IView{
 		parserBar.setValue(progress);
 	}
 
-	public File openChooseDirectory() {
+	private File openChooseDirectory() {
 		 JFileChooser fc = new JFileChooser();
          int returnVal = fc.showSaveDialog(this);
          if (returnVal == JFileChooser.APPROVE_OPTION) {

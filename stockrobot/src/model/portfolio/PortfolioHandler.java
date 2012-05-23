@@ -4,7 +4,6 @@ package model.portfolio;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import utils.global.Log;
@@ -14,8 +13,6 @@ import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
-import model.database.jpa.tables.StockPrices;
-
 
 
 /**
@@ -33,7 +30,6 @@ public final class PortfolioHandler implements IPortfolioHandler{
 	private final transient PropertyChangeSupport pChangeSuport = new PropertyChangeSupport(this);
 	private final transient PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
 	private final transient IRobot_Algorithms robot;
-	private transient Date lastStockPost = null;
 	
 	private PortfolioHandler(final IRobot_Algorithms robot) {
 		this.robot = robot;
@@ -113,23 +109,7 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		}
 		return false;
 	}
-	
-	public void updateAlgorithms() {
-		synchronized (this) {
-			StockPrices sp = jpaHelper.getLastStockPrice();
-			
-			if (sp != null) {
-				if (lastStockPost.getTime() < sp.getTime().getTime()) {
-					for (IPortfolio p : listOfPortfolios) {
-						if (p.getAlgorithm() != null)
-							p.updateAlgorithm();
-					}
-				}
-				this.lastStockPost = sp.getTime();
-			}
-		}
-	}
-	
+		
 	@Override
 	public List<IPortfolio> getPortfolios() {
 		return listOfPortfolios;

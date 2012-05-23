@@ -85,7 +85,7 @@ public class StartController implements IController {
 		return actions;
 	}
 
-	public void defineSubControllers() {
+	private void defineSubControllers() {
 		if (harvester == null) {
 			harvester = new HarvesterController();
 		}
