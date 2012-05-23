@@ -69,6 +69,8 @@ public final class TraderSimulator implements ITrader{
 			ph.setStockSoldPrice(latest);
 			ph.setSoldDate(new Date(System.currentTimeMillis()));
 			jpaHelper.updateObject(portfolio);
+			
+			propertyChangeSuport.firePropertyChange(SELL_STOCK, null, portfolio);
 		}
 		
 		return true;
