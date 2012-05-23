@@ -47,8 +47,8 @@ public class SimulationHandler extends SimModel {
 	
 	private int progress = 0;
 	private Map<String, Long> latestPieData = new HashMap<String, Long>();
-	private int updatePieAt = 0;
-	private int nextPieStep = 25;
+	private int updatePieAt = -5;
+	private int nextPieStep = 10;
 	private List<AlgorithmSettingLong> algorithmLongSettings;
 	private List<AlgorithmSettingDouble> algorithmDoubleSettings;
 	
@@ -195,10 +195,15 @@ public class SimulationHandler extends SimModel {
 		return ((double)portfolio.getPortfolioTable().getBalance()/(double)startingBalance)*100;
 	}
 	private void updatePieData() {
+		boolean updated = false;
 		for (PortfolioHistory ph : portfolio.getPortfolioTable().getHistory()) {
 			if (ph.getSoldDate() == null) {
 				fillPie(ph.getStockPrice().getStockName().getName(), ph.getAmount(), ph.getStockPrice().getBuy());
+				updated = true;
 			}
+		}
+		if (!updated) {
+			firePropertyChange(NEWPIEDATA, null, latestPieData);
 		}
 	}
 	private void setWorth(long currentWorth) {
