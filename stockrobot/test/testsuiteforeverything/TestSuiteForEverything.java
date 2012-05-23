@@ -41,7 +41,6 @@ import model.wizard.WizardPageModelTest;
 	JPATest.class,
 	MainBasicJPATest.class,
 	ItemCmbPortfolioTest.class,
-	//AstroRecieverTest.class, //TODO: Kristian: fix
 	ParserStockTest.class,
 	PortfolioHandlerTest.class,
 	TraderTest.class,
