@@ -109,13 +109,12 @@ public class HarvesterView extends JFrame implements IView{
 		
 		chckbxSimulateStocks = new JCheckBox("Simulate Stocks");
 		chckbxSimulateStocks.setForeground(Color.BLACK);
-		chckbxSimulateStocks.setBackground(UIManager.getColor("control"));
+		chckbxSimulateStocks.setBackground(SystemColor.control);
 		
 		btnStatus = new JButton("Print Status");
 		
 		chckbxForceStop = new JCheckBox("Force Stop");
-		chckbxForceStop.setBackground(UIManager.getColor("control"));
-		chckbxForceStop.setForeground(Color.BLACK);
+		chckbxForceStop.setBackground(SystemColor.control);
 		
 		btnExportLog = new JButton("Export Log");
 		
