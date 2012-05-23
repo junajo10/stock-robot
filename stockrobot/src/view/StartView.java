@@ -72,7 +72,7 @@ public class StartView extends JFrame implements IView {
 		setResizable(false);
 		setTitle("ASTRo Stock Robot");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 252, 402);
+		setBounds(100, 100, 252, 410);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -95,22 +95,24 @@ public class StartView extends JFrame implements IView {
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(chckbxConnectToParser, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addGap(1)
-							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))
-						.addComponent(lblLogLevel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+							.addComponent(chckbxConnectToParser, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblLogLevel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(17)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
 					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addGap(12)
 					.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(chckbxConnectToParser)
