@@ -36,6 +36,11 @@ import model.database.jpa.tables.PortfolioInvestment;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 
+/**
+ * The model for PortfolioHistory.
+ * 
+ * @author Daniel
+ */
 public class PortfolioHistoryModel implements PropertyChangeListener {
 	private IJPAHelper jpaHelper;
 

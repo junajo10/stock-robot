@@ -2,10 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComboBox;
@@ -20,7 +18,6 @@ import view.StartView;
 public class StartController implements IController {
 	private StartView view = new StartView();
 	private StartModel model;
-	private List<IController> subControllers = new ArrayList<IController>();
 	
 	private IController harvester;
 	private IController astroController;
