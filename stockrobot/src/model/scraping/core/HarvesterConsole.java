@@ -1,11 +1,19 @@
 package model.scraping.core;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.NoSuchElementException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 
-public class HarvesterConsole {
+public class HarvesterConsole implements PropertyChangeListener {
 	
 private Harvester harv;
+
+private int connected		= 0;
+private int totalLoops 		= 0;
+private Logger logHandler;
 
 	/**
 	 * Main class for the Parsing part of the program.
@@ -26,6 +34,8 @@ private Harvester harv;
 	
 	public HarvesterConsole(){
 		harv = new Harvester(12334);
+		harv.addObserver(this);
+		logHandler = new Logger();
 		System.out.println("*** ASTRo Harvester started. ***"); //NOPMD
 		System.out.println("*** Write help for help. ***"); //NOPMD
 		Scanner in = new Scanner(System.in);
@@ -116,5 +126,88 @@ private Harvester harv;
 			System.out.println("*** Unknown command, write help for help. ***"); //NOPMD
 		}
 	}
+
+	
+	private void print(String str){
+		System.out.println(str);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals(HarvesterLog.PARSING_DONE)){
+			logHandler.parsingLoop((Long) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.PARSING_PROGRESS)){
+
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.CONNECTED)){
+			logHandler.connected((String) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.DISCONNECTED)){
+			logHandler.disconnected((String) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.TEXT)){
+			print((String) evt.getNewValue());
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.SHUTDOWN)){
+			logHandler.showDownServer();
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.SERVER_UP)){
+			logHandler.serverUp();
+		}
+		
+		if(evt.getPropertyName().equals(HarvesterLog.SERVER_DOWN)){
+			logHandler.finishStopped();
+		}
+	}
+	
+	/**
+	 * Internal class for handling the Log.
+	 * @author Erik
+	 *
+	 */
+	private class Logger {
+
+			
+		public void serverUp(){
+			print("Server is up and accepting connections.");
+		}	
+		
+		public void parsingLoop(long timeElapsed){
+			totalLoops++;
+			print("Parsing loop finished in " + timeElapsed + " ms. ");
+		}		
+		
+		public void finishStopped(){
+			print("Parser shutdown complete.");
+		}
+		
+		public void showDownServer(){
+			print("Shutting down server.");
+		}
+		
+		public void connected(String hostname) {
+			connected++;
+			print(hostname + " has connected to Harvester.");
+		}
+		
+		public void disconnected(String hostname) {
+			connected--;
+			print(hostname + " has disconnected from Harvester.");
+		}
+		
+		public void addText(String text) {
+			print(text);
+		}
+		
+
+	}
+
 	
 }
