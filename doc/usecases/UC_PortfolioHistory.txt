@@ -1,0 +1,34 @@
+Use Case: PortfolioHistory
+Short description: This is the portfoliohistory usecase, here the user gets presented information about the portfolios diffrent trading points and other fun information. 
+
+Priority: Medium
+
+Extends or Includes: 
+
+Participating actors: User, Astro
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+										Statistics starts being generated.
+										Statistics are sent to user
+
+										Graphs starts being generated.
+										Graphs are sent to user
+
+										Tabledata starts being generated.
+										Tabledata are sent to user
+
+
+
+
+User clicks the close button in the view. 
+
+							          View shuts down
+
+
+Alternate flow:
+
+Exceptional flow:
+

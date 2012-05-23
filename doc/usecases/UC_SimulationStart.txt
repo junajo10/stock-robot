@@ -14,6 +14,9 @@ User                                    System
 										Simulation is started.
 										Results are feeded back to the user.
 
+User presses history 
+(see UC_PortfolioHistory)
+
 User closes window
 
 										Simulation data is freed.

@@ -18,6 +18,7 @@ User selects an portfolio
 User clicks the close button in the view. 
 Alternativly clicks history see(UC_PortfolioHistory) 
 or click stock see(UC_PortfolioStock)
+or click new Portfolio see(UC_PortfolioWizard)
 alternate flow. 
 
 										          View shuts down
