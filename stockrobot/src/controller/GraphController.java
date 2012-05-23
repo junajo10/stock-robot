@@ -21,6 +21,7 @@ import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 
+import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.joda.time.DateTime;
@@ -250,7 +251,7 @@ public class GraphController implements IController, PropertyChangeListener {
 				//Add all prices through time to the serie
 				for( StockPrices sp : priceList ) {
 
-					series.addOrUpdate( new Minute( sp.getTime() ), FinancialLongConverter.toDouble( sp.getLatest() ) );
+					series.addOrUpdate( new Millisecond( sp.getTime() ), FinancialLongConverter.toDouble( sp.getLatest() ) );
 				}
 
 				//Insert serie to the view / model of the view
