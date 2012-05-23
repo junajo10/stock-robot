@@ -105,7 +105,7 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 		DecimalFormat df = new DecimalFormat("#.###");
 
 
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("yy/MM/ee hh:mm:ss");
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yy/MM/ee HH:mm:ss");
 
 		for (int i = 0; i < history.size(); i++) {
 			StockPrices sp = history.get(i).getStockPrice();
@@ -147,7 +147,7 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 		TimeSeries t1 = new TimeSeries("Balance");
 
 		if (history.size() > 0) {
-			SortedMap<Date, LongContainer> sortedMap = new TreeMap<Date, LongContainer>();
+			TreeMap<Date, LongContainer> sortedMap = new TreeMap<Date, LongContainer>();
 
 			// Add all purchases
 			for (PortfolioHistory ph : history) {
@@ -190,7 +190,7 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 				Date startDate = investments.get(i).getDate();
 				Date endDate = new Date(System.currentTimeMillis());
 
-				SortedMap<Date, LongContainer> subMap = sortedMap.subMap(startDate, endDate);
+				SortedMap<Date, LongContainer> subMap = sortedMap.subMap(startDate, true, endDate, true);
 				Collection<LongContainer> bepa = subMap.values();
 				for (LongContainer l : bepa) {
 					l.setValue(l.getValue() + invested);
@@ -226,7 +226,7 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 				}
 			}
 			
-			SortedMap<DateTime, LongContainer> worthMap = new TreeMap<DateTime, LongContainer>();
+			TreeMap<DateTime, LongContainer> worthMap = new TreeMap<DateTime, LongContainer>();
 			
 			for (Pair<DateTime, PortfolioHistory> buyPoint : buyList) {
 				worthMap.put(buyPoint.getLeft(), new LongContainer(0));				
@@ -236,18 +236,21 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 			}
 			
 			for (Pair<DateTime, PortfolioHistory> buyPoint : buyList) {
-				SortedMap<DateTime, LongContainer> subMap = worthMap.subMap(buyPoint.getLeft(), currentDate);
-				for (Entry<DateTime, LongContainer> entry : subMap.entrySet()) {
-					//Add the current value
-					StockNames stockName = buyPoint.getRight().getStockPrice().getStockName();
-					StockPrices latestStockPrice = jpaHelper.getLastStock(stockName, entry.getKey().toDate());
-					long amount = buyPoint.getRight().getAmount();
-					if (latestStockPrice != null)
-						entry.getValue().add(latestStockPrice.getSell()*amount);
+				if (buyPoint.getLeft().isBefore(currentDate)) {
+					SortedMap<DateTime, LongContainer> subMap = worthMap.subMap(buyPoint.getLeft(), true, currentDate, true);
+					for (Entry<DateTime, LongContainer> entry : subMap.entrySet()) {
+						//Add the current value
+						StockNames stockName = buyPoint.getRight().getStockPrice().getStockName();
+						StockPrices latestStockPrice = jpaHelper.getLastStock(stockName, entry.getKey().toDate());
+						long amount = buyPoint.getRight().getAmount();
+						if (latestStockPrice != null)
+							entry.getValue().add(latestStockPrice.getSell()*amount);
+					}
 				}
 			}
 			for (Entry<DateTime, LongContainer> entry : worthMap.entrySet()) {
-				worth.add(new Millisecond(entry.getKey().toDate()), FinancialLongConverter.toDouble(entry.getValue().getValue()));
+				if (!entry.getKey().isEqual(currentDate))
+					worth.add(new Millisecond(entry.getKey().toDate()), FinancialLongConverter.toDouble(entry.getValue().getValue()));
 			}
 
 		}

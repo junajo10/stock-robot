@@ -103,7 +103,7 @@ public class PortfolioHistoryModelStatistics {
 			if (!pi.didInvest())
 				amountRemoved += pi.getAmount();
 		}
-		
+		amountRemoved = Math.abs(amountRemoved); 
 		statisticsString += "Mony extracted:\n" + FinancialLongConverter.toStringTwoDecimalPoints(amountRemoved) + "\n";
 		propertyChangeSupport.firePropertyChange(STATISTICSMODELUPDATED, oldString, statisticsString);
 	}

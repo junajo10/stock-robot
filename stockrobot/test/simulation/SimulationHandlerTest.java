@@ -48,6 +48,8 @@ public class SimulationHandlerTest {
 		simulationHandler.clearTestDatabase();
 		Assert.assertTrue(simulationHandler.simulateAlgorithm("TestAlgorithm1", 100) > 0);
 		simulationHandler.clearTestDatabase();
+		
+		cleanDatabase();
 	}
 	/**
 	 * Tests algorithm 2
@@ -57,10 +59,7 @@ public class SimulationHandlerTest {
 		simulationHandler.clearTestDatabase();
 		Assert.assertTrue(simulationHandler.simulateAlgorithm("TestAlgorithm2", 100) > 0);
 		simulationHandler.clearTestDatabase();
-	}
-	
-	@AfterClass
-	public static void clean() {
+		
 		cleanDatabase();
 	}
 	private static void cleanDatabase() {
