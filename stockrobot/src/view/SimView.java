@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
@@ -46,22 +45,6 @@ public class SimView extends JFrame implements IView {
 	public static final String STARTSIMULATION = "Start Simulation";
 	public static final String CONFIGUREALGORTIHM = "Configure Algorithm";
 	public static final String WINDOWCLOSE = "Window Close";
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					SimView frame = new SimView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -186,6 +169,7 @@ public class SimView extends JFrame implements IView {
 
 	@Override
 	public void addActions(Map<String, EventListener> actions) {
+		cleanup();
 		
 		comboBox.addActionListener((ActionListener) actions.get(COMBOBOX));
 		btnSimulate.addActionListener((ActionListener) actions.get(STARTSIMULATION));
