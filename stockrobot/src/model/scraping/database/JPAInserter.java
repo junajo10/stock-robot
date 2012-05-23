@@ -20,20 +20,6 @@ public class JPAInserter implements IInserter {
 	
 	private Map<String, StockPrices> latestMap = null;
 	
-	/*
-	public static void main( String[] args ) {
-		
-		JPAInserter ins 		= new JPAInserter();
-		List<ParserStock> test 	= new ArrayList<ParserStock>();
-		
-		ParserStock ps			= new ParserStock("apa");
-		ps.setDate( new Date(293333292) );
-		//ps.setDate( "2012-02-02 20:20:21" );
-		
-		test.add( ps );
-		ins.insertStockData( test );
-	}*/
-	
 	public JPAInserter() {
 		
 		//Instantiate helper

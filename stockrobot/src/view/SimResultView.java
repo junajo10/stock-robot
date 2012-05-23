@@ -63,23 +63,6 @@ public class SimResultView extends JFrame implements IView {
 	private JButton btnShowHistory = new JButton("Show History");
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					SimResultView frame = new SimResultView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public SimResultView() {

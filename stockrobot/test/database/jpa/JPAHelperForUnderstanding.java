@@ -38,12 +38,6 @@ public class JPAHelperForUnderstanding {
 	}
 	*/
 	
-	public static void main( String[] args ) {
-		
-		JPAHelperForUnderstanding apa = new JPAHelperForUnderstanding();
-		apa.testGetPricesForStockPeriod();
-	}
-	
 	//@Test
 	public void testGetPricesForStockPeriod() {
 		

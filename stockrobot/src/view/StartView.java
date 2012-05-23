@@ -47,23 +47,6 @@ public class StartView extends JFrame implements IView {
 	private String oldLocalhostField = "";
 	
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					StartView frame = new StartView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public StartView() {
@@ -149,8 +132,10 @@ public class StartView extends JFrame implements IView {
 		this.model = (StartModel) model;
 		
 		txtLocalhost.setText(this.model.getParserServer());
-		
-		comboBox.setModel(new DefaultComboBoxModel(Log.TAG.values()));
+		DefaultComboBoxModel comboboxModel = new DefaultComboBoxModel();
+		comboboxModel.addElement(Log.TAG.NORMAL);
+		comboboxModel.addElement(Log.TAG.VERBOSE);
+		comboBox.setModel(comboboxModel);
 		
 		this.setVisible(true);
 	}
