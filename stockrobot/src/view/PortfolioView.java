@@ -231,7 +231,7 @@ public class PortfolioView extends JFrame implements IView {
 		if(selectedPortfolio != null){
 			lblBalanceVar.setText(FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getUnusedAmount()));
 			lblStockValueVar.setText(FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth() - selectedPortfolio.getUnusedAmount()));
-			lblTotalVar.setText(FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth()+selectedPortfolio.getUnusedAmount()));
+			lblTotalVar.setText(FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getCurrentWorth()));
 		}
 	}
 	

@@ -237,16 +237,16 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 			
 			for (Pair<DateTime, PortfolioHistory> buyPoint : buyList) {
 				SortedMap<DateTime, LongContainer> subMap = worthMap.subMap(buyPoint.getLeft(), currentDate);
-				for (Entry<DateTime, LongContainer> apa : subMap.entrySet()) {
+				for (Entry<DateTime, LongContainer> entry : subMap.entrySet()) {
 					//Add the current value
 					StockNames stockName = buyPoint.getRight().getStockPrice().getStockName();
-					StockPrices latestStockPrice = jpaHelper.getLastStock(stockName, apa.getKey().toDate());
+					StockPrices latestStockPrice = jpaHelper.getLastStock(stockName, entry.getKey().toDate());
 					long amount = buyPoint.getRight().getAmount();
-					apa.getValue().add(latestStockPrice.getSell()*amount);
+					entry.getValue().add(latestStockPrice.getSell()*amount);
 				}
 			}
-			for (Entry<DateTime, LongContainer> apa : worthMap.entrySet()) {
-				worth.add(new Millisecond(apa.getKey().toDate()), FinancialLongConverter.toDouble(apa.getValue().getValue()));
+			for (Entry<DateTime, LongContainer> entry : worthMap.entrySet()) {
+				worth.add(new Millisecond(entry.getKey().toDate()), FinancialLongConverter.toDouble(entry.getValue().getValue()));
 			}
 
 		}

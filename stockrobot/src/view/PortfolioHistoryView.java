@@ -161,9 +161,9 @@ public class PortfolioHistoryView extends JFrame implements IView {
 		}
 		else if (evt.getPropertyName().contentEquals("Time Series")) {
 	    	@SuppressWarnings("unchecked")
-			Map<String, TimeSeries> apa =  (Map<String, TimeSeries>) evt.getNewValue();
-	        final TimeSeries portfolioBalance = apa.get("Portfolio Balance");
-	        final TimeSeries portfolioWorth = apa.get("Worth");
+			Map<String, TimeSeries> timeSeries =  (Map<String, TimeSeries>) evt.getNewValue();
+	        final TimeSeries portfolioBalance = timeSeries.get("Portfolio Balance");
+	        final TimeSeries portfolioWorth = timeSeries.get("Worth");
 	        
 	        
 	        final TimeSeriesCollection timeSeriesDataset = new TimeSeriesCollection();
