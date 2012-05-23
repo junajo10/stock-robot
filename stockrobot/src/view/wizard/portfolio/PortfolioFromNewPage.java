@@ -83,21 +83,6 @@ public class PortfolioFromNewPage extends WizardPage {
 		//========================================
 	}
 	
-	public void addAlgorithmListener(ItemListener listener){
-		cmbAlgorithms.addItemListener(listener);
-	}
-	
-	public void setAlgorithmListener(ItemListener listener){
-		removeAlgorithmListeners();
-		addAlgorithmListener(listener);
-	}
-
-	public void removeAlgorithmListeners(){
-		for(ItemListener l : cmbAlgorithms.getItemListeners()){
-			cmbAlgorithms.removeItemListener(l);
-		}
-	}
-	
 	public long getBalance(){
 		
 		long balance = -1;
