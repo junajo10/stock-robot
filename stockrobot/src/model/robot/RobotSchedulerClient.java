@@ -53,7 +53,7 @@ public class RobotSchedulerClient extends Thread{
 				
 			} catch (IOException e) {
 				// Try to reconnect if fail it fails give up.
-				Log.log(Log.TAG.VERBOSE, "IO exeption in harvester connection");
+				Log.log(Log.TAG.ERROR, "IO exeption in harvester connection, trying to reconnect");
 				if (socket != null) {
 					try {
 						socket.close();
@@ -68,7 +68,6 @@ public class RobotSchedulerClient extends Thread{
 				} 
 			}
 		}
-		Log.log(Log.TAG.VERBOSE, "Connecting to harvester broke");
 	}
 	public void cleanup() {
 		keepRunning = false;

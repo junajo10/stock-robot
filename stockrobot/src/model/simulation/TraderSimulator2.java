@@ -42,7 +42,7 @@ public class TraderSimulator2 implements ITrader {
 
 		portfolio.addPortfolioHistory(new PortfolioHistory(s, s.getTime(), amount, portfolio));
 		jpaHelper.updateObject(portfolio);
-		Log.log(TAG.VERBOSE, "Simulator: Buying " + amount + " of " + s.getStockName().getName() + " for: " + FinancialLongConverter.toDouble(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio)));
+		Log.log(TAG.VERY_VERBOSE, "Simulator: Buying " + amount + " of " + s.getStockName().getName() + " for: " + FinancialLongConverter.toDouble(s.getSell()*amount + getCourtagePrice(s, amount, true, portfolio)));
 		return true;
 	}
 	@Override
@@ -55,7 +55,7 @@ public class TraderSimulator2 implements ITrader {
 			Log.log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
 			return false;
 		}
-		Log.log(TAG.VERBOSE, "Simulator: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
+		Log.log(TAG.VERY_VERBOSE, "Simulator: Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
 		StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 		portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount());
 		ph.setSoldDate(latest.getTime());

@@ -138,7 +138,6 @@ public class AstroReciever {
 							e.printStackTrace();
 						}
 						if(latestStocks != null && !latestStocks.equals("")){
-							Log.log(TAG.NORMAL, "New data is available from database.");
 							newData = true;
 						} 
 						else {

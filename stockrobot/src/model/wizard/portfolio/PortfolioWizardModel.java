@@ -89,7 +89,7 @@ public class PortfolioWizardModel extends WizardPageModel{
 			
 			portfolioHandler.setAlgorithm(newPortfolio, algorithm);
 			
-			Log.log(Log.TAG.NORMAL, "Portfolio Created \n" +
+			Log.log(Log.TAG.VERBOSE, "Portfolio Created \n" +
 					"name: " + name + "\n" +
 					"balance: " + balance + "\n" +
 					"algorithm: " + algorithm); 

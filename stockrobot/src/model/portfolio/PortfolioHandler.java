@@ -36,12 +36,10 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		jpaHelper = JPAHelper.getInstance();
 		final List<PortfolioEntity> portfolioTables = jpaHelper.getAllPortfolios();
 		
-		Log.log(TAG.VERY_VERBOSE, "Starting to create portfolios");
 		for (PortfolioEntity pt : portfolioTables) {
 			final IPortfolio p = createExistingPortfolio(pt);
 			Log.log(TAG.VERY_VERBOSE, "Portfolio created: " + p.getName());
 		}
-		Log.log(TAG.VERY_VERBOSE, "Done creating portfolios, number of portfolios: " + listOfPortfolios.size());
 	}
 	
 	private IPortfolio createExistingPortfolio(PortfolioEntity portfolioTable) {

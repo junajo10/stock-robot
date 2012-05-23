@@ -125,11 +125,11 @@ public class TestAlgorithm2 implements IAlgorithm{
 	public boolean giveLongSettings(List<Pair<String, Long>> longSettings) {
 		for (Pair<String, Long> setting : longSettings) {
 			if (setting.getLeft().contentEquals("buy")) {
-				Log.log(TAG.VERY_VERBOSE, "Buy set to: " + setting.getRight());
+				Log.log(TAG.VERBOSE, "Buy set to: " + setting.getRight());
 				this.buySetting = setting.getRight();
 			}
 			else if (setting.getLeft().contentEquals("sell")) {
-				Log.log(TAG.VERY_VERBOSE, "Sell set to: " + setting.getRight());
+				Log.log(TAG.VERBOSE, "Sell set to: " + setting.getRight());
 				this.sellSetting = setting.getRight();
 			}
 			else 

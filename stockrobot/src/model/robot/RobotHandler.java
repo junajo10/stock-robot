@@ -154,9 +154,9 @@ public class RobotHandler {
 			
 			startTime = System.currentTimeMillis();
 			
-			Log.log(Log.TAG.VERBOSE, "Start execution of " + portfolio.getName() + " with algorithm " + portfolio.getAlgorithm().getName());
+			Log.log(Log.TAG.VERY_VERBOSE, "Start execution of " + portfolio.getName() + " with algorithm " + portfolio.getAlgorithm().getName());
 			portfolio.updateAlgorithm();
-			Log.log(Log.TAG.VERBOSE, "Finnished execution of " + portfolio.getName());
+			Log.log(Log.TAG.VERY_VERBOSE, "Finnished execution of " + portfolio.getName());
 			
 			time = System.currentTimeMillis() - startTime;
 			running = false;

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import utils.global.FinancialLongConverter;
 import utils.global.Log;
 import utils.global.Pair;
 import utils.global.Log.TAG;
@@ -186,7 +187,7 @@ public class SimulationHandler extends SimModel {
 		setWorth(portfolio.getCurrentWorth());
 		updatePieData();
 		
-		Log.log(TAG.VERBOSE, "Simulation balance: " + portfolio.getPortfolioTable().getBalance());
+		Log.log(TAG.VERBOSE, "Balance after simulation: " + FinancialLongConverter.toStringTwoDecimalPoints(portfolio.getPortfolioTable().getBalance()));
 		propertyChangeSupport.firePropertyChange(WORTHUPDATE, "OldValue", portfolio.getCurrentWorth());
 		propertyChangeSupport.firePropertyChange(BALANCEUPDATE, "OldValue", portfolio.getUnusedAmount());
 		
