@@ -48,8 +48,9 @@ public class AlgorithmSettingsView extends JFrame implements IView {
 	private JPanel		mainContainer = new JPanel();;
 	
 	private JButton		saveBtn = new JButton();;
-	List<AlgorithmSettingDouble> doubleSettings = new ArrayList<AlgorithmSettingDouble>();
-	List<AlgorithmSettingLong> longSettings = new ArrayList<AlgorithmSettingLong>();
+	private List<AlgorithmSettingDouble> doubleSettings = new ArrayList<AlgorithmSettingDouble>();
+	private List<AlgorithmSettingLong> longSettings = new ArrayList<AlgorithmSettingLong>();
+	
 	public AlgorithmSettingsView( String algorithmName ) {
 		
 		this.algorithmName = algorithmName;

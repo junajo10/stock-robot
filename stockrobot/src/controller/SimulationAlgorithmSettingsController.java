@@ -24,8 +24,8 @@ public class SimulationAlgorithmSettingsController implements IController {
 	
 	private AlgorithmSettingsView view;
 	
-	List<AlgorithmSettingDouble> algortihmSettingsDouble;
-	List<AlgorithmSettingLong> algortihmSettingsLong;
+	private List<AlgorithmSettingDouble> algortihmSettingsDouble;
+	private List<AlgorithmSettingLong> algortihmSettingsLong;
 	
 	private ActionListener saveDown = new ActionListener() {
 		@Override

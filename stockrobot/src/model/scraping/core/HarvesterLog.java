@@ -26,11 +26,11 @@ public class HarvesterLog {
 	public static final String SERVER_UP			= "Server up.";
 	public static final String SERVER_DOWN			= "Stopped successfull.";
 	
-	long totalLoops = 0;
-	int connected = 0;
-	DefaultListModel model;
+	private long totalLoops = 0;
+	private int connected = 0;
+	private DefaultListModel model;
 	
-	static HarvesterLog log;
+	private static HarvesterLog log;
 	
 	public static HarvesterLog getInstance(){
 		if(log==null){

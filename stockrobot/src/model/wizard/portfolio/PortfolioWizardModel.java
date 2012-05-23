@@ -2,7 +2,6 @@ package model.wizard.portfolio;
 
 import utils.global.FinancialLongConverter;
 import utils.global.Log;
-import model.database.jpa.tables.PortfolioEntity;
 import model.portfolio.IPortfolio;
 import model.portfolio.IPortfolioHandler;
 import model.portfolio.PortfolioHandler;
@@ -10,7 +9,6 @@ import model.wizard.WizardPageModel;
 
 public class PortfolioWizardModel extends WizardPageModel{
 
-	PortfolioEntity portfolio;
 	private String name;
 	private String algorithm;
 	private long balance;
@@ -18,13 +16,12 @@ public class PortfolioWizardModel extends WizardPageModel{
 	private static final int MIN_SIZE_NAME = 5;
 	
 	public static final int PROPERTY_NAME = 1;
-	public static final int PROPERTY_BALANCE = 2;
-	public static final int PROPERTY_ALGORITHM = 3;
+	private static final int PROPERTY_BALANCE = 2;
+	private static final int PROPERTY_ALGORITHM = 3;
 	
 	public PortfolioWizardModel() {
 		super();
 		
-		portfolio = new PortfolioEntity();
 		properties.put(PROPERTY_NAME, false);
 	}
 	
@@ -36,7 +33,6 @@ public class PortfolioWizardModel extends WizardPageModel{
 			Log.log(Log.TAG.DEBUG, "[PageModel] Name set to " + name);
 		}else{
 			properties.put(PROPERTY_NAME, false);
-			//TODO fire error event
 		}
 	}
 	

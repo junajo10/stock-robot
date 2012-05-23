@@ -68,7 +68,7 @@ public class GraphView extends JFrame implements IView {
 	public final String rangeYearSelectListener 	= "rngYearSelectListener";
 	public final String rangeMonthSelectListener 	= "rngMonthrSelectListener";
 	public final String rangeDaySelectListener 	= "rngDaySelectListener";
-	public final String rangeHourSelectListener 	= "rnghourSelectListener";
+	private final String rangeHourSelectListener 	= "rnghourSelectListener";
 	public final String rangeValueListener  = "rngValueListener";
 	public final String rangeYearSliderListener 	= "rngYearSliderListener";
 	public final String rangeMonthSliderListener 	= "rngMonthSliderListener";

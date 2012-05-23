@@ -46,10 +46,10 @@ public class WizardView extends JFrame implements IView {
 	private JPanel pnlMainPane;
 	private JPanel pnlContent;
 	
-	protected JButton btnCancel;
-	protected JButton btnBack;
-	protected JButton btnNext;
-	protected JButton btnFinish;
+	private JButton btnCancel;
+	private JButton btnBack;
+	private JButton btnNext;
+	private JButton btnFinish;
 	
 	public static final String WINDOW_CLOSE 				= "windowClose";
 	public static final String GO_NEXT					= "goNext";	

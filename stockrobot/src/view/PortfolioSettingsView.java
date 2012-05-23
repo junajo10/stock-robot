@@ -172,7 +172,6 @@ public class PortfolioSettingsView extends JFrame implements IView {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -31,7 +31,7 @@ public class AstroReciever {
 	private boolean shouldRun;
 	
 	private Socket serverSocket;
-	boolean isConnected = false;
+	private boolean isConnected = false;
 	
 	
 	public AstroReciever(String SERVER_ADRESS, int PORT_NR ) {

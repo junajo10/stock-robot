@@ -18,16 +18,16 @@ import utils.global.Log.TAG;
 import view.StartView;
 
 public class StartController implements IController {
-	StartView view = new StartView();
-	StartModel model;
-	List<IController> subControllers = new ArrayList<IController>();
+	private StartView view = new StartView();
+	private StartModel model;
+	private List<IController> subControllers = new ArrayList<IController>();
 	
-	IController harvester;
-	IController astroController;
+	private IController harvester;
+	private IController astroController;
 	
 	public static String name = "StartController";
 	
-	ActionListener startAstroAction = new ActionListener() {
+	private ActionListener startAstroAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -39,7 +39,7 @@ public class StartController implements IController {
 			
 		}
 	};
-	ActionListener startHavester = new ActionListener() {
+	private ActionListener startHavester = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -50,7 +50,7 @@ public class StartController implements IController {
 			});
 		}
 	};
-	ActionListener comboBox = new ActionListener() {
+	private ActionListener comboBox = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			TAG selectedTag = (TAG)((JComboBox)e.getSource()).getSelectedItem();

@@ -59,10 +59,7 @@ public final class TraderSimulator implements ITrader{
 			Log.log(TAG.ERROR, "Couldent sell stock: " + ph + " it already is sold");
 			return false;
 		}
-		if (portfolio.isStopSelling()) {
-			System.out.println("Ble");
-		}
-		else {
+		if (!portfolio.isStopSelling()) {
 			Log.log(TAG.VERBOSE, "Selling " + ph.getAmount() + " of " + ph.getStockPrice().getStockName().getName() + " for: " + FinancialLongConverter.toDouble(ph.getStockPrice().getBuy()*ph.getAmount()));
 			StockPrices latest = jpaHelper.getLatestStockPrice(ph.getStockPrice());
 			portfolio.soldFor(ph.getStockPrice().getBuy()*ph.getAmount());

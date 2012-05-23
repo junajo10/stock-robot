@@ -28,7 +28,7 @@ public class GraphStockTogglerController implements IController {
 	private IView view;
 	private PropertyChangeSupport dispatcher;
 	
-	ActionListener checkboxChanged = new ActionListener() {
+	private ActionListener checkboxChanged = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			

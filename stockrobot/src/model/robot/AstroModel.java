@@ -17,12 +17,12 @@ import model.trader.TraderSimulator;
  * @author Daniel
  */
 public class AstroModel implements IRobot_Algorithms{
-	IJPAHelper jpaHelper = JPAHelper.getInstance();
-	ITrader trader = TraderSimulator.getInstance();
+	private IJPAHelper jpaHelper = JPAHelper.getInstance();
+	private ITrader trader = TraderSimulator.getInstance();
 	
-	IPortfolioHandler portfolioHandler;
+	private IPortfolioHandler portfolioHandler;
 	
-	RobotScheduler robotScheduler;
+	private RobotScheduler robotScheduler;
 	
 	/**
 	 * This starts robotScheduler without connection to the parser,

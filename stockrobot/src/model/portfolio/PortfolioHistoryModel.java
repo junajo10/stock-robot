@@ -45,7 +45,7 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 	private Pair<Object[][], Object[]> tableDate;
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-	PortfolioHistoryModelStatistics historyStatistics;
+	private PortfolioHistoryModelStatistics historyStatistics;
 
 	public static final String STATISTICSUPDATED = "StatisticsUpdated";
 

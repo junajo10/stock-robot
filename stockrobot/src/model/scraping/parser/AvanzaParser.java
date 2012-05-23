@@ -28,7 +28,7 @@ import utils.global.ParseDateFromString;
  */
 public class AvanzaParser implements IParser {
 	
-	String market; 
+	private String market; 
 	
 	/** Parses the given Avanza-URL
 	 * <p>

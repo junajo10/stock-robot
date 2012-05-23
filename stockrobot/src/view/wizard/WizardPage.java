@@ -17,8 +17,8 @@ public abstract class WizardPage extends JPanel  implements IView  {
 
 	private static final long serialVersionUID = 5355811249972492866L;
 	
-	protected WizardPageModel pageModel;
-	protected WizardModel wizardModel;
+	private WizardPageModel pageModel;
+	private WizardModel wizardModel;
 	
 	public WizardPage(WizardModel wizardModel, WizardPageModel pageModel){
 		this.wizardModel = wizardModel;

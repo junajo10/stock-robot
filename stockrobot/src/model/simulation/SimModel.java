@@ -11,8 +11,8 @@ public class SimModel {
 	private int stocksBack;
 	private PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
 	private long initialValue = Long.valueOf("10000000000000");
-	protected List<AlgorithmSettingDouble> doubleSettings;
-	protected List<AlgorithmSettingLong> longSettings;
+	private List<AlgorithmSettingDouble> doubleSettings;
+	private List<AlgorithmSettingLong> longSettings;
 	
 	
 	public SimModel() {

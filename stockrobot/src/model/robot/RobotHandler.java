@@ -54,7 +54,6 @@ public class RobotHandler {
 		
 		List<AlgorithmThread> stillRunning = new LinkedList<AlgorithmThread>();
 		
-		//TODO make code to run algorithms
 		for(AlgorithmThread a : algorithms){
 			
 			if(a.isRunning())
@@ -77,7 +76,7 @@ public class RobotHandler {
 			if(!found){
 				AlgorithmThread aThread = new AlgorithmThread(portfolio);
 				algorithms.add(aThread);
-				//aThread.run();
+
 				threadExecutor.execute(aThread);
 			}
 			

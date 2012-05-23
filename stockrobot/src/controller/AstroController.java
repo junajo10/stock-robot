@@ -34,9 +34,9 @@ public class AstroController implements IController {
 	
 	public static final String CLASSNAME = "Astro Controller";
 	
-	AstroModel model;
-	AstroView view = new AstroView();
-	List<IController> subControllers = new ArrayList<IController>();
+	private AstroModel model;
+	private AstroView view = new AstroView();
+	private List<IController> subControllers = new ArrayList<IController>();
 	
 	//Hardcoded sub controllers:
 	private IController simController;
@@ -44,7 +44,7 @@ public class AstroController implements IController {
 	private IController stockInfoController;
 	private IController portfolioController;
 	
-	ActionListener startSim = new ActionListener() {
+	private ActionListener startSim = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -56,7 +56,7 @@ public class AstroController implements IController {
 		}
 	};
 	
-	ActionListener openGraph = new ActionListener() {
+	private ActionListener openGraph = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -68,7 +68,7 @@ public class AstroController implements IController {
 		}
 	};
 	
-	ActionListener openStockInfo = new ActionListener() {
+	private ActionListener openStockInfo = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -80,7 +80,7 @@ public class AstroController implements IController {
 		}
 	};
 	
-	ActionListener openPortfolioView = new ActionListener() {
+	private ActionListener openPortfolioView = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -92,7 +92,7 @@ public class AstroController implements IController {
 		}
 	};
 	
-	ActionListener clearLog = new ActionListener() {
+	private ActionListener clearLog = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(new Runnable() {
@@ -104,7 +104,7 @@ public class AstroController implements IController {
 		}
 	};
 	
-	ActionListener exportLog = new ActionListener() {
+	private ActionListener exportLog = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SwingUtilities.invokeLater(new Runnable() {

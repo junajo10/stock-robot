@@ -15,7 +15,7 @@ import utils.global.Log;
 public class RobotSchedulerClient extends Thread{
 	private InputStream inputStream;
 	private Socket socket;
-	boolean keepRunning = true;
+	private boolean keepRunning = true;
 	private RobotScheduler robotScheduler;
 	private String host;
 	private int port;

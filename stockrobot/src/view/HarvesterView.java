@@ -74,10 +74,10 @@ public class HarvesterView extends JFrame implements IView{
 	public static final String EXPORT_LOG 				= "exportLog";
 	public static final String WINDOW_CLOSE 			= "windowClose";
 	
-	long totalLoops		= 0;
-	int connected 		= 0;
+	private long totalLoops		= 0;
+	private int connected 		= 0;
 	
-	WindowListener windowListener;
+	private WindowListener windowListener;
 
 	
 	public HarvesterView() {

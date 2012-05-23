@@ -27,8 +27,8 @@ public class Connector implements IConnector {
 	
 	private Map<Socket,Socket > clients;
 	
-	boolean sendNewData = false;
-	boolean shouldRun;
+	private boolean sendNewData = false;
+	private boolean shouldRun;
 	
 	private ServerSocket recieve;
 	private PropertyChangeSupport pcs;

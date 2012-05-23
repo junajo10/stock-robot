@@ -37,7 +37,7 @@ import model.portfolio.IRobot_Algorithms;
  * @author Daniel
  */
 public class SimulationHandler extends SimModel {
-	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	private IJPAHelper jpaSimHelper;
 	private IJPAHelper jpaHelper = JPAHelper.getInstance();
 	

@@ -19,8 +19,8 @@ import model.scraping.connect.IConnector;
  */
 public class SimulationRunner implements IParserRunner {
 
-	boolean run = false;
-	boolean close = false;
+	private boolean run = false;
+	private boolean close = false;
 	private int portNr;
 
 	private IConnector connector;

@@ -15,10 +15,10 @@ import utils.global.FinancialLongConverter;
 import view.PortfolioSettingsView;
 
 public class PortfolioSettingsController implements IController {
-	PortfolioSettingsView view;
-	IPortfolio portfolio;
+	private PortfolioSettingsView view;
+	private IPortfolio portfolio;
 	
-	ActionListener okAction = new ActionListener() {
+	private ActionListener okAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (view.getSelectedPane().contentEquals(PortfolioSettingsView.INVESTEXTRAXT)) {
@@ -35,13 +35,13 @@ public class PortfolioSettingsController implements IController {
 			cleanup();
 		}
 	};
-	ActionListener cancelAction = new ActionListener() {
+	private ActionListener cancelAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			cleanup();
 		}
 	};
-	WindowListener windowClose = new AbstractWindowCloseAdapter() {
+	private WindowListener windowClose = new AbstractWindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			cleanup();

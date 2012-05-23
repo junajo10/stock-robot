@@ -20,7 +20,7 @@ import model.portfolio.IPortfolioHandler;
 public class RobotScheduler implements Runnable{
 
 	private RobotHandler handler;	
-	IPortfolioHandler portfolioHandler;
+	private IPortfolioHandler portfolioHandler;
 
 	public static final long MILLI_SECOND = 1;
 	public static final long SECOND = 1000*MILLI_SECOND;
@@ -36,7 +36,7 @@ public class RobotScheduler implements Runnable{
 	private boolean usingServer = false;
 
 	private Date lastStockPriceDate = new Date(0);
-	RobotSchedulerClient client;
+	private RobotSchedulerClient client;
 
 	public RobotScheduler(IPortfolioHandler portfolioHandler){
 		handler = new RobotHandler(portfolioHandler);

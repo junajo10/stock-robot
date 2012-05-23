@@ -29,16 +29,16 @@ import model.scraping.scheduler.Scheduler;
  */
 public class ParserRunner implements IParserRunner {
 	
-	boolean run = false;
-	boolean close = false;
+	private boolean run = false;
+	private boolean close = false;
 	private int portNr;
 	
-	AvanzaParser parser;
-	IScheduler scheduler;
-	IInserter inserter;
-	IConnector connector;
+	private AvanzaParser parser;
+	private IScheduler scheduler;
+	private IInserter inserter;
+	private IConnector connector;
 	
-	boolean skipScheduler = false;
+	private boolean skipScheduler = false;
 	private PropertyChangeSupport pcs;
 	
 	public ParserRunner(int PORT_NR, PropertyChangeSupport pcs){

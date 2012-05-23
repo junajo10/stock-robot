@@ -21,7 +21,7 @@ public class SimResultController implements IController, PropertyChangeListener 
 
 	private SimResultView view;
 	private SimulationHandler model;
-	PortfolioHistoryController history = new PortfolioHistoryController();
+	private PortfolioHistoryController history = new PortfolioHistoryController();
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -55,7 +55,7 @@ public class SimResultController implements IController, PropertyChangeListener 
 
 	}
 
-	ActionListener historyListener = new ActionListener() {
+	private ActionListener historyListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			history.display(model.getPortfolioEntity());

@@ -111,7 +111,7 @@ public class WizardContoller implements IController {
 		}	
 	}
 
-	WindowListener windowClose = new AbstractWindowCloseAdapter() {
+	private WindowListener windowClose = new AbstractWindowCloseAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			cleanup();

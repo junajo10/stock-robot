@@ -43,10 +43,10 @@ public class GraphController implements IController, PropertyChangeListener {
 	public static final String BIND_GRAPH_VIEW = "bindGraphView";
 	public static final String WINDOW_TITLE = "Stock prices on a graph";
 	
-	public static final int YEAR_RANGE = 0;
-	public static final int MONTH_RANGE = 1;
-	public static final int DAY_RANGE = 2;
-	public static final int HOUR_RANGE = 3;
+	private static final int YEAR_RANGE = 0;
+	private static final int MONTH_RANGE = 1;
+	private static final int DAY_RANGE = 2;
+	private static final int HOUR_RANGE = 3;
 	
 	private int selectedRange = 2;
 	private int sliderYearValue = 0;

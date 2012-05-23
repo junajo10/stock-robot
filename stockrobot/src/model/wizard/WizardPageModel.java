@@ -12,7 +12,7 @@ import model.IModel;
 
 public abstract class WizardPageModel implements IModel {
 
-	protected PropertyChangeSupport observers;
+	private PropertyChangeSupport observers;
 	protected Map<Integer,Boolean> properties = new HashMap<Integer,Boolean>(); //Returns a map with flags if property is set or not
 
 	public WizardPageModel() {

@@ -42,7 +42,7 @@ public class PortfolioController implements IController {
 		actions.put(PortfolioView.PORTFOLIOSELECTOR, selectedPortfolioListener);
 		actions.put(PortfolioView.SETTINGS, settingsListener);
 	}
-	ActionListener settingsListener = new ActionListener() {
+	private ActionListener settingsListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -54,7 +54,7 @@ public class PortfolioController implements IController {
 			}
 		}
 	};
-	ActionListener createPortfolioListener = new ActionListener() {
+	private ActionListener createPortfolioListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -63,7 +63,7 @@ public class PortfolioController implements IController {
 		}
 	};
 	
-	ActionListener manageAlgorithmSettingsListener = new ActionListener() {
+	private ActionListener manageAlgorithmSettingsListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -79,7 +79,7 @@ public class PortfolioController implements IController {
 		}
 	};
 	
-	ActionListener portfolioHistoryListener = new ActionListener() {
+	private ActionListener portfolioHistoryListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -90,7 +90,7 @@ public class PortfolioController implements IController {
 		}
 	};
 	
-	ItemListener selectedPortfolioListener = new ItemListener() {
+	private ItemListener selectedPortfolioListener = new ItemListener() {
 		
 		@Override
 		public void itemStateChanged(ItemEvent e) {

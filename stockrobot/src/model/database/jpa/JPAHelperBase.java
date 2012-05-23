@@ -37,8 +37,8 @@ import model.database.jpa.tables.StockPrices;
  * @author Daniel
  */
 class JPAHelperBase implements IJPAHelper {
-	OpenJPAEntityManager em = null;
-	EntityManagerFactory factory;
+	protected OpenJPAEntityManager em = null;
+	private EntityManagerFactory factory;
 
 	@Override
 	public void stopJPASystem() {
