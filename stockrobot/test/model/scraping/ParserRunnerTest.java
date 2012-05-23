@@ -61,22 +61,6 @@ public class ParserRunnerTest {
 		
 		toTest.stopParser();
 		
-		Thread closer = new Thread( new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				runnerCreated = false;
-				
-				try {
-					th.join();
-				} catch (InterruptedException e) {
-					
-					e.printStackTrace();
-				}
-			}
-		} );
-		closer.start();
 	}
 	
 	/**
