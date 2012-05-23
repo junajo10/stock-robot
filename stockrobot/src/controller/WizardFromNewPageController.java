@@ -34,11 +34,37 @@ public class WizardFromNewPageController extends WizardPageController {
 		actions.put(PortfolioFromNewPage.BALANCE_INPUT_LISTENER, new BalanceListener());
 		actions.put(PortfolioFromNewPage.ALGORITHM_LISTENER, new AlgorithmListener());
 		
+		pageModel.setAlgorithm(page.getSelectedAlgorithm());
+		
 		page.addActions(actions);
 	}
 	
 	public ItemListener getAlgorithmListener(){
 		return new AlgorithmListener();
+	}
+	
+	public void updateFinnish(){
+		
+		if(pageModel.canFinish()){
+			page.setErrorAlgorithms(false);
+			page.setErrorBalance(false);
+			model.setFinish(true);
+			
+		}
+		else{
+			page.setErrorAlgorithms(false);
+			if(pageModel.getAlgorithm() == null){
+				page.setErrorAlgorithms(true);
+			}else{
+				page.setErrorAlgorithms(false);
+			}if(page.getBalance() > 0){
+				page.setErrorBalance(false);
+			}
+			else{
+				page.setErrorBalance(true);
+			}
+			model.setFinish(false);
+		}
 	}
 	
 	class AlgorithmListener implements ItemListener{
@@ -47,16 +73,14 @@ public class WizardFromNewPageController extends WizardPageController {
 		public void itemStateChanged(ItemEvent e) {
 			
 			if(e.getStateChange() == ItemEvent.SELECTED){
-				model.setFinish(true);
-				page.setErrorAlgorithms(false);
-				
 				pageModel.setAlgorithm(page.getSelectedAlgorithm());
-			}else if(e.getStateChange() == ItemEvent.DESELECTED){
-				model.setFinish(false);
-				page.setErrorAlgorithms(true);
 			}
+			
+			updateFinnish();
 		}
 	}
+	
+	
 	
 	class BalanceListener implements KeyListener{
 
@@ -72,10 +96,10 @@ public class WizardFromNewPageController extends WizardPageController {
 			if(page.getBalance() > 0){
 				pageModel.setBalance(page.getBalance());
 				page.setErrorBalance(false);
+			}else{
+				pageModel.setBalance(-1);
 			}
-			else{
-				page.setErrorBalance(true);
-			}
+			updateFinnish();
 		}
 	}
 	

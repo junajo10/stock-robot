@@ -40,6 +40,10 @@ public class PortfolioWizardModel extends WizardPageModel{
 		}
 	}
 	
+	public String getAlgorithm(){
+		return algorithm;
+	}
+	
 	public void setAlgorithm(String algorithm){
 		
 		if(algorithm != null){
