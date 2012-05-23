@@ -157,7 +157,7 @@ public final class PortfolioHandler implements IPortfolioHandler{
 		return instance;
 	}
 	@Override
-	public void addAddObserver(PropertyChangeListener listener) {
+	public void addObserver(PropertyChangeListener listener) {
 		pChangeSuport.addPropertyChangeListener(listener);
 	}
 	@Override

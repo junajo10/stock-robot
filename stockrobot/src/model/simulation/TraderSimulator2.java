@@ -24,7 +24,7 @@ public class TraderSimulator2 implements ITrader {
 		this.jpaHelper = jpaHelper;
 	}
 	@Override
-	public void addAddObserver(PropertyChangeListener listener) {} //NOPMD
+	public void addObserver(PropertyChangeListener listener) {} //NOPMD
 
 	@Override
 	public void removeObserver(PropertyChangeListener listener) {} //NOPMD

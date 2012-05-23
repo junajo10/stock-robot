@@ -261,7 +261,7 @@ public class WizardModelTest {
 			public void propertyChange(PropertyChangeEvent evt) {}
 		};
 		
-		toTest.addAddObserver(listener);
+		toTest.addObserver(listener);
 		
 		toTest.removeObserver(listener);
 	}

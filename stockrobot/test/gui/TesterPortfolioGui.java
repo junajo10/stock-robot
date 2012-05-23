@@ -47,7 +47,7 @@ class TestPortfolioHandler implements IPortfolioHandler{
 	}
 
 	@Override
-	public void addAddObserver(PropertyChangeListener listener) {
+	public void addObserver(PropertyChangeListener listener) {
 	}
 	@Override
 	public void removeObserver(PropertyChangeListener listener) {

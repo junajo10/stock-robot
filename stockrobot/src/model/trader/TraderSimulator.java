@@ -73,7 +73,7 @@ public final class TraderSimulator implements ITrader{
 		return (long) (s.getSell()*amount*0.1);
 	}
 	@Override
-	public void addAddObserver(PropertyChangeListener listener) {
+	public void addObserver(PropertyChangeListener listener) {
 
 		propertyChangeSuport.addPropertyChangeListener(listener);
 	}

@@ -18,7 +18,7 @@ public interface IModel {
 	 * 
 	 * @param listener
 	 */
-	public void addAddObserver(PropertyChangeListener listener);
+	public void addObserver(PropertyChangeListener listener);
 	
 	/**
 	 * Removes a listener from the model

@@ -375,7 +375,7 @@ public class RobotSchedulerTest extends DatabaseCleaner implements IRobot_Algori
 		}
 	
 		@Override
-		public void addAddObserver(PropertyChangeListener listener) {
+		public void addObserver(PropertyChangeListener listener) {
 		}
 		
 		@Override

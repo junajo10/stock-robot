@@ -35,7 +35,7 @@ public class WizardContoller implements IController {
 		
 		model = new WizardModel();
 		view = new WizardView(model);
-		model.addAddObserver(view);
+		model.addObserver(view);
 		view.setEnableCancel(true);
 		this.pageModel = pageModel;
 		

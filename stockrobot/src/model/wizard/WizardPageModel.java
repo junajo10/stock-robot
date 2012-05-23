@@ -21,7 +21,7 @@ public abstract class WizardPageModel implements IModel {
 	}
 		
 	@Override
-	public void addAddObserver(PropertyChangeListener listener){
+	public void addObserver(PropertyChangeListener listener){
 		observers.addPropertyChangeListener(listener);
 	}
 	

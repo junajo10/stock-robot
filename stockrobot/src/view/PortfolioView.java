@@ -68,8 +68,8 @@ public class PortfolioView extends JFrame implements IView {
 	
 	public void init() {
 		
-		trader.addAddObserver(this);
-		portfolios.addAddObserver(this);
+		trader.addObserver(this);
+		portfolios.addObserver(this);
 		setTitle("Portfolio");
 		
 		setBounds(100, 100, 441, 194);
