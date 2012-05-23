@@ -1,0 +1,32 @@
+Use Case: PortfolioSettings
+Short description: From this use case we can add or remove an amount from a portfolio. We can also set portfolio variables that turns off/on buying and selling.
+
+Priority: Low
+
+Extends or Includes: UC_Portfolio
+
+Participating actors: User, Astro
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User selects to invest/extract
+User sets an amount
+User hits OK
+
+                                        System will change the current amount in the portfolio
+
+Window shuts down
+
+
+
+Alternate Flow:
+User sets variable flags
+User hits OK
+
+                                        System will change the portfolios buy/sell settings
+
+Window shuts down
+
+
