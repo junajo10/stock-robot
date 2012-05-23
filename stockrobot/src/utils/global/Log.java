@@ -34,7 +34,7 @@ public final class Log {
 		initialize();
 	}
 	
-	public static void log(TAG tag, String message){
+	public synchronized static void log(TAG tag, String message){
 		if(log.filter.get(tag)){
 			Date date= new java.util.Date();
 			String time = new Timestamp(date.getTime()) + "";
