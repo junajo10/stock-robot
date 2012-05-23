@@ -14,7 +14,6 @@ import utils.global.Log;
 import utils.global.Pair;
 import utils.global.Log.TAG;
 
-import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.AlgorithmSettingDouble;
@@ -25,6 +24,7 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.portfolio.IAlgorithm;
 import model.portfolio.IRobot_Algorithms;
+import model.portfolio.AlgortihmLoader;
 
 
 /**
@@ -73,7 +73,7 @@ public class SimulationHandler extends SimModel {
 		
 		portfolio = new PortfolioSimulator(portfolioEntity, jpaSimHelper);
 		
-		PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+		AlgortihmLoader algorithmLoader = AlgortihmLoader.getInstance();
 		
 		IAlgorithm algorithm = algorithmLoader.loadAlgorithm(algorithmLoader.getAlgorithmNames().get(0));
 		

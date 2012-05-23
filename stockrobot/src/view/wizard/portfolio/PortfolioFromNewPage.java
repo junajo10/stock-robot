@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-import model.algorithms.loader.PluginAlgortihmLoader;
+import model.portfolio.AlgortihmLoader;
 import model.wizard.WizardModel;
 import model.wizard.portfolio.PortfolioWizardModel;
 
@@ -65,7 +65,7 @@ public class PortfolioFromNewPage extends WizardPage {
 		lblErrorBalance.setForeground(Color.RED);
 		pnlBalance.add(lblErrorBalance);
 		
-		List<String> algorithms = PluginAlgortihmLoader.getInstance().getAlgorithmNames();
+		List<String> algorithms = AlgortihmLoader.getInstance().getAlgorithmNames();
 		
 		JPanel pnlAlgorithm = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pnlAlgorithm.getLayout();

@@ -1,4 +1,4 @@
-package model.algorithms.loader;
+package model.portfolio;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 

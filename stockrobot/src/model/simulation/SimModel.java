@@ -2,14 +2,14 @@ package model.simulation;
 
 import java.util.List;
 
-import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
+import model.portfolio.AlgortihmLoader;
 
 public class SimModel {
 	private String algorithm;
 	private int stocksBack;
-	private PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+	private AlgortihmLoader algorithmLoader = AlgortihmLoader.getInstance();
 	private long initialValue = Long.valueOf("10000000000000");
 	private List<AlgorithmSettingDouble> doubleSettings;
 	private List<AlgorithmSettingLong> longSettings;

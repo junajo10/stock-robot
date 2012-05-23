@@ -7,13 +7,13 @@ import utils.global.Log;
 import utils.global.Pair;
 import utils.global.Log.TAG;
 
-import model.algorithms.loader.AlgorithmPlugin;
 import model.database.jpa.IJPAAlgortihm;
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.database.jpa.tables.PortfolioHistory;
 import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
+import model.portfolio.AlgorithmPlugin;
 import model.portfolio.IAlgorithm;
 import model.portfolio.IPortfolio;
 import model.portfolio.IRobot_Algorithms;

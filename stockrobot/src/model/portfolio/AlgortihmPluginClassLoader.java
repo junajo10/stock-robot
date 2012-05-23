@@ -1,4 +1,4 @@
-package model.algorithms.loader;
+package model.portfolio;
 
 
 
@@ -12,7 +12,7 @@ import utils.SettingParser;
 
 
 
-public class PluginClassLoader extends ClassLoader {
+public class AlgortihmPluginClassLoader extends ClassLoader {
 	private static final String EXPORTEDPACKAGE = "model.algorithms";
 
 	@Override

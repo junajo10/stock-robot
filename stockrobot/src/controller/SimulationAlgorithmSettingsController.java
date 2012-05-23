@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.tables.AlgorithmSettingDouble;
 import model.database.jpa.tables.AlgorithmSettingLong;
 import model.portfolio.IAlgorithm;
+import model.portfolio.AlgortihmLoader;
 import model.simulation.SimModel;
 
 import view.AlgorithmSettingsView;
@@ -49,7 +49,7 @@ public class SimulationAlgorithmSettingsController implements IController {
 		view.init();
 		view.addActions( getActionListeners() );
 		
-		IAlgorithm algorithm = PluginAlgortihmLoader.getInstance().loadAlgorithm(algorithmName);
+		IAlgorithm algorithm = AlgortihmLoader.getInstance().loadAlgorithm(algorithmName);
 		
 		algortihmSettingsDouble = algorithm.getDefaultDoubleSettings();
 		algortihmSettingsLong = algorithm.getDefaultLongSettings();

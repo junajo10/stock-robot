@@ -1,4 +1,4 @@
-package model.algorithms.loader;
+package model.portfolio;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.portfolio.IAlgorithm;
 
 import utils.SettingParser;
 import utils.global.FileHelper;
@@ -20,9 +19,9 @@ import utils.global.Log.TAG;
  * 
  * @author Daniel
  */
-public final class PluginAlgortihmLoader {
+public final class AlgortihmLoader {
 	
-	private static PluginAlgortihmLoader instance = null;
+	private static AlgortihmLoader instance = null;
 	
 	private Map<String, Class<?>> algorithmMap = new HashMap<String, Class<?>>();
 	
@@ -35,7 +34,7 @@ public final class PluginAlgortihmLoader {
 		return algorithmNames;
 	}
 	
-	private PluginAlgortihmLoader() {
+	private AlgortihmLoader() {
 		reloadAlgorithmClasses();
 	}
 	
@@ -43,7 +42,7 @@ public final class PluginAlgortihmLoader {
 		String pluginPath = SettingParser.getAlgorithmPath();
 		
 		List<File> files = FileHelper.getFiles(new File(pluginPath));
-		PluginClassLoader pluginLoader = new PluginClassLoader();
+		AlgortihmPluginClassLoader pluginLoader = new AlgortihmPluginClassLoader();
 		
 		algorithmMap.clear();
 
@@ -87,10 +86,10 @@ public final class PluginAlgortihmLoader {
 	 * Gets an instance of PluginAlgorithmLoader
 	 * @return an instance of PluginAlgorithmLoader
 	 */
-	public static PluginAlgortihmLoader getInstance() {
-		synchronized (PluginAlgortihmLoader.class) {
+	public static AlgortihmLoader getInstance() {
+		synchronized (AlgortihmLoader.class) {
 			if (instance == null)
-				instance = new PluginAlgortihmLoader();
+				instance = new AlgortihmLoader();
 		}
 		return instance;
 	}

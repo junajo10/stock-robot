@@ -9,7 +9,6 @@ import java.util.List;
 import utils.global.Log;
 import utils.global.Log.TAG;
 
-import model.algorithms.loader.PluginAlgortihmLoader;
 import model.database.jpa.IJPAHelper;
 import model.database.jpa.JPAHelper;
 import model.database.jpa.tables.PortfolioEntity;
@@ -28,7 +27,7 @@ public final class PortfolioHandler implements IPortfolioHandler{
 	private final transient List<IPortfolio> listOfPortfolios = new ArrayList<IPortfolio>();
 	private final transient IJPAHelper jpaHelper;
 	private final transient PropertyChangeSupport pChangeSuport = new PropertyChangeSupport(this);
-	private final transient PluginAlgortihmLoader algorithmLoader = PluginAlgortihmLoader.getInstance();
+	private final transient AlgortihmLoader algorithmLoader = AlgortihmLoader.getInstance();
 	private final transient IRobot_Algorithms robot;
 	
 	private PortfolioHandler(final IRobot_Algorithms robot) {
