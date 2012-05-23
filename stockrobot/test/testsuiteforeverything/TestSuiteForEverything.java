@@ -36,7 +36,6 @@ import model.wizard.WizardPageModelTest;
 @Suite.SuiteClasses({
 	FinancialLongConverterTest.class,
 	PairTest.class,
-	//SimulationControllerTest.class, //TODO: Kristian: fix
 	//GraphControllerTest.class,  //TODO: Kristian: fix
 	JPATest.class,
 	MainBasicJPATest.class,
