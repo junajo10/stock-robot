@@ -78,9 +78,7 @@ public class AstroModel implements IRobot_Algorithms, IModel{
 	}
 	@Override
 	public void addObserver(PropertyChangeListener listener) {
-		if(observers!=null && listener!=null){
 			observers.addPropertyChangeListener(listener);
-		}
 	}
 	@Override
 	public void removeObserver(PropertyChangeListener listener) {
