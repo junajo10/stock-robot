@@ -28,7 +28,7 @@ public class AstroModel implements IRobot_Algorithms, IModel{
 	private IPortfolioHandler portfolioHandler;
 	
 	private RobotScheduler robotScheduler;
-	private PropertyChangeSupport observers;
+	private PropertyChangeSupport observers = new PropertyChangeSupport(this);
 	
 	/**
 	 * This starts robotScheduler without connection to the parser,
@@ -36,7 +36,6 @@ public class AstroModel implements IRobot_Algorithms, IModel{
 	 */
 	public AstroModel() {
 		jpaHelper = JPAHelper.getInstance();
-		observers = new PropertyChangeSupport(this);
 		portfolioHandler = PortfolioHandler.getInstance(this);
 		robotScheduler = new RobotScheduler(portfolioHandler);
 		Log.instance().addObservers(observers);
