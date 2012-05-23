@@ -11,6 +11,7 @@ import model.database.jpa.tables.StockNames;
 import model.database.jpa.tables.StockPrices;
 import model.simulation.SimulationHandler;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +37,7 @@ public class SimulationHandlerTest {
 		jpaHelper.storeObject(sn);
 		
 		for (int i = 0; i < 100; i++) {
-			jpaHelper.storeObject(new StockPrices(sn, 10, 10, 10*i, 10*i, new Date((long)i*(long)10000)));
+			jpaHelper.storeObject(new StockPrices(sn, 10, 10, 10*i, 10*i, new Date(System.currentTimeMillis() + (long)i*(long)10000)));
 		}
 	}
 	/**
@@ -58,7 +59,10 @@ public class SimulationHandlerTest {
 		simulationHandler.clearTestDatabase();
 	}
 	
-	
+	@AfterClass
+	public static void clean() {
+		cleanDatabase();
+	}
 	private static void cleanDatabase() {
 		while( jpaHelper.getAllPortfolios().size() > 0 ) {
 			
