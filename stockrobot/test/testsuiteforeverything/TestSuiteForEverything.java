@@ -53,9 +53,9 @@ import model.wizard.WizardPageModelTest;
 	WizardPageModelTest.class,
 	SchedulerTest.class,
 	AvanzaParserTest.class,
-	ParserRunnerTest.class,
 	SimulationRunnerTest.class,
 	SimulationHandlerTest.class,
+	ParserRunnerTest.class,
 })
 
 public class TestSuiteForEverything {
