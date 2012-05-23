@@ -40,32 +40,6 @@ public class WizardFromNewPageControllerTest {
 		Assert.assertNotNull( toTest.getAlgorithmListener() );
 	}
 	
-	/**
-	 * Test selected, then the result from toTest.wizardModel.getFinish should be true
-	 */
-	@Test
-	public void testItemStateChangedSELECTED() {
-		
-		ItemListener listener = toTest.getAlgorithmListener();
-		
-		//Faked ItemEvent, to be able to test what the handler in listener does:
-		ItemEvent fakeEvent = new ItemEvent(new ItemSelectable() {
-			
-			@Override
-			public void removeItemListener(ItemListener l) {} //NOPMD
-			
-			@Override
-			public Object[] getSelectedObjects() {return null;} //NOPMD
-			
-			@Override
-			public void addItemListener(ItemListener l) {} //NOPMD
-			
-		}, 0, new Object(), ItemEvent.SELECTED);
-		
-		listener.itemStateChanged(fakeEvent);
-		
-		Assert.assertEquals( true, toTest.getWizardModel().isAllowedFinish() );
-	}
 	
 	/**
 	 * Test selected, then the result from toTest.wizardModel.getFinish should be true
