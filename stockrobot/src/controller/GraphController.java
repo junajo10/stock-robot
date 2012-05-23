@@ -281,6 +281,8 @@ public class GraphController implements IController, PropertyChangeListener {
 		
 		view.removeSeries( timeSeriesList.indexOf( stockName ) );
 		timeSeriesList.remove( stockName );
+		timeSeriesMap.remove(stockName);
+		updateSeries();
 	}
 	
 	@Override
