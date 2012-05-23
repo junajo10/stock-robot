@@ -87,6 +87,7 @@ public class PortfolioHistory {
 	public void setStockSoldPrice(StockPrices sp) {
 		this.stockSoldPrice = sp;
 	}
+	@Override
 	public String toString() {
 		return "BuyDate: " + buyDate + "SoldDate: " + soldDate + " Stock: " + stockPrice;
 	}

@@ -1,6 +1,5 @@
 package controller;
 
-import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;

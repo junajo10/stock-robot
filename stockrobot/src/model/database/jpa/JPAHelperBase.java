@@ -176,7 +176,7 @@ class JPAHelperBase implements IJPAHelper {
 		//TODO: Fix this to be type safe! I couldn't find a way to compare dates without using JPQL.
 		//Get all prices WITHIN (including ends) start -> end, that are of the company defined in st
 		@SuppressWarnings("unchecked")
-		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery( "SELECT o FROM StockPrices o WHERE o.time >= :startTime AND o.time <= :endTime AND o.stockName.id = :stockId" )
+		TypedQuery<StockPrices> query = em.createQuery( "SELECT o FROM StockPrices o WHERE o.time >= :startTime AND o.time <= :endTime AND o.stockName.id = :stockId" )
 				.setParameter("startTime", start)
 				.setParameter("endTime",   end)
 				.setParameter("stockId", st.getId() );
@@ -258,7 +258,7 @@ class JPAHelperBase implements IJPAHelper {
 		if (amount > 0)
 			portfolio.invest(amount, true);
 		else
-			portfolio.invest(-amount, false);
+			portfolio.invest(amount, false);
 
 		updateObject(portfolio);
 
@@ -404,7 +404,7 @@ class JPAHelperBase implements IJPAHelper {
 		
 		
 		@SuppressWarnings("unchecked")
-		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery(
+		TypedQuery<StockPrices> query = em.createQuery(
 				"SELECT o FROM StockPrices o WHERE o.time <= :givenTime ORDER BY o.time DESC" )
 				.setParameter("givenTime", date);
 		
@@ -418,7 +418,7 @@ class JPAHelperBase implements IJPAHelper {
 	@Override
 	public StockPrices getLastStockPrice() {
 		@SuppressWarnings("unchecked")
-		TypedQuery<StockPrices> query = (TypedQuery<StockPrices>) em.createQuery(
+		TypedQuery<StockPrices> query = em.createQuery(
 				"SELECT o FROM StockPrices o ORDER BY o.time DESC" );
 		
 		query.setMaxResults(1);

@@ -93,7 +93,7 @@ public class PortfolioHistoryModelStatistics {
 		else
 			statisticsString += "Sold stocks/day:\n" + df.format(soldPerDay) + "\n";
 		
-		statisticsString += "Mony invested:\n" + selectedPortfolio.getTotalInvestedAmount() + "\n";
+		statisticsString += "Mony invested:\n" + FinancialLongConverter.toStringTwoDecimalPoints(selectedPortfolio.getTotalInvestedAmount()) + "\n";
 		
 		propertyChangeSupport.firePropertyChange(STATISTICSMODELUPDATED, oldString, statisticsString + "generating more..");
 		oldString = statisticsString; 

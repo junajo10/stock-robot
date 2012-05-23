@@ -161,6 +161,7 @@ public class PortfolioEntity {
 	/**
 	 * A helper method to easy get the text representation.
 	 */
+	@Override
 	public String toString() {
 		return name + " | " + balance;
 	}

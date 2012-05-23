@@ -82,6 +82,7 @@ public class StockNames {
 	/**
 	 * A simple debug message.
 	 */
+	@Override
 	public String toString() {
 		return name + " | " + market;
 	}

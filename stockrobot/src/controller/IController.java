@@ -1,9 +1,5 @@
 package controller;
 
-import java.beans.PropertyChangeListener;
-import java.util.EventListener;
-import java.util.Map;
-
 /**
  * Interface for controllers, this should help with our circular dependencies.
  * 

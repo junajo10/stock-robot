@@ -89,6 +89,7 @@ public class AlgorithmSettingDouble {
 	public double getMaxValue() {
 		return maxValue;
 	}
+	@Override
 	public String toString() {
 		return "SettingText: " + settingText + " Value: " + value + " Index: " + settingIndex; 
 	}

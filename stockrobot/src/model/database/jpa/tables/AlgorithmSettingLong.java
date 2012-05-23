@@ -89,6 +89,7 @@ public class AlgorithmSettingLong {
 	public long getMaxValue() {
 		return maxValue;
 	}
+	@Override
 	public String toString() {
 		return "SettingText: " + settingText + " Value: " + value + " Index: " + settingIndex; 
 	}

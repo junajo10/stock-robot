@@ -4,7 +4,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +15,6 @@ import view.wizard.portfolio.PortfolioFromNewPage;
 
 public class WizardFromNewPageController extends WizardPageController {
 
-	private static final String CLASS_NAME = "WizardFromNewPageController";
-	
 	private final PortfolioFromNewPage page;
 	private final WizardModel model;
 	private final  PortfolioWizardModel pageModel;

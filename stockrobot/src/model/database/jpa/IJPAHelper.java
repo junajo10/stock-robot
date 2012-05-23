@@ -39,12 +39,14 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param o The object to be updated.
 	 * @return True if it went ok.
 	 */
+	@Override
 	public boolean updateObject(Object o);
 	/**
 	 * Store 1 object in the database.
 	 * @param o Object to be stored
 	 * @return True if it went ok
 	 */
+	@Override
 	public boolean storeObject(Object o);
 	
 	/**
@@ -52,12 +54,14 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param o Object to store
 	 * @return Returns true if store was done, false if database couldent store this
 	 */
+	@Override
 	public boolean storeObjectIfPossible(Object o);
 	/**
 	 * Stores a list of objects to the database
 	 * @param list List of objects
 	 * @return True if it went ok
 	 */
+	@Override
 	@SuppressWarnings("rawtypes")
 	public boolean storeListOfObjects(List list);
 	/**
@@ -65,6 +69,7 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param list List of objects
 	 * @return the number of objects not stored.
 	 */
+	@Override
 	@SuppressWarnings("rawtypes")
 	public int storeListOfObjectsDuplicates(List list);
 	/**
@@ -98,6 +103,7 @@ public interface IJPAHelper extends IJPAAlgortihm, IJPAParser{
 	 * @param portfolioTable The portfolio table we wish to get history from
 	 * @return Returns a list of portfolioHistorys.
 	 */
+	@Override
 	public List<PortfolioHistory> getCurrentStocksHistory(PortfolioEntity portfolioTable);
 	
 	/**

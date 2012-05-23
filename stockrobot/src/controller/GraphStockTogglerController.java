@@ -22,7 +22,6 @@ public class GraphStockTogglerController implements IController {
 	public static final String CHECKBOX_PROPERTY = "checkBoxProperty";
 	public static final String CHECKED = "checked";
 	public static final String UNCHECKED = "unchecked";
-	private static final String CLASS_NAME = "GraphStockTogglerController";
 	
 	private Map<String, EventListener> events;
 	private final String stockName;

@@ -78,6 +78,7 @@ public class StockPrices {
 	public Date getTime() {
 		return time;
 	}
+	@Override
 	public String toString() {
 		return stockName.getName() + " | Buy: " + buy + " | Sell: " + sell + " | Market: " + stockName.getMarket() + " | Time: " + time;
 	}

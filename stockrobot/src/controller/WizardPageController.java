@@ -1,6 +1,5 @@
 package controller;
 
-import java.beans.PropertyChangeEvent;
 import view.wizard.WizardPage;
 
 /**

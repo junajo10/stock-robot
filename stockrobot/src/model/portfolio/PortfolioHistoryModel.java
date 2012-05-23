@@ -248,7 +248,7 @@ public class PortfolioHistoryModel implements PropertyChangeListener {
 			for (Entry<DateTime, LongContainer> apa : worthMap.entrySet()) {
 				worth.add(new Millisecond(apa.getKey().toDate()), FinancialLongConverter.toDouble(apa.getValue().getValue()));
 			}
-			worth.add(new Millisecond(new Date(System.currentTimeMillis())), 0);
+
 		}
 
 

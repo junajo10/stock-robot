@@ -1,9 +1,5 @@
 package controller;
 
-import java.beans.PropertyChangeEvent;
-import java.util.EventListener;
-import java.util.Map;
-
 import view.PortfolioHistoryView;
 
 import model.database.jpa.JPAHelper;
