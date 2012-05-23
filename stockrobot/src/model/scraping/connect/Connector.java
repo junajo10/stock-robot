@@ -217,7 +217,7 @@ public class Connector implements IConnector {
 					Socket clientSocket = recieve.accept();					
 					clientSocket.setKeepAlive(true);
 					clients.put(clientSocket, clientSocket);
-					pcs.firePropertyChange("Connected.", null, clientSocket.getInetAddress().toString());
+					pcs.firePropertyChange("Connected.", null, clientSocket.getInetAddress().toString().substring(1) +":" + clientSocket.getPort());
 				}
 			} catch (IOException e) {
 			}
