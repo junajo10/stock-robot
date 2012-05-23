@@ -52,6 +52,7 @@ public class AstroModel implements IRobot_Algorithms, IModel{
 		
 		portfolioHandler = PortfolioHandler.getInstance(this);
 		robotScheduler = new RobotScheduler(portfolioHandler, host, port);
+		Log.instance().addObservers(observers);
 	}
 	@Override
 	public IJPAHelper getJPAHelper() {
