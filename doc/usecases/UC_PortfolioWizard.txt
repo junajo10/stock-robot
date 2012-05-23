@@ -1,0 +1,26 @@
+Use Case: PortfolioWizard
+Short description: This UC is used to create a new portfolio.
+
+Priority: Medium
+
+Participating actors: User, Astro
+
+Normal flow of events:
+
+User                                    System
+----                                    ------
+User fills in information about username, algorithm and balance.
+
+                                        wizard enables finish button.
+
+Clicks finish.
+
+
+										          Portfolio is created and wizard closes.
+
+
+Alternate flow:
+User clicks cancel button and wizard closes
+
+Exceptional flow:
+
