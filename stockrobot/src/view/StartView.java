@@ -44,17 +44,24 @@ public class StartView extends JFrame implements IView {
 	public final static String LOGLEVEL = "Combobox";
 	private final JCheckBox chckbxConnectToParser = new JCheckBox("Connect to Harvester Server");
 	private String oldLocalhostField = "";
+	private final JCheckBox chckbxUseAndroidServer = new JCheckBox("Use Android Server");
+	private final JTextField textField = new JTextField();
 	
 	/**
 	 * Create the frame.
 	 */
 	public StartView() {
+		chckbxUseAndroidServer.setBackground(Color.WHITE);
+		chckbxUseAndroidServer.setForeground(Color.BLACK);
+		chckbxUseAndroidServer.setSelected(true);
+		textField.setText("44000");
+		textField.setColumns(10);
 		chckbxConnectToParser.setBackground(Color.WHITE);
 		chckbxConnectToParser.setSelected(true);
 		setResizable(false);
 		setTitle("ASTRo Stock Robot");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 252, 410);
+		setBounds(100, 100, 264, 446);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,23 +78,44 @@ public class StartView extends JFrame implements IView {
 
 		JLabel lblNewLabel  = new JLabel();
 		lblNewLabel.setIcon(new ImageIcon(StartView.class.getResource("/images/logo.png")));
+		
+		JLabel lblPortNr = new JLabel("Port Nr");
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-							.addComponent(chckbxConnectToParser, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-							.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblLogLevel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(btnStartParser, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(17)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap(94, Short.MAX_VALUE)
+							.addComponent(lblLogLevel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(chckbxConnectToParser, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblPortNr)
+							.addGap(8)
+							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(chckbxUseAndroidServer)))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -100,13 +128,19 @@ public class StartView extends JFrame implements IView {
 					.addComponent(chckbxConnectToParser)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtLocalhost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblLogLevel)
 					.addGap(5)
+					.addComponent(chckbxUseAndroidServer)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPortNr))
+					.addGap(5)
+					.addComponent(lblLogLevel)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnStartAstro, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-					.addGap(9))
+					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 		
