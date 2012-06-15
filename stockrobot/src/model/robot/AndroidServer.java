@@ -9,15 +9,26 @@ public class AndroidServer {
 	
 	private boolean shouldRun = true;
 	private ServerSocket socket;
-	private ArrayList<ClientRunner> clients;
+	private ArrayList<AndroidClient> clients;
+	static AndroidServer instance;
 	
-	public AndroidServer(){
-		clients = new ArrayList<ClientRunner>();
+	static AndroidServer instance(){
+		if(instance == null){
+			instance = new AndroidServer();
+			return instance;
+		} else {
+			return instance;
+		}
+	}
+	
+	private AndroidServer(){
+		clients = new ArrayList<AndroidClient>();
 		AcceptServer server = new AcceptServer();
 		Thread serverThread = new Thread(server);
 		serverThread.start();
 
 	}
+	
 	
 	public boolean shutdown(){
 		shouldRun = false;
@@ -26,7 +37,7 @@ public class AndroidServer {
 		} catch (IOException e) {
 			
 		}
-		for(ClientRunner c : clients){
+		for(AndroidClient c : clients){
 			c.disconnect();
 			clients.remove(c);
 		}
@@ -48,7 +59,7 @@ public class AndroidServer {
 			while(shouldRun){
 				try {
 					Socket newClient = socket.accept();
-					clients.add(new ClientRunner(newClient));
+					clients.add(new AndroidClient(newClient));
 				} catch (IOException e) {
 				}
 			}
