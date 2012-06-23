@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 
+import model.robot.AndroidServer;
+
 /**
  * @author Mattias Markehed
  * mattias.markehed@gmail.com
@@ -40,7 +42,8 @@ public final class Log {
 			String time = new Timestamp(date.getTime()) + "";
 			if(observers!=null){
 				observers.firePropertyChange("AddListItem", null, "[" + time.substring(11, 16) + "] - " + message);
-			} // Temorary solution //Erik
+			} // Temporary solution //Erik
+			AndroidServer.instance().sendLogEvent(message);
 			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
 			System.out.println(message); //NOPMD
 		}

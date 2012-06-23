@@ -21,6 +21,9 @@ public class AndroidClient {
 			sendLogEvent = new AtomicBoolean(false);
 			isConnected = new AtomicBoolean(true);
 			Log.instance().log(TAG.NORMAL, "A new Android Client has connected to ASTRo.");
+			Sender send = new Sender();
+			Thread senderThread = new Thread(send);
+			senderThread.start();
 		}
 
 		public boolean disconnect() {
@@ -37,7 +40,7 @@ public class AndroidClient {
 			isConnected.set(false);
 		}
 		
-		private boolean isConnected() {
+		public boolean isConnected() {
 			return isConnected.get();
 		}
 		
@@ -52,14 +55,21 @@ public class AndroidClient {
 			@Override
 			public void run() {
 				while(shouldRun){
+					PrintWriter pw;
 					if(sendLogEvent.get()){
-						PrintWriter pw;
 						try {
 							pw = new PrintWriter(s.getOutputStream(), true);
 							pw.println("LOG" + logMessage);
 							pw.flush();
+							sendLogEvent.set(false);
 						} catch (IOException e) {
 							setDisconnected();
+						}
+					} else {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
 						}
 					}
 				}

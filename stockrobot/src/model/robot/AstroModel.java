@@ -26,6 +26,7 @@ public class AstroModel implements IRobot_Algorithms, IModel{
 	private ITrader trader = TraderSimulator.getInstance();
 	
 	private IPortfolioHandler portfolioHandler;
+	private AndroidServer android;
 	
 	private RobotScheduler robotScheduler;
 	private PropertyChangeSupport observers = new PropertyChangeSupport(this);
@@ -39,6 +40,7 @@ public class AstroModel implements IRobot_Algorithms, IModel{
 		portfolioHandler = PortfolioHandler.getInstance(this);
 		robotScheduler = new RobotScheduler(portfolioHandler);
 		Log.instance().addObservers(observers);
+		AndroidServer android = AndroidServer.instance();
 	}
 	/**
 	 * This starts robotScheduler with a connection to the parser,

@@ -5,6 +5,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+
+import utils.global.Log;
+import utils.global.Log.TAG;
+
 public class AndroidServer {
 	
 	private boolean shouldRun = true;
@@ -12,7 +16,7 @@ public class AndroidServer {
 	private ArrayList<AndroidClient> clients;
 	static AndroidServer instance;
 	
-	static AndroidServer instance(){
+	public static AndroidServer instance(){
 		if(instance == null){
 			instance = new AndroidServer();
 			return instance;
@@ -21,11 +25,19 @@ public class AndroidServer {
 		}
 	}
 	
+	public boolean sendLogEvent(String msg){
+		for(AndroidClient c: clients){
+			c.sendLogEvent(msg);
+		}
+		return true;
+	}
+	
 	private AndroidServer(){
 		clients = new ArrayList<AndroidClient>();
 		AcceptServer server = new AcceptServer();
 		Thread serverThread = new Thread(server);
 		serverThread.start();
+		new Thread(new Pinger()).start();
 
 	}
 	
@@ -42,6 +54,23 @@ public class AndroidServer {
 			clients.remove(c);
 		}
 		return true;
+	}
+	
+	private class Pinger implements Runnable {
+
+		@Override
+		public void run() {
+			while(true){
+				Log.instance().log(TAG.NORMAL, "Sending a little ping.");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 	
 	private class AcceptServer implements Runnable {
