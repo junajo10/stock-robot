@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 
-import model.robot.AndroidServer;
+import model.android.AndroidServer;
 
 /**
  * @author Mattias Markehed
