@@ -57,7 +57,6 @@ public class StartView extends JFrame implements IView {
 		textField.setText("44000");
 		textField.setColumns(10);
 		chckbxConnectToParser.setBackground(Color.WHITE);
-		chckbxConnectToParser.setSelected(true);
 		setResizable(false);
 		setTitle("ASTRo Stock Robot");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
