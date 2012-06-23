@@ -61,6 +61,10 @@ public class AndroidServer {
 		Thread serverThread = new Thread(server);
 		serverThread.start();
 		new Thread(new Pinger()).start();
+		
+		Updater upd = new Updater();
+		Thread updateThread = new Thread(upd);
+		updateThread.start();
 
 	}
 	

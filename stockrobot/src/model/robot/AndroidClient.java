@@ -25,6 +25,7 @@ public class AndroidClient {
 			shouldRun = true;
 			sendLogEvent = new AtomicBoolean(false);
 			isConnected = new AtomicBoolean(true);
+			sendPortfolioValue = new AtomicBoolean(false);
 			portfolioValue = 0;
 			logMessage = "";
 			Log.instance().log(TAG.NORMAL, "A new Android Client has connected to ASTRo.");
@@ -77,9 +78,19 @@ public class AndroidClient {
 							pw = new PrintWriter(s.getOutputStream(), true);
 							pw.println("LOG" + logMessage);
 							pw.flush();
-							pw.close();
 							sendLogEvent.set(false);
 						} catch (IOException e) {
+							setDisconnected();
+						}
+					} else if(sendPortfolioValue.get()){
+						try {
+							Log.instance().log(TAG.NORMAL, "Sending portfoliovalue refresh :" + portfolioValue);
+							pw = new PrintWriter(s.getOutputStream(), true);
+							pw.println("PFV" + portfolioValue);
+							pw.flush();
+							sendPortfolioValue.set(false);
+						} catch (IOException e) {
+							e.printStackTrace();
 							setDisconnected();
 						}
 					} else {
@@ -88,18 +99,7 @@ public class AndroidClient {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-					}
-					if(sendPortfolioValue.get()){
-						try {
-							pw = new PrintWriter(s.getOutputStream(), true);
-							pw.println("PFV" + portfolioValue);
-							pw.flush();
-							pw.close();
-							sendPortfolioValue.set(false);
-						} catch (IOException e) {
-							setDisconnected();
-						}
-					}
+					}					
 				}
 			}
 			
