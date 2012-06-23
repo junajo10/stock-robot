@@ -4,6 +4,14 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
+
+import model.database.jpa.IJPAHelper;
+import model.database.jpa.JPAHelper;
+import model.database.jpa.tables.PortfolioEntity;
+import model.portfolio.IPortfolio;
+import model.portfolio.Portfolio;
+import model.portfolio.PortfolioHandler;
 
 
 import utils.global.Log;
@@ -23,6 +31,21 @@ public class AndroidServer {
 		} else {
 			return instance;
 		}
+	}
+	
+	public void updatePortfolios(){
+
+	}
+	
+	private boolean updatePortfolioValue(){
+		List<IPortfolio> portList = PortfolioHandler.getInstance().getPortfolios();
+		IPortfolio por = portList.get(0);
+		Long value = por.getCurrentWorth();
+
+		for(AndroidClient c: clients){
+			c.sendStockValue(value);
+		}
+		return true;
 	}
 	
 	public boolean sendLogEvent(String msg){
@@ -94,5 +117,21 @@ public class AndroidServer {
 			}
 		}
 		
-	}	
+	}
+	
+	private class Updater implements Runnable {
+		@Override
+		public void run() {
+			while(shouldRun){
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				updatePortfolioValue();
+			}
+		}
+		
+	}
+
 }

@@ -61,7 +61,7 @@ public class StartView extends JFrame implements IView {
 		setResizable(false);
 		setTitle("ASTRo Stock Robot");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 264, 446);
+		setBounds(100, 100, 264, 458);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

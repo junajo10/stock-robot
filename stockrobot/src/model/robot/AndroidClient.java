@@ -1,6 +1,9 @@
 package model.robot;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -14,20 +17,28 @@ public class AndroidClient {
 		private AtomicBoolean sendLogEvent;
 		private String logMessage;
 		private AtomicBoolean isConnected; 
+		private AtomicBoolean sendPortfolioValue;
+		private long portfolioValue;
 
 		public AndroidClient(Socket socket) {
 			this.s = socket;
 			shouldRun = true;
 			sendLogEvent = new AtomicBoolean(false);
 			isConnected = new AtomicBoolean(true);
+			portfolioValue = 0;
+			logMessage = "";
 			Log.instance().log(TAG.NORMAL, "A new Android Client has connected to ASTRo.");
 			Sender send = new Sender();
+			Reciever rec = new Reciever();
 			Thread senderThread = new Thread(send);
+			Thread recieverThread = new Thread(rec);
 			senderThread.start();
+			
 		}
 
 		public boolean disconnect() {
 			shouldRun = false;
+			setDisconnected();
 			try {
 				s.close();
 			} catch (IOException e) {
@@ -49,6 +60,11 @@ public class AndroidClient {
 			logMessage = msg;
 			return true;
 		}
+
+		public void sendStockValue(Long value) {
+			sendPortfolioValue.set(true);
+			portfolioValue = value;
+		}
 		
 		private class Sender implements Runnable {
 
@@ -61,6 +77,7 @@ public class AndroidClient {
 							pw = new PrintWriter(s.getOutputStream(), true);
 							pw.println("LOG" + logMessage);
 							pw.flush();
+							pw.close();
 							sendLogEvent.set(false);
 						} catch (IOException e) {
 							setDisconnected();
@@ -72,7 +89,47 @@ public class AndroidClient {
 							e.printStackTrace();
 						}
 					}
+					if(sendPortfolioValue.get()){
+						try {
+							pw = new PrintWriter(s.getOutputStream(), true);
+							pw.println("PFV" + portfolioValue);
+							pw.flush();
+							pw.close();
+							sendPortfolioValue.set(false);
+						} catch (IOException e) {
+							setDisconnected();
+						}
+					}
 				}
+			}
+			
+		}
+		
+		private class Reciever implements Runnable {
+
+			public Reciever(){
+			}
+			
+			@Override
+			public void run() {
+				while(shouldRun){
+					BufferedReader input = null;
+					while(isConnected.get() && shouldRun){
+						try {	
+							input = new BufferedReader(new InputStreamReader(s.getInputStream()));
+							if(!input.ready()){
+								String strInput = input.readLine();
+								handleInput(strInput);
+							}
+						} catch (IOException e) {
+							disconnect();
+						}
+					}
+				}
+			}
+			
+			private void handleInput(String input){
+				
 			}
 			
 		}

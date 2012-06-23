@@ -41,9 +41,9 @@ public final class Log {
 			Date date= new java.util.Date();
 			String time = new Timestamp(date.getTime()) + "";
 			if(observers!=null){
-				observers.firePropertyChange("AddListItem", null, "[" + time.substring(11, 16) + "] - " + message);
+				observers.firePropertyChange("AddListItem", null, "[" + time.substring(11, 19) + "] - " + message);
 			} // Temporary solution //Erik
-			AndroidServer.instance().sendLogEvent(message);
+			AndroidServer.instance().sendLogEvent("[" + time.substring(11, 19) + "] - " + message);
 			System.out.print("[" + log.shortenerMap.get(tag) + "] " ); //NOPMD
 			System.out.println(message); //NOPMD
 		}
